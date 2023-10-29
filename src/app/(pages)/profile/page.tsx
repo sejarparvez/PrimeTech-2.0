@@ -105,58 +105,72 @@ export default function Profile() {
                 <div className="mt-3 text-muted-foreground">{userData.bio}</div>
               </CardContent>
               <CardFooter className="flex flex-wrap">
-                <div>Connect with me:</div>
+                {(userData.facebook ||
+                  userData.twitter ||
+                  userData.linkedin ||
+                  userData.instagram ||
+                  userData.github) && <div>Connect with me:</div>}
                 <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
-                  <Link
-                    href={`https://${userData.facebook}`}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <ToolTipHookDown
-                      text="Facebook"
-                      icon={<FaFacebook size={20} />}
-                    />
-                  </Link>
-                  <Link
-                    href={`https://${userData.twitter}`}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <ToolTipHookDown
-                      text="Twitter"
-                      icon={<FaTwitter size={20} />}
-                    />
-                  </Link>
-                  <Link
-                    href={`https://${userData.linkedin}`}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <ToolTipHookDown
-                      text="LinkedIn"
-                      icon={<FaLinkedin size={20} />}
-                    />
-                  </Link>
-                  <Link
-                    href={`https://${userData.instagram}`}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <ToolTipHookDown
-                      text="Instagram"
-                      icon={<FaInstagram size={20} />}
-                    />
-                  </Link>
-                  <Link
-                    href={`https://${userData.github}`}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <ToolTipHookDown
-                      text="GitHub"
-                      icon={<FaGithub size={20} />}
-                    />
-                  </Link>
+                  {userData.facebook && (
+                    <Link
+                      href={`https://${userData.facebook}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ToolTipHookDown
+                        text="Facebook"
+                        icon={<FaFacebook size={20} />}
+                      />
+                    </Link>
+                  )}
+                  {userData.twitter && (
+                    <Link
+                      href={`https://${userData.twitter}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ToolTipHookDown
+                        text="Twitter"
+                        icon={<FaTwitter size={20} />}
+                      />
+                    </Link>
+                  )}
+                  {userData.linkedin && (
+                    <Link
+                      href={`https://${userData.linkedin}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ToolTipHookDown
+                        text="LinkedIn"
+                        icon={<FaLinkedin size={20} />}
+                      />
+                    </Link>
+                  )}
+                  {userData.instagram && (
+                    <Link
+                      href={`https://${userData.instagram}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ToolTipHookDown
+                        text="Instagram"
+                        icon={<FaInstagram size={20} />}
+                      />
+                    </Link>
+                  )}
+                  {userData.github && (
+                    <Link
+                      href={`https://${userData.github}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ToolTipHookDown
+                        text="GitHub"
+                        icon={<FaGithub size={20} />}
+                      />
+                    </Link>
+                  )}
                 </div>
               </CardFooter>
             </div>
