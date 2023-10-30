@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   FaFacebook,
@@ -31,6 +32,11 @@ export default function Profile() {
     status: "",
     createdAt: "",
     bio: "",
+    facebook: "",
+    twitter: "",
+    linkedin: "",
+    instagram: "",
+    github: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -101,26 +107,56 @@ export default function Profile() {
               <CardFooter className="flex flex-wrap">
                 <div>Connect with me:</div>
                 <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
-                  <ToolTipHookDown
-                    text="Facebook"
-                    icon={<FaFacebook size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="Twitter"
-                    icon={<FaTwitter size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="LinkedIn"
-                    icon={<FaLinkedin size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="Instagram"
-                    icon={<FaInstagram size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="GitHub"
-                    icon={<FaGithub size={20} />}
-                  />
+                  <Link
+                    href={`https://${userData.facebook}`}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <ToolTipHookDown
+                      text="Facebook"
+                      icon={<FaFacebook size={20} />}
+                    />
+                  </Link>
+                  <Link
+                    href={`https://${userData.twitter}`}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <ToolTipHookDown
+                      text="Twitter"
+                      icon={<FaTwitter size={20} />}
+                    />
+                  </Link>
+                  <Link
+                    href={`https://${userData.linkedin}`}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <ToolTipHookDown
+                      text="LinkedIn"
+                      icon={<FaLinkedin size={20} />}
+                    />
+                  </Link>
+                  <Link
+                    href={`https://${userData.instagram}`}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <ToolTipHookDown
+                      text="Instagram"
+                      icon={<FaInstagram size={20} />}
+                    />
+                  </Link>
+                  <Link
+                    href={`https://${userData.github}`}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <ToolTipHookDown
+                      text="GitHub"
+                      icon={<FaGithub size={20} />}
+                    />
+                  </Link>
                 </div>
               </CardFooter>
             </div>
