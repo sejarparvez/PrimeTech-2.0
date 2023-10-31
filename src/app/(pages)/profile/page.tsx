@@ -18,11 +18,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   FaFacebook,
+  FaGithub,
   FaInstagram,
   FaLinkedin,
-  FaTelegram,
   FaTwitter,
-  FaWhatsapp,
 } from "react-icons/fa";
 
 export default function Profile() {
@@ -31,7 +30,7 @@ export default function Profile() {
     image: null,
     status: "",
     createdAt: "",
-    bio: ''
+    bio: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -97,36 +96,30 @@ export default function Profile() {
                     <span>19</span>
                   </div>
                 </div>
-                <div className="mt-3 text-muted-foreground">
-                 {userData.bio}
-                </div>
+                <div className="mt-3 text-muted-foreground">{userData.bio}</div>
               </CardContent>
               <CardFooter className="flex flex-wrap">
                 <div>Connect with me:</div>
                 <div className="flex flex-wrap gap-4 pl-4 text-muted-foreground hover:[&>*]:text-foreground">
                   <ToolTipHookDown
-                    text="GitHub"
+                    text="Facebook"
                     icon={<FaFacebook size={20} />}
                   />
                   <ToolTipHookDown
-                    text="GitHub"
+                    text="Twitter"
                     icon={<FaTwitter size={20} />}
                   />
                   <ToolTipHookDown
-                    text="GitHub"
+                    text="LinkedIn"
                     icon={<FaLinkedin size={20} />}
                   />
                   <ToolTipHookDown
-                    text="GitHub"
-                    icon={<FaWhatsapp size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="GitHub"
-                    icon={<FaTelegram size={20} />}
-                  />
-                  <ToolTipHookDown
-                    text="GitHub"
+                    text="Instagram"
                     icon={<FaInstagram size={20} />}
+                  />
+                  <ToolTipHookDown
+                    text="GitHub"
+                    icon={<FaGithub size={20} />}
                   />
                 </div>
               </CardFooter>
