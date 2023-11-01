@@ -31,6 +31,7 @@ export default function Profile() {
     image: null,
     status: "",
     createdAt: "",
+    bio: ''
   });
   const [loading, setLoading] = useState(true);
 
@@ -97,10 +98,7 @@ export default function Profile() {
                   </div>
                 </div>
                 <div className="mt-3 text-muted-foreground">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Officia quisquam architecto rerum praesentium voluptatem
-                  nesciunt explicabo temporibus iure ratione omnis? Fugit hic
-                  libero quaerat et molestias harum quam quas quod?
+                 {userData.bio}
                 </div>
               </CardContent>
               <CardFooter className="flex flex-wrap">
