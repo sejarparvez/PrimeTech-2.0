@@ -10,7 +10,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function EditProfile() {
-  const [userData, setUserData] = useState({ name: "", email: "", bio: "" });
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    facebook: "",
+    twitter: "",
+    linkedin: "",
+    instagram: "",
+    github: "",
+  });
   const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -48,8 +57,6 @@ export default function EditProfile() {
     fetchData();
   }, []);
 
-  console.log(userData)
-
   return (
     <>
       {loading ? (
@@ -69,7 +76,14 @@ export default function EditProfile() {
               <PasswordTab />
             </TabsContent>
             <TabsContent value="more">
-              <MoreTab bio="" />
+              <MoreTab
+                bio={userData.bio}
+                facebook={userData.facebook}
+                twitter={userData.twitter}
+                linkedin={userData.twitter}
+                instagram={userData.instagram}
+                github={userData.github}
+              />
             </TabsContent>
           </Tabs>
         </div>

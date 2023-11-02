@@ -28,7 +28,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         name: true,
         email: true,
         image: true,
-        socialLink: true,
+        facebook: true,
+        linkedin: true,
+        twitter: true,
+        github: true,
+        instagram: true,
         bio: true,
       },
     });
@@ -40,7 +44,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       status: 200,
     });
   } catch (error) {
-    return new NextResponse("Error fetching user");
+    return new NextResponse("Error fetching user", { status: 409 });
   } finally {
     prisma.$disconnect();
   }
@@ -57,7 +61,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     const id = token?.sub;
 
     if (!token) {
-      return new NextResponse("You are not logged in");
+      return new NextResponse("You are not logged in", { status: 401 });
     }
 
     // Check if the user exists

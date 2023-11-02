@@ -20,7 +20,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         name: true,
         status: true,
         image: true,
-        socialLink: true,
+        facebook: true,
+        twitter: true,
+        linkedin: true,
+        github: true,
+        instagram: true,
         bio: true,
         createdAt: true,
       },
@@ -33,7 +37,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       status: 200,
     });
   } catch (error) {
-    return new NextResponse("Error fetching user");
+    return new NextResponse("Error fetching user", { status: 409 });
   } finally {
     prisma.$disconnect();
   }

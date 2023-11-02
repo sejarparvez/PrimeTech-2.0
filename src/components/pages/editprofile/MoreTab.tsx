@@ -22,16 +22,32 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
-export default function MoreTab({ bio }: { bio: string }) {
+interface props {
+  bio: string;
+  facebook: string;
+  twitter: string;
+  linkedin: string;
+  instagram: string;
+  github: string;
+}
+
+export default function MoreTab({
+  bio,
+  facebook,
+  twitter,
+  linkedin,
+  instagram,
+  github,
+}: props) {
   return (
     <Formik
       initialValues={{
         bio: bio,
-        facebook: "",
-        twitter: "",
-        linkedin: "",
-        instagram: "",
-        github: "",
+        facebook: facebook,
+        twitter: twitter,
+        linkedin: linkedin,
+        instagram: instagram,
+        github: github,
       }}
       validationSchema={Yup.object({
         bio: Yup.string().max(1000, "Bio must be at most 1000 characters"),
@@ -113,7 +129,7 @@ export default function MoreTab({ bio }: { bio: string }) {
                         id="facebook"
                         type="text"
                         name="facebook"
-                        defaultValue=""
+                        defaultValue={facebook}
                         placeholder="facebook.com/primetech"
                       />
                     </div>
@@ -127,7 +143,7 @@ export default function MoreTab({ bio }: { bio: string }) {
                         id="twitter"
                         type="text"
                         name="twitter"
-                        defaultValue=""
+                        defaultValue={twitter}
                         placeholder="twitter.com/primetech"
                       />
                     </div>
@@ -141,7 +157,7 @@ export default function MoreTab({ bio }: { bio: string }) {
                         id="instagram"
                         name="instagram"
                         type="text"
-                        defaultValue=""
+                        defaultValue={instagram}
                         placeholder="instagram.com/primetech"
                       />
                     </div>
@@ -155,7 +171,7 @@ export default function MoreTab({ bio }: { bio: string }) {
                         id="new"
                         name="linkedin"
                         type="text"
-                        defaultValue=""
+                        defaultValue={linkedin}
                         placeholder="linkedin/in/primetech"
                       />
                     </div>
@@ -169,8 +185,8 @@ export default function MoreTab({ bio }: { bio: string }) {
                         id="new"
                         name="github"
                         type="text"
-                        defaultValue=""
-                        placeholder="github.com/primetech"
+                        defaultValue="thisis"
+                        // placeholder="github.com/primetech"
                       />
                     </div>
                   </AccordionContent>

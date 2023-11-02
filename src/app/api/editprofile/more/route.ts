@@ -31,12 +31,17 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
-        bio: bio,
+        bio,
+        facebook,
+        twitter,
+        linkedin,
+        instagram,
+        github,
       },
     });
 
     // Return the updated user information in the response
-    return new NextResponse(JSON.stringify(updatedUser));
+    return new NextResponse("User updated", { status: 200 });
   } catch (error) {
     // Handle errors and return an appropriate response
     console.error("Error:", error);
