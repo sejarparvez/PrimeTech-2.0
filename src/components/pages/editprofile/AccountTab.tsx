@@ -54,7 +54,6 @@ export default function AccountTab({ name, email }: props) {
         user: {
           ...session?.user,
           name: newName,
-
           image: newImage || session?.user?.image,
         },
       });

@@ -185,8 +185,8 @@ export default function MoreTab({
                         id="new"
                         name="github"
                         type="text"
-                        defaultValue="thisis"
-                        // placeholder="github.com/primetech"
+                        defaultValue={github}
+                        placeholder="github.com/primetech"
                       />
                     </div>
                   </AccordionContent>

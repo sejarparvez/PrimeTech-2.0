@@ -49,7 +49,6 @@ export default function Profile() {
     fetchUserData();
   }, []);
 
-  console.log(userData);
   return (
     <>
       {loading ? (
