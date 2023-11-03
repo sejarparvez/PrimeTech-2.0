@@ -45,15 +45,11 @@ model User {
   status             String?
   createdAt          DateTime   @default(now())
   bio                String?
-  socialLink         SocialLink?
+  facebook           String?
+  twitter            String?
+  instagram          String?
+  linkedin           String?
+  github             String?
   accounts           Account[]
   sessions           Session[] 
-}
-
-model SocialLink {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String  @unique @db.ObjectId
-  facebook String?
-  twitter  String?
-  user User @relation(fields: [userId], references: [id])
 }
