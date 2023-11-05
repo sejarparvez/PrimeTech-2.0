@@ -72,7 +72,6 @@ export default function AccountTab({ name, email }: props) {
     }
   }
 
-  console.log("Session:", session);
   return (
     <Formik
       initialValues={{ name, email }}

@@ -48,6 +48,8 @@ export default function EditProfile() {
     fetchData();
   }, []);
 
+  console.log(userData)
+
   return (
     <>
       {loading ? (
