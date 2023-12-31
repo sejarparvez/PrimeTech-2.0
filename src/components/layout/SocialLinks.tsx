@@ -32,7 +32,6 @@ export default function SocialLinks() {
         href="https://linkedin.com/in/sejarparvez"
         target="_blank"
         rel="noopener"
-        title="Linkedin"
       >
         <ToolTipHook text="Linkedin" icon={<FaLinkedinIn size={28} />} />
       </Link>
@@ -40,7 +39,6 @@ export default function SocialLinks() {
         href="https://github.com/sejarparvez"
         target="_blank"
         rel="noopener"
-        title="Github"
       >
         <ToolTipHook text="GitHub" icon={<FaGithub size={28} />} />
       </Link>
