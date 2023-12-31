@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BsFacebook } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { Button } from "../ui/button";
+import ToolTipHook from "../helper/ToolTipHook";
 
 export default function SocialLinks() {
   return (
@@ -11,31 +11,22 @@ export default function SocialLinks() {
         href="https://facebook.com/sejarparvez"
         target="_blank"
         rel="noopener"
-        title="Facebook"
       >
-        <Button size="icon" variant="ghost">
-          <BsFacebook size={28} />
-        </Button>
+        <ToolTipHook text="Facebook" icon={<BsFacebook size={28} />} />
       </Link>
       <Link
         href="https://twitter.com/sejarparvez"
         target="_blank"
         rel="noopener"
-        title="Twitter"
       >
-        <Button size="icon" variant="ghost">
-          <FaXTwitter size={28} />
-        </Button>
+        <ToolTipHook text="Twitter" icon={<FaXTwitter size={28} />} />
       </Link>
       <Link
         href="https://instagram.com/sejarparvez"
         target="_blank"
         rel="noopener"
-        title="Instagram"
       >
-        <Button size="icon" variant="ghost">
-          <FaInstagram size={28} />
-        </Button>
+        <ToolTipHook text="Instagram" icon={<FaInstagram size={28} />} />
       </Link>
       <Link
         href="https://linkedin.com/in/sejarparvez"
@@ -43,9 +34,7 @@ export default function SocialLinks() {
         rel="noopener"
         title="Linkedin"
       >
-        <Button size="icon" variant="ghost">
-          <FaLinkedinIn size={28} />
-        </Button>
+        <ToolTipHook text="Linkedin" icon={<FaLinkedinIn size={28} />} />
       </Link>
       <Link
         href="https://github.com/sejarparvez"
@@ -53,9 +42,7 @@ export default function SocialLinks() {
         rel="noopener"
         title="Github"
       >
-        <Button size="icon" variant="ghost">
-          <FaGithub size={28} />
-        </Button>
+        <ToolTipHook text="GitHub" icon={<FaGithub size={28} />} />
       </Link>
     </section>
   );

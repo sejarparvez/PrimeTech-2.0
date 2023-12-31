@@ -3,7 +3,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { BsMoonStars } from "react-icons/bs";
 import { MdOutlineWbSunny } from "react-icons/md";
-import { Button } from "../ui/button";
+import ToolTipHook from "../helper/ToolTipHook";
 import { Label } from "../ui/label";
 
 export default function ThemeSwitch() {
@@ -30,22 +30,17 @@ export default function ThemeSwitch() {
 
   return (
     <div className="relative flex flex-col items-center justify-center gap-5">
-      <Label htmlFor="mode">
-        <Button
-          variant="ghost"
-          size="icon"
-          title="Change Theme"
-          aria-label={
-            theme === "light" ? "Switch to Dark Theme" : "Switch to Light Theme"
+      <Label htmlFor="mode" onClick={handleThemeToggle}>
+        <ToolTipHook
+          icon={
+            resolvedTheme === "light" ? (
+              <MdOutlineWbSunny size={28} />
+            ) : (
+              <BsMoonStars size={28} />
+            )
           }
-          onClick={handleThemeToggle}
-        >
-          {resolvedTheme === "light" ? (
-            <MdOutlineWbSunny size={28} />
-          ) : (
-            <BsMoonStars size={28} />
-          )}
-        </Button>
+          text="Change Theme"
+        />
       </Label>
     </div>
   );
