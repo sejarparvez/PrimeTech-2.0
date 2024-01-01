@@ -48,12 +48,12 @@ export default function Featured() {
     { id: 3, name: "this is the name", img: img3 },
   ];
   return (
-    <>
-      <Carousel setApi={setApi}>
+    <div>
+      <Carousel setApi={setApi} opts={{ loop: true }}>
         <CarouselContent className="">
           {data.map((data) => (
             <CarouselItem key={data.id}>
-              <Card className="group relative mx-8 mt-8 bg-secondary">
+              <Card className="group relative bg-secondary">
                 <CardContent className="relative rounded-md p-4">
                   <Link href="/blog/postid">
                     <Image
@@ -103,7 +103,7 @@ export default function Featured() {
                 </div>
                 <Link
                   href="/blog/postid"
-                  className="absolute bottom-48 left-12 text-5xl font-bold text-white"
+                  className="absolute bottom-48 left-12 mr-12 text-5xl font-bold text-white"
                 >
                   Leaner Responsive Images With Client Hints
                 </Link>
@@ -125,6 +125,6 @@ export default function Featured() {
           ></button>
         ))}
       </div>
-    </>
+    </div>
   );
 }

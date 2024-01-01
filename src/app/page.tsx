@@ -2,22 +2,24 @@ import LeftSidebar from "@/components/layout/LeftSidebar";
 import Navbar from "@/components/layout/Navbar";
 import RightSidebar from "@/components/layout/RightSidebar";
 import Featured from "@/components/pages/home/Featured";
+import RecentPost from "@/components/pages/home/RecentPost";
 
 export default function Home() {
   return (
     <div className="flex">
-      <section>
+      <div className="w-20">
         <LeftSidebar />
-      </section>
-      <div className="flex min-h-screen w-full flex-col border-l">
-        <div>
-          <Navbar />
-        </div>
-        <div className="flex">
-          <main className="min-h-screen w-[72%] border-r">
+      </div>
+      <div className="w-full border-l">
+        <Navbar />
+        <div className="grid grid-cols-12">
+          <div className="col-span-9 border-r px-4 pt-4">
             <Featured />
-          </main>
-          <RightSidebar />
+            <RecentPost />
+          </div>
+          <div className="col-span-3">
+            <RightSidebar />
+          </div>
         </div>
       </div>
     </div>
