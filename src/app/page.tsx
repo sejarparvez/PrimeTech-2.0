@@ -1,6 +1,6 @@
 import LeftSidebar from "@/components/layout/LeftSidebar";
 import Navbar from "@/components/layout/Navbar";
-import RightSidebar from "@/components/layout/RightSidebar";
+import RightSidebar from "@/components/layout/rightsidebar/RightSidebar";
 import Featured from "@/components/pages/home/Featured";
 import RecentPost from "@/components/pages/home/RecentPost";
 
@@ -12,12 +12,12 @@ export default function Home() {
       </div>
       <div className="w-full border-l">
         <Navbar />
-        <div className="grid grid-cols-12">
-          <div className="col-span-9 border-r px-4 pt-4">
+        <div className="grid-cols-48  grid">
+          <div className="col-span-37 border-r px-4 pt-4">
             <Featured />
             <RecentPost />
           </div>
-          <div className="col-span-3">
+          <div className="col-span-11">
             <RightSidebar />
           </div>
         </div>
