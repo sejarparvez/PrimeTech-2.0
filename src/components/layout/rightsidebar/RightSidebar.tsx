@@ -14,9 +14,9 @@ export default function RightSidebar() {
   }
 
   return (
-    <div className="mt-4">
+    <div className="mb-20 mt-4">
       <div className="flex items-center justify-center">
-        <div className="flex h-12 w-10/12 items-center justify-between rounded-full bg-secondary text-xl">
+        <div className="flex h-12 w-10/12 items-center justify-between rounded-full bg-secondary text-xl md:w-1/2 lg:w-10/12">
           <div
             onClick={() => handleClick(1)}
             className={`rounded-full px-4 py-3 ${
@@ -64,7 +64,7 @@ export default function RightSidebar() {
       </div>
       <div>
         {active === 1 && (
-          <div className="mx-4 mt-5 flex flex-col gap-4">
+          <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
             <PostModel />
             <PostModel />
             <PostModel />
@@ -73,7 +73,8 @@ export default function RightSidebar() {
           </div>
         )}
         {active === 2 && (
-          <div className="mx-4 mt-5 flex flex-col gap-4">
+          <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
+            <PostModel />
             <PostModel />
             <PostModel />
             <PostModel />
@@ -83,7 +84,7 @@ export default function RightSidebar() {
         )}
 
         {active === 3 && (
-          <div className="mx-4 mt-5 flex flex-col gap-5">
+          <div className="mx-auto mt-5  flex w-11/12 flex-col gap-5 md:w-3/5 lg:w-10/12">
             <CommentsModel />
             <CommentsModel />
             <CommentsModel />
@@ -93,7 +94,7 @@ export default function RightSidebar() {
           </div>
         )}
         {active === 4 && (
-          <div className="mt-5 mx-4">
+          <div className="mx-auto mt-5  w-11/12 md:w-3/5 lg:w-10/12">
             <CategoryModel />
           </div>
         )}
@@ -102,7 +103,7 @@ export default function RightSidebar() {
           <div className=" absolute -top-4 left-6 bg-background px-2 text-xl font-bold text-gray-600">
             Featured
           </div>
-          <div className="mx-4 mt-8 flex flex-col gap-6">
+          <div className="mx-auto mt-8  flex w-11/12 flex-col gap-6 md:w-3/5 lg:w-10/12">
             <FeaturedModel />
             <FeaturedModel />
             <FeaturedModel />

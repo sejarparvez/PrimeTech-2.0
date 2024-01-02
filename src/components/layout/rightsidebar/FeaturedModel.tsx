@@ -8,7 +8,7 @@ export default function FeaturedModel() {
         <Image
           src={img1}
           alt=""
-          className="h-32 w-full rounded-lg object-cover"
+          className="h-48 w-full rounded-lg object-cover lg:h-32"
         />
       </div>
       <div className="flex flex-col gap-1 ">

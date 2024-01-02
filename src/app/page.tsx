@@ -8,13 +8,13 @@ import RecentPost from "@/components/pages/home/RecentPost";
 export default function Home() {
   return (
     <div>
-      <div className="flex">
-        <div className="w-20">
+      <div className="md:grid md:grid-cols-24 lg:flex">
+        <div className="col-span-2 hidden w-20 md:block">
           <LeftSidebar />
         </div>
-        <div className="w-full border-l">
+        <div className="col-span-22 w-full border-l">
           <Navbar />
-          <div className="grid  grid-cols-48">
+          <div className="lg:grid lg:grid-cols-48">
             <div className="col-span-37 border-r px-4 pt-4">
               <Featured />
               <RecentPost />

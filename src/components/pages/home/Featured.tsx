@@ -59,11 +59,11 @@ export default function Featured() {
                     <Image
                       src={data.img}
                       alt=""
-                      className="h-[29rem] w-full rounded-lg object-cover brightness-50 transition-all  duration-300 group-hover:brightness-90"
+                      className="h-52 w-full rounded-lg object-cover brightness-50 transition-all duration-300  group-hover:brightness-90 md:h-[29rem]"
                     />
                   </Link>
                 </CardContent>
-                <div className="flex items-center justify-between px-8 py-6">
+                <div className="flex flex-col gap-2 py-6 md:flex-row md:items-center md:justify-between md:px-8">
                   <div className="flex gap-16 text-muted-foreground">
                     <span>SEJAR PARVEZ</span>
                     <span className="flex items-center justify-center gap-2">
@@ -71,21 +71,19 @@ export default function Featured() {
                       <span>19th Dec 2023</span>
                     </span>
                   </div>
-                  <div className="flex gap-3">
-                    <Badge>Featured</Badge>
-                    <Badge>Marketing</Badge>
-                  </div>
+
+                  <Badge className="w-fit">Featured</Badge>
                 </div>
-                <div className="absolute bottom-[3.5rem] left-16 flex items-center justify-center">
+                <div className="absolute bottom-[5.8rem] left-10 flex items-center justify-center md:bottom-[3.5rem] md:left-16">
                   <Image
                     src={img1}
                     alt=""
-                    className="z-10 h-16 w-16 rounded-full object-cover ring ring-white"
+                    className="z-10 h-10 w-10 rounded-full object-cover ring ring-white md:h-16 md:w-16"
                   />
-                  <div className="absolute -top-2  h-10 w-20 rounded-t-full bg-primary"></div>
+                  <div className="absolute -top-1.5 h-7 w-[3.1rem]  rounded-t-full bg-primary md:-top-2 md:h-10 md:w-20"></div>
                 </div>
                 <Link href="/blog/postid">
-                  <Button className="absolute bottom-24 right-4 flex items-center justify-center gap-3 transition-all duration-300 hover:px-10">
+                  <Button className="absolute bottom-28 right-0 flex scale-75 items-center justify-center gap-3 transition-all duration-300 hover:px-10 md:bottom-24 md:right-4 md:scale-100">
                     <span>View Details</span>
                     <FaAngleRight />
                   </Button>
@@ -103,7 +101,7 @@ export default function Featured() {
                 </div>
                 <Link
                   href="/blog/postid"
-                  className="absolute bottom-48 left-12 mr-12 text-5xl font-bold text-white"
+                  className="absolute bottom-40 left-12 mr-12 text-2xl font-bold text-white md:bottom-48 md:text-5xl"
                 >
                   Leaner Responsive Images With Client Hints
                 </Link>
