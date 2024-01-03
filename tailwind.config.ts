@@ -89,10 +89,22 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        show: {
+          "0%, 49.99%": {
+            opacity: "0",
+            zIndex: "10",
+          },
+          "50%, 100%": {
+            opacity: "1",
+            zIndex: "5",
+          },
+        },
       },
+
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        show: "show 0.6s ease-in-out",
       },
     },
   },
