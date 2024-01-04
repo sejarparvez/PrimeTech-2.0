@@ -1,118 +1,101 @@
 "use client";
+import SigninInput from "@/components/common/input/SignInInput";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
-import { AiFillFacebook } from "react-icons/ai";
-import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaTwitter } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const AuthForm = () => {
-  const [isSignUp, setSignUp] = useState(false);
+export default function Login() {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleSignUpClick = () => {
-    setSignUp(true);
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
+  const handleEmailChange = (e: { target: { value: any } }) => {
+    setData((prevData) => ({
+      ...prevData,
+      email: e.target.value,
+    }));
   };
-
-  const handleSignInClick = () => {
-    setSignUp(false);
+  const handlePasswordChange = (e: { target: { value: any } }) => {
+    setData((prevData) => ({
+      ...prevData,
+      password: e.target.value,
+    }));
   };
 
   return (
-    <>
-      <div
-        className={`container relative mt-24 min-h-[30rem] w-[48rem] max-w-full overflow-hidden shadow-2xl ${
-          isSignUp ? "right-panel-active" : ""
-        }`}
-        id="container"
-      >
-        <div className="sign-up-container opacity-1 trans absolute left-0 top-0 h-full w-1/2 transition-all duration-500 ease-in-out">
-          <form
-            action="#"
-            className="flex h-full flex-col items-center justify-center bg-white py-16 text-center"
-          >
-            <h1>Create Account</h1>
-            <div className="social-container">
-              <a href="#" className="social">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-google-plus-g"></i>
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-            <span>or use your email for registration</span>
-            <input
-              type="text"
-              placeholder="Name"
-              className="my-3 bg-slate-100 px-4 py-3"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="my-3 bg-slate-100 px-4 py-3"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="my-3 bg-slate-100 px-4 py-3"
-            />
-            <Button>Sign Up</Button>
-          </form>
-        </div>
-        <div className=" absolute left-0 top-0 z-20 h-full w-1/2 transition-all duration-300 ease-in-out">
-          <form
-            action="#"
-            className="flex h-full flex-col items-center justify-center bg-white py-16 text-center"
-          >
-            <h1>Sign in</h1>
-            <div className=" my-5 inline-flex gap-4">
-              <Link href="#" className="rounded-full border p-3">
-                <AiFillFacebook />
-              </Link>
-              <Link href="#" className="rounded-full border p-3">
+    <div className="mt-28 flex items-center justify-center">
+      <div className="grid w-full grid-cols-1 justify-around rounded-2xl shadow-2xl md:w-10/12 md:grid-cols-5  lg:w-8/12">
+        <div className="col-span-3 bg-secondary  md:rounded-l-2xl">
+          <section className="my-8 flex flex-col items-center justify-center gap-4">
+            <h1 className="text-center text-2xl font-bold md:text-3xl lg:text-4xl">
+              Log in to PrimeTech
+            </h1>
+            <span className="bg-primary-200 flex h-1 w-20 rounded-full"></span>
+            <div className="my-3 flex gap-6">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary dark:border-white dark:text-white">
+                <FaFacebookF />
+              </span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary dark:border-white dark:text-white">
                 <FaTwitter />
-              </Link>
-              <Link href="#" className="rounded-full border p-3">
-                <FaLinkedin />
-              </Link>
+              </span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary dark:border-white dark:text-white">
+                <FaGithub />
+              </span>
             </div>
-            <span>or use your account</span>
-            <input
-              type="email"
-              placeholder="Email"
-              className="my-3 bg-slate-100 px-4 py-3"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="my-3 bg-slate-100 px-4 py-3"
-            />
-            <a href="#">Forgot your password?</a>
-            <Button>Sign In</Button>
-          </form>
-        </div>
-        <div className="overlay-container">
-          <div className="overlay duration relative -left-full h-full w-[200%] translate-x-0 bg-gradient-to-b from-primary to-pink-500  text-white transition-transform duration-300 ease-in-out">
-            <div className="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
-              <p>
-                To keep connected with us, please login with your personal info
+            <p className="dark:text-primary-200">or use your email account</p>
+            <form className="my-6 flex w-11/12 flex-col gap-5 md:w-2/3">
+              <SigninInput
+                label="Input Your Email"
+                id="email"
+                type="email"
+                error={errors.email}
+                onChange={handleEmailChange}
+                value={data.email}
+              />
+              <SigninInput
+                label="Input Your Password"
+                id="password"
+                type="password"
+                error={errors.password}
+                onChange={handlePasswordChange}
+                value={data.password}
+              />
+              <Button>Log In</Button>
+              <p className="text-center md:hidden">
+                Don&apos;t have an account?
+                <Link href={"/signup"} className="pl-2 text-xl font-bold">
+                  Register
+                </Link>
               </p>
-              <Button onClick={handleSignInClick}>Sign In</Button>
-            </div>
-            <div className="overlay-panel overlay-right">
-              <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start a journey with us</p>
-              <Button className="ghost" onClick={handleSignUpClick}>
-                Sign Up
-              </Button>
-            </div>
-          </div>
+            </form>
+          </section>
+        </div>
+        <div className="col-span-2 hidden flex-col items-center justify-center gap-4 bg-gradient-to-b from-primary to-pink-600 p-3 text-center text-white md:flex  md:rounded-r-2xl lg:p-16">
+          <span className="text-lightgray-100 text-3xl font-bold">
+            Hi, There!
+          </span>
+          <span className="bg-lightgray-100 flex h-1 w-20 rounded-full"></span>
+          <span className="text-darkgray-100 my-4">
+            New to PrimeTech? Let&#39;s create a free account to start your
+            journey with us.
+          </span>
+          <Link href="/registration">
+            <Button variant="outline" className="text-primary shadow-lg">
+              Registration
+            </Button>
+          </Link>
         </div>
       </div>
-    </>
+      <ToastContainer position="top-center" autoClose={3000} />
+    </div>
   );
-};
-
-export default AuthForm;
+}

@@ -104,7 +104,7 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        show: "show 0.6s ease-in-out",
+        show: "show 0.7s ease-in-out",
       },
     },
   },
