@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-react": "^8.0.0-rc17",
+    "formik": "^2.4.5",
     "next": "14.0.0",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
@@ -34,6 +35,7 @@
     "react-toastify": "^9.1.3",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.3.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
