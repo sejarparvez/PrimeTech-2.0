@@ -51,18 +51,13 @@ export default function Login() {
                   or use your email account
                 </p>
                 <Form className="my-6 flex w-11/12 flex-col gap-5 md:w-2/3">
+                  <SigninInput type="email" placeholder="Email" name="email" />
                   <SigninInput
-                    label="Input Your Email"
-                    id="email"
-                    type="email"
-                    name="email"
-                  />
-                  <SigninInput
-                    label="Input Your Password"
-                    id="password"
-                    type="password"
                     name="password"
+                    type="password"
+                    placeholder="Password"
                   />
+
                   <Button type="submit" disabled={submitting}>
                     Log In
                   </Button>

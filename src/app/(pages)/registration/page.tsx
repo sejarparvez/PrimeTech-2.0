@@ -3,10 +3,13 @@
 import SigninInput from "@/components/common/input/SignInInput";
 import RegistrationRight from "@/components/pages/authentication/RegistrationRight";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
 import { SiPolkadot } from "react-icons/si";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
 export default function Registration() {
@@ -29,7 +32,30 @@ export default function Registration() {
         })}
         onSubmit={async (values) => {
           setSubmitting(true);
-          console.log(values);
+
+          try {
+            // Make the API call with axios
+            const response = await toast.promise(
+              axios.post("/api/registration", values),
+              {
+                pending: "Promise is pending",
+                success: "Promise resolved 👌",
+                error: "Promise rejected 🤯",
+              },
+            );
+
+            // Log the response from the server
+            console.log(response.data);
+
+            // You can add further logic based on the response if needed
+          } catch (error) {
+            // Handle any errors that occur during the API call
+            console.error("Error during registration:", error);
+
+            // You may want to update the UI or show an error message to the user
+          }
+
+          setSubmitting(false);
         }}
       >
         <div className="mt-28 flex items-center justify-center">
@@ -41,15 +67,20 @@ export default function Registration() {
                 </h1>
                 <span className="flex h-1 w-20 rounded-full"></span>
                 <Form className="my-6 flex w-full flex-col gap-5 md:w-2/3">
-                  <SigninInput label="name" name="name" id="name" type="text" />
                   <SigninInput
-                    label="email"
+                    placeholder="Name"
+                    name="name"
+                    id="name"
+                    type="text"
+                  />
+                  <SigninInput
                     name="email"
                     id="email"
                     type="email"
+                    placeholder="Email Address"
                   />
                   <SigninInput
-                    label="password"
+                    placeholder="Password"
                     name="password"
                     id="password"
                     type="password"
@@ -74,6 +105,7 @@ export default function Registration() {
             </div>
             <RegistrationRight />
           </div>
+          <ToastContainer position="top-center" theme="dark" />
         </div>
       </Formik>
     </>

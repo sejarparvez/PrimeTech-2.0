@@ -1,29 +1,20 @@
+import { useField } from "formik";
+
 interface FormInputProps {
   label: string;
+  name: string;
   type: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  id: string;
-  error?: string;
+  id?: string;
 }
 
-const Input: React.FC<FormInputProps> = ({
-  label,
-  type,
-  value,
-  onChange,
-  id,
-  error,
-}) => {
+const Input: React.FC<FormInputProps> = ({ label, id, ...props }) => {
+  const [field, meta] = useField(props);
   return (
     <div>
       <div className="relative">
         <input
-          required
-          type={type}
-          value={value}
-          onChange={onChange}
-          id={id}
+          {...field}
+          {...props}
           className="peer flex w-full appearance-none rounded-lg border border-primary bg-transparent px-2.5 pb-2.5 pt-4 text-sm  focus:outline-none  dark:border-white"
           placeholder=""
         />
@@ -34,7 +25,9 @@ const Input: React.FC<FormInputProps> = ({
           {label}
         </label>
       </div>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {meta.touched && meta.error ? (
+        <p className="text-sm text-red-500">{meta.error}</p>
+      ) : null}
     </div>
   );
 };
