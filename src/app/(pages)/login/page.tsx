@@ -2,15 +2,18 @@
 import SigninInput from "@/components/common/input/SignInInput";
 import { Button } from "@/components/ui/button";
 import { Form, Formik } from "formik";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaFacebookF, FaGithub, FaTwitter } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 
 export default function Login() {
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -24,7 +27,29 @@ export default function Login() {
             .required(),
         })}
         onSubmit={async (values) => {
-          setSubmitting(true);
+          try {
+            setSubmitting(true);
+            toast.loading("Please wait...");
+            const response = await signIn("credentials", {
+              ...values,
+              redirect: false,
+            });
+            toast.dismiss();
+            if (response?.error) {
+              toast.error("Sign in failed");
+              console.log(response);
+            } else {
+              toast.success("Successful sign-in");
+
+              setTimeout(() => {
+                router.back();
+              }, 2000);
+            }
+          } catch (error) {
+            toast.dismiss();
+            toast.error("Sign in failed");
+            console.log(error);
+          }
           console.log(values);
         }}
       >
@@ -51,12 +76,25 @@ export default function Login() {
                   or use your email account
                 </p>
                 <Form className="my-6 flex w-11/12 flex-col gap-5 md:w-2/3">
-                  <SigninInput type="email" placeholder="Email" name="email" />
                   <SigninInput
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                  <SigninInput
+                    id="password"
                     name="password"
                     type="password"
                     placeholder="Password"
                   />
+
+                  <Link
+                    href="/reset"
+                    className="flex justify-end text-sm font-bold text-primary"
+                  >
+                    Forget Password
+                  </Link>
 
                   <Button type="submit" disabled={submitting}>
                     Log In
@@ -86,7 +124,7 @@ export default function Login() {
               </Link>
             </div>
           </div>
-          <ToastContainer position="top-center" autoClose={3000} />
+          <ToastContainer position="top-center" autoClose={3000} theme="dark" />
         </div>
       </Formik>
     </>

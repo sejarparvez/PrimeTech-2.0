@@ -1,19 +1,12 @@
 "use client";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import ProfileSlide from "../pages/profile/ProfileSlide";
 import { Button } from "../ui/button";
 import Menu from "./Menu";
 import { NavigationMenuComponent } from "./NavigationMenu";
 
 export default function Navbar() {
-  const { data: session } = useSession();
-  const email = session?.user?.email;
-  const name = session?.user?.name || "PRIME";
-  const fallback = name.slice(0, 2);
-  const image = session?.user?.image;
-
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -44,20 +37,7 @@ export default function Navbar() {
       </Button>
       <div className="hidden items-center justify-center md:gap-4 lg:flex lg:gap-8">
         <NavigationMenuComponent />
-        {email ? (
-          <Link href="/dashboard" legacyBehavior passHref>
-            <Avatar>
-              {image && <AvatarImage src={image} />}
-              <AvatarFallback>{fallback}</AvatarFallback>
-            </Avatar>
-          </Link>
-        ) : (
-          <Link href="/login" legacyBehavior passHref>
-            <Button size="lg" className="md:px-6 lg:px-10">
-              Login
-            </Button>
-          </Link>
-        )}
+        <ProfileSlide />
       </div>
       <div className="block lg:hidden">
         <Menu />
