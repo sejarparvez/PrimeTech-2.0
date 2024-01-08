@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SiPolkadot } from "react-icons/si";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,11 +15,15 @@ import * as Yup from "yup";
 
 export default function Registration() {
   const [submitting, setSubmitting] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [readOnly, setReadOnly] = useState(false);
+  const router = useRouter();
 
   return (
     <>
       <Formik
-        initialValues={{ name: "", email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "", code: "" }}
         validationSchema={Yup.object({
           name: Yup.string()
             .min(5, "Name Must be at least 5 characters")
@@ -29,30 +34,51 @@ export default function Registration() {
             .min(6, "Password must be 6 characters long")
             .max(15, "Password can not be more than 15 characters")
             .required(),
+          code: showPopUp
+            ? Yup.string().required("Verification code is required")
+            : Yup.string(),
         })}
         onSubmit={async (values) => {
           setSubmitting(true);
 
           try {
-            // Make the API call with axios
-            const response = await toast.promise(
-              axios.post("/api/registration", values),
-              {
-                pending: "Promise is pending",
-                success: "Promise resolved 👌",
-                error: "Promise rejected 🤯",
-              },
-            );
+            if (showPopUp) {
+              const response = await toast.promise(
+                axios.put("/api/registration", {
+                  userId,
+                  code: values.code,
+                }),
+                {
+                  pending: "Verifying the code",
+                  success: "Code verified successfully 👍",
+                  error: "Invalid code. Please try again 🤯",
+                },
+              );
 
-            // Log the response from the server
-            console.log(response.data);
+              if (response.status === 200) {
+                setTimeout(() => {
+                  router.push("/login");
+                }, 1000);
+              }
+            } else {
+              const response = await toast
+                .promise(axios.post("/api/registration", values), {
+                  pending: "Sending the verification code",
+                  success: "Email sent successfully 👌",
+                })
 
-            // You can add further logic based on the response if needed
+                .catch((error) => {
+                  toast.error(error.response.data);
+                });
+
+              if (response && response.status === 200) {
+                setUserId(response.data.userId);
+                setShowPopUp(true);
+                setReadOnly(true);
+              }
+            }
           } catch (error) {
-            // Handle any errors that occur during the API call
-            console.error("Error during registration:", error);
-
-            // You may want to update the UI or show an error message to the user
+            console.error("Error during registration/verification:", error);
           }
 
           setSubmitting(false);
@@ -72,19 +98,37 @@ export default function Registration() {
                     name="name"
                     id="name"
                     type="text"
+                    readOnly={readOnly}
                   />
                   <SigninInput
                     name="email"
                     id="email"
                     type="email"
                     placeholder="Email Address"
+                    readOnly={readOnly}
                   />
                   <SigninInput
                     placeholder="Password"
                     name="password"
                     id="password"
                     type="password"
+                    readOnly={readOnly}
                   />
+
+                  {showPopUp && (
+                    <div>
+                      <SigninInput
+                        placeholder="Verification Code"
+                        name="code"
+                        id="code"
+                        type="number"
+                      />
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Check your email for the verification code. Make sure to
+                        check your spam folder as well.
+                      </p>
+                    </div>
+                  )}
 
                   <Button type="submit" disabled={submitting}>
                     Registration
@@ -105,6 +149,7 @@ export default function Registration() {
             </div>
             <RegistrationRight />
           </div>
+
           <ToastContainer position="top-center" theme="dark" />
         </div>
       </Formik>

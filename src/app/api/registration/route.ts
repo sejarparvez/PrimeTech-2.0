@@ -1,7 +1,8 @@
+import generateVerificationCode from "@/components/helper/GenerateCode";
+import sendVerificationEmail from "@/components/helper/SendMail";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 
 const prisma = new PrismaClient();
 
@@ -9,6 +10,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const data = await req.json();
     const { name, email, password } = data;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     if (!name || !email || !password) {
       return new NextResponse("Missing name, email, or password", {
@@ -22,56 +24,79 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     });
 
-    if (existingUser) {
+    if (existingUser?.emailVerified) {
       return new NextResponse("Email is already registered", { status: 409 });
+    } else if (existingUser?.emailVerified === null) {
+      // Update the existing user with data from the request
+      const updatedUser = await prisma.user.update({
+        where: {
+          email: email,
+        },
+        data: {
+          name,
+          password: hashedPassword,
+          emailVerified: null,
+          verificationCode: null,
+        },
+      });
+
+      // Send verification code
+      const verificationCode = generateVerificationCode();
+      await sendVerificationEmail(email, verificationCode);
+
+      // Save the verification code in the database
+      await prisma.user.update({
+        where: { id: updatedUser.id },
+        data: { verificationCode: verificationCode },
+      });
+
+      return new NextResponse(
+        JSON.stringify({
+          message: "Verification code sent successfully",
+          userId: updatedUser.id,
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+    } else {
+      const user = await prisma.user.create({
+        data: {
+          name,
+          email,
+          status: "Subscriber",
+          password: hashedPassword,
+          emailVerified: null,
+          verificationCode: null,
+        },
+      });
+
+      // Send verification code
+      const verificationCode = generateVerificationCode();
+      await sendVerificationEmail(email, verificationCode);
+
+      // Save the verification code in the database
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { verificationCode: verificationCode },
+      });
+
+      return new NextResponse(
+        JSON.stringify({
+          message: "Verification code sent successfully",
+          userId: user.id,
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        status: "Subscriber",
-        password: hashedPassword,
-      },
-    });
-
-    const verificationCode = generateVerificationCode();
-
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_SERVER,
-      port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    if (!email) {
-      return new NextResponse("Fill out the required fields", { status: 400 });
-    }
-
-    const mailData = {
-      from: process.env.SMTP_USER,
-      to: email,
-      subject: "Password Reset Verification Code",
-      text: `Your verification code for password reset: ${verificationCode} | Sent from: PrimeTech`,
-      html: `<p>Your verification code for creating new user: <strong>${verificationCode}</strong></p><p>Sent from: PrimeTech</p>`,
-    };
-
-    // Save the verification code in the database
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { verificationCode: verificationCode },
-    });
-
-    const info = await transporter.sendMail(mailData);
-
-    console.log("Message sent successfully", info);
-
-    return new NextResponse("Message sent successfully", { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return new NextResponse("Internal server error", { status: 500 });
@@ -80,7 +105,45 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
-function generateVerificationCode() {
-  // Generate a random 6-digit code
-  return Math.floor(100000 + Math.random() * 900000).toString();
+export async function PUT(req: NextRequest, res: NextResponse) {
+  try {
+    const data = await req.json();
+    const { userId, code } = data;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse("User not found", { status: 404 });
+    }
+
+    const verificationCode = code.toString();
+
+    // Check if the verification code matches the one stored in the database
+    if (user.verificationCode === verificationCode) {
+      // Update user status or perform any other verification logic
+
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          emailVerified: new Date().toISOString(),
+          verificationCode: null,
+        },
+      });
+
+      return new NextResponse("User verified successfully", { status: 200 });
+    } else {
+      return new NextResponse("Invalid verification code", { status: 400 });
+    }
+  } catch (error) {
+    console.error("Error during verification:", error);
+    return new NextResponse("Internal server error", { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
 }
