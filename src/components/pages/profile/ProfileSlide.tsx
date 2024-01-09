@@ -1,4 +1,14 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -14,8 +24,10 @@ export default function ProfileSlide() {
 
   async function handleLogout() {
     console.log("clicked");
-    signOut({ redirect: true, callbackUrl: "/" });
+    signOut({ redirect: false, callbackUrl: "/" });
   }
+
+  console.log(session)
   return (
     <>
       {email ? (
@@ -35,14 +47,29 @@ export default function ProfileSlide() {
               <span className="font-extrabold text-primary">{name}</span>
             </Link>
             <div className="mt-10">
-              <Button
-                size="lg"
-                onClick={handleLogout}
-                variant="destructive"
-                className="mx-auto flex"
-              >
-                Logout
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="lg">
+                    Log Out
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleLogout}
+                      className="bg-red-600 hover:bg-red-700"
+                    >
+                      Log Out
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </SheetContent>
         </Sheet>

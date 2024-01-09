@@ -28,8 +28,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b py-3 md:w-[94.4%] md:pl-3 md:pr-10 lg:py-4 lg:pl-4 ${
-        visible ? "opacity-100 backdrop-blur-md" : "opacity-0"
+      className={`fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b py-3 transition-all duration-300 md:w-[94.4%] md:pl-3 md:pr-10 lg:py-4 lg:pl-4 ${
+        visible
+          ? "translate-y-0 opacity-100 backdrop-blur-md"
+          : "-translate-y-20 opacity-10"
       }`}
     >
       <Button variant="ghost" className="text-2xl font-extrabold lg:text-3xl">

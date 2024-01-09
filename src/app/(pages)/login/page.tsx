@@ -50,7 +50,6 @@ export default function Login() {
             toast.error("Sign in failed");
             console.log(error);
           }
-          console.log(values);
         }}
       >
         <div className="mt-28 flex items-center justify-center">

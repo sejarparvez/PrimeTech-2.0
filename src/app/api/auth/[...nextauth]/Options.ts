@@ -5,6 +5,14 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const prisma = new PrismaClient();
+interface UserWithRole {
+  id: string;
+  email: string;
+  image: string | null;
+  name: string;
+  status: string;
+  role: string;
+}
 
 export const authOptions = {
   providers: [
@@ -44,19 +52,28 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    async jwt({ token, user }: { token: JWT; user?: UserWithRole }) {
+      return {
+        ...token,
+        ...user,
+      };
+    },
     session: ({
       session,
       token,
     }: {
       session: Session;
       token: string | JWT;
-    }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: typeof token === "string" ? token : token.sub,
-      },
-    }),
+    }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: typeof token === "string" ? token : token.sub,
+          role: typeof token === "string" ? token : token.status,
+        },
+      };
+    },
   },
 
   session: {
