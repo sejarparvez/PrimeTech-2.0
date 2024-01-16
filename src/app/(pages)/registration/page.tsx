@@ -98,8 +98,8 @@ export default function Registration() {
           }}
         >
           <div className="mt-28 flex items-center justify-center">
-            <div className="grid w-11/12 grid-cols-1 justify-around rounded-2xl shadow-2xl md:grid-cols-5 lg:w-8/12">
-              <div className="col-span-3 bg-secondary p-4 md:rounded-l-2xl">
+            <div className="grid w-11/12 grid-cols-1 justify-around rounded-2xl border md:grid-cols-5 lg:w-8/12">
+              <div className="col-span-3 p-4 md:rounded-l-2xl">
                 <section className="my-8 flex flex-col items-center justify-center gap-4">
                   <h1 className="text-center text-3xl font-bold underline">
                     Create New Account
@@ -149,7 +149,7 @@ export default function Registration() {
                   </Form>
                 </section>
                 <p className="md:hidden">
-                  Already have an account?{" "}
+                  Already have an account?
                   <Link href={"/login"} className="text-xl font-bold">
                     Login
                   </Link>

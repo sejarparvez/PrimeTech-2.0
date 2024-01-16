@@ -19,7 +19,7 @@ export default function Login() {
   const router = useRouter();
   useEffect(() => {
     if (session) {
-      router.replace("/dashboard");
+      router.replace("/profile");
     }
   }, [session, router]);
 
@@ -65,8 +65,8 @@ export default function Login() {
           }}
         >
           <div className="mt-28 flex items-center justify-center">
-            <div className="grid w-full grid-cols-1 justify-around rounded-2xl shadow-2xl md:w-10/12 md:grid-cols-5  lg:w-8/12">
-              <div className="col-span-3 bg-secondary  md:rounded-l-2xl">
+            <div className="grid w-full grid-cols-1 justify-around rounded-2xl border md:w-10/12  md:grid-cols-5 lg:w-8/12">
+              <div className="col-span-3 md:rounded-l-2xl">
                 <section className="my-8 flex flex-col items-center justify-center gap-4">
                   <h1 className="text-center text-2xl font-bold md:text-3xl lg:text-4xl">
                     Log in to PrimeTech
@@ -118,19 +118,17 @@ export default function Login() {
                   </Form>
                 </section>
               </div>
-              <div className="col-span-2 hidden flex-col items-center justify-center gap-4 bg-gradient-to-b from-primary to-pink-600 p-3 text-center text-white md:flex  md:rounded-r-2xl lg:p-16">
+              <div className="col-span-2 hidden flex-col items-center justify-center gap-4 bg-secondary p-3 text-center md:flex  md:rounded-r-2xl lg:p-16">
                 <span className="text-lightgray-100 text-3xl font-bold">
                   Hi, There!
                 </span>
-                <span className="bg-lightgray-100 flex h-1 w-20 rounded-full"></span>
-                <span className="text-darkgray-100 my-4">
+                <span className="flex h-1 w-20 rounded-full"></span>
+                <span className="my-4">
                   New to PrimeTech? Let&#39;s create a free account to start
                   your journey with us.
                 </span>
                 <Link href="/registration">
-                  <Button variant="outline" className="text-primary shadow-lg">
-                    Registration
-                  </Button>
+                  <Button>Registration</Button>
                 </Link>
               </div>
             </div>
