@@ -50,7 +50,7 @@ export default function MoreTab({
         github: github,
       }}
       validationSchema={Yup.object({
-        bio: Yup.string().max(1000, "Bio must be at most 1000 characters"),
+        bio: Yup.string().max(1200, "Bio must be at most 1200 characters"),
         facebook: Yup.string().matches(
           /^(https?:\/\/)?(www\.)?facebook\.com\/.+/,
           "Invalid Facebook URL",
@@ -74,22 +74,17 @@ export default function MoreTab({
       })}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          // Show loading toast
           toast.loading("Updating profile...", { autoClose: false });
 
-          // Make a PUT request to the server
-          await axios.put("/api/editprofile/more", values); // Replace with your actual API endpoint
+          await axios.put("/api/editprofile/more", values);
 
-          // Hide loading toast and display success toast
-          toast.dismiss(); // Dismiss the loading toast
+          toast.dismiss();
           toast.success("Profile updated successfully!");
         } catch (error) {
-          // Hide loading toast and display error toast
-          toast.dismiss(); // Dismiss the loading toast
+          toast.dismiss();
           toast.error("Failed to update profile. Please try again.");
           console.error("Error updating profile:", error);
         } finally {
-          // Set form submission as complete
           setSubmitting(false);
         }
       }}
@@ -109,7 +104,6 @@ export default function MoreTab({
               <EditProfileTextArea
                 name="bio"
                 id="bio"
-                defaultValue={bio}
                 placeholder="Add a few line about yourself"
               />
             </div>
@@ -129,7 +123,6 @@ export default function MoreTab({
                         id="facebook"
                         type="text"
                         name="facebook"
-                        defaultValue={facebook}
                         placeholder="facebook.com/primetech"
                       />
                     </div>
@@ -143,7 +136,6 @@ export default function MoreTab({
                         id="twitter"
                         type="text"
                         name="twitter"
-                        defaultValue={twitter}
                         placeholder="twitter.com/primetech"
                       />
                     </div>
@@ -157,7 +149,6 @@ export default function MoreTab({
                         id="instagram"
                         name="instagram"
                         type="text"
-                        defaultValue={instagram}
                         placeholder="instagram.com/primetech"
                       />
                     </div>
@@ -171,7 +162,6 @@ export default function MoreTab({
                         id="new"
                         name="linkedin"
                         type="text"
-                        defaultValue={linkedin}
                         placeholder="linkedin/in/primetech"
                       />
                     </div>
@@ -185,7 +175,6 @@ export default function MoreTab({
                         id="new"
                         name="github"
                         type="text"
-                        defaultValue={github}
                         placeholder="github.com/primetech"
                       />
                     </div>

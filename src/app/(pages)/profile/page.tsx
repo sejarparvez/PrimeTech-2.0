@@ -102,7 +102,10 @@ export default function Profile() {
                     <span>19</span>
                   </div>
                 </div>
-                <div className="mt-3 text-muted-foreground">{userData.bio}</div>
+                <div
+                  className="mt-3 text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: userData.bio }}
+                />
               </CardContent>
               <CardFooter className="flex flex-wrap">
                 {(userData.facebook ||

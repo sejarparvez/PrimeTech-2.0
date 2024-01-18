@@ -80,7 +80,7 @@ export default function EditProfile() {
                 bio={userData.bio}
                 facebook={userData.facebook}
                 twitter={userData.twitter}
-                linkedin={userData.twitter}
+                linkedin={userData.linkedin}
                 instagram={userData.instagram}
                 github={userData.github}
               />
