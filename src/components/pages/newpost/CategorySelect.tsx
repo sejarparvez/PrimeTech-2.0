@@ -12,7 +12,7 @@ import {
 export const CategorySelect = () => {
   return (
     <Select>
-      <SelectTrigger className="w-96">
+      <SelectTrigger className="md:w-96">
         <SelectValue placeholder="Select a category" />
       </SelectTrigger>
       <SelectContent>

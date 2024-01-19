@@ -22,10 +22,10 @@ const Content: FC<Props> = ({ value, onChange, error }) => {
   }, []);
 
   return (
-    <div className="mb-4 h-[25rem]">
+    <div className="mb-20 md:mb-10 lg:mb-4">
       <div>
         <ReactQuill
-          className="h-96 w-full max-w-5xl"
+          className="h-56 w-full md:h-80 lg:h-96"
           value={value}
           onChange={(content, delta, source, editor) => {
             onChange(editor.getHTML());
