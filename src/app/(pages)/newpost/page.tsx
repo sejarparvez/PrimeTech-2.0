@@ -1,6 +1,7 @@
 "use client";
 import { CategorySelect } from "@/components/pages/newpost/CategorySelect";
 import PostContent from "@/components/pages/newpost/PostContent";
+import PostInput from "@/components/pages/newpost/PostInput";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,8 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
 export default function NewPost() {
   const [content, setContent] = useState("");
@@ -20,6 +22,13 @@ export default function NewPost() {
   return (
     <Formik
       initialValues={{ title: "", category: "", content: "" }}
+      validationSchema={Yup.object({
+        title: Yup.string()
+          .min(20, "Title Must be at least 20 characters")
+          .max(80, "Title can not be more than 80 characters")
+          .required(),
+        category: Yup.string().required(),
+      })}
       onSubmit={async (values) => {
         console.log(values);
       }}
@@ -31,17 +40,21 @@ export default function NewPost() {
               <CardTitle className="text-3xl">Create New Post</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-              <div>
-                <Label>Post Title:</Label>
-                <Input placeholder="Post Title" type="text" />
-              </div>
+              <PostInput
+                name="title"
+                id="title"
+                label="Post Title:"
+                placeholder="Post Title"
+                type="text"
+              />
+
               <div>
                 <Label>Featured Image:</Label>
                 <Input placeholder="Featured Image" type="file" />
               </div>
               <div>
                 <Label>Select Post Category:</Label>
-                <CategorySelect />
+                <Field as={CategorySelect} name="category" />
               </div>
               <div>
                 <Label>Post Content:</Label>
@@ -49,6 +62,7 @@ export default function NewPost() {
                   onChange={(newValue) => setContent(newValue)}
                   error=""
                   value={content}
+                  name="content"
                 />
               </div>
             </CardContent>

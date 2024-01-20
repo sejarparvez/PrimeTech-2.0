@@ -8,7 +8,7 @@ import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
 
 export default function RecentPostModel() {
   return (
-    <Card className="bg-secondary">
+    <Card className="shadow-lg">
       <CardContent className="p-3">
         <div className="relative">
           <Image

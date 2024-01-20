@@ -1,4 +1,3 @@
-"use client";
 import Toolbar from "@/components/common/Post/Toolbar";
 import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
@@ -9,12 +8,13 @@ const ReactQuill = dynamic(() => import("react-quill"), {
 });
 
 interface Props {
+  name: string; // Add a name prop
   value: string;
-  onChange: (value: string) => void;
+  onChange: (name: string, value: string) => void;
   error?: string;
 }
 
-const Content: FC<Props> = ({ value, onChange, error }) => {
+const Content: FC<Props> = ({ name, value, onChange, error }) => {
   useEffect(() => {
     const Quill = require("react-quill");
     if (Quill && typeof window !== "undefined") {
@@ -28,7 +28,7 @@ const Content: FC<Props> = ({ value, onChange, error }) => {
           className="h-56 w-full md:h-80 lg:h-96"
           value={value}
           onChange={(content, delta, source, editor) => {
-            onChange(editor.getHTML());
+            onChange(name, editor.getHTML());
           }}
           modules={Toolbar()}
         />

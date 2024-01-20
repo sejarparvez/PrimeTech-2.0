@@ -145,22 +145,11 @@ export default function AccountTab({ name, email }: props) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Name</Label>
-              <EditProfileInput
-                id="name"
-                defaultValue={name}
-                name="name"
-                type="text"
-              />
+              <EditProfileInput id="name" name="name" type="text" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
-              <EditProfileInput
-                id="email"
-                name="email"
-                type="email"
-                defaultValue={email}
-                readOnly
-              />
+              <EditProfileInput id="email" name="email" type="email" />
               <p className="text-sm text-muted-foreground">
                 Email can not be changed
               </p>
