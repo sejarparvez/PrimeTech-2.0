@@ -13,12 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
 import * as Yup from "yup";
 
 export default function NewPost() {
-  const [content, setContent] = useState("");
-
   return (
     <Formik
       initialValues={{ title: "", category: "", content: "" }}
@@ -28,6 +25,7 @@ export default function NewPost() {
           .max(80, "Title can not be more than 80 characters")
           .required(),
         category: Yup.string().required(),
+        content: Yup.string().required(),
       })}
       onSubmit={async (values) => {
         console.log(values);
@@ -47,7 +45,6 @@ export default function NewPost() {
                 placeholder="Post Title"
                 type="text"
               />
-
               <div>
                 <Label>Featured Image:</Label>
                 <Input placeholder="Featured Image" type="file" />
@@ -58,12 +55,7 @@ export default function NewPost() {
               </div>
               <div>
                 <Label>Post Content:</Label>
-                <PostContent
-                  onChange={(newValue) => setContent(newValue)}
-                  error=""
-                  value={content}
-                  name="content"
-                />
+                <PostContent />
               </div>
             </CardContent>
             <CardFooter>
