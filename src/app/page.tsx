@@ -1,5 +1,5 @@
 import RightSidebar from "@/components/layout/rightsidebar/RightSidebar";
-import Featured from "@/components/pages/home/Featured";
+import Featured from "@/components/pages/home/Featured/Featured";
 import RecentPost from "@/components/pages/home/RecentPost";
 
 export default function Home() {

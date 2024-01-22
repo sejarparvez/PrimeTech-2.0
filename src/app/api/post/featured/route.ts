@@ -5,14 +5,10 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    // const url = new URL(req.url);
-    // const queryParams = new URLSearchParams(url.search);
-    // const searchName = queryParams.get("search") || "";
     const lastUpdatedPost = await prisma.post.findMany({
       where: {
         category: "Featured",
       },
-
       select: {
         id: true,
         title: true,
@@ -37,7 +33,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       take: 3,
     });
 
-    if (lastUpdatedPost) {
+    if (lastUpdatedPost.length > 0) {
       // Return the last updated post with author's name
       return new NextResponse(JSON.stringify(lastUpdatedPost), {
         headers: { "Content-Type": "application/json" },
@@ -50,11 +46,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
       });
     }
   } catch (error) {
-    // Handle errors
+    // Handle specific Prisma errors
+    if (
+      error instanceof Error &&
+      error.name === "PrismaClientKnownRequestError"
+    ) {
+      return new NextResponse("Duplicate entry error.", {
+        status: 400,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+
+    // Handle other errors
     console.error("Error fetching last updated post:", error);
+
     return new NextResponse("Internal Server Error", {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     });
+  } finally {
+    await prisma.$disconnect(); // Close Prisma client connection
   }
 }
