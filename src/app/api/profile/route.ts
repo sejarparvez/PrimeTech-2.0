@@ -17,6 +17,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const userInfo = await prisma.user.findUnique({
       where: { id },
       select: {
+        _count: {
+          select: {
+            posts: true,
+            comments: true,
+          },
+        },
         name: true,
         status: true,
         image: true,

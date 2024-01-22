@@ -1,7 +1,10 @@
 import Toolbar from "@/components/common/Post/Toolbar";
 import { Field, FieldProps } from "formik";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+});
 
 export default function PostContent() {
   return (

@@ -37,6 +37,7 @@ export default function Profile() {
     linkedin: "",
     instagram: "",
     github: "",
+    _count: { posts: "", comments: "" },
   });
   const [loading, setLoading] = useState(true);
 
@@ -95,11 +96,11 @@ export default function Profile() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span>Total Post:</span>
-                    <span>9</span>
+                    <span>{userData._count.posts}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <span>Total Comment:</span>
-                    <span>19</span>
+                    <span>{userData._count.comments}</span>
                   </div>
                 </div>
                 <div
