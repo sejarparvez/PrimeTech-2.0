@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaClock, FaComments, FaStar, FaTag } from "react-icons/fa";
 import CategoryModel from "./CategoryModel";
 import CommentsModel from "./CommentsModel";
-import FeaturedModel from "./FeaturedModel";
+import Featured from "./Featured";
 import PostModel from "./PostModel";
 
 export default function RightSidebar() {
@@ -99,16 +99,7 @@ export default function RightSidebar() {
           </div>
         )}
 
-        <div className="relative mt-12 border-t">
-          <div className=" absolute -top-4 left-6 bg-background px-2 text-xl font-bold text-gray-600">
-            Featured
-          </div>
-          <div className="mx-auto mt-8  flex w-11/12 flex-col gap-6 md:w-3/5 lg:w-10/12">
-            <FeaturedModel />
-            <FeaturedModel />
-            <FeaturedModel />
-          </div>
-        </div>
+        <Featured />
       </div>
     </div>
   );

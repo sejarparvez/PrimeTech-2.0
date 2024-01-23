@@ -1,5 +1,7 @@
 "use client";
+import { FetchFeaturedPosts } from "@/components/fetch/get/featured/FetchFeaturedPost";
 import Loading from "@/components/helper/Loading";
+import FeaturedPostType from "@/components/type/post/FeaturedPostType";
 import {
   Carousel,
   CarouselApi,
@@ -8,33 +10,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import FeaturedCard from "./FeaturedCard";
-
-// Import statements...
-
-interface Post {
-  _id: string;
-  coverImage: string;
-  title: string;
-  author: {
-    name: string;
-    image: string;
-  };
-  _count: {
-    comments: number;
-  };
-  updatedAt: string;
-}
 
 export default function Featured() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const [post, setPost] = useState<Post[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // New state for error handling
 
   const handleDotClick = (index: number) => {
     if (api) {
@@ -55,43 +37,25 @@ export default function Featured() {
     });
   }, [api]);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const { data, isLoading, isError } = FetchFeaturedPosts();
 
-    axios
-      .get("api/post/featured")
-      .then((response) => {
-        setPost(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error loading posts:", error);
+  if (isLoading) {
+    return <Loading />;
+  }
 
-        if (error.response && error.response.status === 404) {
-          // No featured posts found
-          setError("No featured posts found.");
-        } else {
-          // Other errors
-          setError("Error loading posts. Please try again later.");
-        }
-
-        setIsLoading(false);
-      });
-  }, []);
+  if (isError) {
+    return <p>Error loading posts. Please try again later.</p>;
+  }
 
   return (
     <div>
-      {isLoading && <Loading />} {/* Display loading state */}
-      {error && (
-        <div className="font-bold text-red-500">
-          {error} {/* Display error message */}
-        </div>
-      )}
-      {!isLoading && !error && (
+      {isLoading && <Loading />}
+      {isError && <div className="font-bold text-red-500">{isError}</div>}
+      {!isLoading && !isError && (
         <Carousel setApi={setApi} opts={{ loop: true }}>
           <CarouselContent className="">
-            {post && post.length > 0 ? (
-              post.map((postItem) => (
+            {data && data.length > 0 ? (
+              data.map((postItem: FeaturedPostType) => (
                 <CarouselItem key={postItem._id}>
                   <FeaturedCard
                     title={postItem.title}
@@ -111,7 +75,7 @@ export default function Featured() {
           <CarouselNext variant="default" />
         </Carousel>
       )}
-      {!isLoading && !error && (
+      {!isLoading && !isError && (
         <div className="mt-4 flex justify-center space-x-4">
           {[...Array(count)].map((_, index) => (
             <button

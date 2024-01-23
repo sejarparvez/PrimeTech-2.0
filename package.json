@@ -23,6 +23,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query-next-experimental": "^5.17.19",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
@@ -48,6 +49,7 @@
   "devDependencies": {
     "@prisma/client": "^5.7.1",
     "@tanstack/eslint-plugin-query": "^5.17.20",
+    "@tanstack/react-query-devtools": "^5.17.21",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
