@@ -1,5 +1,5 @@
 "use client";
-import formatDate from "@/components/helper/FormattedDate";
+import formatDate from "@/components/helper/hook/FormattedDate";
 import Loading from "@/components/helper/Loading";
 import ToolTipHookDown from "@/components/helper/ToolTipHookDown";
 import RecentPostModel from "@/components/pages/home/RecentPostModel";
@@ -188,14 +188,14 @@ export default function Profile() {
                 </div>
               </CardHeader>
               <div className="mx-2 my-8 grid grid-cols-1 gap-12 md:grid-cols-2">
+                {/* <RecentPostModel />
                 <RecentPostModel />
                 <RecentPostModel />
                 <RecentPostModel />
                 <RecentPostModel />
                 <RecentPostModel />
                 <RecentPostModel />
-                <RecentPostModel />
-                <RecentPostModel />
+                <RecentPostModel /> */}
               </div>
             </Card>
             <div className="flex flex-col gap-10 md:flex-row lg:w-3/12 lg:flex-col">

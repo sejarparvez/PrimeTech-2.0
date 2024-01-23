@@ -13,11 +13,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
       : 1;
     const pageSize = queryParams.get("pageSize")
       ? parseInt(queryParams.get("pageSize")!, 10)
-      : 2; // Change the page size to 2 posts per page
+      : 10;
 
     const skipCount = (page - 1) * pageSize;
 
-    // Calculate the total number of posts without pagination
     const totalPostsCount = await prisma.post.count();
 
     const allPosts = await prisma.post.findMany({
@@ -26,12 +25,16 @@ export async function GET(req: NextRequest, res: NextResponse) {
         title: true,
         coverImage: true,
         category: true,
-        content: true,
-        createdAt: true,
         updatedAt: true,
         author: {
           select: {
             name: true,
+            image: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
           },
         },
       },

@@ -2,6 +2,7 @@ interface FeaturedPostType {
   _id: string;
   coverImage: string;
   title: string;
+  category: string;
   author: {
     name: string;
     image: string;

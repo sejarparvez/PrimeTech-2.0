@@ -1,6 +1,6 @@
 import { FetchFeaturedPosts } from "@/components/fetch/get/featured/FetchFeaturedPost";
-import formatDate from "@/components/helper/FormattedDate";
 import Loading from "@/components/helper/Loading";
+import formatDate from "@/components/helper/hook/FormattedDate";
 import FeaturedPostType from "@/components/type/post/FeaturedPostType";
 import { v4 as uuidv4 } from "uuid";
 import FeaturedModel from "./FeaturedModel";
