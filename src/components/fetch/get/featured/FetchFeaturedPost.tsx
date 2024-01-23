@@ -5,7 +5,7 @@ export function FetchFeaturedPosts() {
   return useQuery({
     queryKey: ["featuredPosts"],
     queryFn: async () => {
-      const response = await axios.get("api/post/featured");
+      const response = await axios.get("/api/post/featured");
       return response.data;
     },
   });

@@ -2,6 +2,7 @@ import { FetchFeaturedPosts } from "@/components/fetch/get/featured/FetchFeature
 import formatDate from "@/components/helper/FormattedDate";
 import Loading from "@/components/helper/Loading";
 import FeaturedPostType from "@/components/type/post/FeaturedPostType";
+import { v4 as uuidv4 } from "uuid";
 import FeaturedModel from "./FeaturedModel";
 
 export default function Featured() {
@@ -15,7 +16,6 @@ export default function Featured() {
     return <p>Error loading posts. Please try again later.</p>;
   }
 
-  console.log(data);
   return (
     <div className="relative mt-12 border-t">
       <div className=" absolute -top-4 left-6 bg-background px-2 text-xl font-bold text-gray-600">
@@ -25,7 +25,7 @@ export default function Featured() {
         {data && data.length > 0 ? (
           data.map((postItem: FeaturedPostType) => (
             <FeaturedModel
-              key={postItem._id}
+              key={uuidv4()}
               title={postItem.title}
               image={postItem.coverImage}
               time={formatDate(postItem.updatedAt)}

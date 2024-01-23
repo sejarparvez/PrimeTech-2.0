@@ -1,7 +1,6 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { RiMenu3Line } from "react-icons/ri";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,7 +37,11 @@ export default function Menu() {
     <div className="mr-3 lg:hidden">
       <Sheet>
         <SheetTrigger asChild>
-          <RiMenu3Line size="24" />
+          <div className="flex flex-col items-end gap-1.5 p-1">
+            <span className="h-[2px] w-5 bg-foreground"></span>
+            <span className="h-[2px] w-4 bg-foreground"></span>
+            <span className="h-[2px] w-5 bg-foreground"></span>
+          </div>
         </SheetTrigger>
         <SheetContent className="pt-10">
           <SheetHeader>

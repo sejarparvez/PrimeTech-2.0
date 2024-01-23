@@ -11,6 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import FeaturedCard from "./FeaturedCard";
 
 export default function Featured() {
@@ -56,7 +57,7 @@ export default function Featured() {
           <CarouselContent className="">
             {data && data.length > 0 ? (
               data.map((postItem: FeaturedPostType) => (
-                <CarouselItem key={postItem._id}>
+                <CarouselItem key={uuidv4()}>
                   <FeaturedCard
                     title={postItem.title}
                     time={postItem.updatedAt}
