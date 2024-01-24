@@ -4,9 +4,10 @@ interface FormattedPostResult {
   postLink: string;
 }
 
-const useFormattedPost = (
+export const useFormattedPostLink = (
   timestamp: string,
   title: string,
+  category: string,
 ): FormattedPostResult => {
   const [formattedDate, setFormattedDate] = useState("");
 
@@ -27,12 +28,11 @@ const useFormattedPost = (
   }, [timestamp]);
 
   // Format the title as a slug
-  const formattedTitle = title.replace(/\s+/g, "-").toLowerCase();
+  const formattedTitle = title.replace(/\s+/g, "_").toLowerCase();
+  const formattedCategory = category.replace(/\s+/g, "_").toLowerCase();
 
   // Create the post link
-  const postLink = `/blog/${formattedDate}/${formattedTitle}/`;
+  const postLink = `/blog/${formattedCategory}/${formattedDate}/${formattedTitle}/`;
 
   return { postLink };
 };
-
-export default useFormattedPost;

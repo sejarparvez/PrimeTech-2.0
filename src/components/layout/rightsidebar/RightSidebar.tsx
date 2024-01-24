@@ -67,12 +67,12 @@ export default function RightSidebar() {
         {active === 1 && <SidebarRecent />}
         {active === 2 && (
           <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
+            {/* <PostModel />
             <PostModel />
             <PostModel />
             <PostModel />
             <PostModel />
-            <PostModel />
-            <PostModel />
+            <PostModel /> */}
           </div>
         )}
 

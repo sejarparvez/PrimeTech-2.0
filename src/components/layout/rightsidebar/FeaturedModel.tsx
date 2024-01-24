@@ -1,15 +1,24 @@
-import FormattedLink from "@/components/helper/hook/FormattedLink";
+import formatDate from "@/components/helper/hook/FormattedDate";
+import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
 import Image from "next/image";
 import Link from "next/link";
 
 interface props {
   image: string;
   title: string;
-  time: string;
+  createdAt: string;
+  updatedAt: string;
+  category: string;
 }
 
-export default function FeaturedModel({ image, title, time }: props) {
-  const { postLink } = FormattedLink(time, title);
+export default function FeaturedModel({
+  image,
+  title,
+  createdAt,
+  updatedAt,
+  category,
+}: props) {
+  const { postLink } = useFormattedPostLink(createdAt, title, category);
   return (
     <div className="flex flex-col gap-2">
       <div>
@@ -28,7 +37,7 @@ export default function FeaturedModel({ image, title, time }: props) {
         <Link href={postLink} className="font-bold">
           {title}
         </Link>
-        <div className="text-gray-600">{time}</div>
+        <div className="text-gray-600">{formatDate(updatedAt)}</div>
       </div>
     </div>
   );

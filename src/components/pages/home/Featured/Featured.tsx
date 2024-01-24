@@ -60,7 +60,9 @@ export default function Featured() {
                 <CarouselItem key={uuidv4()}>
                   <FeaturedCard
                     title={postItem.title}
-                    time={postItem.updatedAt}
+                    createdAt={postItem.createdAt}
+                    updatedAt={postItem.updatedAt}
+                    category={postItem.category}
                     name={postItem.author.name}
                     authorImage={postItem.author.image}
                     comments={postItem._count.comments}

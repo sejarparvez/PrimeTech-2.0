@@ -1,5 +1,5 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
-import FormattedLink from "@/components/helper/hook/FormattedLink";
+import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,7 +28,7 @@ export default function RecentPostModel({
   category,
   content,
 }: props) {
-  const { postLink } = FormattedLink(createdAt, title);
+  const { postLink } = useFormattedPostLink(createdAt, title, category);
 
   return (
     <Card className="shadow-lg">

@@ -1,5 +1,5 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
-import FormattedLink from "@/components/helper/hook/FormattedLink";
+import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,21 +10,25 @@ import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
 interface props {
   image: string;
   name: string;
-  time: string;
+  createdAt: string;
   authorImage: string;
   title: string;
+  category: string;
+  updatedAt: string;
   comments: number;
 }
 
 export default function FeaturedCard({
   image,
   name,
-  time,
+  createdAt,
   authorImage,
   title,
+  category,
+  updatedAt,
   comments,
 }: props) {
-  const { postLink } = FormattedLink(time, title);
+  const { postLink } = useFormattedPostLink(createdAt, title, category);
   return (
     <Card className="group relative bg-secondary">
       <CardContent className="relative rounded-md p-4">
@@ -43,7 +47,7 @@ export default function FeaturedCard({
           <span>{name}</span>
           <span className="flex items-center justify-center gap-2">
             <FaRegCalendarAlt />
-            <span>{formatDate(time)}</span>
+            <span>{formatDate(updatedAt)}</span>
           </span>
         </div>
 
