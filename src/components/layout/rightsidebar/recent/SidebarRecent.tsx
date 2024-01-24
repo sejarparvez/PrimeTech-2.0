@@ -1,11 +1,10 @@
-"use client";
 import { FetchAllPost } from "@/components/fetch/get/allpost/FetchAllPost";
 import Loading from "@/components/helper/Loading";
 import FeaturedPostType from "@/components/type/post/FeaturedPostType";
 import { v4 as uuidv4 } from "uuid";
-import RecentPostModel from "./RecentPostModel";
+import PostModel from "./PostModel";
 
-export default function RecentPost() {
+export default function SidebarRecent() {
   const { data, isLoading, isError } = FetchAllPost();
 
   if (isLoading) {
@@ -16,19 +15,16 @@ export default function RecentPost() {
     return <p>Error loading posts. Please try again later.</p>;
   }
 
+  const posts = data?.posts.slice(0, 5) || [];
   return (
-    <div className="my-20 grid grid-cols-1 gap-12 md:grid-cols-2">
-      {data.posts.map((post: FeaturedPostType) => (
-        <RecentPostModel
+    <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
+      {posts.map((post: FeaturedPostType) => (
+        <PostModel
           key={uuidv4()}
-          title={post.title}
           image={post.coverImage}
-          authorImage={post.author.image}
+          title={post.title}
           updatedAt={post.updatedAt}
-          comments={post._count.comments}
           category={post.category}
-          createdAt={post.createdAt}
-          content={post.content}
         />
       ))}
     </div>

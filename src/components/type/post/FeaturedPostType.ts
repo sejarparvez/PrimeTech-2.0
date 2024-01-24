@@ -11,6 +11,8 @@ interface FeaturedPostType {
     comments: number;
   };
   updatedAt: string;
+  createdAt: string;
+  content: string;
 }
 
 export default FeaturedPostType;

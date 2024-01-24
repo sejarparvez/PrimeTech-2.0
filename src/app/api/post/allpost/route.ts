@@ -26,6 +26,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
         coverImage: true,
         category: true,
         updatedAt: true,
+        createdAt: true,
+        content: true,
         author: {
           select: {
             name: true,
@@ -45,10 +47,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
       take: pageSize,
     });
 
-    if (allPosts.length > 0) {
-      // Include the total count along with the paginated posts in the response
+    // Remove HTML tags from content
+    const sanitizedPosts = allPosts.map((post) => {
+      return {
+        ...post,
+        content: post.content.replace(/<[^>]*>/g, ""), // Remove HTML tags
+      };
+    });
+
+    // Truncate content to 200 characters
+    const truncatedPosts = sanitizedPosts.map((post) => {
+      return {
+        ...post,
+        content: post.content.slice(0, 180),
+      };
+    });
+
+    if (truncatedPosts.length > 0) {
       return new NextResponse(
-        JSON.stringify({ posts: allPosts, totalPostsCount }),
+        JSON.stringify({ posts: truncatedPosts, totalPostsCount }),
         {
           headers: { "Content-Type": "application/json" },
         },

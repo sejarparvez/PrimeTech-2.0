@@ -1,3 +1,4 @@
+import formatDate from "@/components/helper/hook/FormattedDate";
 import FormattedLink from "@/components/helper/hook/FormattedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,24 +9,26 @@ import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
 
 interface props {
   image: string;
-  name: string;
-  time: string;
+  updatedAt: string;
+  createdAt: string;
   authorImage: string;
   title: string;
   comments: number;
   category: string;
+  content: string;
 }
 
 export default function RecentPostModel({
   image,
-  name,
-  time,
+  updatedAt,
+  createdAt,
   authorImage,
   title,
   comments,
   category,
+  content,
 }: props) {
-  const { postLink } = FormattedLink(time, title);
+  const { postLink } = FormattedLink(createdAt, title);
 
   return (
     <Card className="shadow-lg">
@@ -76,13 +79,9 @@ export default function RecentPostModel({
           </Link>
           <p className="flex items-center gap-4 text-gray-600 dark:text-gray-500">
             <FaRegCalendarAlt />
-            <span>{time}</span>
+            <span>{formatDate(updatedAt)}</span>
           </p>
-          <p className="text-gray-700 dark:text-gray-400">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud...
-          </p>
+          <p className="text-gray-700 dark:text-gray-400">{content}...</p>
           <div className="flex items-center justify-start">
             <Badge>{category}</Badge>
           </div>

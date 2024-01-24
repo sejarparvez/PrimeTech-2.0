@@ -4,7 +4,8 @@ import { FaClock, FaComments, FaStar, FaTag } from "react-icons/fa";
 import CategoryModel from "./CategoryModel";
 import CommentsModel from "./CommentsModel";
 import Featured from "./Featured";
-import PostModel from "./PostModel";
+import PostModel from "./recent/PostModel";
+import SidebarRecent from "./recent/SidebarRecent";
 
 export default function RightSidebar() {
   const [active, setActive] = useState(1);
@@ -63,15 +64,7 @@ export default function RightSidebar() {
         </div>
       </div>
       <div>
-        {active === 1 && (
-          <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
-            <PostModel />
-            <PostModel />
-            <PostModel />
-            <PostModel />
-            <PostModel />
-          </div>
-        )}
+        {active === 1 && <SidebarRecent />}
         {active === 2 && (
           <div className="mx-auto mt-5  flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
             <PostModel />
