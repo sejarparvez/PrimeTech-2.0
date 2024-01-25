@@ -30,7 +30,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 z-50 flex h-16 w-full items-center justify-between py-3 transition-all duration-300 md:w-[94.4%] md:pl-3 md:pr-10 lg:py-4 lg:pl-4 ${
         visible
-          ? "translate-y-0 opacity-100 backdrop-blur-md"
+          ? "translate-y-0 border opacity-100 backdrop-blur-md"
           : "-translate-y-20 opacity-10"
       }`}
     >

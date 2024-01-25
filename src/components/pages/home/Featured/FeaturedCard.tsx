@@ -2,7 +2,7 @@ import formatDate from "@/components/helper/hook/FormattedDate";
 import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
@@ -31,17 +31,16 @@ export default function FeaturedCard({
   const { postLink } = useFormattedPostLink(createdAt, title, category);
   return (
     <Card className="group relative bg-secondary">
-      <CardContent className="relative rounded-md p-4">
-        <Link href={postLink}>
-          <Image
-            src={image}
-            alt=""
-            className="h-52 w-full rounded-lg object-cover brightness-50 transition-all duration-300  group-hover:brightness-90 md:h-[29rem]"
-            width={900}
-            height={900}
-          />
-        </Link>
-      </CardContent>
+      <Link href={postLink}>
+        <Image
+          src={image}
+          alt=""
+          className="h-52 w-full rounded-lg object-cover brightness-50 transition-all duration-700  group-hover:brightness-75 md:h-[29rem]"
+          width={900}
+          height={900}
+        />
+      </Link>
+
       <div className="flex flex-col gap-2 py-6 md:flex-row md:items-center md:justify-between md:px-8">
         <div className="flex gap-16 text-muted-foreground">
           <span>{name}</span>

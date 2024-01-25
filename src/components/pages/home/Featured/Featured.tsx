@@ -11,19 +11,12 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import FeaturedCard from "./FeaturedCard";
 
 export default function Featured() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-
-  const handleDotClick = (index: number) => {
-    if (api) {
-      api.scrollTo(index);
-    }
-  };
 
   useEffect(() => {
     if (!api) {
@@ -34,9 +27,16 @@ export default function Featured() {
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on("select", () => {
+      console.log("current");
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
+
+  const handleDotClick = (index: number) => {
+    if (api) {
+      api.scrollTo(index);
+    }
+  };
 
   const { data, isLoading, isError } = FetchFeaturedPosts();
 
@@ -50,14 +50,11 @@ export default function Featured() {
 
   return (
     <div>
-      {isLoading && <Loading />}
-      {isError && <div className="font-bold text-red-500">{isError}</div>}
-      {!isLoading && !isError && (
-        <Carousel setApi={setApi} opts={{ loop: true }}>
-          <CarouselContent className="">
-            {data && data.length > 0 ? (
-              data.map((postItem: FeaturedPostType) => (
-                <CarouselItem key={uuidv4()}>
+      <Carousel setApi={setApi} opts={{ loop: true }}>
+        <CarouselContent>
+          {data && data.length > 0
+            ? data.map((postItem: FeaturedPostType) => (
+                <CarouselItem key={postItem._id}>
                   <FeaturedCard
                     title={postItem.title}
                     createdAt={postItem.createdAt}
@@ -70,27 +67,23 @@ export default function Featured() {
                   />
                 </CarouselItem>
               ))
-            ) : (
-              <p>No featured posts found.</p>
-            )}
-          </CarouselContent>
-          <CarouselPrevious variant="default" />
-          <CarouselNext variant="default" />
-        </Carousel>
-      )}
-      {!isLoading && !isError && (
-        <div className="mt-4 flex justify-center space-x-4">
-          {[...Array(count)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              className={`h-3 w-3 rounded-full  ${
-                index === current - 1 ? "ring-4 ring-primary" : "bg-gray-300"
-              }`}
-            ></button>
-          ))}
-        </div>
-      )}
+            : "No content"}
+        </CarouselContent>
+        <CarouselPrevious variant="default" />
+        <CarouselNext variant="default" />
+      </Carousel>
+
+      <div className="mt-4 flex justify-center space-x-4">
+        {[...Array(count)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={`h-3 w-3 rounded-full  ${
+              index === current - 1 ? "ring-4 ring-primary" : "bg-gray-300"
+            }`}
+          ></button>
+        ))}
+      </div>
     </div>
   );
 }
