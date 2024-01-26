@@ -74,11 +74,6 @@ export default function NewPost() {
     return formattedDateStr;
   };
 
-  const test = "this Is a test Uri";
-  const testCode = encodeForUrl(test);
-
-  console.log(testCode);
-
   return (
     <>
       <Formik

@@ -71,7 +71,7 @@ export default function ProfileSlide() {
                 </Link>
               </SheetClose>
               <SheetClose asChild>
-                <Link href="newpost">
+                <Link href="/newpost">
                   <Button variant="default" className="flex w-full">
                     New Post
                   </Button>

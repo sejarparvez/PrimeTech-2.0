@@ -25,6 +25,7 @@ export default function SidebarRecent() {
           title={post.title}
           updatedAt={post.updatedAt}
           category={post.category}
+          createdAt={post.createdAt}
         />
       ))}
     </div>

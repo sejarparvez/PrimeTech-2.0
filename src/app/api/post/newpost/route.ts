@@ -45,7 +45,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     });
 
-    return new NextResponse("Post created successfully", { status: 201 });
+    return new NextResponse(JSON.stringify(newPost), {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error:", error);
     return new NextResponse("An error occurred", { status: 500 });

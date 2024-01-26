@@ -49,6 +49,23 @@ export default function NewPost() {
     }
   };
 
+  // Function to properly encode a string for URLs
+  const encodeForUrl = (str: string) => {
+    return encodeURIComponent(str.replace(/\s+/g, "-")).toLowerCase();
+  };
+
+  const encodeDate = (date: string) => {
+    const postDate = new Date(date);
+
+    // Extract date components
+    const day = postDate.getDate();
+    const month = postDate.getMonth() + 1; // Month is zero-based
+    const year = postDate.getFullYear();
+
+    const formattedDateStr = `${day}/${month}/${year}`;
+    return formattedDateStr;
+  };
+
   return (
     <>
       {status === "unauthenticated" || status === "loading" ? (
@@ -92,9 +109,17 @@ export default function NewPost() {
               if (response.status === 201) {
                 toast.dismiss();
                 toast.success("Post uploaded successfully!");
+                const uri = response.data.title;
+                const category = response.data.category;
+                const encodedUri = uri ? encodeForUrl(uri) : "";
+                const encodedCategory = category ? encodeForUrl(category) : "";
+                const date = response.data.createdAt;
+                const formattedDate = encodeDate(date);
                 setTimeout(() => {
                   setIsSubmitting(false);
-                  router.push("/profile");
+                  router.push(
+                    `/blog/${encodedCategory}/${formattedDate}/${encodedUri}`,
+                  );
                 }, 2000);
               } else {
                 toast.dismiss();
@@ -145,7 +170,11 @@ export default function NewPost() {
                 </CardFooter>
               </Card>
             </div>
-            <ToastContainer position="top-center" autoClose={3000} />
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              theme="dark"
+            />
           </Form>
         </Formik>
       )}
