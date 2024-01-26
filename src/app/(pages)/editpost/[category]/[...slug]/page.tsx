@@ -27,6 +27,10 @@ export default function NewPost() {
   const [imageError, setImageError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
   const router = useRouter();
 
   const MAX_IMAGE_SIZE_KB = 500;
@@ -52,6 +56,28 @@ export default function NewPost() {
   if (isError) {
     return <p>Error loading posts. Please try again later.</p>;
   }
+
+  // Function to properly encode a string for URLs
+  const encodeForUrl = (str: string) => {
+    return encodeURIComponent(str.replace(/\s+/g, "-")).toLowerCase();
+  };
+
+  const encodeDate = (date: string) => {
+    const postDate = new Date(date);
+
+    // Extract date components
+    const day = postDate.getDate();
+    const month = postDate.getMonth() + 1; // Month is zero-based
+    const year = postDate.getFullYear();
+
+    const formattedDateStr = `${day}/${month}/${year}`;
+    return formattedDateStr;
+  };
+
+  const test = "this Is a test Uri";
+  const testCode = encodeForUrl(test);
+
+  console.log(testCode);
 
   return (
     <>
@@ -100,10 +126,20 @@ export default function NewPost() {
 
             if (response.status === 200) {
               toast.dismiss();
+
               toast.success("Post uploaded successfully!");
+              const uri = response.data.title;
+              const category = response.data.category;
+              const encodedUri = uri ? encodeForUrl(uri) : "";
+              const encodedCategory = category ? encodeForUrl(category) : "";
+              const date = response.data.createdAt;
+              const formattedDate = encodeDate(date);
+
               setTimeout(() => {
                 setIsSubmitting(false);
-                router.push("/profile");
+                router.push(
+                  `/blog/${encodedCategory}/${formattedDate}/${encodedUri}`,
+                );
               }, 2000);
             } else {
               toast.dismiss();
@@ -154,7 +190,7 @@ export default function NewPost() {
               </CardFooter>
             </Card>
           </div>
-          <ToastContainer position="top-center" autoClose={3000} />
+          <ToastContainer position="top-center" autoClose={3000} theme="dark" />
         </Form>
       </Formik>
     </>
