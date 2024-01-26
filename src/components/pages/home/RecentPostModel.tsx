@@ -34,7 +34,7 @@ export default function RecentPostModel({
     <Card className="shadow-lg">
       <CardContent className="p-3">
         <div className="relative">
-          <Link href={postLink}>
+          <Link href={`/blog/${postLink}`}>
             <Image
               src={image}
               alt=""
@@ -53,7 +53,7 @@ export default function RecentPostModel({
             />
             <div className="absolute -top-2  h-8 w-16 rounded-t-full bg-primary"></div>
           </div>
-          <Link href={postLink}>
+          <Link href={`/blog/${postLink}`}>
             <Button
               size="sm"
               className="absolute bottom-1 right-0 flex items-center justify-center gap-3 transition-all duration-300 hover:px-5"
@@ -72,7 +72,7 @@ export default function RecentPostModel({
           </div>
         </div>
         <div className="mt-12 flex flex-col gap-5">
-          <Link href={postLink}>
+          <Link href={`/blog/${postLink}`}>
             <h1 className="text-2xl font-bold transition-all duration-300 hover:text-primary">
               {title}
             </h1>

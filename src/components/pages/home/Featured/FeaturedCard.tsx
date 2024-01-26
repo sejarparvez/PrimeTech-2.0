@@ -31,7 +31,7 @@ export default function FeaturedCard({
   const { postLink } = useFormattedPostLink(createdAt, title, category);
   return (
     <Card className="group relative bg-secondary">
-      <Link href={postLink}>
+      <Link href={`/blog/${postLink}`}>
         <Image
           src={image}
           alt=""
@@ -62,7 +62,7 @@ export default function FeaturedCard({
         />
         <div className="absolute -top-1.5 h-7 w-[3.1rem]  rounded-t-full bg-primary md:-top-2 md:h-10 md:w-20"></div>
       </div>
-      <Link href={postLink}>
+      <Link href={`/blog/${postLink}`}>
         <Button className="absolute bottom-28 right-0 flex scale-75 items-center justify-center gap-3 transition-all duration-300 hover:px-10 md:bottom-24 md:right-6 md:scale-100">
           <span>View Details</span>
           <FaAngleRight />
@@ -77,7 +77,7 @@ export default function FeaturedCard({
         </p>
       </div>
       <Link
-        href={postLink}
+        href={`/blog/${postLink}`}
         className="absolute bottom-40 left-12 mr-12 text-2xl font-bold text-white md:bottom-48 md:text-5xl"
       >
         {title}

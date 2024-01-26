@@ -32,7 +32,7 @@ export const useFormattedPostLink = (
   const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
 
   // Create the post link
-  const postLink = `/blog/${formattedCategory}/${formattedDate}/${formattedTitle}/`;
+  const postLink = `${formattedCategory}/${formattedDate}/${formattedTitle}/`;
 
   return { postLink };
 };

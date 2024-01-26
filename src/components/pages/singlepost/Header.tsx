@@ -1,6 +1,10 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
+import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { FaPen, FaTrash } from "react-icons/fa";
 
 interface props {
   title: string;
@@ -8,6 +12,7 @@ interface props {
   name: string;
   updatedAt: string;
   category: string;
+  createdAt: string;
 }
 
 export default function Header({
@@ -16,7 +21,10 @@ export default function Header({
   name,
   updatedAt,
   category,
+  createdAt,
 }: props) {
+  const { postLink } = useFormattedPostLink(createdAt, title, category);
+
   return (
     <>
       <div className="rounded-lg border  md:mb-10 md:p-4  ">
@@ -39,11 +47,21 @@ export default function Header({
           </div>
           <div>
             <Link href={`/category/`}>
-              <button className="dark:text-primary-200 mr-10 rounded-br-2xl rounded-tl-2xl bg-primary px-4 py-1 font-bold text-white">
-                {category}
-              </button>
+              <Badge>{category}</Badge>
             </Link>
           </div>
+        </div>
+        <div className="mt-4 flex items-center justify-center gap-20">
+          <Link href={`/editpost/${postLink}`}>
+            <Button className="flex items-center gap-2">
+              <FaPen />
+              <span>Edit Post</span>
+            </Button>
+          </Link>
+          <Button className="flex items-center gap-2" variant="destructive">
+            <FaTrash />
+            <span>Delete Post</span>
+          </Button>
         </div>
       </div>
 

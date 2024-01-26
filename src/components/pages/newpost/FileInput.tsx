@@ -3,9 +3,10 @@ import { ChangeEvent } from "react";
 
 interface FileSelectProps {
   onFileSelect: (file: File) => void;
+  isRequired: boolean;
 }
 
-export function FileInput({ onFileSelect }: FileSelectProps) {
+export function FileInput({ onFileSelect, isRequired }: FileSelectProps) {
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -18,7 +19,7 @@ export function FileInput({ onFileSelect }: FileSelectProps) {
     <Input
       id="picture"
       type="file"
-      required={true}
+      required={isRequired}
       className="flex h-full items-start px-0"
       onChange={handleFileChange}
     />

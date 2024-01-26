@@ -124,7 +124,7 @@ export default function NewPost() {
                   />
                   <div>
                     <Label>Featured Image:</Label>
-                    <FileInput onFileSelect={handleFile} />
+                    <FileInput onFileSelect={handleFile} isRequired={true} />
                     {imageError && (
                       <p className="text-sm text-red-600">{imageError}</p>
                     )}
