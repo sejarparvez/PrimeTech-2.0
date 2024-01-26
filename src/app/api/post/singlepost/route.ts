@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 function decodeFromUrl(encodedStr: string) {
-  return decodeURIComponent(encodedStr.replace(/_/g, " "));
+  return decodeURIComponent(encodedStr.replace(/-/g, " "));
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {

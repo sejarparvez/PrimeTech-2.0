@@ -58,6 +58,10 @@ export default function NewPost() {
           initialValues={{ title: "", category: "", content: "" }}
           validationSchema={Yup.object({
             title: Yup.string()
+              .matches(
+                /^[a-zA-Z0-9\s,'_]+$/,
+                "Title can not contain special characters",
+              )
               .min(20, "Title Must be at least 20 characters")
               .max(80, "Title can not be more than 80 characters")
               .required(),

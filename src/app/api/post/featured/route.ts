@@ -15,6 +15,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         coverImage: true,
         category: true,
         updatedAt: true,
+        createdAt: true,
         author: {
           select: {
             name: true,

@@ -28,8 +28,8 @@ export const useFormattedPostLink = (
   }, [timestamp]);
 
   // Format the title as a slug
-  const formattedTitle = title.replace(/\s+/g, "_").toLowerCase();
-  const formattedCategory = category.replace(/\s+/g, "_").toLowerCase();
+  const formattedTitle = title.replace(/\s+/g, "-").toLowerCase();
+  const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
 
   // Create the post link
   const postLink = `/blog/${formattedCategory}/${formattedDate}/${formattedTitle}/`;
