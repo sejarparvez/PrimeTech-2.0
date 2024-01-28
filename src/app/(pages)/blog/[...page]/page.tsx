@@ -10,9 +10,9 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Blog() {
   const params = useParams<{ page: string }>();
-  const { data, isLoading, isError } = FetchAllPost();
 
   const [page, setPage] = useState<number>(Number(params.page[1]) || 1);
+  const { data, isLoading, isError } = FetchAllPost(page);
 
   if (isLoading) {
     return <Loading />;

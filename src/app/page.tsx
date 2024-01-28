@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <div>
       <div className="md:grid md:grid-cols-24 lg:flex">
-        <div className="col-span-22 w-full border-l">
+        <div className="col-span-22 w-full">
           <div className="lg:grid lg:grid-cols-48">
-            <div className="col-span-37 border-r px-4 pt-4">
+            <div className="col-span-37 flex flex-col gap-10 border-r px-4 pt-4">
               <Featured />
               <RecentPost />
             </div>
