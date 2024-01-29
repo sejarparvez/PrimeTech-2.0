@@ -22,7 +22,7 @@ export default function FeaturedModel({
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <Link href={postLink}>
+        <Link href={`/article/${postLink}`}>
           <Image
             src={image}
             alt=""
@@ -34,7 +34,7 @@ export default function FeaturedModel({
       </div>
       <div className="flex flex-col gap-1 ">
         <div className="font-semibold text-primary">Featured</div>
-        <Link href={postLink} className="font-bold">
+        <Link href={`/article/${postLink}`} className="font-bold">
           {title}
         </Link>
         <div className="text-gray-600">{formatDate(updatedAt)}</div>

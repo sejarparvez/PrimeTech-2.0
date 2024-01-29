@@ -1,11 +1,13 @@
 import { FetchAllPost } from "@/components/fetch/get/allpost/FetchAllPost";
 import Loading from "@/components/helper/Loading";
 import FeaturedPostType from "@/components/type/post/FeaturedPostType";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PostModel from "./PostModel";
 
 export default function SidebarRecent() {
-  const { data, isLoading, isError } = FetchAllPost();
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, isError } = FetchAllPost(page);
 
   if (isLoading) {
     return <Loading />;

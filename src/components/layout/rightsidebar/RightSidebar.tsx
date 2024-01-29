@@ -4,7 +4,6 @@ import { FaClock, FaComments, FaStar, FaTag } from "react-icons/fa";
 import CategoryModel from "./CategoryModel";
 import CommentsModel from "./CommentsModel";
 import Featured from "./Featured";
-import PostModel from "./recent/PostModel";
 import SidebarRecent from "./recent/SidebarRecent";
 
 export default function RightSidebar() {

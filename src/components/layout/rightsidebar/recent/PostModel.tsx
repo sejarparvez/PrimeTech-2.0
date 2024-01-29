@@ -25,7 +25,7 @@ export default function PostModel({
   const encodedCategory = category ? encodeForUrl(category) : "";
   return (
     <div className="flex gap-2">
-      <Link href={`/blog/${postLink}`} className="mt-2 w-4/12">
+      <Link href={`/article/${postLink}`} className="mt-2 w-4/12">
         <Image
           src={image}
           alt=""
@@ -40,7 +40,7 @@ export default function PostModel({
           <Link href={`/blog/${encodedCategory}`}>{category}</Link>
         </div>
         <div className="font-bold">
-          <Link href={`/blog/${postLink}`}>{title}</Link>
+          <Link href={`/article/${postLink}`}>{title}</Link>
         </div>
         <div className="text-gray-600">{formatDate(updatedAt)}</div>
       </div>
