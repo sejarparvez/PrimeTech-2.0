@@ -40,50 +40,52 @@ export default function Featured() {
 
   const { data, isLoading, isError } = FetchFeaturedPosts();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <p>Error loading posts. Please try again later.</p>;
-  }
-
   return (
-    <div>
-      <Carousel setApi={setApi} opts={{ loop: true }}>
-        <CarouselContent>
-          {data && data.length > 0
-            ? data.map((postItem: FeaturedPostType) => (
-                <CarouselItem key={postItem._id}>
-                  <FeaturedCard
-                    title={postItem.title}
-                    createdAt={postItem.createdAt}
-                    updatedAt={postItem.updatedAt}
-                    category={postItem.category}
-                    name={postItem.author.name}
-                    authorImage={postItem.author.image}
-                    comments={postItem._count.comments}
-                    image={postItem.coverImage}
-                  />
-                </CarouselItem>
-              ))
-            : "No content"}
-        </CarouselContent>
-        <CarouselPrevious variant="default" />
-        <CarouselNext variant="default" />
-      </Carousel>
+    <>
+      {isLoading ? (
+        <div className="mb-10">
+          <Loading />
+        </div>
+      ) : isError ? (
+        <p>Error loading posts. Please try again later.</p>
+      ) : (
+        <div className="mb-10">
+          <Carousel setApi={setApi} opts={{ loop: true }}>
+            <CarouselContent>
+              {data && data.length > 0
+                ? data.map((postItem: FeaturedPostType) => (
+                    <CarouselItem key={postItem._id}>
+                      <FeaturedCard
+                        title={postItem.title}
+                        createdAt={postItem.createdAt}
+                        updatedAt={postItem.updatedAt}
+                        category={postItem.category}
+                        name={postItem.author.name}
+                        authorImage={postItem.author.image}
+                        comments={postItem._count.comments}
+                        image={postItem.coverImage}
+                      />
+                    </CarouselItem>
+                  ))
+                : "No content"}
+            </CarouselContent>
+            <CarouselPrevious variant="default" />
+            <CarouselNext variant="default" />
+          </Carousel>
 
-      <div className="mt-4 flex justify-center space-x-4">
-        {[...Array(count)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`h-3 w-3 rounded-full  ${
-              index === current - 1 ? "ring-4 ring-primary" : "bg-gray-300"
-            }`}
-          ></button>
-        ))}
-      </div>
-    </div>
+          <div className="mt-4 flex justify-center space-x-4">
+            {[...Array(count)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={`h-3 w-3 rounded-full  ${
+                  index === current - 1 ? "ring-4 ring-primary" : "bg-gray-300"
+                }`}
+              ></button>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
