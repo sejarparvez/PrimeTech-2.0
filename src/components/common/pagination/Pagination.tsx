@@ -1,12 +1,12 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useRouter } from "next/navigation";
 
 interface PaginationUiProps {
   currentPage: number;
@@ -19,27 +19,68 @@ export default function PaginationUi({
   totalPages,
   setCurrentPage,
 }: PaginationUiProps) {
+  const router = useRouter();
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === totalPages;
+
+  const handlePreviousClick = () => {
+    if (!isFirstPage) {
+      if (currentPage === 2) {
+        router.push(`/`);
+      } else {
+        setCurrentPage(currentPage - 1);
+        router.push(`/blog/page/${currentPage - 1}`);
+      }
+    }
+  };
+
+  const handleNextClick = () => {
+    if (!isLastPage) {
+      setCurrentPage(currentPage + 1);
+      router.push(`/blog/page/${currentPage + 1}`);
+    }
+  };
+
+  console.log(isFirstPage);
+
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => setCurrentPage(currentPage - 1)} />
+          {isFirstPage ? (
+            <span className="cursor-not-allowed">
+              <PaginationPrevious />
+            </span>
+          ) : (
+            <PaginationPrevious onClick={handlePreviousClick} />
+          )}
         </PaginationItem>
         {[...Array(totalPages).keys()].map((page) => (
           <PaginationItem key={page}>
-            <PaginationLink
-              isActive={currentPage === page + 1}
-              href={`/blog/page/${page + 1}`}
-            >
-              {page + 1}
-            </PaginationLink>
+            {currentPage === page + 1 ? (
+              <span className="cursor-not-allowed">
+                <PaginationLink isActive>{page + 1}</PaginationLink>
+              </span>
+            ) : (
+              <PaginationLink
+                onClick={() => {
+                  setCurrentPage(page + 1);
+                  router.push(page === 0 ? `/` : `/blog/page/${page + 1}`);
+                }}
+              >
+                {page + 1}
+              </PaginationLink>
+            )}
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
+          {isLastPage ? (
+            <span className="cursor-not-allowed">
+              <PaginationNext />
+            </span>
+          ) : (
+            <PaginationNext onClick={handleNextClick} />
+          )}
         </PaginationItem>
       </PaginationContent>
     </Pagination>
