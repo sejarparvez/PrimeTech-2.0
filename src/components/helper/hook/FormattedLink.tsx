@@ -16,8 +16,8 @@ export const useFormattedPostLink = (
     const postDate = new Date(timestamp);
 
     // Extract date components
-    const day = postDate.getDate();
-    const month = postDate.getMonth() + 1; // Month is zero-based
+    const day = ("0" + postDate.getDate()).slice(-2);
+    const month = ("0" + (postDate.getMonth() + 1)).slice(-2);
     const year = postDate.getFullYear();
 
     // Format the date as needed

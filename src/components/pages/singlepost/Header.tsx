@@ -25,6 +25,11 @@ export default function Header({
 }: props) {
   const { postLink } = useFormattedPostLink(createdAt, title, category);
 
+  const encodeForUrl = (str: string) => {
+    return encodeURIComponent(str.replace(/\s+/g, "-")).toLowerCase();
+  };
+  const encodedCategory = category ? encodeForUrl(category) : "";
+
   return (
     <>
       <div className="rounded-lg border  md:mb-10 md:p-4  ">
@@ -46,7 +51,7 @@ export default function Header({
             </span>
           </div>
           <div>
-            <Link href={`/category/`}>
+            <Link href={`/category/${encodedCategory}/page/1`}>
               <Badge>{category}</Badge>
             </Link>
           </div>

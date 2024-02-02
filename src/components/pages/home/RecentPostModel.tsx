@@ -30,6 +30,8 @@ export default function RecentPostModel({
 }: props) {
   const { postLink } = useFormattedPostLink(createdAt, title, category);
 
+  const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
+
   return (
     <Card className="shadow-lg">
       <CardContent className="p-3">
@@ -83,7 +85,9 @@ export default function RecentPostModel({
           </p>
           <p className="text-gray-700 dark:text-gray-400">{content}...</p>
           <div className="flex items-center justify-start">
-            <Badge>{category}</Badge>
+            <Link href={`/category/${formattedCategory}`}>
+              <Badge>{category}</Badge>
+            </Link>
           </div>
         </div>
       </CardContent>

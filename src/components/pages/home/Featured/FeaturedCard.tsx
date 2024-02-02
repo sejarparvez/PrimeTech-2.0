@@ -29,6 +29,7 @@ export default function FeaturedCard({
   comments,
 }: props) {
   const { postLink } = useFormattedPostLink(createdAt, title, category);
+  const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
   return (
     <Card className="group relative bg-secondary">
       <Link href={`/article/${postLink}`}>
@@ -42,7 +43,7 @@ export default function FeaturedCard({
       </Link>
 
       <div className="flex flex-col gap-2 py-6 md:flex-row md:items-center md:justify-between md:px-8">
-        <div className="flex gap-16 text-muted-foreground">
+        <div className="mt-5 flex gap-16 text-muted-foreground">
           <span>{name}</span>
           <span className="flex items-center justify-center gap-2">
             <FaRegCalendarAlt />
@@ -50,9 +51,11 @@ export default function FeaturedCard({
           </span>
         </div>
 
-        <Badge className="w-fit">Featured</Badge>
+        <Link href={`/category/${formattedCategory}`}>
+          <Badge>Featured</Badge>
+        </Link>
       </div>
-      <div className="absolute bottom-[5.8rem] left-10 flex items-center justify-center md:bottom-[4rem] md:left-16">
+      <div className="absolute bottom-[5.8rem] left-10 flex items-center justify-center md:bottom-[3.75rem] md:left-16">
         <Image
           src={authorImage}
           alt=""

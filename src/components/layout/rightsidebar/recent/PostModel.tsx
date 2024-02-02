@@ -37,7 +37,7 @@ export default function PostModel({
 
       <div className="flex w-8/12 flex-col gap-1 text-sm">
         <div className="font-semibold text-primary">
-          <Link href={`/blog/${encodedCategory}`}>{category}</Link>
+          <Link href={`/category/${encodedCategory}`}>{category}</Link>
         </div>
         <div className="font-bold">
           <Link href={`/article/${postLink}`}>{title}</Link>

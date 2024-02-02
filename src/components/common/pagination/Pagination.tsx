@@ -41,8 +41,6 @@ export default function PaginationUi({
     }
   };
 
-  console.log(isFirstPage);
-
   return (
     <Pagination>
       <PaginationContent>
