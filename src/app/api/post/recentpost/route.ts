@@ -17,6 +17,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
         updatedAt: true,
         createdAt: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     if (response.length === 0) {
