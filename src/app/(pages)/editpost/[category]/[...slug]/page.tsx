@@ -133,7 +133,7 @@ export default function NewPost() {
               setTimeout(() => {
                 setIsSubmitting(false);
                 router.push(
-                  `/blog/${encodedCategory}/${formattedDate}/${encodedUri}`,
+                  `/article/${encodedCategory}/${formattedDate}/${encodedUri}`,
                 );
               }, 2000);
             } else {

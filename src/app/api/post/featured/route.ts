@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
+    const url = new URL(req.url);
+    const queryParams = new URLSearchParams(url.search);
+    const searchName = queryParams.get("search") || "";
     const lastUpdatedPost = await prisma.post.findMany({
       where: {
         category: "Featured",
@@ -35,19 +38,16 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
 
     if (lastUpdatedPost.length > 0) {
-      // Return the last updated post with author's name
       return new NextResponse(JSON.stringify(lastUpdatedPost), {
         headers: { "Content-Type": "application/json" },
       });
     } else {
-      // No post found in the "featured" category
       return new NextResponse("No featured posts found.", {
         status: 404,
         headers: { "Content-Type": "text/plain" },
       });
     }
   } catch (error) {
-    // Handle specific Prisma errors
     if (
       error instanceof Error &&
       error.name === "PrismaClientKnownRequestError"
@@ -58,7 +58,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       });
     }
 
-    // Handle other errors
     console.error("Error fetching last updated post:", error);
 
     return new NextResponse("Internal Server Error", {
@@ -66,6 +65,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       headers: { "Content-Type": "text/plain" },
     });
   } finally {
-    await prisma.$disconnect(); // Close Prisma client connection
+    await prisma.$disconnect();
   }
 }
