@@ -1,7 +1,9 @@
+"use client";
 import formatDate from "@/components/helper/hook/FormattedDate";
 import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaPen, FaTrash } from "react-icons/fa";
@@ -13,6 +15,7 @@ interface props {
   updatedAt: string;
   category: string;
   createdAt: string;
+  authorId: string;
 }
 
 export default function Header({
@@ -22,8 +25,11 @@ export default function Header({
   updatedAt,
   category,
   createdAt,
+  authorId,
 }: props) {
   const { postLink } = useFormattedPostLink(createdAt, title, category);
+
+  const { data: session, status } = useSession();
 
   const encodeForUrl = (str: string) => {
     return encodeURIComponent(str.replace(/\s+/g, "-")).toLowerCase();
@@ -56,18 +62,23 @@ export default function Header({
             </Link>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-center gap-20">
-          <Link href={`/editpost/${postLink}`}>
-            <Button className="flex items-center gap-2">
-              <FaPen />
-              <span>Edit Post</span>
-            </Button>
-          </Link>
-          <Button className="flex items-center gap-2" variant="destructive">
-            <FaTrash />
-            <span>Delete Post</span>
-          </Button>
-        </div>
+
+        {status === "authenticated" &&
+          (authorId === session.user?.id ||
+            session.user?.role === "Administrator") && (
+            <div className="mt-4 flex items-center justify-center gap-20">
+              <Link href={`/editpost/${postLink}`}>
+                <Button className="flex items-center gap-2">
+                  <FaPen />
+                  <span>Edit Post</span>
+                </Button>
+              </Link>
+              <Button className="flex items-center gap-2" variant="destructive">
+                <FaTrash />
+                <span>Delete Post</span>
+              </Button>
+            </div>
+          )}
       </div>
 
       <Image

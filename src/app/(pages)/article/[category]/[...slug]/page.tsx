@@ -24,6 +24,7 @@ export default function Page() {
             updatedAt={data.updatedAt}
             category={data.category}
             createdAt={data.createdAt}
+            authorId={data.authorId}
           />
           <MainContent content={data.content} />
         </>

@@ -35,7 +35,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
     const postId = id.toString();
 
-    if (userId !== token.sub) {
+    if (userId !== token.sub && token.status !== "Administrator") {
       return new NextResponse(
         "Unauthorized - You are not the author of this post",
         { status: 403 },
