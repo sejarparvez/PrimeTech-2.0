@@ -54,10 +54,10 @@ export default function Featured() {
             <CarouselContent>
               {data && data.length > 0
                 ? data.map((postItem: FeaturedPostType) => (
-                    <CarouselItem key={postItem._id}>
+                    <CarouselItem key={postItem.id}>
                       <FeaturedCard
                         title={postItem.title}
-                        createdAt={postItem.createdAt}
+                        id={postItem.id}
                         updatedAt={postItem.updatedAt}
                         category={postItem.category}
                         name={postItem.author.name}
@@ -78,7 +78,7 @@ export default function Featured() {
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className={`h-3 w-3 rounded-full  ${
+                className={`h-3 w-3 rounded-full ${
                   index === current - 1 ? "ring-4 ring-primary" : "bg-gray-300"
                 }`}
               ></button>

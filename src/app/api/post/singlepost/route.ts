@@ -1,42 +1,20 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@/components/helper/Prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
-
-function decodeFromUrl(encodedStr: string) {
-  return decodeURIComponent(encodedStr.replace(/-/g, " "));
-}
-
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
-    const encodedCategory = queryParams.get("category");
-    const createdAt = queryParams.get("createdAt");
-    const encodedTitle = queryParams.get("title");
+    const id = queryParams.get("id");
 
-    if (!encodedCategory || !encodedTitle || !createdAt) {
-      return new NextResponse("Category, title, or createdAt not provided", {
-        status: 400,
-      });
+    if (!id) {
+      return new NextResponse("Missing field", { status: 400 });
     }
 
-    const category = decodeFromUrl(encodedCategory);
-    const title = decodeFromUrl(encodedTitle);
-
-    const response = await prisma.post.findFirst({
+    // Fetch the design
+    const design = await Prisma.post.findUnique({
       where: {
-        category: {
-          mode: "insensitive",
-          equals: category,
-        },
-        title: {
-          mode: "insensitive",
-          equals: title,
-        },
-        createdAt: {
-          gte: new Date(`${createdAt}T00:00:00.000Z`),
-        },
+        id: id,
       },
       include: {
         author: {
@@ -45,23 +23,29 @@ export async function GET(req: NextRequest, res: NextResponse) {
             image: true,
           },
         },
+
+        comments: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
     });
 
-    if (!response) {
-      return new NextResponse("Post not found", { status: 404 });
+    if (!design) {
+      return new NextResponse("Design not found", { status: 404 });
     }
 
-    return new NextResponse(JSON.stringify(response), { status: 200 });
+    // Add like and comments count to the response object
+    const enhancedResponse = {
+      ...design,
+      commentsCount: design.comments.length,
+    };
+
+    return new NextResponse(JSON.stringify(enhancedResponse), { status: 200 });
   } catch (error) {
-    console.error("Error in API route:", error);
-
-    if (error instanceof Error) {
-      return new NextResponse(error.message, { status: 500 });
-    }
-
     return new NextResponse("Internal Server Error", { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    Prisma.$disconnect();
   }
 }

@@ -1,5 +1,5 @@
 interface FeaturedPostType {
-  _id: string;
+  id: string;
   coverImage: string;
   title: string;
   category: string;

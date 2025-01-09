@@ -1,21 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "next/navigation";
 
-export function FetchSinglePost() {
-  const params = useParams();
+interface props {
+  id: string;
+}
 
-  const category = params.category;
-
-  const createdAt = `${params.slug[2]}-${params.slug[1].padStart(2, "0")}-${
-    params.slug[0]
-  }`;
+export function FetchSinglePost({ id }: props) {
   return useQuery({
-    queryKey: ["singlePost", category, createdAt, params.slug[3]],
+    queryKey: ["Single Design", id],
     queryFn: async () => {
-      const response = await axios.get(
-        `/api/post/singlepost?category=${category}&createdAt=${createdAt}&title=${params.slug[3]}`,
-      );
+      const response = await axios.get(`/api/post/singlepost?id=${id}`);
       return response.data;
     },
   });
