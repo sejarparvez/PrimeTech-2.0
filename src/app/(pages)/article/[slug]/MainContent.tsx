@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/components/lib/utils";
 import React from "react";
 import CodeBlock from "./CodeBlock";
 
@@ -122,7 +122,7 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ content }) => {
   };
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8 font-sans text-gray-800 dark:text-gray-200">
+    <article className="mx-auto max-w-5xl px-4 py-8 font-sans text-gray-800 dark:text-gray-200">
       {processContent(content)}
     </article>
   );

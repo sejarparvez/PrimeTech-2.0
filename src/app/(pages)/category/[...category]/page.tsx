@@ -3,8 +3,8 @@ import PaginationUi from "@/components/common/pagination/Pagination";
 import { FetchCategoryPost } from "@/components/fetch/get/categorypost/FetchCategoryPost";
 import Loading from "@/components/helper/Loading";
 import { formatedCategory } from "@/components/helper/hook/FormattedCategory";
+import FeaturedPostType from "@/components/interface/post/FeaturedPostType";
 import RecentPostModel from "@/components/pages/home/RecentPostModel";
-import FeaturedPostType from "@/components/type/post/FeaturedPostType";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 

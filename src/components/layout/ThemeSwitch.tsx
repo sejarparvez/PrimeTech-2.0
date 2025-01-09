@@ -34,9 +34,9 @@ export default function ThemeSwitch() {
         <ToolTipHook
           icon={
             resolvedTheme === "light" ? (
-              <MdOutlineWbSunny size={28} />
+              <MdOutlineWbSunny size={24} />
             ) : (
-              <BsMoonStars size={28} />
+              <BsMoonStars size={20} />
             )
           }
           text="Change Theme"

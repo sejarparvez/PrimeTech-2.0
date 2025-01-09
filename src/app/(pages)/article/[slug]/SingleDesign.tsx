@@ -15,7 +15,6 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   const id = postlink.split("_")[1];
 
   const { isLoading, data, isError, refetch } = FetchSinglePost({ id });
-  console.log(data);
 
   const handleRetry = () => {
     setRetryCount((prev) => prev + 1);
@@ -46,7 +45,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <div className="container mx-auto my-8 px-2 md:my-12 lg:px-6">
+    <div className="container mx-auto my-8 px-2 lg:px-6">
       <div>
         {isLoading ? (
           <Skeleton className="h-[30rem] w-full rounded-xl md:h-[40rem] lg:h-[50rem]" />

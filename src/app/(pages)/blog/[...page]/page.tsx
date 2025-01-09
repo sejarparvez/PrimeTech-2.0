@@ -2,8 +2,8 @@
 import PaginationUi from "@/components/common/pagination/Pagination";
 import { FetchAllPost } from "@/components/fetch/get/allpost/FetchAllPost";
 import Loading from "@/components/helper/Loading";
+import FeaturedPostType from "@/components/interface/post/FeaturedPostType";
 import RecentPostModel from "@/components/pages/home/RecentPostModel";
-import FeaturedPostType from "@/components/type/post/FeaturedPostType";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";

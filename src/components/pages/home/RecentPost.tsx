@@ -2,7 +2,7 @@
 import PaginationUi from "@/components/common/pagination/Pagination";
 import { FetchAllPost } from "@/components/fetch/get/allpost/FetchAllPost";
 import Loading from "@/components/helper/Loading";
-import FeaturedPostType from "@/components/type/post/FeaturedPostType";
+import FeaturedPostType from "@/components/interface/post/FeaturedPostType";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import RecentPostModel from "./RecentPostModel";
@@ -23,7 +23,7 @@ export default function RecentPost() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
         {data.posts.map((post: FeaturedPostType) => (
           <RecentPostModel
             id={post.id}
