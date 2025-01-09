@@ -1,5 +1,5 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
-import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
+import { createSlug } from "@/components/helper/Slug";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,9 +8,9 @@ import Link from "next/link";
 import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
 
 interface props {
+  id: string;
   image: string;
   name: string;
-  createdAt: string;
   authorImage: string;
   title: string;
   category: string;
@@ -20,23 +20,21 @@ interface props {
 
 export default function FeaturedCard({
   image,
+  id,
   name,
-  createdAt,
   authorImage,
   title,
   category,
   updatedAt,
   comments,
 }: props) {
-  const { postLink } = useFormattedPostLink(createdAt, title, category);
-  const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
   return (
     <Card className="group relative bg-secondary">
-      <Link href={`/article/${postLink}`}>
+      <Link href={createSlug({ id, name: title })}>
         <Image
           src={image}
           alt=""
-          className="h-52 w-full rounded-lg object-cover brightness-50 transition-all duration-700  group-hover:brightness-75 md:h-[29rem]"
+          className="h-52 w-full rounded-lg object-cover brightness-50 transition-all duration-700 group-hover:brightness-75 md:h-[29rem]"
           width={900}
           height={900}
         />
@@ -51,7 +49,7 @@ export default function FeaturedCard({
           </span>
         </div>
 
-        <Link href={`/category/${formattedCategory}`}>
+        <Link href={createSlug({ id, name: title })}>
           <Badge>Featured</Badge>
         </Link>
       </div>
@@ -63,15 +61,15 @@ export default function FeaturedCard({
           width={100}
           className="z-10 h-10 w-10 rounded-full object-cover ring ring-white md:h-16 md:w-16"
         />
-        <div className="absolute -top-1.5 h-7 w-[3.1rem]  rounded-t-full bg-primary md:-top-2 md:h-10 md:w-20"></div>
+        <div className="absolute -top-1.5 h-7 w-[3.1rem] rounded-t-full bg-primary md:-top-2 md:h-10 md:w-20"></div>
       </div>
-      <Link href={`/article/${postLink}`}>
+      <Link href={createSlug({ id, name: title })}>
         <Button className="absolute bottom-28 right-0 flex scale-75 items-center justify-center gap-3 transition-all duration-300 hover:px-10 md:bottom-24 md:right-6 md:scale-100">
           <span>View Details</span>
           <FaAngleRight />
         </Button>
       </Link>
-      <div className=" absolute right-10 top-10" title="comment count">
+      <div className="absolute right-10 top-10" title="comment count">
         <div className="relative">
           <FaComment size="36" />
         </div>
@@ -80,7 +78,7 @@ export default function FeaturedCard({
         </p>
       </div>
       <Link
-        href={`/article/${postLink}`}
+        href={createSlug({ id, name: title })}
         className="absolute bottom-40 left-12 mr-12 text-2xl font-bold text-white md:bottom-48 md:text-5xl"
       >
         {title}

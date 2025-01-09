@@ -22,7 +22,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <QueryProvider>
           <ThemeProvider

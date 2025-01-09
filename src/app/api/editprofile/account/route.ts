@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET;
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const token = await getToken({ req, secret });
     if (!token) {
@@ -50,7 +50,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function PUT(req: NextRequest, res: NextResponse) {
+export async function PUT(req: NextRequest) {
   try {
     const body = await req.formData();
 

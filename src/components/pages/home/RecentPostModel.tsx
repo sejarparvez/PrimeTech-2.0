@@ -1,5 +1,5 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
-import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
+import { createSlug } from "@/components/helper/Slug";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FaAngleRight, FaComment, FaRegCalendarAlt } from "react-icons/fa";
 
 interface props {
+  id: string;
   image: string;
   updatedAt: string;
   createdAt: string;
@@ -19,6 +20,7 @@ interface props {
 }
 
 export default function RecentPostModel({
+  id,
   image,
   updatedAt,
   createdAt,
@@ -28,15 +30,13 @@ export default function RecentPostModel({
   category,
   content,
 }: props) {
-  const { postLink } = useFormattedPostLink(createdAt, title, category);
-
   const formattedCategory = category.replace(/\s+/g, "-").toLowerCase();
 
   return (
     <Card className="shadow-lg">
       <CardContent className="p-3">
         <div className="relative">
-          <Link href={`/article/${postLink}`}>
+          <Link href={createSlug({ id, name: title })}>
             <Image
               src={image}
               alt=""
@@ -53,9 +53,9 @@ export default function RecentPostModel({
               height={200}
               width={200}
             />
-            <div className="absolute -top-2  h-8 w-16 rounded-t-full bg-primary"></div>
+            <div className="absolute -top-2 h-8 w-16 rounded-t-full bg-primary"></div>
           </div>
-          <Link href={`/article/${postLink}`}>
+          <Link href={createSlug({ id, name: title })}>
             <Button
               size="sm"
               className="absolute bottom-1 right-0 flex items-center justify-center gap-3 transition-all duration-300 hover:px-5"
@@ -64,7 +64,7 @@ export default function RecentPostModel({
               <FaAngleRight />
             </Button>
           </Link>
-          <div className=" absolute right-2 top-2" title="comment count">
+          <div className="absolute right-2 top-2" title="comment count">
             <div className="relative">
               <FaComment size="36" />
             </div>
@@ -74,7 +74,7 @@ export default function RecentPostModel({
           </div>
         </div>
         <div className="mt-12 flex flex-col gap-5">
-          <Link href={`/article/${postLink}`}>
+          <Link href={createSlug({ id, name: title })}>
             <h1 className="text-2xl font-bold transition-all duration-300 hover:text-primary">
               {title}
             </h1>

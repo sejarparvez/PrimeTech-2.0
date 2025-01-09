@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, ) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);

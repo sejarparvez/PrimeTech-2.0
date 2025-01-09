@@ -27,10 +27,6 @@ export default function NewPost() {
   const [imageError, setImageError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
-
   const router = useRouter();
 
   const MAX_IMAGE_SIZE_KB = 500;
@@ -47,7 +43,7 @@ export default function NewPost() {
     }
   };
 
-  const { data, isLoading, isError } = FetchSinglePost();
+  const { data, isLoading, isError } = FetchSinglePost({ id: "" });
 
   if (isLoading) {
     return <Loading />;

@@ -12,7 +12,17 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Category() {
   const params = useParams();
-  const formattedCategory = formatedCategory(params.category[0]);
+  const formattedCategory =
+    params?.category && Array.isArray(params.category)
+      ? formatedCategory(params.category[0])
+      : "All";
+
+  // You can then safely use formattedCategory
+  if (formattedCategory) {
+    console.log("Formatted category:", formattedCategory);
+  } else {
+    console.log("No category provided.");
+  }
   const [page, setPage] = useState<number>(1);
 
   const { data, isLoading, isError } = FetchCategoryPost(
@@ -41,6 +51,7 @@ export default function Category() {
         <div className="mt-10 grid grid-cols-1 gap-12 md:grid-cols-2">
           {data.posts.map((post: FeaturedPostType) => (
             <RecentPostModel
+              id={post.id}
               key={uuidv4()}
               title={post.title}
               image={post.coverImage}

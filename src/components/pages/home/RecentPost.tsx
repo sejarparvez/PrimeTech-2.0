@@ -26,6 +26,7 @@ export default function RecentPost() {
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         {data.posts.map((post: FeaturedPostType) => (
           <RecentPostModel
+            id={post.id}
             key={uuidv4()}
             title={post.title}
             image={post.coverImage}
