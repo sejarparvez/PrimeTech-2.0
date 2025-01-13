@@ -45,7 +45,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <div className="container mx-auto my-8 px-2 lg:px-6">
+    <div className="container max-w-4xl mx-auto my-8 px-2 lg:px-6">
       <div>
         {isLoading ? (
           <Skeleton className="h-[30rem] w-full rounded-xl md:h-[40rem] lg:h-[50rem]" />

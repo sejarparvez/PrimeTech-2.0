@@ -1,47 +1,49 @@
 "use client";
+
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { BsMoonStars } from "react-icons/bs";
-import { MdOutlineWbSunny } from "react-icons/md";
-import ToolTipHook from "../helper/ToolTipHook";
-import { Label } from "../ui/label";
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function ThemeSwitch() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { setTheme, theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
-  const handleThemeToggle = () => {
-    if (resolvedTheme === "system") {
-      // If the system theme is light, switch to dark; otherwise, switch to light
-      setTheme(theme === "light" ? "dark" : "light");
-    } else {
-      // If the theme is explicitly set, toggle between "light" and "dark"
-      setTheme(theme === "light" ? "dark" : "light");
-    }
-  };
-
-  useEffect(() => {
+  React.useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return null;
+    return <Button variant="ghost" size="icon" disabled className="h-9 w-9" />;
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center gap-5">
-      <Label htmlFor="mode" onClick={handleThemeToggle}>
-        <ToolTipHook
-          icon={
-            resolvedTheme === "light" ? (
-              <MdOutlineWbSunny size={24} />
-            ) : (
-              <BsMoonStars size={20} />
-            )
-          }
-          text="Change Theme"
-        />
-      </Label>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary" size="icon" className="h-9 w-9">
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

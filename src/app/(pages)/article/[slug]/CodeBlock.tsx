@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/components/lib/utils";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Check, Copy } from "lucide-react";
 import React, { useState } from "react";
 import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";

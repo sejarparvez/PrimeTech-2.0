@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/components/lib/utils";
+import { cn } from "@/lib/utils";
 import React from "react";
 import CodeBlock from "./CodeBlock";
 
@@ -73,36 +73,27 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ content }) => {
 
         // Apply Tailwind classes based on element type
         const className = cn({
-          "text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100":
-            element.tagName === "H1",
-          "text-3xl font-semibold mt-8 mb-4 text-gray-800 dark:text-gray-200":
-            element.tagName === "H2",
-          "text-2xl font-semibold mt-6 mb-3 text-gray-700 dark:text-gray-300":
-            element.tagName === "H3",
-          "mb-4 text-gray-700 dark:text-gray-300 leading-relaxed":
-            element.tagName === "P",
+          "text-4xl font-bold mb-6": element.tagName === "H1",
+          "text-3xl font-semibold mt-8 mb-4": element.tagName === "H2",
+          "text-2xl font-semibold mt-6 mb-3 ": element.tagName === "H3",
+          "mb-4 leading-relaxed": element.tagName === "P",
           "list-disc list-inside mb-4 pl-4": element.tagName === "UL",
           "list-decimal list-inside mb-4 pl-4": element.tagName === "OL",
           "mb-2": element.tagName === "LI",
-          "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline":
-            element.tagName === "A",
+          underline: element.tagName === "U",
           "font-semibold": element.tagName === "STRONG",
-          "bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 font-mono text-sm":
+          " rounded px-1 py-0.5 font-mono text-sm":
             element.tagName === "CODE" &&
             element.parentElement?.tagName !== "PRE",
-          "border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4 text-gray-600 dark:text-gray-400":
+          "border-l-4 border pl-4 italic my-4 ":
             element.tagName === "BLOCKQUOTE",
           "w-full h-auto my-6 rounded-lg shadow-lg": element.tagName === "IMG",
-          "my-6 border-t border-gray-300 dark:border-gray-700":
-            element.tagName === "HR",
-          "font-mono bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5":
-            element.tagName === "KBD",
-          underline: element.tagName === "U",
+          "my-6 border-t border": element.tagName === "HR",
+          "font-mono  rounded px-1 py-0.5": element.tagName === "KBD",
           italic: element.tagName === "I" || element.tagName === "EM",
           "line-through": element.tagName === "S" || element.tagName === "DEL",
-          "border-collapse border border-gray-300 dark:border-gray-700":
-            element.tagName === "TABLE",
-          "border border-gray-300 dark:border-gray-700 px-4 py-2":
+          "border-collapse border": element.tagName === "TABLE",
+          "border px-4 py-2":
             element.tagName === "TH" || element.tagName === "TD",
         });
 

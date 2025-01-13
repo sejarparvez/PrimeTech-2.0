@@ -1,19 +1,22 @@
 "use client";
 
-import { FetchFeaturedPosts } from "@/components/fetch/get/featured/FetchFeaturedPost";
+import { FetchRecentPost } from "@/components/fetch/post/FetchPost";
 import { createSlug } from "@/components/helper/Slug";
 import { PostInterface } from "@/components/interface/Post";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, MoveUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
-export default function Featured() {
-  const { data, isLoading, isError } = FetchFeaturedPosts();
+type Variant = "featured" | "horizontal";
+
+const ProgrammingPost: FC = () => {
+  const { data, isLoading, isError, refetch } = FetchRecentPost();
 
   if (isLoading) {
     return (
@@ -26,29 +29,67 @@ export default function Featured() {
   if (isError) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <p>Failed to load posts. Please try again.</p>
+        <div className="text-center">
+          <p className="mb-4">Failed to load posts. Please try again.</p>
+          <Button onClick={() => refetch()}>Retry</Button>
+        </div>
       </main>
     );
   }
 
   return (
-    <section className="container pt-4">
+    <section className="container pb-10 pt-10 md:pb-20 md:pt-16">
+      <div className="mb-10 flex flex-col items-center gap-4 md:mb-16 md:flex-row md:gap-20">
+        <h1 className="text-center text-3xl font-extrabold italic md:text-7xl">
+          Programming Guide
+        </h1>
+        <Button
+          variant="outline"
+          className="flex w-full items-center justify-center space-x-4 px-8 py-4 md:w-auto md:space-x-10 md:px-20 md:py-6"
+        >
+          <p className="text-base md:text-lg">View All</p>
+          <MoveUpRight className="h-5 w-5 md:h-6 md:w-6" />
+        </Button>
+      </div>
+      {/* First Row */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8">
-        <div className="md:col-span-8">
-          <PostCard post={data[0]} variant="featured" />
+        <div className="grid grid-cols-1 gap-4 md:col-span-4 md:grid md:gap-4">
+          {data[0] && <PostCard post={data[0]} variant="horizontal" />}
+          {data[1] && <PostCard post={data[1]} variant="horizontal" />}
         </div>
-        <div className="grid grid-cols-1 gap-4 md:col-span-4 md:gap-3">
-          <PostCard post={data[1]} variant="horizontal" />
-          <PostCard post={data[2]} variant="horizontal" />
+
+        <div className="md:col-span-4">
+          {data[2] && <PostCard post={data[2]} variant="featured" />}
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:col-span-4 md:gap-4">
+          {data[3] && <PostCard post={data[3]} variant="horizontal" />}
+          {data[4] && <PostCard post={data[4]} variant="horizontal" />}
+        </div>
+      </div>
+
+      {/* Second Row */}
+      <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-12">
+        <div className="md:col-span-4">
+          {data[5] && <PostCard post={data[5]} variant="featured" />}
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:col-span-4 md:gap-4">
+          {data[6] && <PostCard post={data[6]} variant="horizontal" />}
+          {data[7] && <PostCard post={data[7]} variant="horizontal" />}
+        </div>
+
+        <div className="md:col-span-4">
+          {data[8] && <PostCard post={data[8]} variant="featured" />}
         </div>
       </div>
     </section>
   );
-}
+};
 
 interface PostCardProps {
   post: PostInterface;
-  variant: "featured" | "horizontal";
+  variant: Variant;
 }
 
 const PostCard: FC<PostCardProps> = ({ post, variant }) => (
@@ -59,22 +100,21 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
       }`}
     >
       <Image
-        src={post.coverImage}
+        src={post.coverImage || "/default-image.jpg"}
         alt={`Cover image for ${post.title}`}
         width={variant === "horizontal" ? 300 : 800}
         height={variant === "horizontal" ? 256 : 528}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        priority={variant === "featured"}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-      <div className="relative flex h-full flex-col justify-end p-2 text-white md:p-6">
+      <div className="relative flex h-full flex-col justify-end p-6 text-white">
         <h3
-          className={`mb-2 font-bold ${
-            variant === "featured" ? "text-2xl md:text-5xl" : "text-xl"
-          }`}
+          className={`mb-2 font-bold ${variant === "featured" ? "text-xl md:text-4xl" : "text-xl"}`}
         >
           {post.title}
         </h3>
-        {variant === "featured" && (
+        {variant === "featured" && post.author && (
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Avatar className="h-8 w-8 border-2 border-white">
@@ -101,7 +141,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
   </Link>
 );
 
-const SkeletonFeaturedPosts = () => (
+const SkeletonFeaturedPosts: FC = () => (
   <section className="container mx-auto px-4 py-16 md:py-24">
     <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
       <div className="md:col-span-8">
@@ -110,13 +150,17 @@ const SkeletonFeaturedPosts = () => (
         </Card>
       </div>
       <div className="space-y-4 md:col-span-4">
-        <Card className="relative flex h-48 overflow-hidden md:h-64">
-          <Skeleton className="absolute inset-0 h-full w-full" />
-        </Card>
-        <Card className="relative flex h-48 overflow-hidden md:h-64">
-          <Skeleton className="absolute inset-0 h-full w-full" />
-        </Card>
+        {[0, 1].map((index) => (
+          <Card
+            key={index}
+            className="relative flex h-48 overflow-hidden md:h-64"
+          >
+            <Skeleton className="absolute inset-0 h-full w-full" />
+          </Card>
+        ))}
       </div>
     </div>
   </section>
 );
+
+export default ProgrammingPost;

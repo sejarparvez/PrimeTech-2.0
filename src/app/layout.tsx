@@ -31,15 +31,9 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Provider session={session}>
-              <div>
-                <div className="md:grid md:grid-cols-24 lg:flex">
-                  <div className="md:col-span-22 md:w-full md:border-l">
-                    <Navbar />
-                    <div>{children}</div>
-                  </div>
-                </div>
-                <Footer />
-              </div>
+              <Navbar />
+              {children}
+              <Footer />
             </Provider>
           </ThemeProvider>
         </QueryProvider>

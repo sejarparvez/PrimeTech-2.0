@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="md:grid md:grid-cols-24 lg:flex">
         <div className="col-span-22 w-full border-l">
           <div className="lg:grid lg:grid-cols-48">
-            <div className="col-span-37 border-r pt-2">{children}</div>
+            <div className="col-span-37 mt-10 border-r pt-2">{children}</div>
             <div className="col-span-11">
               <RightSidebar />
             </div>
