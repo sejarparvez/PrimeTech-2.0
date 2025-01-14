@@ -1,7 +1,6 @@
-import { FetchRecentPost } from "@/components/fetch/get/recentpost/FetchRecentPost";
+import { FetchRecentPost } from "@/components/fetch/post/FetchPost";
 import Loading from "@/components/helper/Loading";
 import FeaturedPostType from "@/components/interface/post/FeaturedPostType";
-import { v4 as uuidv4 } from "uuid";
 import PostModel from "./PostModel";
 
 export default function SidebarRecent() {
@@ -19,12 +18,10 @@ export default function SidebarRecent() {
         <div className="mx-auto mt-5 flex w-11/12 flex-col gap-4 md:w-3/5 lg:w-10/12">
           {data.map((post: FeaturedPostType) => (
             <PostModel
-              key={uuidv4()}
+              key={post.id}
+              id={post.id}
               image={post.coverImage}
               title={post.title}
-              updatedAt={post.updatedAt}
-              category={post.category}
-              createdAt={post.createdAt}
             />
           ))}
         </div>

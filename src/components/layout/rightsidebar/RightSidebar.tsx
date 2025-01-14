@@ -15,16 +15,16 @@ export default function RightSidebar() {
   }
 
   return (
-    <div className="sticky top-6">
-      <ScrollArea className="mt-20 h-full pb-10">
+    <div className="sticky top-20">
+      <ScrollArea className="h-[93vh] pb-10">
         <div className="flex items-center justify-center">
           <div className="flex h-12 w-10/12 items-center justify-between rounded-full bg-secondary text-xl md:w-1/2 lg:w-10/12">
             <div
               onClick={() => handleClick(1)}
               className={`rounded-full px-4 py-3 ${
                 active === 1
-                  ? "bg-primary text-white"
-                  : "text-gray-500 hover:text-primary"
+                  ? "bg-primary text-secondary"
+                  : "text-muted-foreground hover:text-primary"
               }`}
             >
               <FaClock />
@@ -34,8 +34,8 @@ export default function RightSidebar() {
               onClick={() => handleClick(2)}
               className={`rounded-full px-4 py-3 ${
                 active === 2
-                  ? "bg-primary text-white"
-                  : "text-gray-500 hover:text-primary"
+                  ? "bg-primary text-secondary"
+                  : "text-muted-foreground hover:text-primary"
               }`}
             >
               <FaStar />
@@ -45,8 +45,8 @@ export default function RightSidebar() {
               onClick={() => handleClick(3)}
               className={`rounded-full px-4 py-3 ${
                 active === 3
-                  ? "bg-primary text-white"
-                  : "text-gray-500 hover:text-primary"
+                  ? "bg-primary text-secondary"
+                  : "text-muted-foreground hover:text-primary"
               }`}
             >
               <FaComments />
@@ -56,8 +56,8 @@ export default function RightSidebar() {
               onClick={() => handleClick(4)}
               className={`rounded-full px-4 py-3 ${
                 active === 4
-                  ? "bg-primary text-white"
-                  : "text-gray-500 hover:text-primary"
+                  ? "bg-primary text-secondary"
+                  : "text-muted-foreground hover:text-primary"
               }`}
             >
               <FaTag />

@@ -1,31 +1,27 @@
-import formatDate from "@/components/helper/hook/FormattedDate";
 import { useFormattedPostLink } from "@/components/helper/hook/FormattedLink";
+import { createSlug } from "@/components/helper/Slug";
 import Image from "next/image";
 import Link from "next/link";
 
 interface props {
   image: string;
   title: string;
-  category: string;
-  updatedAt: string;
-  createdAt: string;
+  id: string;
 }
 
 export default function PostModel({
   image,
   title,
-  category,
-  updatedAt,
-  createdAt,
+  id,
 }: props) {
-  const { postLink } = useFormattedPostLink(createdAt, title, category);
-  const encodeForUrl = (str: string) => {
-    return encodeURIComponent(str.replace(/\s+/g, "-")).toLowerCase();
-  };
-  const encodedCategory = category ? encodeForUrl(category) : "";
+
+
   return (
     <div className="flex gap-2">
-      <Link href={`/article/${postLink}`} className="mt-2 w-4/12">
+      <Link
+        href={`${createSlug({ id: id, name: title })}`}
+        className="mt-1 w-4/12"
+      >
         <Image
           src={image}
           alt=""
@@ -36,13 +32,9 @@ export default function PostModel({
       </Link>
 
       <div className="flex w-8/12 flex-col gap-1 text-sm">
-        <div className="font-semibold text-primary">
-          <Link href={`/category/${encodedCategory}`}>{category}</Link>
+        <div className="font-medium">
+          <Link href={`${createSlug({ id: id, name: title })}`}>{title}</Link>
         </div>
-        <div className="font-bold">
-          <Link href={`/article/${postLink}`}>{title}</Link>
-        </div>
-        <div className="text-gray-600">{formatDate(updatedAt)}</div>
       </div>
     </div>
   );
