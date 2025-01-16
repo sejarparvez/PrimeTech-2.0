@@ -1,15 +1,17 @@
 "use client";
 
 import { FetchSinglePost } from "@/components/fetch/get/singlepost/FetchSinglePost";
-import { Badge } from "@/components/ui/badge";
+import PostContent from "@/components/shared/PostContent";
+import PostHeader from "@/components/shared/PostHeader";
+import PostReadingProgress from "@/components/shared/PostReadingProgress";
+import PostSharing from "@/components/shared/PostSharing";
+import PostToc from "@/components/shared/PostToc";
+import TiptapRenderer from "@/components/TiptapRenderer/ServerRenderer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, Calendar, User } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { AlertCircle } from "lucide-react";
 import { useState } from "react";
-import BlogPostContent from "./MainContent";
 
 export default function SingleDesign({ postlink }: { postlink: string }) {
   const [retryCount, setRetryCount] = useState(0);
@@ -51,56 +53,23 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <article className="container mx-auto my-8 max-w-4xl">
-      <header className="mb-8">
-        <h1 className="mb-4 text-2xl font-extrabold text-primary sm:text-4xl lg:text-4xl">
-          {data.title}
-        </h1>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              <span>This article was last updated by</span>
-
-              <Link
-                href={`/users/${data.author.id}`}
-                className="flex items-center gap-1 font-medium text-foreground hover:underline"
-              >
-                <User className="h-4 w-4 text-primary" />
-                {data.author.name}
-              </Link>
-
-              <span>on</span>
-
-              <time
-                dateTime={data.updatedAt}
-                className="flex items-center gap-1"
-              >
-                <Calendar className="h-4 w-4 text-primary" />
-                {new Date(data.updatedAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-              <Badge className="w-fit md:hidden">{data.category}</Badge>
-            </div>
-          </div>
-          <Badge className="hidden w-fit md:block">{data.category}</Badge>
-        </div>
-      </header>
-
-      <figure className="mb-8 overflow-hidden rounded-lg">
-        <Image
-          src={data.coverImage}
-          alt={data.title}
-          className="h-auto w-full object-cover transition-transform duration-300"
-          width={900}
-          height={500}
-          priority
-        />
-      </figure>
-
-      <BlogPostContent content={data.content} />
+    <article className="flex flex-col items-center px-6 py-10">
+      <PostReadingProgress />
+      <PostHeader
+        title={data.title}
+        authorName={data.author.name}
+        authorImage={data.author.image}
+        createdAt={data.createdAt}
+        category={data.category}
+        cover={data.coverImage}
+      />
+      <div className="grid w-full grid-cols-1 gap-6 lg:w-auto lg:grid-cols-[minmax(auto,256px)_minmax(720px,1fr)_minmax(auto,256px)] lg:gap-12">
+        <PostSharing />
+        <PostContent>
+          <TiptapRenderer>{data.content}</TiptapRenderer>
+        </PostContent>
+        <PostToc />
+      </div>
     </article>
   );
 }
