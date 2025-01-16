@@ -14,14 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { getPost, savePost } from "@/services/post";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as z from "zod";
 import { NewArticleCategoryAndTags } from "./NewArticleCategory";
 import { ProductImage } from "./NewArticleImage";
-import { NewArticleSchema } from "./NewArticleSchema";
+import { NewArticleSchema, NewArticleSchemaType } from "./NewArticleSchema";
 
 export default function NewArticleForm() {
   const editorRef = useRef<TiptapEditorRef>(null);
@@ -60,21 +62,42 @@ export default function NewArticleForm() {
     return () => subscription.unsubscribe();
   }, [form, getWordCount]);
 
-  function onSubmit(values: z.infer<typeof NewArticleSchema>) {
-    // You can handle form submission here if needed
+  async function onSubmit(data: NewArticleSchemaType) {
     if (!image) {
       setWarning("Please upload an image.");
       return;
     }
 
     const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
+    Object.entries(data).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         formData.append(key, value.toString());
       }
     });
     formData.append("image", image);
-    console.log(formData);
+
+    toast.loading("Uploading, please wait...");
+    try {
+      const response = await axios.post(
+        "/api/dashboard/single-article",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      );
+
+      if (response.status === 201) {
+        toast.dismiss();
+        toast.success("Article successfully added");
+        resetForm();
+      } else {
+        toast.error("Failed to add article");
+        throw new Error("Failed to create article");
+      }
+    } catch (error: unknown) {
+      toast.dismiss();
+      toast.error("Failed to add article");
+    }
   }
 
   if (isLoading) return null;
@@ -105,31 +128,26 @@ export default function NewArticleForm() {
             </Button>
           </Link>
           <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-            New Design
+            New Article
           </h1>
           <div className="hidden items-center gap-2 md:ml-auto md:flex">
             <Button variant="outline" type="button" onClick={resetForm}>
               Discard
             </Button>
-            <Button size="sm" type="submit">
-              Save Design
-            </Button>
+            <Button type="submit">Save Article</Button>
           </div>
         </div>
         <div className="grid grid-cols-12 gap-10">
-          <div className="col-span-8">
+          <div className="col-span-8 space-y-6">
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>Article Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter post title..." {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is the title of your post.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -139,7 +157,7 @@ export default function NewArticleForm() {
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Content</FormLabel>
+                  <FormLabel>Article Content</FormLabel>
                   <FormControl>
                     <TiptapEditor
                       ref={editorRef}

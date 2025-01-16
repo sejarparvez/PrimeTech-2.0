@@ -2,6 +2,7 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { QueryProvider } from "@/provider/QueryProvider";
 import Provider from "@/provider/SessionProvider";
+import ClientSideToastContainer from "@/provider/ToastProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";
@@ -34,6 +35,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
               <Navbar />
               {children}
               <Footer />
+              <ClientSideToastContainer />
             </Provider>
           </ThemeProvider>
         </QueryProvider>

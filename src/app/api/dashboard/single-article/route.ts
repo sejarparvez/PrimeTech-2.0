@@ -1,6 +1,5 @@
-import storage from "@/utils/firebaseConfig";
+import { UploadImage } from "@/helper/UploadImage";
 import { PrismaClient } from "@prisma/client";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,17 +27,20 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const buffer = Buffer.from(await cover.arrayBuffer());
-    const filename = Date.now() + cover.name.replaceAll(" ", "_");
+    // Handle image file if present
+    const imageFile = data.get("image") as Blob;
+    let imageUrl = { secure_url: "", public_id: "" };
 
-    const storageRef = ref(storage, "post/featured/" + filename);
-    await uploadBytes(storageRef, buffer);
-    const downloadURL = await getDownloadURL(storageRef);
+    if (imageFile) {
+      // Upload the image to Cloudinary and get the URL
+      imageUrl = await UploadImage(imageFile, "Article/");
+    }
 
     const newPost = await prisma.post.create({
       data: {
         title,
-        coverImage: downloadURL,
+        coverImage: imageUrl.secure_url,
+        imageId: imageUrl.public_id,
         category: categories,
         content,
         author: { connect: { id: token.sub } },

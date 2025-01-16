@@ -40,7 +40,6 @@ export const RequiredLabel: React.FC<{ children: React.ReactNode }> = ({
 
 export const NewArticleCategoryAndTags: React.FC = () => {
   const { control, setValue, watch } = useFormContext<NewArticleSchemaType>();
-  const selectedCategory = watch("category");
   const tags = watch("tags") || [];
 
   const [input, setInput] = useState("");
