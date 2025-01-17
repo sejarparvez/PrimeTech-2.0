@@ -6,12 +6,12 @@ import PostHeader from "@/components/shared/PostHeader";
 import PostReadingProgress from "@/components/shared/PostReadingProgress";
 import PostSharing from "@/components/shared/PostSharing";
 import PostToc from "@/components/shared/PostToc";
-import TiptapRenderer from "@/components/TiptapRenderer/ServerRenderer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
+import TiptapRenderer from "./TiptapRenderer";
 
 export default function SingleDesign({ postlink }: { postlink: string }) {
   const [retryCount, setRetryCount] = useState(0);

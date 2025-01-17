@@ -30,7 +30,7 @@ export default function NewDesign() {
         </Suspense>
         <main className="w-full">
           <BreadCrumb />
-          <div className="container">
+          <div className="container px-2 md:px-10">
             <NewArticleForm />
           </div>
           <Footer />

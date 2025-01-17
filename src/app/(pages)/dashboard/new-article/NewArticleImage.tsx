@@ -51,7 +51,7 @@ export function ProductImage({ image, setImage, error }: ProductImageProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-1">
-          Design Image
+          Cover Image
           <CgAsterisk className="h-3 w-3 text-destructive" aria-hidden="true" />
         </CardTitle>
         <CardDescription>
@@ -61,7 +61,7 @@ export function ProductImage({ image, setImage, error }: ProductImageProps) {
       <CardContent>
         <div className="grid gap-4">
           {image ? (
-            <div className="relative aspect-square w-full max-w-sm overflow-hidden rounded-md">
+            <div className="relative h-48 w-full max-w-sm overflow-hidden rounded-md">
               <Image
                 src={URL.createObjectURL(image)}
                 alt="Product image"
@@ -79,7 +79,7 @@ export function ProductImage({ image, setImage, error }: ProductImageProps) {
               </Button>
             </div>
           ) : (
-            <div className="aspect-square w-full max-w-sm">
+            <div className="h-48 w-full max-w-sm">
               <Label
                 htmlFor="image-upload"
                 className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-muted-foreground bg-muted"

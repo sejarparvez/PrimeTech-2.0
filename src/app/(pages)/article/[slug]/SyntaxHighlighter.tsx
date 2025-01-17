@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useState } from "react";
-import { highlight } from "../utils/highlight";
+import { highlight } from "../../../../components/TiptapRenderer/utils/highlight";
 
 interface SyntaxHighlighterProps {
   content?: string;

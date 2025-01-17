@@ -1,5 +1,3 @@
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
 import { QueryProvider } from "@/provider/QueryProvider";
 import Provider from "@/provider/SessionProvider";
 import ClientSideToastContainer from "@/provider/ToastProvider";
@@ -32,9 +30,8 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Provider session={session}>
-              <Navbar />
               {children}
-              <Footer />
+
               <ClientSideToastContainer />
             </Provider>
           </ThemeProvider>

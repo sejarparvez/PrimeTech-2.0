@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Components } from "rehype-react";
-import HeadingWithAnchor from "./HeadingWithAnchor";
 import CopyButton from "./CopyButton";
-import type { ReactElement } from "react";
+import HeadingWithAnchor from "./HeadingWithAnchor";
 
 const SyntaxHighlighter = dynamic(() => import("./SyntaxHighlighter"), {
   ssr: false,
@@ -27,19 +26,14 @@ export const components: Partial<Components> = {
       <iframe
         {...props}
         allowFullScreen={true}
-        className="w-full h-full aspect-video mx-auto rounded-lg"
+        className="mx-auto aspect-video h-full w-full rounded-lg"
       />
     </div>
-    //  <div className="relative pt-[56.25%] rounded-lg overflow-hidden">
-    //    <div className="absolute inset-0">
-    //      <iframe {...props} allowFullScreen={true} className="w-full h-full" />
-    //    </div>
-    //  </div>
   ),
   pre: ({ children, ...props }) => {
-    const code = (children as ReactElement).props.children;
+    const code = (children as any).props.children;
     return (
-      <div className="relative group not-prose rounded-lg overflow-hidden border border-[#d1d9e0] dark:border-[#3d444d]">
+      <div className="not-prose group relative overflow-hidden rounded-lg border border-[#d1d9e0] dark:border-[#3d444d]">
         <CopyButton code={String(code)} />
         <pre {...(props as any)}>{children}</pre>
       </div>

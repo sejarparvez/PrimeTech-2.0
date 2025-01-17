@@ -1,5 +1,5 @@
-import { components } from "./components/custom";
-import { createProcessor } from "./utils/processor";
+import { components } from "./custom";
+import { createProcessor } from "./processor";
 
 interface TiptapRendererProps {
   children: string;

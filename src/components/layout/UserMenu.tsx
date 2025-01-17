@@ -60,7 +60,9 @@ export function UserMenu() {
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Dashboard</DropdownMenuItem>
+        <Link href="/dashboard">
+          <DropdownMenuItem>Dashboard</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuSeparator />
         <AlertDialog open={showLogoutAlert} onOpenChange={setShowLogoutAlert}>
