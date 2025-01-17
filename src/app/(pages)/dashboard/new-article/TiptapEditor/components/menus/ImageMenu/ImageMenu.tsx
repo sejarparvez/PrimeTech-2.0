@@ -1,29 +1,32 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {useTiptapContext} from "../../Provider";
-import {BubbleMenu} from "../../BubbleMenu";
-import {Toolbar, ToolbarDivider} from "../../ui/Toolbar";
+import { getNodeContainer } from "@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer";
+import { Node } from "@tiptap/pm/model";
+import { NodeSelection, Selection, TextSelection } from "@tiptap/pm/state";
+import { useEditorState } from "@tiptap/react";
+import { useCallback, useRef, useState } from "react";
+import type { Instance } from "tippy.js";
+import { BubbleMenu } from "../../BubbleMenu";
 import MenuButton from "../../MenuButton";
-import {useEditorState} from "@tiptap/react";
-import {getNodeContainer} from "@/components/TiptapEditor/utils/getNodeContainer";
+import { useTiptapContext } from "../../Provider";
+import { Toolbar, ToolbarDivider } from "../../ui/Toolbar";
 import AltTextEdit from "./AltTextEdit";
-import type {Instance} from "tippy.js";
 import SizeDropdown from "./SizeDropdown";
-import {NodeSelection, Selection, TextSelection} from "@tiptap/pm/state";
-import {Node} from "@tiptap/pm/model";
 
 export const ImageMenu = () => {
   const tippyInstance = useRef<Instance | null>(null);
-  const {editor, isResizing, contentElement} = useTiptapContext();
+  const { editor, isResizing, contentElement } = useTiptapContext();
   const [isEditText, setIsEditText] = useState(false);
 
   const image = useEditorState({
     editor,
     selector: (ctx) => {
-      if (!ctx.editor.isActive("image") && !ctx.editor.isActive("imageFigure")) {
+      if (
+        !ctx.editor.isActive("image") &&
+        !ctx.editor.isActive("imageFigure")
+      ) {
         return null;
       }
 
-      const {node, pos} = getImageOrFigureNode(ctx.editor.state.selection);
+      const { node, pos } = getImageOrFigureNode(ctx.editor.state.selection);
       if (!node) return null;
 
       return {
@@ -45,27 +48,34 @@ export const ImageMenu = () => {
 
   const updateImageAttr = (name: string, value: any) => {
     const {
-      state: {selection},
+      state: { selection },
     } = editor;
     return editor
       .chain()
-      .command(({commands}) => {
-        if (image?.pos && selection.from !== image.pos) return commands.setNodeSelection(image.pos);
+      .command(({ commands }) => {
+        if (image?.pos && selection.from !== image.pos)
+          return commands.setNodeSelection(image.pos);
         return true;
       })
-      .updateAttributes("image", {[name]: value})
+      .updateAttributes("image", { [name]: value })
       .focus()
       .run();
   };
 
   // Toggle caption between figure and image
   const toggleCaption = () =>
-    editor.chain().focus()[image?.hasCaption ? "figureToImage" : "imageToFigure"]().run();
+    editor
+      .chain()
+      .focus()
+      [image?.hasCaption ? "figureToImage" : "imageToFigure"]()
+      .run();
 
   // Toggle alt text edit form and update Tippy position
   const toggleEditAltText = () => {
     setIsEditText((prev) => !prev);
-    requestAnimationFrame(() => tippyInstance.current?.popperInstance?.update());
+    requestAnimationFrame(() =>
+      tippyInstance.current?.popperInstance?.update(),
+    );
   };
 
   const setAltText = (value: string) => {
@@ -79,7 +89,8 @@ export const ImageMenu = () => {
 
   // Download image with proper filename
   const downloadImage = useCallback(async () => {
-    if (!image?.src) return console.error("No image source available for download.");
+    if (!image?.src)
+      return console.error("No image source available for download.");
 
     try {
       const res = await fetch(image.src);
@@ -106,7 +117,9 @@ export const ImageMenu = () => {
     <BubbleMenu
       editor={editor}
       pluginKey="image-bubble"
-      shouldShow={({editor}) => editor.isActive("imageFigure") || editor.isActive("image")}
+      shouldShow={({ editor }) =>
+        editor.isActive("imageFigure") || editor.isActive("image")
+      }
       updateDelay={100}
       tippyOptions={{
         maxWidth: "auto",
@@ -146,11 +159,15 @@ export const ImageMenu = () => {
             active={image?.hasCaption}
             onClick={toggleCaption}
           />
-          <ToolbarDivider/>
-          <SizeDropdown value={image?.width} onChange={setSize}/>
-          <ToolbarDivider/>
-          <MenuButton icon="Download" tooltip="Download" onClick={downloadImage}/>
-          <MenuButton icon="Trash" tooltip="Delete" onClick={removeImage}/>
+          <ToolbarDivider />
+          <SizeDropdown value={image?.width} onChange={setSize} />
+          <ToolbarDivider />
+          <MenuButton
+            icon="Download"
+            tooltip="Download"
+            onClick={downloadImage}
+          />
+          <MenuButton icon="Trash" tooltip="Delete" onClick={removeImage} />
         </Toolbar>
       )}
     </BubbleMenu>
@@ -159,7 +176,9 @@ export const ImageMenu = () => {
 
 export default ImageMenu;
 
-const getImageOrFigureNode = (selection: Selection): { node: Node | null; pos: number | null } => {
+const getImageOrFigureNode = (
+  selection: Selection,
+): { node: Node | null; pos: number | null } => {
   let node: Node | null = null;
   let pos: number | null = null;
 
@@ -179,5 +198,5 @@ const getImageOrFigureNode = (selection: Selection): { node: Node | null; pos: n
     }
   }
 
-  return {node, pos};
+  return { node, pos };
 };

@@ -2,7 +2,6 @@
 import formatDate from "@/components/helper/hook/FormattedDate";
 import Loading from "@/components/helper/Loading";
 import ToolTipHookDown from "@/components/helper/ToolTipHookDown";
-import RecentPostModel from "@/components/pages/home/RecentPostModel";
 import CommentsModel from "@/components/pages/profile/CommentModel";
 import PostModel from "@/components/pages/profile/PostModel";
 import { Badge } from "@/components/ui/badge";

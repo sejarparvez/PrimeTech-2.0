@@ -1,16 +1,16 @@
 "use client";
 
-import React, { forwardRef, useCallback, useEffect } from "react";
 import { Content, type Editor } from "@tiptap/react";
+import { forwardRef, useCallback, useEffect } from "react";
 
-import TiptapProvider from "./Provider";
 import { type UseTiptapEditorOptions } from "../hooks/useTiptapEditor";
+import TiptapProvider from "./Provider";
 
 import MenuBar from "./MenuBar";
-import StatusBar from "./StatusBar";
 import Resizer from "./Resizer";
+import StatusBar from "./StatusBar";
 
-import { TextMenu, LinkMenu, ImageMenu, CodeBlockMenu } from "./menus";
+import { CodeBlockMenu, ImageMenu, LinkMenu, TextMenu } from "./menus";
 
 import ExtensionKit from "../kit";
 
@@ -60,23 +60,27 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
       contentMaxHeight,
       onContentChange,
     },
-    ref
+    ref,
   ) => {
     const isEditable = !readonly && !disabled;
     const displayBubbleMenu = isEditable && hideBubbleMenu;
 
     const throttledUpdate = useCallback(
       throttle((value: Content) => onContentChange?.(value), 1500),
-      []
+      [],
     );
 
     const handleUpdate = useCallback(
       (editor: Editor) => {
         const content =
-          output === "html" ? (editor.isEmpty ? "" : editor.getHTML()) : editor.getJSON();
+          output === "html"
+            ? editor.isEmpty
+              ? ""
+              : editor.getHTML()
+            : editor.getJSON();
         throttledUpdate(content);
       },
-      [throttledUpdate, output]
+      [throttledUpdate, output],
     );
 
     const editorOptions: UseTiptapEditorOptions = {
@@ -98,7 +102,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
 
     const menus = displayBubbleMenu && (
       <>
-        {/* <TextMenu  /> */}
+        <TextMenu enable />
         <LinkMenu />
         <ImageMenu />
         <CodeBlockMenu />
@@ -115,7 +119,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
         <Resizer />
       </TiptapProvider>
     );
-  }
+  },
 );
 
 TiptapEditor.displayName = "TiptapEditor";
