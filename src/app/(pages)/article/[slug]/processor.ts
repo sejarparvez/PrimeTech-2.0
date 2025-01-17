@@ -1,4 +1,3 @@
-import { Root } from "hast";
 import * as prod from "react/jsx-runtime";
 import rehypeParse from "rehype-parse";
 import rehypeReact, { type Components } from "rehype-react";
@@ -10,7 +9,7 @@ interface ProcessorOptions {
 }
 
 const addHeadingIds = () => {
-  return (tree: Root) => {
+  return (tree: any) => {
     visit(tree, "element", (node) => {
       if (["h2", "h3", "h4"].includes(node.tagName)) {
         // Safely extract all text content, even if nested
