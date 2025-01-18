@@ -1,6 +1,7 @@
+"use client";
 import { useEffect, useState } from "react";
 
-export default function useProgress(containerSelector: string) {
+function useProgress(containerSelector: string) {
   const [enable, setEnable] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
 
@@ -15,7 +16,7 @@ export default function useProgress(containerSelector: string) {
           if (!enable && entry.isIntersecting) setEnable(true);
         });
       },
-      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 }
+      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 },
     );
 
     observer.observe(container);
@@ -56,3 +57,16 @@ export default function useProgress(containerSelector: string) {
 
   return { enable, progress };
 }
+
+const PostReadingProgress = () => {
+  const { progress, enable } = useProgress(".article-content");
+
+  return enable ? (
+    <div
+      className="fixed inset-x-0 top-16 z-50 h-1 bg-blue-600 dark:bg-blue-500"
+      style={{ width: `${progress}%` }}
+    />
+  ) : null;
+};
+
+export default PostReadingProgress;

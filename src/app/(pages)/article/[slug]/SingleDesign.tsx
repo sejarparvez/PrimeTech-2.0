@@ -1,16 +1,15 @@
 "use client";
-
-import { FetchSinglePost } from "@/components/fetch/get/singlepost/FetchSinglePost";
-import PostContent from "@/components/shared/PostContent";
-import PostHeader from "@/components/shared/PostHeader";
-import PostReadingProgress from "@/components/shared/PostReadingProgress";
-import PostSharing from "@/components/shared/PostSharing";
-import PostToc from "@/components/shared/PostToc";
+import { FetchSinglePost } from "@/components/fetch/post/FetchPost";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
+import PostContent from "./PostContent";
+import PostHeader from "./PostHeader";
+import PostReadingProgress from "./PostReadingProgress";
+import PostSharing from "./PostSharing";
+import PostToc from "./PostToc";
 import TiptapRenderer from "./TiptapRenderer";
 
 export default function SingleDesign({ postlink }: { postlink: string }) {
