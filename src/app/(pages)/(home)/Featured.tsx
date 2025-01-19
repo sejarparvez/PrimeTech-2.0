@@ -17,7 +17,7 @@ export default function Featured() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen">
+      <main>
         <SkeletonFeaturedPosts />
       </main>
     );
@@ -102,7 +102,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
 );
 
 const SkeletonFeaturedPosts = () => (
-  <section className="container mx-auto px-4 py-16 md:py-24">
+  <section className="container pt-4">
     <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
       <div className="md:col-span-8">
         <Card className="relative h-64 overflow-hidden md:h-[33rem]">
