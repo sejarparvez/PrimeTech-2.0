@@ -1,6 +1,6 @@
+import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import MediaGallery from "./MediaGallery";
-import { Button } from "@/components/ui/button";
 import "./style.scss";
 
 interface MediaLibraryProps {
@@ -61,7 +61,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("/api/images", {
+      const response = await fetch("/api/dashboard/single-article/image", {
         method: "POST",
         body: formData,
       });

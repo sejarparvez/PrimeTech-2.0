@@ -1,6 +1,6 @@
 import Dialog from "@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Dialog";
 import useModal from "@/app/(pages)/dashboard/new-article/TiptapEditor/hooks/useModal";
-import MediaLibrary from "@/components/MediaLibrary";
+import MediaLibrary from "@/app/(pages)/dashboard/new-article/TiptapEditor/components/MediaLibrary";
 import { useEditorState } from "@tiptap/react";
 import MenuButton from "../MenuButton";
 import { useTiptapContext } from "../Provider";
