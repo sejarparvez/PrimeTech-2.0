@@ -111,8 +111,10 @@ const PostToc = () => {
               <Link
                 href={`#${item.id}`}
                 onClick={scrollToHeading(item.id)}
-                className={`transition-colors hover:text-blue-600 ${
-                  activeId === item.id ? "text-blue-600" : ""
+                className={`transition-all hover:font-bold hover:tracking-wider hover:text-primary ${
+                  activeId === item.id
+                    ? "font-bold tracking-wider text-primary"
+                    : ""
                 }`}
               >
                 {item.text}

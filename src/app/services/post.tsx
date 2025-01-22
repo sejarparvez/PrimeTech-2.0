@@ -7,7 +7,7 @@ export const useSinglePost = ({ id }: { id: string }) => {
   return useQuery({
     queryKey: ["Single article", id],
     queryFn: async () => {
-      const response = await axios.get(`/api/post/singlepost?id=${id}`);
+      const response = await axios.get(`/api/article/single-article?id=${id}`);
       return response.data;
     },
   });

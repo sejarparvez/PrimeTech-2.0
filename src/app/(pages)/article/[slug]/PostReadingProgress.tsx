@@ -63,7 +63,7 @@ const PostReadingProgress = () => {
 
   return enable ? (
     <div
-      className="fixed inset-x-0 top-16 z-50 h-1 bg-blue-600 dark:bg-blue-500"
+      className="fixed inset-x-0 top-16 z-50 h-1 bg-primary"
       style={{ width: `${progress}%` }}
     />
   ) : null;

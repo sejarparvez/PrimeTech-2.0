@@ -1,3 +1,4 @@
+import { DomUtils, parseDocument } from "htmlparser2";
 import slugify from "slugify";
 
 /**
@@ -13,7 +14,13 @@ export const slugifyText = (text: string) => {
 /**
  * Creates a slug using article id and name.
  */
-export const createSlug = ({ id, name }: { id: string; name: string }): string => {
+export const createSlug = ({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}): string => {
   if (!id || !name) {
     throw new Error("Both 'id' and 'name' are required to create a slug.");
   }
@@ -34,10 +41,19 @@ export const SlugToText = (slug: string): string => {
 };
 
 /**
- * Removes HTML tags from a string.
+ * Removes HTML tags from a string using htmlparser2.
+ *
+ * @param str - The string to sanitize.
+ * @returns A string with all HTML tags removed.
  */
 export function RemoveHtmlTags(str: string): string {
-  if (!str) return "";
-  const doc = new DOMParser().parseFromString(str, "text/html");
-  return doc.body.textContent || "";
+  if (typeof str !== "string" || !str.trim()) return ""; // Handle invalid or empty strings
+
+  try {
+    const document = parseDocument(str); // Parse the HTML string
+    return DomUtils.getText(document).trim(); // Extract and trim text content
+  } catch (error) {
+    console.error("Error parsing string in RemoveHtmlTags:", error);
+    return ""; // Return empty string in case of error
+  }
 }
