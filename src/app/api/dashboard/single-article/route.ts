@@ -1,4 +1,4 @@
-import { UploadImage } from "@/helper/UploadImage";
+import { cloudinaryUploadImage } from "@/utils/cloudinary";
 import { PrismaClient } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
 
     if (imageFile) {
       // Upload the image to Cloudinary and get the URL
-      imageUrl = await UploadImage(imageFile, "Article/");
+      imageUrl = await cloudinaryUploadImage(imageFile, "Article/");
     }
 
     const newPost = await prisma.post.create({

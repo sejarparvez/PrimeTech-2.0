@@ -1,13 +1,5 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import Logout from "../common/Logout";
 
 export function UserMenu() {
   const { data: session, status } = useSession();
@@ -65,31 +58,7 @@ export function UserMenu() {
         </Link>
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <AlertDialog open={showLogoutAlert} onOpenChange={setShowLogoutAlert}>
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem onClick={() => setShowLogoutAlert(true)}>
-              Log out
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you sure you want to log out?
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <Button
-                variant="secondary"
-                onClick={() => setShowLogoutAlert(false)}
-              >
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={() => signOut()}>
-                Log out
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <Logout />
       </DropdownMenuContent>
     </DropdownMenu>
   );

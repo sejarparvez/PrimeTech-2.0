@@ -1,20 +1,20 @@
 "use client";
 
-import { FetchRecentPost } from "@/components/fetch/post/FetchPost";
-import { createSlug } from "@/components/helper/Slug";
-import FeaturedPostType from "@/components/interface/post/FeaturedPostType";
+import { useRecentPosts } from "@/app/services/post";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { articleInterFace } from "@/utils/interface";
+import { createSlug } from "@/utils/slug";
 import { formatDistanceToNow } from "date-fns";
 import { Calendar, MessageCircle, MoveUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function RecentPostsList() {
-  const { data, isLoading, isError } = FetchRecentPost();
+  const { data, isLoading, isError } = useRecentPosts();
 
   if (isError) {
     return (
@@ -44,7 +44,7 @@ export default function RecentPostsList() {
           ? Array.from({ length: 6 }).map((_, index) => (
               <PostSkeleton key={index} />
             ))
-          : data?.map((post: FeaturedPostType) => (
+          : data?.map((post: articleInterFace) => (
               <PostCard key={post.id} data={post} />
             ))}
       </div>
@@ -52,7 +52,7 @@ export default function RecentPostsList() {
   );
 }
 
-function PostCard({ data }: { data: FeaturedPostType }) {
+function PostCard({ data }: { data: articleInterFace }) {
   return (
     <>
       <Link
@@ -77,10 +77,6 @@ function PostCard({ data }: { data: FeaturedPostType }) {
             <h2 className="mb-2 line-clamp-2 text-xl font-bold transition-colors group-hover:text-primary sm:text-2xl">
               {data.title}
             </h2>
-
-            <p className="mb-4 line-clamp-2 text-sm text-muted-foreground sm:line-clamp-3">
-              {data.content}
-            </p>
 
             <div className="flex items-center justify-between text-xs sm:text-sm">
               <div className="flex items-center space-x-2 sm:space-x-4">

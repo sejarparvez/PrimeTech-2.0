@@ -1,11 +1,11 @@
 "use client";
 
-import { FetchRecentPost } from "@/components/fetch/post/FetchPost";
-import { createSlug } from "@/components/helper/Slug";
-import { PostInterface } from "@/components/interface/Post";
+import { useRecentPosts } from "@/app/services/post";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { articleInterFace } from "@/utils/interface";
+import { createSlug } from "@/utils/slug";
 import { formatDistanceToNow } from "date-fns";
 import { MessageCircle, MoveUpRight } from "lucide-react";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import Link from "next/link";
 import { FC } from "react";
 
 export default function ComputingPost() {
-  const { isLoading, data, isError } = FetchRecentPost();
+  const { isLoading, data, isError } = useRecentPosts();
 
   if (isLoading) return <p>Loading...</p>;
   if (isError || !data) return <p>Failed to load posts.</p>;
@@ -57,7 +57,7 @@ export default function ComputingPost() {
 }
 
 interface PostCardProps {
-  post: PostInterface;
+  post: articleInterFace;
   variant: "featured" | "horizontal";
 }
 
@@ -101,7 +101,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
             </div>
             <div className="flex items-center space-x-2">
               <MessageCircle className="h-4 w-4" />
-              <span className="text-xs">{post.commentCount}</span>
+              <span className="text-xs">{post._count.comments}</span>
             </div>
           </div>
         )}

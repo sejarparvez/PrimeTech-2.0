@@ -1,5 +1,6 @@
 "use client";
-import { FetchSinglePost } from "@/components/fetch/post/FetchPost";
+
+import { useSinglePost } from "@/app/services/post";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,7 +18,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
 
   const id = postlink.split("_")[1];
 
-  const { isLoading, data, isError, refetch } = FetchSinglePost({ id });
+  const { isLoading, data, isError, refetch } = useSinglePost({ id });
 
   const handleRetry = () => {
     setRetryCount((prev) => prev + 1);

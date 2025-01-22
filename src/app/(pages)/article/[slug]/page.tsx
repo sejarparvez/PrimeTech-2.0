@@ -1,4 +1,4 @@
-import { RemoveHtmlTags } from "@/components/helper/Slug";
+import { RemoveHtmlTags } from "@/utils/slug";
 import axios from "axios";
 import type { Metadata, ResolvingMetadata } from "next";
 import SingleDesign from "./SingleDesign";
