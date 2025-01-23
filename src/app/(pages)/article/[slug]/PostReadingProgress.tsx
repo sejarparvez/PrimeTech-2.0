@@ -24,7 +24,7 @@ function useProgress(containerSelector: string) {
     return () => {
       observer.unobserve(container);
     };
-  }, [containerSelector]);
+  }, [containerSelector, enable]);
 
   useEffect(() => {
     const container = document.body.querySelector(containerSelector);
@@ -53,7 +53,7 @@ function useProgress(containerSelector: string) {
       window.removeEventListener("scroll", calculateProgress);
       window.removeEventListener("resize", calculateProgress);
     };
-  }, [enable]);
+  }, [enable, containerSelector]);
 
   return { enable, progress };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSinglePost } from "@/app/services/post";
+import { useSinglePost } from "@/app/services/article";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

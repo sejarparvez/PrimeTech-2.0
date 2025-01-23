@@ -53,13 +53,13 @@ export async function GET(req: NextRequest) {
       take: limit,
 
       orderBy: {
-        createdAt: "desc",
+        updatedAt: "desc",
       },
 
       select: {
         title: true,
         id: true,
-        createdAt: true,
+        updatedAt: true,
         category: true,
         coverImage: true,
 

@@ -42,7 +42,7 @@ export function DashboardSidebar({
         },
         {
           title: "View All",
-          url: "/dashboard/all-design?category=all&query=&page=1",
+          url: "/dashboard/all-article?category=all&query=&page=1",
         },
       ],
     },

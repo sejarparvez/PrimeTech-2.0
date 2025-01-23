@@ -1,6 +1,6 @@
 "use client";
 
-import { useFeaturedArticles } from "@/app/services/post";
+import { useFeaturedArticles } from "@/app/services/article";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

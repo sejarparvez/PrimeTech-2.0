@@ -1,6 +1,6 @@
 "use client";
 
-import { useRecentPosts } from "@/app/services/post";
+import { useRecentPosts } from "@/app/services/article";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
