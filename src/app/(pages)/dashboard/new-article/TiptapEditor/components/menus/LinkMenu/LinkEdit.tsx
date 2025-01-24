@@ -29,7 +29,7 @@ const LinkEdit = ({ initialUrl, initialText, isCreate, onApply, onCancel }: Link
     if (!isCreate) {
       setCanSubmit((url && url !== initialUrl) || text !== initialText);
     }
-  }, [text, url]);
+  }, [text, url, initialText, initialUrl, isCreate]);
 
   return (
     <form className="rte-link__form" onSubmit={onSubmit}>

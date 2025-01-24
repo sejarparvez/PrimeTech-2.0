@@ -1,9 +1,10 @@
+import { useEditorState } from "@tiptap/react";
 import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useEditorState } from "@tiptap/react";
 import { useTiptapContext } from "./Provider";
 
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value));
 
 type ResizeInfo = {
   currentHeight: number;
@@ -40,8 +41,8 @@ const Resizer = () => {
       const nodeType = ctx.editor.isActive("image")
         ? "image"
         : ctx.editor.isActive("youtube")
-        ? "youtube"
-        : null;
+          ? "youtube"
+          : null;
 
       if (!nodeType) return null;
 
@@ -55,9 +56,12 @@ const Resizer = () => {
   const { maxWidth, minWidth } = useMemo(() => {
     const width = contentElement.current?.getBoundingClientRect().width || 0;
     return { maxWidth: width, minWidth: width * 0.25 };
-  }, [contentElement.current]);
+  }, [contentElement]);
 
-  const startResizing = (event: React.PointerEvent<HTMLDivElement>, direction: number) => {
+  const startResizing = (
+    event: React.PointerEvent<HTMLDivElement>,
+    direction: number,
+  ) => {
     event.preventDefault();
     const resizeInfo = resizeInfoRef.current;
 
@@ -105,7 +109,7 @@ const Resizer = () => {
     requestAnimationFrame(() =>
       editor?.commands.updateAttributes(nodeState!.nodeType, {
         width: Math.round((resizeInfo.currentWidth / maxWidth) * 100),
-      })
+      }),
     );
   };
 
@@ -136,14 +140,14 @@ const Resizer = () => {
     resizeInfo.ratio = width / height;
 
     updateControlPosition();
-  }, [nodeState]);
+  }, [nodeState, updateControlPosition]);
 
   if (!nodeState || !contentElement.current) return;
 
   const renderResizerHandle = (
     cursor: string,
     direction: number,
-    position: React.CSSProperties
+    position: React.CSSProperties,
   ) => (
     <div
       className="rte-resizer__control"
@@ -155,11 +159,19 @@ const Resizer = () => {
   return createPortal(
     <div ref={controlRef} className="rte-resizer">
       {renderResizerHandle("nw-resize", 0, { width: 12, left: -10, top: -10 })}
-      {renderResizerHandle("sw-resize", 0, { width: 12, left: -10, bottom: -10 })}
+      {renderResizerHandle("sw-resize", 0, {
+        width: 12,
+        left: -10,
+        bottom: -10,
+      })}
       {renderResizerHandle("sw-resize", 1, { width: 12, right: -10, top: -10 })}
-      {renderResizerHandle("nw-resize", 1, { width: 12, right: -10, bottom: -10 })}
+      {renderResizerHandle("nw-resize", 1, {
+        width: 12,
+        right: -10,
+        bottom: -10,
+      })}
     </div>,
-    contentElement.current
+    contentElement.current,
   );
 };
 

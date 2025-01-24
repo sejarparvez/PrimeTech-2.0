@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Image from "next/image";
 import React from "react";
 import { LuCheck } from "react-icons/lu";
 
@@ -31,7 +32,12 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
           )}
 
           <div className="media-item__image-wrapper">
-            <img src={image.url} alt={image.display_name} />
+            <Image
+              width={200}
+              height={200}
+              src={image.url}
+              alt={image.display_name}
+            />
           </div>
 
           <div className="media-item__info">

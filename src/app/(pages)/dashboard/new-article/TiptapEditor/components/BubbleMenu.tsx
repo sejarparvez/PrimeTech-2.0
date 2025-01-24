@@ -50,7 +50,7 @@ export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenu
         }
       });
     };
-  }, [editor]);
+  }, [editor, props]);
 
   const portal = createPortal(
     <div className={clsx("rte-bubble-menu", className)}>{children}</div>,

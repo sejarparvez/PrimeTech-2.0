@@ -34,7 +34,7 @@ export const CodeBlockMenu = () => {
     if (node?.textContent) {
       copy(node.textContent);
     }
-  }, [editor]);
+  }, [editor, copy]);
 
   const handleDelete = useCallback(() => {
     editor.chain().focus().deleteNode("codeBlock").run();
