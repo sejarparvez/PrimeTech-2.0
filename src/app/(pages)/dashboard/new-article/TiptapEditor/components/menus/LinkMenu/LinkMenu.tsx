@@ -40,7 +40,7 @@ export const LinkMenu = () => {
       })
       .run();
     setIsEditing(false);
-  }, []);
+  }, [editor]);
 
   const removeLink = useCallback(() => {
     editor.chain().focus().unsetLink().run();

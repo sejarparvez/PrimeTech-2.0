@@ -1,7 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import {
+  BubbleMenuPlugin,
+  BubbleMenuPluginProps,
+} from "@tiptap/extension-bubble-menu";
 import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { BubbleMenuPluginProps, BubbleMenuPlugin } from "@tiptap/extension-bubble-menu";
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -13,7 +16,12 @@ export type BubbleMenuProps = Omit<
   children: React.ReactNode;
 };
 
-export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenuProps) => {
+export const BubbleMenu = ({
+  editor,
+  className,
+  children,
+  ...props
+}: BubbleMenuProps) => {
   const menuEl = useRef<HTMLDivElement>(document.createElement("div"));
 
   useEffect(() => {
@@ -21,13 +29,17 @@ export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenu
       return;
     }
 
-    const { pluginKey = "bubbleMenu", tippyOptions = {}, updateDelay, shouldShow = null } = props;
-
+    const {
+      pluginKey = "bubbleMenu",
+      tippyOptions = {},
+      updateDelay,
+      shouldShow = null,
+    } = props;
     const menuEditor = editor;
 
     if (!menuEditor) {
       console.warn(
-        "BubbleMenu component is not rendered inside of an editor component or does not have editor prop."
+        "BubbleMenu component is not rendered inside of an editor component or does not have editor prop.",
       );
       return;
     }
@@ -42,11 +54,15 @@ export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenu
     });
 
     menuEditor.registerPlugin(plugin);
+
+    // Use a stable reference for cleanup
+    const menuElement = menuEl.current;
+
     return () => {
       menuEditor.unregisterPlugin(pluginKey);
       window.requestAnimationFrame(() => {
-        if (menuEl.current.parentNode) {
-          menuEl.current.parentNode.removeChild(menuEl.current);
+        if (menuElement.parentNode) {
+          menuElement.parentNode.removeChild(menuElement);
         }
       });
     };
@@ -54,7 +70,7 @@ export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenu
 
   const portal = createPortal(
     <div className={clsx("rte-bubble-menu", className)}>{children}</div>,
-    menuEl.current
+    menuEl.current,
   );
 
   return portal;
