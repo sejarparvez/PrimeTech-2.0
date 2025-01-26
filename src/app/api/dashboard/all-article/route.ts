@@ -20,13 +20,13 @@ export async function GET(req: NextRequest) {
     const category = queryParams.get("category") || "all";
     const searchQuery = queryParams.get("searchQuery") || "";
 
-    const limit = 10;
+    const limit = 12;
     const skip = (page - 1) * limit;
 
     let whereClause: {
       authorId?: string | undefined;
       category?: string;
-      name?: {
+      title?: {
         contains: string;
         mode: "insensitive";
       };
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
       whereClause.authorId = token.sub;
     }
     if (searchQuery) {
-      whereClause.name = {
+      whereClause.title = {
         contains: searchQuery,
         mode: "insensitive",
       };
@@ -53,16 +53,9 @@ export async function GET(req: NextRequest) {
       take: limit,
 
       orderBy: {
-        updatedAt: "desc",
+        createdAt: "desc",
       },
-
-      select: {
-        title: true,
-        id: true,
-        updatedAt: true,
-        category: true,
-        coverImage: true,
-
+      include: {
         author: {
           select: {
             name: true,

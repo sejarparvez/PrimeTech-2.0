@@ -24,7 +24,6 @@ import * as z from "zod";
 import { NewArticleCategoryAndTags } from "./NewArticleCategory";
 import { ProductImage } from "./NewArticleImage";
 import { NewArticleSchema, NewArticleSchemaType } from "./NewArticleSchema";
-import { mock } from "@/sample";
 
 export default function NewArticleForm() {
   const editorRef = useRef<TiptapEditorRef>(null);
@@ -35,7 +34,7 @@ export default function NewArticleForm() {
     resolver: zodResolver(NewArticleSchema),
     defaultValues: {
       title: "",
-      content: mock.content,
+      content: "",
       category: "",
       tags: [],
     },

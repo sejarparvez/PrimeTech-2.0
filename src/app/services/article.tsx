@@ -13,7 +13,6 @@ export const useSinglePost = ({ id }: { id: string }) => {
   });
 };
 
-// /hooks/useUserDesigns.ts
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 
