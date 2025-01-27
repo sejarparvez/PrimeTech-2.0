@@ -60,3 +60,23 @@ export async function cloudinaryUploadImage(
     Readable.from(buffer).pipe(uploadStream);
   });
 }
+
+// Utility function to delete an image from Cloudinary by its public ID
+export async function deleteImageFromCloudinary(
+  imageId: string,
+): Promise<void> {
+  try {
+    // Call Cloudinary's API to delete the image by its public ID
+    const result = await cloudinary.uploader.destroy(imageId);
+    if (result.result === "ok") {
+      console.log(
+        `Image with ID ${imageId} successfully deleted from Cloudinary.`,
+      );
+    } else {
+      console.log(`Failed to delete image with ID ${imageId}.`);
+    }
+  } catch (error) {
+    console.error("Error deleting image from Cloudinary:", error);
+    throw new Error("Error deleting image from Cloudinary.");
+  }
+}

@@ -3,10 +3,7 @@
 import { articleCategories } from "@/app/constants/articleCategory";
 import { useDashboardArticle } from "@/app/services/article";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,21 +14,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
 import { articleInterFace } from "@/utils/interface";
-import { formatDistanceToNow } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
+import { ArticleCard } from "./ArticleCard";
+import { ArticleListSkeleton } from "./ArticleSketon";
 import ArticlePagination from "./PaginationUi";
 
 export default function ArticleList() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session } = useSession();
 
   const [category, setCategory] = useState<string>(
     searchParams.get("category") || "all",
@@ -70,7 +63,7 @@ export default function ArticleList() {
   const categoryName = searchParams.get("category") || "All";
   const query = searchParams.get("query") || "";
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const { isLoading, data, isError, refetch } = useDashboardArticle({
+  const { isLoading, data, isError } = useDashboardArticle({
     page,
     category: categoryName,
     searchQuery: query,
@@ -164,106 +157,6 @@ export default function ArticleList() {
           </motion.div>
         </AnimatePresence>
       )}
-    </div>
-  );
-}
-
-function ArticleCard({ article }: { article: articleInterFace }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-zinc-700/25">
-        <div className="relative aspect-[16/10]">
-          <Image
-            src={article.coverImage}
-            alt={article.title}
-            fill
-            className="object-cover brightness-50 transition-all duration-300 group-hover:scale-105 group-hover:brightness-75"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        </div>
-        <CardHeader className="absolute bottom-0 left-0 right-0 mb-16 p-4 md:mb-0">
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-start justify-between">
-              <Badge className="mb-2">{article.category}</Badge>
-              <div className="flex items-center space-x-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:hidden lg:flex">
-                <Button size="icon" variant="secondary">
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button size="icon">
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button size="icon" variant="destructive">
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-            <CardTitle className="mb-1 line-clamp-2 text-base text-white sm:text-lg">
-              {article.title}
-            </CardTitle>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-white/80 sm:text-sm">
-              <Avatar className="h-6 w-6">
-                <AvatarImage
-                  src={article.author?.image}
-                  alt={article.author?.name}
-                />
-                <AvatarFallback className="text-primary">
-                  {article.author?.name.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <span className="line-clamp-1">{article.author?.name}</span>
-              <div className="flex flex-wrap items-center">
-                <span className="mx-2">•</span>
-                <Calendar className="mr-1 h-4 w-4" />
-                <time dateTime={article.updatedAt}>
-                  {formatDistanceToNow(new Date(article.updatedAt), {
-                    addSuffix: true,
-                  })}
-                </time>
-              </div>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="justify-end space-x-1 p-4 sm:flex lg:hidden">
-          <Button size="sm" variant="secondary">
-            <Eye className="mr-2 h-4 w-4" />
-            View
-          </Button>
-          <Button size="sm" variant="secondary">
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-          <Button size="sm" variant="secondary">
-            <Trash2 className="mr-2 h-4 w-4" />
-            Delete
-          </Button>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
-}
-
-function ArticleListSkeleton() {
-  return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {[...Array(6)].map((_, i) => (
-        <Card key={i} className="relative overflow-hidden">
-          <div className="relative aspect-[16/10]">
-            <Skeleton className="absolute inset-0" />
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <Skeleton className="mb-2 h-5 w-20" />
-            <Skeleton className="mb-1 h-6 w-3/4" />
-            <div className="mt-2 flex items-center">
-              <Skeleton className="mr-2 h-6 w-6 rounded-full" />
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </Card>
-      ))}
     </div>
   );
 }
