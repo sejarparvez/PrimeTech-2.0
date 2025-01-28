@@ -63,6 +63,8 @@ export async function cloudinaryUploadImage(
 
 // Utility function to delete an image from Cloudinary by its public ID
 export async function deleteImageFromCloudinary(
+
+
   imageId: string,
 ): Promise<void> {
   try {

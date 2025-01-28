@@ -1,11 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const lastUpdatedPost = await prisma.post.findMany({
+    const lastUpdatedPost = await Prisma.post.findMany({
       where: {
         category: "Featured",
       },
@@ -60,6 +58,6 @@ export async function GET() {
       headers: { "Content-Type": "text/plain" },
     });
   } finally {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   }
 }
