@@ -1,7 +1,12 @@
-import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
-import { useCodeMirror } from "./useCodeMirror";
-import { formatHtml } from "./format";
-import "./CodeMirror.scss";
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
+import { useCodeMirror } from './useCodeMirror';
+import { formatHtml } from './format';
+import './CodeMirror.scss';
 
 interface SourceEditorProps {
   initialContent: string;
@@ -10,7 +15,7 @@ interface SourceEditorProps {
 
 const SourceEditor = forwardRef<HTMLDivElement, SourceEditorProps>(
   ({ initialContent, onChange }, ref) => {
-    const [formattedContent, setFormattedContent] = useState<string>("");
+    const [formattedContent, setFormattedContent] = useState<string>('');
     const editorRef = useCodeMirror({
       initialContent: formattedContent,
       onChange,
@@ -26,6 +31,6 @@ const SourceEditor = forwardRef<HTMLDivElement, SourceEditorProps>(
   }
 );
 
-SourceEditor.displayName = "SourceEditor";
+SourceEditor.displayName = 'SourceEditor';
 
 export default SourceEditor;

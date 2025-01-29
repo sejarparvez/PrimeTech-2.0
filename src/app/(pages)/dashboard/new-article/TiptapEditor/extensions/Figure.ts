@@ -1,11 +1,11 @@
-import { Editor } from "@tiptap/core";
-import { mergeAttributes, Node } from "@tiptap/core";
-import { NodeType } from "@tiptap/pm/model";
+import { Editor } from '@tiptap/core';
+import { mergeAttributes, Node } from '@tiptap/core';
+import { NodeType } from '@tiptap/pm/model';
 
 export const Figure = Node.create({
-  name: "figure",
-  group: "block",
-  content: "block figcaption",
+  name: 'figure',
+  group: 'block',
+  content: 'block figcaption',
   selectable: true,
   draggable: true,
 
@@ -16,11 +16,11 @@ export const Figure = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: "figure" }];
+    return [{ tag: 'figure' }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["figure", mergeAttributes(HTMLAttributes), 0];
+    return ['figure', mergeAttributes(HTMLAttributes), 0];
   },
 
   addKeyboardShortcuts() {
@@ -40,7 +40,11 @@ const handleEnter = (editor: Editor, nodeType: NodeType) => {
 
   if ($from.parent.type === nodeType) {
     const pos = $from.end();
-    return editor.chain().focus(pos).insertContentAt(pos, { type: "paragraph" }).run();
+    return editor
+      .chain()
+      .focus(pos)
+      .insertContentAt(pos, { type: 'paragraph' })
+      .run();
   }
 
   return false;
@@ -60,7 +64,8 @@ const handleDelete = (editor: Editor, nodeType: NodeType) => {
   }
 
   // Check if the cursor is at the end of the current block
-  const isAtEnd = selection.empty && $from.parentOffset === $from.parent.nodeSize - 2;
+  const isAtEnd =
+    selection.empty && $from.parentOffset === $from.parent.nodeSize - 2;
   if (isAtEnd) {
     const $pos = doc.resolve($from.pos + 1); // Resolve the position after the current block
     const nodeAfter = $pos.nodeAfter; // Get the node after the resolved position
@@ -96,7 +101,10 @@ const handleBackspace = (editor: Editor, nodeType: NodeType) => {
     return editor
       .chain()
       .command(({ chain }) => {
-        return $from.parent.textContent.length > 0 || chain().deleteCurrentNode().run();
+        return (
+          $from.parent.textContent.length > 0 ||
+          chain().deleteCurrentNode().run()
+        );
       })
       .setNodeSelection($pos.pos - nodeBefore.nodeSize)
       .run();

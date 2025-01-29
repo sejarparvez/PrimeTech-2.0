@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   totalPages: number;
@@ -12,11 +12,11 @@ interface PaginationProps {
 export default function ArticlePagination({ totalPages }: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page") || "1");
+  const currentPage = Number(searchParams.get('page') || '1');
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
+    params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
 
@@ -30,9 +30,9 @@ export default function ArticlePagination({ totalPages }: PaginationProps) {
     children: React.ReactNode;
   }) => (
     <Button
-      variant={currentPage === page ? "default" : "outline"}
+      variant={currentPage === page ? 'default' : 'outline'}
       size="icon"
-      className={disabled ? "pointer-events-none opacity-50" : ""}
+      className={disabled ? 'pointer-events-none opacity-50' : ''}
       asChild
     >
       <Link href={createPageURL(page)} aria-disabled={disabled}>
@@ -55,7 +55,7 @@ export default function ArticlePagination({ totalPages }: PaginationProps) {
       pageNumbers.push(
         <PaginationLink key={i} page={i}>
           {i}
-        </PaginationLink>,
+        </PaginationLink>
       );
     }
 

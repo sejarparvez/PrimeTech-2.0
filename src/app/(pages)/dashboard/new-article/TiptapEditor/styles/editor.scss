@@ -1,5 +1,5 @@
-@use "mixins";
-@use "variables";
+@use 'mixins';
+@use 'variables';
 
 .rte-editor {
   all: unset;
@@ -9,7 +9,7 @@
   border-radius: variables.$radius;
   font-family: variables.$editor-font;
   box-shadow: variables.$shadow-1;
-  @include mixins.font-size("sm");
+  @include mixins.font-size('sm');
 
   &--fullscreen {
     --rte-editor-max-height: auto;
@@ -163,10 +163,12 @@
 .rte-heading-dropdown {
   min-width: 10rem;
 
-  @each $heading, $size in ("p": "sm", "h1": "2xl", "h2": "xl", "h3": "lg", "h4": "base") {
-    [data-heading="#{$heading}"] {
+  @each $heading,
+    $size in ('p': 'sm', 'h1': '2xl', 'h2': 'xl', 'h3': 'lg', 'h4': 'base')
+  {
+    [data-heading='#{$heading}'] {
       @include mixins.font-size($size);
-      @if $heading != "p" {
+      @if $heading != 'p' {
         font-weight: bold;
       }
     }
@@ -198,7 +200,7 @@
     padding: 0.375rem 0.375rem 0.375rem 1.75rem;
     border-radius: variables.$radius-sm;
     cursor: pointer;
-    @include mixins.font-size("sm");
+    @include mixins.font-size('sm');
 
     &:hover {
       background-color: variables.$accent-color;

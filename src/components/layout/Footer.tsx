@@ -1,29 +1,29 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Briefcase, Send } from "lucide-react";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Briefcase, Send } from 'lucide-react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 import {
   FaFacebook,
   FaGithub,
   FaInstagram,
   FaLinkedin,
   FaTwitter,
-} from "react-icons/fa";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { z } from "zod";
+} from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { z } from 'zod';
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -33,25 +33,25 @@ export default function Footer() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.loading("Please wait...");
+    toast.loading('Please wait...');
     try {
-      const response = await axios.post("/api/dashboard/subscribe", {
+      const response = await axios.post('/api/dashboard/subscribe', {
         email: data.email,
       });
       toast.dismiss();
 
       if (response.status === 200) {
         toast.dismiss();
-        toast.success("Successfully subscribed!");
+        toast.success('Successfully subscribed!');
         form.reset();
       } else if (response.status === 409) {
         toast.dismiss();
-        toast.info("Email already in use");
+        toast.info('Email already in use');
       }
     } catch (error: any) {
       toast.dismiss();
@@ -74,28 +74,28 @@ export default function Footer() {
               {[
                 {
                   icon: FaFacebook,
-                  label: "Facebook",
-                  href: "https://www.facebook.com/www.md.mohon",
+                  label: 'Facebook',
+                  href: 'https://www.facebook.com/www.md.mohon',
                 },
                 {
                   icon: FaTwitter,
-                  label: "Twitter",
-                  href: "https://www.twitter.com/mohongraphics",
+                  label: 'Twitter',
+                  href: 'https://www.twitter.com/mohongraphics',
                 },
                 {
                   icon: FaInstagram,
-                  label: "Instagram",
-                  href: "https://www.instagram.com/mohongraphics",
+                  label: 'Instagram',
+                  href: 'https://www.instagram.com/mohongraphics',
                 },
                 {
                   icon: FaLinkedin,
-                  label: "LinkedIn",
-                  href: "https://linkedin.com/in/mohongraphics",
+                  label: 'LinkedIn',
+                  href: 'https://linkedin.com/in/mohongraphics',
                 },
                 {
                   icon: FaGithub,
-                  label: "GitHub",
-                  href: "https://www.github.com/mohon01",
+                  label: 'GitHub',
+                  href: 'https://www.github.com/mohon01',
                 },
               ].map((social) => (
                 <Link
@@ -121,14 +121,14 @@ export default function Footer() {
               <h3 className="text-lg font-semibold">Services</h3>
               <ul className="space-y-2">
                 {[
-                  "Branding",
-                  "Web Design",
-                  "Print Design",
-                  "Motion Graphics",
+                  'Branding',
+                  'Web Design',
+                  'Print Design',
+                  'Motion Graphics',
                 ].map((service) => (
                   <li key={service}>
                     <Link
-                      href={`/services/${service.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-muted-foreground transition-colors hover:text-primary"
                     >
                       {service}
@@ -138,7 +138,7 @@ export default function Footer() {
                 <li>
                   <Link
                     className="text-muted-foreground transition-colors hover:text-primary"
-                    href={"/services/ui-ux"}
+                    href={'/services/ui-ux'}
                   >
                     UI/UX
                   </Link>
@@ -148,7 +148,7 @@ export default function Footer() {
             <nav className="space-y-4">
               <h3 className="text-lg font-semibold">Company</h3>
               <ul className="space-y-2">
-                {["About", "Portfolio", "Careers", "Blog", "Contact"].map(
+                {['About', 'Portfolio', 'Careers', 'Blog', 'Contact'].map(
                   (item) => (
                     <li key={item}>
                       <Link
@@ -158,7 +158,7 @@ export default function Footer() {
                         {item}
                       </Link>
                     </li>
-                  ),
+                  )
                 )}
               </ul>
             </nav>
@@ -166,15 +166,15 @@ export default function Footer() {
               <h3 className="text-lg font-semibold">Jobs</h3>
               <ul className="space-y-2">
                 {[
-                  "Graphic Designer",
-                  "UI/UX Designer",
-                  "Web Developer",
-                  "Motion Designer",
-                  "Internships",
+                  'Graphic Designer',
+                  'UI/UX Designer',
+                  'Web Developer',
+                  'Motion Designer',
+                  'Internships',
                 ].map((job) => (
                   <li key={job}>
                     <Link
-                      href={`/jobs/${job.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`/jobs/${job.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-muted-foreground transition-colors hover:text-primary"
                     >
                       {job}
@@ -232,14 +232,14 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} PrimeTech. All rights reserved.</p>
           <nav className="mt-4 flex flex-wrap justify-center space-x-4 sm:mt-0 sm:space-x-6">
             {[
-              "Privacy Policy",
-              "Terms of Service",
-              "Cookie Policy",
-              "Sitemap",
+              'Privacy Policy',
+              'Terms of Service',
+              'Cookie Policy',
+              'Sitemap',
             ].map((item) => (
               <Link
                 key={item}
-                href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
                 className="transition-colors hover:text-primary"
               >
                 {item}

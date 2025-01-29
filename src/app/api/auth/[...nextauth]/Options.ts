@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import { Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import { Session } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
 interface UserWithRole {
@@ -21,15 +21,15 @@ interface CustomSession extends Session {
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-        email: { label: "email", type: "email" },
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
+        email: { label: 'email', type: 'email' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          throw new Error("Email and password are required.");
+          throw new Error('Email and password are required.');
         }
         const user = await prisma.user.findUnique({
           where: {
@@ -38,20 +38,20 @@ export const authOptions = {
         });
 
         if (!user) {
-          throw new Error("User not found.");
+          throw new Error('User not found.');
         }
         if (user.emailVerified === null) {
-          throw new Error("User not found.");
+          throw new Error('User not found.');
         }
 
         if (user.password) {
           const passwordMatch = await bcrypt.compareSync(
             credentials.password,
-            user.password,
+            user.password
           );
 
           if (!passwordMatch) {
-            throw new Error("Incorrect password.");
+            throw new Error('Incorrect password.');
           }
         }
 
@@ -72,7 +72,7 @@ export const authOptions = {
       trigger?: any;
       session?: Session;
     }) {
-      if (trigger === "update") {
+      if (trigger === 'update') {
         return { ...token, ...session?.user };
       }
       if (user) {
@@ -94,18 +94,18 @@ export const authOptions = {
         ...session,
         user: {
           ...session.user,
-          id: typeof token === "string" ? token : token.sub,
-          role: typeof token === "string" ? token : token.status,
+          id: typeof token === 'string' ? token : token.sub,
+          role: typeof token === 'string' ? token : token.status,
         },
       };
     },
   } as any,
 
   session: {
-    strategy: "jwt" as "jwt",
+    strategy: 'jwt' as 'jwt',
     maxAge: 60 * 60 * 24,
     updateAge: 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === 'development',
 };

@@ -1,11 +1,13 @@
-@use "mixins";
-@use "variables";
+@use 'mixins';
+@use 'variables';
 
 .ProseMirror-selectednode {
   @at-root {
     &:has(iframe),
     img#{&} {
-      box-shadow: 0 0 0 3px variables.$bg-color, 0 0 0 5px variables.$primary-color;
+      box-shadow:
+        0 0 0 3px variables.$bg-color,
+        0 0 0 5px variables.$primary-color;
     }
   }
 }
@@ -19,11 +21,13 @@
   padding-block: 1.75rem;
 
   // Editable content styles
-  &[contenteditable="true"] {
+  &[contenteditable='true'] {
     .ProseMirror-selectednode:has(iframe),
     img.ProseMirror-selectednode,
     img:has(+ figcaption.ProseMirror-selectednode) {
-      box-shadow: 0 0 0 3px variables.$bg-color, 0 0 0 5px variables.$primary-color;
+      box-shadow:
+        0 0 0 3px variables.$bg-color,
+        0 0 0 5px variables.$primary-color;
     }
   }
 
@@ -38,7 +42,7 @@
 
   // Indentation levels
   @for $i from 1 through 4 {
-    [data-indent="#{$i}"] {
+    [data-indent='#{$i}'] {
       text-indent: 1em * $i;
     }
   }

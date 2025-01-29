@@ -1,8 +1,8 @@
-import { Link as TiptapLink, LinkOptions } from "@tiptap/extension-link";
-import { getMarkRange } from "@tiptap/core";
-import { Plugin, Selection, TextSelection } from "@tiptap/pm/state";
+import { Link as TiptapLink, LinkOptions } from '@tiptap/extension-link';
+import { getMarkRange } from '@tiptap/core';
+import { Plugin, Selection, TextSelection } from '@tiptap/pm/state';
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     customLink: {
       insertLink: (attrs: any) => ReturnType;
@@ -35,7 +35,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
   },
 
   onSelectionUpdate() {
-    if (this.storage.mode == -1 && !this.editor.isActive("link")) {
+    if (this.storage.mode == -1 && !this.editor.isActive('link')) {
       this.editor.commands.confirmEditLink();
     }
   },
@@ -46,7 +46,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
       startEditLink:
         () =>
         ({ editor, chain }) => {
-          const mode = editor.isActive("link") ? 1 : -1;
+          const mode = editor.isActive('link') ? 1 : -1;
 
           if (mode === -1) {
             chain()
@@ -56,14 +56,14 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
                   return chain()
                     .blur()
                     .focus(tr.selection.anchor)
-                    .insertLink({ text: "\u200B" })
+                    .insertLink({ text: '\u200B' })
                     .run();
                 // @ts-ignore
-                return chain().setLink({href:""}).run();
+                return chain().setLink({ href: '' }).run();
               })
-              .setMeta("addToHistory", false)
-              .setMeta("preventUpdate", true)
-              .setMeta("preventClearTempLink", true)
+              .setMeta('addToHistory', false)
+              .setMeta('preventUpdate', true)
+              .setMeta('preventClearTempLink', true)
               .run();
           }
 
@@ -78,14 +78,14 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
           return chain()
             .insertContent(
               {
-                type: "text",
+                type: 'text',
                 text: text,
                 marks: [
                   {
-                    type: "link",
+                    type: 'link',
                     attrs: {
                       href,
-                      target: "_blank",
+                      target: '_blank',
                     },
                   },
                 ],
@@ -108,8 +108,8 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
               clearTempLinks(tr, doc, this.storage.tempPos);
               return true;
             })
-            .setMeta("addToHistory", shouldUpdate)
-            .setMeta("preventUpdate", !shouldUpdate)
+            .setMeta('addToHistory', shouldUpdate)
+            .setMeta('preventUpdate', !shouldUpdate)
             .run();
 
           this.storage.mode = 0;
@@ -133,7 +133,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
             const { schema, doc, tr } = view.state;
             const range = getMarkRange(doc.resolve(pos), schema.marks.link);
             const target = event.target as HTMLElement;
-            const linkElement = target.closest("a");
+            const linkElement = target.closest('a');
 
             if (!linkElement?.href || !range) {
               return false;
@@ -141,7 +141,9 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
 
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(
+              new TextSelection($start, $end)
+            );
 
             view.dispatch(transaction);
 
@@ -153,14 +155,17 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
             transactions.some((transaction) => transaction.docChanged) &&
             !oldState.doc.eq(newState.doc);
           const skipTransaction = transactions.some((transaction) =>
-            transaction.getMeta("preventClearTempLink")
+            transaction.getMeta('preventClearTempLink')
           );
 
           if (!hasDocChanges || skipTransaction) return;
 
           const tr = newState.tr;
 
-          const range = getMarkRange(newState.selection.$anchor, newState.schema.marks.link);
+          const range = getMarkRange(
+            newState.selection.$anchor,
+            newState.schema.marks.link
+          );
           if (!range) {
             return;
           }
@@ -179,7 +184,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
 
   addKeyboardShortcuts() {
     return {
-      "Mod-k": () => this.editor.commands.startEditLink(),
+      'Mod-k': () => this.editor.commands.startEditLink(),
     };
   },
 });
@@ -188,11 +193,11 @@ function clearTempLinks(tr: any, doc: any, selection: any) {
   const { from, to, empty } = selection;
   if (empty) {
     tr.removeMark(from, from + 1);
-    tr.insertText("", from, from + 1);
+    tr.insertText('', from, from + 1);
   } else {
     doc.nodesBetween(from, to, (node: any, pos: any) => {
       const linkMark = node.marks.find(
-        (mark: any) => mark.type.name === "link" && !mark.attrs.href
+        (mark: any) => mark.type.name === 'link' && !mark.attrs.href
       );
 
       if (linkMark) {

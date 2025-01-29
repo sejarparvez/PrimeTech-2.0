@@ -1,6 +1,6 @@
-import React from "react";
-import MenuButton from "../../MenuButton";
-import { DropdownMenuItem } from "../../ui/DropdownMenu";
+import React from 'react';
+import MenuButton from '../../MenuButton';
+import { DropdownMenuItem } from '../../ui/DropdownMenu';
 
 interface SizeDropdownProps {
   value: number;
@@ -12,10 +12,10 @@ const SizeDropdown = ({ value, onChange }: SizeDropdownProps) => {
   return (
     <MenuButton
       type="dropdown"
-      buttonStyle={{ width: "6.5rem" }}
-      dropdownStyle={{ width: "7rem" }}
+      buttonStyle={{ width: '6.5rem' }}
+      dropdownStyle={{ width: '7rem' }}
       icon="Ruler"
-      text={value ? `${value}%` : "Default"}
+      text={value ? `${value}%` : 'Default'}
       hideText={false}
       tooltip={false}
     >
@@ -25,7 +25,7 @@ const SizeDropdown = ({ value, onChange }: SizeDropdownProps) => {
           data-active={option == value || undefined}
           onSelect={() => onChange(option)}
         >
-          {option ? `${option}% width` : "Default"}
+          {option ? `${option}% width` : 'Default'}
         </DropdownMenuItem>
       ))}
     </MenuButton>

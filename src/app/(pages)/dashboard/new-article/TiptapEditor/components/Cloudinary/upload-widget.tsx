@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import Script from "./script";
+import { useEffect, useRef, useState } from 'react';
+import Script from './script';
 import {
   CloudinaryInstance,
   UploadWidgetError,
   UploadWidgetInstance,
   UploadWidgetProps,
   UploadWidgetResults,
-} from "./upload-widget.type";
+} from './upload-widget.type';
 
 const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
   const cloudinary = useRef<CloudinaryInstance | null>(null);
@@ -39,7 +39,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
       }
     }
 
-    if ("requestIdleCallback" in window) {
+    if ('requestIdleCallback' in window) {
       requestIdleCallback(onIdle);
     } else {
       setTimeout(onIdle, 1);
@@ -63,14 +63,14 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
     return cloudinary.current?.createUploadWidget(
       uploadOptions,
       function (error: UploadWidgetError, result: UploadWidgetResults) {
-        if (error && typeof onError === "function") {
+        if (error && typeof onError === 'function') {
           onError(error, widget.current);
         }
 
-        if (result.event === "success" && typeof onSuccess === "function") {
+        if (result.event === 'success' && typeof onSuccess === 'function') {
           onSuccess(result, widget.current);
         }
-      },
+      }
     );
   }
 
@@ -89,7 +89,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
 
   return (
     <>
-      {typeof children === "function" && children({ cloudinary, widget, open })}
+      {typeof children === 'function' && children({ cloudinary, widget, open })}
       <Script
         src="https://upload-widget.cloudinary.com/global/all.js"
         onLoad={handleOnLoad}

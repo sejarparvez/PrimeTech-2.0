@@ -1,4 +1,4 @@
-import { IconBaseProps, IconType } from "react-icons";
+import { IconBaseProps, IconType } from 'react-icons';
 import {
   TbAlignCenter,
   TbAlignJustified,
@@ -43,13 +43,13 @@ import {
   TbTrash,
   TbUnderline,
   TbX,
-} from "react-icons/tb";
+} from 'react-icons/tb';
 
-import IconCorner from "./Corner";
-import IconInlineCode from "./InlineCode";
-import IconQuote from "./Quote";
-import IconTextColor from "./TextColor";
-import IconTextHighlight from "./TextHighlight";
+import IconCorner from './Corner';
+import IconInlineCode from './InlineCode';
+import IconQuote from './Quote';
+import IconTextColor from './TextColor';
+import IconTextHighlight from './TextHighlight';
 
 export const icons = {
   Bold: TbBold,

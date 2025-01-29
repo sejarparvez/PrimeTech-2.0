@@ -1,2 +1,2 @@
-export * from "./ImageFigure";
-export * from "./ImageCaption";
+export * from './ImageFigure';
+export * from './ImageCaption';

@@ -1,19 +1,24 @@
-import React, { CSSProperties, memo, useEffect, useMemo } from "react";
-import clsx from "clsx";
+import React, { CSSProperties, memo, useEffect, useMemo } from 'react';
+import clsx from 'clsx';
 
-import Tooltip from "./ui/Tooltip";
-import Icon, { type IconProps } from "./ui/Icon";
-import Button, { type ButtonProps } from "./ui/Button";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "./ui/DropdownMenu";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
+import Tooltip from './ui/Tooltip';
+import Icon, { type IconProps } from './ui/Icon';
+import Button, { type ButtonProps } from './ui/Button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from './ui/DropdownMenu';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/Popover';
 
-import { getShortcutKey } from "../utils/shortcut";
-import { useTiptapContext } from "./Provider";
+import { getShortcutKey } from '../utils/shortcut';
+import { useTiptapContext } from './Provider';
 
-interface MenuButtonProps extends Omit<ButtonProps, "variant" | "ref" | "type"> {
-  icon?: IconProps["name"];
-  type?: "button" | "dropdown" | "popover";
-  buttonType?: ButtonProps["type"];
+interface MenuButtonProps
+  extends Omit<ButtonProps, 'variant' | 'ref' | 'type'> {
+  icon?: IconProps['name'];
+  type?: 'button' | 'dropdown' | 'popover';
+  buttonType?: ButtonProps['type'];
   text?: string;
   active?: boolean;
   shortcuts?: string[];
@@ -51,14 +56,17 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   ) => {
     const { editor, contentElement } = useTiptapContext();
 
-    const hasArrowIcon = type === "dropdown" || (type === "popover" && !hideArrow);
+    const hasArrowIcon =
+      type === 'dropdown' || (type === 'popover' && !hideArrow);
     const hasIconOnly = hideText && !hasArrowIcon;
 
     const tooltipContent = useMemo(() => {
       if (tooltip === false) return null;
       const content = {
-        title: typeof tooltip === "string" ? tooltip : text,
-        shortcuts: shortcuts ? `(${shortcuts.map(getShortcutKey).join(" + ")})` : "",
+        title: typeof tooltip === 'string' ? tooltip : text,
+        shortcuts: shortcuts
+          ? `(${shortcuts.map(getShortcutKey).join(' + ')})`
+          : '',
       };
 
       return `${content.title} ${content.shortcuts}`;
@@ -74,7 +82,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         ref={ref}
         type={buttonType}
         variant="ghost"
-        className={clsx("rte-menu__button", buttonClass)}
+        className={clsx('rte-menu__button', buttonClass)}
         style={buttonStyle}
         iconOnly={hasIconOnly}
         slotBefore={!hasIconOnly && renderIcon}
@@ -87,7 +95,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         }
         onFocusCapture={(e) => e.stopPropagation()}
         data-active={(editor.isEditable && active) || undefined}
-        aria-label={typeof tooltip === "string" ? tooltip : text}
+        aria-label={typeof tooltip === 'string' ? tooltip : text}
         disabled={!editor.isEditable || disabled}
         {...props}
       >
@@ -106,7 +114,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       renderButton
     );
 
-    if (type === "dropdown") {
+    if (type === 'dropdown') {
       return (
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>{renderContent}</DropdownMenuTrigger>
@@ -121,7 +129,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       );
     }
 
-    if (type === "popover") {
+    if (type === 'popover') {
       return (
         <Popover modal={false}>
           <PopoverTrigger asChild>{renderContent}</PopoverTrigger>
@@ -140,6 +148,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   }
 );
 
-MenuButton.displayName = "MenuButton";
+MenuButton.displayName = 'MenuButton';
 
 export default memo(MenuButton);

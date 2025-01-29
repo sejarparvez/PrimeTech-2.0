@@ -1,5 +1,5 @@
-import { DomUtils, parseDocument } from "htmlparser2";
-import slugify from "slugify";
+import { DomUtils, parseDocument } from 'htmlparser2';
+import slugify from 'slugify';
 
 /**
  * Generates a slugified version of the provided name.
@@ -33,9 +33,9 @@ export const createSlug = ({
  * Converts a slug into a human-readable format.
  */
 export const SlugToText = (slug: string): string => {
-  if (!slug.trim()) return "";
+  if (!slug.trim()) return '';
   return slug
-    .replace(/-/g, " ")
+    .replace(/-/g, ' ')
     .replace(/\b\w/g, (match) => match.toUpperCase())
     .replace(/\b\w{1}/g, (match) => match.toLowerCase());
 };
@@ -47,13 +47,13 @@ export const SlugToText = (slug: string): string => {
  * @returns A string with all HTML tags removed.
  */
 export function RemoveHtmlTags(str: string): string {
-  if (typeof str !== "string" || !str.trim()) return ""; // Handle invalid or empty strings
+  if (typeof str !== 'string' || !str.trim()) return ''; // Handle invalid or empty strings
 
   try {
     const document = parseDocument(str); // Parse the HTML string
     return DomUtils.getText(document).trim(); // Extract and trim text content
   } catch (error) {
-    console.error("Error parsing string in RemoveHtmlTags:", error);
-    return ""; // Return empty string in case of error
+    console.error('Error parsing string in RemoveHtmlTags:', error);
+    return ''; // Return empty string in case of error
   }
 }

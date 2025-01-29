@@ -1,7 +1,7 @@
-import React from "react";
-import MenuButton from "../MenuButton";
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import MenuButton from '../MenuButton';
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
 
 const BoldButton = () => {
   const { editor } = useTiptapContext();
@@ -9,7 +9,7 @@ const BoldButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("bold"),
+        active: ctx.editor.isActive('bold'),
         disabled: !ctx.editor.can().toggleBold(),
       };
     },
@@ -19,7 +19,7 @@ const BoldButton = () => {
     <MenuButton
       icon="Bold"
       tooltip="Bold"
-      shortcuts={["Mod", "B"]}
+      shortcuts={['Mod', 'B']}
       onClick={() => editor.chain().focus().toggleBold().run()}
       {...state}
     />

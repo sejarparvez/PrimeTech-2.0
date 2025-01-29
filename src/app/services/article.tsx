@@ -1,21 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import debounce from "lodash.debounce";
-import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import debounce from 'lodash.debounce';
+import { useEffect, useState } from 'react';
 
 // Initialize Axios API Client
 const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: '/api',
   timeout: 5000,
 });
 
 // Centralized Query Keys
 const QUERY_KEYS = {
-  SINGLE_ARTICLE: "Single article",
-  DASHBOARD_ARTICLES: "Dashboard Articles",
-  RECENT_ARTICLES: "Recent Articles",
-  FEATURED_ARTICLES: "Featured Articles",
-  ALL_ARTICLES: "All Articles",
+  SINGLE_ARTICLE: 'Single article',
+  DASHBOARD_ARTICLES: 'Dashboard Articles',
+  RECENT_ARTICLES: 'Recent Articles',
+  FEATURED_ARTICLES: 'Featured Articles',
+  ALL_ARTICLES: 'All Articles',
 };
 
 // Custom Hook for Debounced Value
@@ -79,8 +79,8 @@ interface DashboardProps {
 
 export const useDashboardArticle = ({
   page,
-  category = "",
-  searchQuery = "",
+  category = '',
+  searchQuery = '',
 }: DashboardProps) => {
   const debouncedSearchQuery = useDebouncedValue(searchQuery);
 

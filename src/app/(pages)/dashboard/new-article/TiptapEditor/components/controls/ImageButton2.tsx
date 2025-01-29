@@ -1,9 +1,9 @@
-import Dialog from "@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Dialog";
-import useModal from "@/app/(pages)/dashboard/new-article/TiptapEditor/hooks/useModal";
-import MediaLibrary from "@/app/(pages)/dashboard/new-article/TiptapEditor/components/MediaLibrary";
-import { useEditorState } from "@tiptap/react";
-import MenuButton from "../MenuButton";
-import { useTiptapContext } from "../Provider";
+import Dialog from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Dialog';
+import useModal from '@/app/(pages)/dashboard/new-article/TiptapEditor/hooks/useModal';
+import MediaLibrary from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/MediaLibrary';
+import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
+import { useTiptapContext } from '../Provider';
 
 const ImageButton = () => {
   const { editor } = useTiptapContext();
@@ -11,7 +11,7 @@ const ImageButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("image"),
+        active: ctx.editor.isActive('image'),
         disabled: !ctx.editor.isEditable,
       };
     },

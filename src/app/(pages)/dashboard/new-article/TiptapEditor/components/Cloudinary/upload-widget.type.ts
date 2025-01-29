@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX } from 'react';
 
 export type UploadWidgetInstance = any;
 export type CloudinaryInstance = any;
@@ -16,19 +16,19 @@ export interface UploadWidgetPropsChildren {
 }
 
 export type UploadWidgetEvent =
-  | "abort"
-  | "batch-cancelled"
-  | "close"
-  | "display-changed"
-  | "publicid"
-  | "queues-end"
-  | "queues-start"
-  | "retry"
-  | "show-completed"
-  | "source-changed"
-  | "success"
-  | "tags"
-  | "upload-added";
+  | 'abort'
+  | 'batch-cancelled'
+  | 'close'
+  | 'display-changed'
+  | 'publicid'
+  | 'queues-end'
+  | 'queues-start'
+  | 'retry'
+  | 'show-completed'
+  | 'source-changed'
+  | 'success'
+  | 'tags'
+  | 'upload-added';
 
 export interface UploadWidgetResults {
   event?: UploadWidgetEvent;
@@ -36,7 +36,7 @@ export interface UploadWidgetResults {
 }
 
 export interface UploadWidgetInfo {
-  access_mode: "public" | "authenticated";
+  access_mode: 'public' | 'authenticated';
   api_key: string;
   asset_id: string;
   batchId: string;
@@ -55,12 +55,12 @@ export interface UploadWidgetInfo {
   path: string;
   placeholder: boolean;
   public_id: string;
-  resource_type: "image" | "raw" | "video" | "auto";
+  resource_type: 'image' | 'raw' | 'video' | 'auto';
   secure_url: string;
   signature: string;
   tags: string[];
   thumbnail_url: string;
-  type: "upload" | "private" | "authenticated";
+  type: 'upload' | 'private' | 'authenticated';
   url: string;
   version: number;
   width: number;

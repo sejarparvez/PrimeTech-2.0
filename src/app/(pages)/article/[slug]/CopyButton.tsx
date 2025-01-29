@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { LuCheck, LuClipboard } from "react-icons/lu";
+import { useState } from 'react';
+import { LuCheck, LuClipboard } from 'react-icons/lu';
 
 const CopyButton = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false);
@@ -12,7 +12,7 @@ const CopyButton = ({ code }: { code: string }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      console.error("Failed to copy:", error);
+      console.error('Failed to copy:', error);
     }
   };
 

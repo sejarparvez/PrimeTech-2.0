@@ -1,7 +1,7 @@
-import { useEditorState } from "@tiptap/react";
-import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
-import { createPortal } from "react-dom";
-import { useTiptapContext } from "./Provider";
+import { useEditorState } from '@tiptap/react';
+import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { useTiptapContext } from './Provider';
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -38,10 +38,10 @@ const Resizer = () => {
     selector: (ctx) => {
       if (!ctx.editor.isFocused || !ctx.editor.isEditable) return null;
 
-      const nodeType = ctx.editor.isActive("image")
-        ? "image"
-        : ctx.editor.isActive("youtube")
-          ? "youtube"
+      const nodeType = ctx.editor.isActive('image')
+        ? 'image'
+        : ctx.editor.isActive('youtube')
+          ? 'youtube'
           : null;
 
       if (!nodeType) return null;
@@ -60,7 +60,7 @@ const Resizer = () => {
 
   const startResizing = (
     event: React.PointerEvent<HTMLDivElement>,
-    direction: number,
+    direction: number
   ) => {
     event.preventDefault();
     const resizeInfo = resizeInfoRef.current;
@@ -70,8 +70,8 @@ const Resizer = () => {
     resizeInfo.isResizing = true;
     resizeInfo.direction = direction;
 
-    document.addEventListener("pointermove", handleResize);
-    document.addEventListener("pointerup", stopResizing);
+    document.addEventListener('pointermove', handleResize);
+    document.addEventListener('pointerup', stopResizing);
 
     setIsResizing(true);
   };
@@ -102,14 +102,14 @@ const Resizer = () => {
     if (!resizeInfo.isResizing) return;
 
     resizeInfo.isResizing = false;
-    document.removeEventListener("pointermove", handleResize);
-    document.removeEventListener("pointerup", stopResizing);
+    document.removeEventListener('pointermove', handleResize);
+    document.removeEventListener('pointerup', stopResizing);
 
     setIsResizing(false);
     requestAnimationFrame(() =>
       editor?.commands.updateAttributes(nodeState!.nodeType, {
         width: Math.round((resizeInfo.currentWidth / maxWidth) * 100),
-      }),
+      })
     );
   };
 
@@ -147,7 +147,7 @@ const Resizer = () => {
   const renderResizerHandle = (
     cursor: string,
     direction: number,
-    position: React.CSSProperties,
+    position: React.CSSProperties
   ) => (
     <div
       className="rte-resizer__control"
@@ -158,20 +158,20 @@ const Resizer = () => {
 
   return createPortal(
     <div ref={controlRef} className="rte-resizer">
-      {renderResizerHandle("nw-resize", 0, { width: 12, left: -10, top: -10 })}
-      {renderResizerHandle("sw-resize", 0, {
+      {renderResizerHandle('nw-resize', 0, { width: 12, left: -10, top: -10 })}
+      {renderResizerHandle('sw-resize', 0, {
         width: 12,
         left: -10,
         bottom: -10,
       })}
-      {renderResizerHandle("sw-resize", 1, { width: 12, right: -10, top: -10 })}
-      {renderResizerHandle("nw-resize", 1, {
+      {renderResizerHandle('sw-resize', 1, { width: 12, right: -10, top: -10 })}
+      {renderResizerHandle('nw-resize', 1, {
         width: 12,
         right: -10,
         bottom: -10,
       })}
     </div>,
-    contentElement.current,
+    contentElement.current
   );
 };
 

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Logout from "@/components/common/Logout";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Logout from '@/components/common/Logout';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,16 +10,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { BadgeCheck, ChevronsUpDown } from "lucide-react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+} from '@/components/ui/sidebar';
+import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -37,18 +37,18 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
                   src={session?.user?.image || undefined}
-                  alt={session?.user?.name || "User Avatar"}
+                  alt={session?.user?.name || 'User Avatar'}
                 />
                 <AvatarFallback className="rounded-lg">
-                  {session?.user?.name?.[0]?.toUpperCase() || "M"}
+                  {session?.user?.name?.[0]?.toUpperCase() || 'M'}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {session?.user?.name || "Guest"}
+                  {session?.user?.name || 'Guest'}
                 </span>
                 <span className="truncate text-xs">
-                  {session?.user?.email || "guest@example.com"}
+                  {session?.user?.email || 'guest@example.com'}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -56,7 +56,7 @@ export function NavUser() {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -65,18 +65,18 @@ export function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={session?.user?.image || undefined}
-                    alt={session?.user?.name || "User Avatar"}
+                    alt={session?.user?.name || 'User Avatar'}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {session?.user?.name?.[0]?.toUpperCase() || "M"}
+                    {session?.user?.name?.[0]?.toUpperCase() || 'M'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {session?.user?.name || "Guest"}
+                    {session?.user?.name || 'Guest'}
                   </span>
                   <span className="truncate text-xs">
-                    {session?.user?.email || "guest@example.com"}
+                    {session?.user?.email || 'guest@example.com'}
                   </span>
                 </div>
               </div>

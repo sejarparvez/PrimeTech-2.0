@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import type {
   MediaLibraryInsertResults,
   MediaLibraryOptions,
   MediaLibraryProps,
   MediaLibraryPropsOptions,
-} from "./media-library.type";
-import Script from "./script";
+} from './media-library.type';
+import Script from './script';
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
@@ -28,7 +28,7 @@ const MediaLibrary = ({
       const iframe = document.querySelector("iframe[src*='cloudinary']");
       if (iframe && iframe.parentNode) {
         document.body.removeChild(iframe.parentNode);
-        console.log("Media Library widget destroyed successfully.");
+        console.log('Media Library widget destroyed successfully.');
       }
     }
 
@@ -59,7 +59,7 @@ const MediaLibrary = ({
       }
     }
 
-    if ("requestIdleCallback" in window) {
+    if ('requestIdleCallback' in window) {
       requestIdleCallback(onIdle);
     } else {
       setTimeout(onIdle, 1);
@@ -118,17 +118,17 @@ const MediaLibrary = ({
 
     return cloudinary.current.createMediaLibrary(mediaLibraryOptions, {
       showHandler: () => {
-        if (typeof onOpen === "function") {
+        if (typeof onOpen === 'function') {
           onOpen(callbackOptions);
         }
       },
       hideHandler: () => {
-        if (typeof onClose === "function") {
+        if (typeof onClose === 'function') {
           onClose(callbackOptions);
         }
       },
       insertHandler: (data: MediaLibraryInsertResults) => {
-        if (typeof onInsert === "function") {
+        if (typeof onInsert === 'function') {
           onInsert(data, callbackOptions);
         }
       },
@@ -154,7 +154,7 @@ const MediaLibrary = ({
 
   return (
     <>
-      {typeof children === "function" && children(callbackOptions)}
+      {typeof children === 'function' && children(callbackOptions)}
       <div ref={widgetContainerRef}></div>
       <Script
         src="https://media-library.cloudinary.com/global/all.js"

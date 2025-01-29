@@ -1,4 +1,4 @@
-@use "functions";
+@use 'functions';
 
 // Colors
 $bg-color: var(--rte-bg, #ffffff);
@@ -33,27 +33,27 @@ $text-lineHeight-xl: 1.75rem;
 $text-lineHeight-2xl: 2rem;
 
 $font-sizes: (
-  "xs": (
+  'xs': (
     $text-size-xs,
     $text-lineHeight-xs,
   ),
-  "sm": (
+  'sm': (
     $text-size-sm,
     $text-lineHeight-sm,
   ),
-  "base": (
+  'base': (
     $text-size-base,
     $text-lineHeight-base,
   ),
-  "lg": (
+  'lg': (
     $text-size-lg,
     $text-lineHeight-lg,
   ),
-  "xl": (
+  'xl': (
     $text-size-xl,
     $text-lineHeight-xl,
   ),
-  "2xl": (
+  '2xl': (
     $text-size-2xl,
     $text-lineHeight-2xl,
   ),
@@ -79,7 +79,11 @@ $shadow-2: var(
   0px 24px 48px -12px #25292e14,
   0px 48px 96px -24px #25292e14
 );
-$shadow-3: var(--rte-shadow-3, 0px 0px 0px 1px #d1d9e0, 0px 40px 80px 0px #25292e3d);
+$shadow-3: var(
+  --rte-shadow-3,
+  0px 0px 0px 1px #d1d9e0,
+  0px 40px 80px 0px #25292e3d
+);
 
 // Editor
 $editor-min-height: var(--rte-editor-min-height);
@@ -87,7 +91,10 @@ $editor-max-height: var(--rte-editor-max-height);
 $editor-font-size: var(--rte-editor-font-size, 1rem);
 $editor-link: var(--rte-editor-link, $primary-color);
 $editor-line-height: var(--rte-editor-line-height, 1.75);
-$editor-selection: var(--rte-editor-selection, functions.tint-color($primary-color, 0.2));
+$editor-selection: var(
+  --rte-editor-selection,
+  functions.tint-color($primary-color, 0.2)
+);
 $editor-code-bg: var(--rte-editor-code-bg, #f6f8fa);
 $editor-scrollbar: var(--rte-editor-scrollbar, #00000040);
 $editor-font: var(

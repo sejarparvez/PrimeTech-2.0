@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useDeleteArticle } from "@/app/services/article";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { articleInterFace } from "@/utils/interface";
-import { createSlug } from "@/utils/slug";
-import { formatDistanceToNow } from "date-fns";
-import { motion } from "framer-motion";
-import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { DeleteArticleDialog } from "./DeleteArticleDialog";
+import { useDeleteArticle } from '@/app/services/article';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { articleInterFace } from '@/utils/interface';
+import { createSlug } from '@/utils/slug';
+import { formatDistanceToNow } from 'date-fns';
+import { motion } from 'framer-motion';
+import { Calendar, Edit, Eye, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { DeleteArticleDialog } from './DeleteArticleDialog';
 
 export function ArticleCard({ article }: { article: articleInterFace }) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -24,17 +24,17 @@ export function ArticleCard({ article }: { article: articleInterFace }) {
 
   // Function to handle article deletion
   const handleDelete = async () => {
-    toast.loading("Please wait...");
+    toast.loading('Please wait...');
     try {
       // Call the delete mutation with the article id
       await deleteArticleMutation.mutateAsync(article.id);
       toast.dismiss();
-      toast.success("Article deleted successfully!");
+      toast.success('Article deleted successfully!');
       setIsDeleteDialogOpen(false); // Close the delete dialog
     } catch (error) {
       toast.dismiss();
-      console.error("Error deleting article:", error);
-      toast.error("An error occurred while deleting the article.");
+      console.error('Error deleting article:', error);
+      toast.error('An error occurred while deleting the article.');
     }
   };
 
@@ -47,7 +47,7 @@ export function ArticleCard({ article }: { article: articleInterFace }) {
       <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-zinc-700/25">
         <div className="relative aspect-[16/10]">
           <Image
-            src={article.coverImage || "/placeholder.svg"}
+            src={article.coverImage || '/placeholder.svg'}
             alt={article.title}
             fill
             className="object-cover brightness-50 transition-all duration-300 group-hover:scale-105 group-hover:brightness-75"

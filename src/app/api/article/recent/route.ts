@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
@@ -26,12 +26,12 @@ export async function GET() {
         },
       },
       orderBy: {
-        updatedAt: "desc",
+        updatedAt: 'desc',
       },
     });
 
     if (response.length === 0) {
-      return new NextResponse(JSON.stringify({ error: "No posts found" }), {
+      return new NextResponse(JSON.stringify({ error: 'No posts found' }), {
         status: 404,
       });
     }
@@ -39,8 +39,8 @@ export async function GET() {
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (error) {
     return new NextResponse(
-      JSON.stringify({ error: "Internal Server Error" }),
-      { status: 500 },
+      JSON.stringify({ error: 'Internal Server Error' }),
+      { status: 500 }
     );
   } finally {
     await prisma.$disconnect();

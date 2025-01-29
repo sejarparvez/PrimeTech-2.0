@@ -14,18 +14,23 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import * as z from 'zod';
-import { NewArticleCategoryAndTags } from './NewArticleCategory';
-import { ProductImage } from './NewArticleImage';
-import { NewArticleSchema, NewArticleSchemaType } from './NewArticleSchema';
 
-export default function NewArticleForm() {
+import * as z from 'zod';
+
+import {
+  NewArticleSchema,
+  NewArticleSchemaType,
+} from '../new-article/NewArticleSchema';
+import { ProductImage } from '../new-article/NewArticleImage';
+import { NewArticleCategoryAndTags } from '../new-article/NewArticleCategory';
+import { useSinglePost } from '@/app/services/article';
+
+export default function EditArticleForm({ id }: { id: string }) {
+  const { isLoading, data, isError } = useSinglePost({ id: id });
   const editorRef = useRef<TiptapEditorRef>(null);
   const [image, setImage] = useState<File | null>(null);
   const [warning, setWarning] = useState<string>('');
@@ -39,6 +44,19 @@ export default function NewArticleForm() {
       tags: [],
     },
   });
+
+  // Set form values when data is loaded
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        title: data.title,
+        content: data.content,
+        category: data.category,
+        tags: data.tags,
+      });
+      setImage(data.image || null);
+    }
+  }, [data, form]);
 
   const resetForm = () => {
     form.reset({ title: '', content: '', category: '', tags: [] });
@@ -58,26 +76,15 @@ export default function NewArticleForm() {
     });
     formData.append('image', image);
 
-    toast.loading('Uploading, please wait...');
-    try {
-      const response = await axios.post(
-        '/api/dashboard/single-article',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      toast.dismiss();
-      if (response.status === 201) {
-        toast.success('Article successfully added');
-        resetForm();
-      } else {
-        toast.error('Failed to add article');
-      }
-    } catch {
-      toast.dismiss();
-      toast.error('Failed to add article');
-    }
+    console.log(formData);
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading article. Please try again later.</p>;
   }
 
   return (
@@ -95,7 +102,7 @@ export default function NewArticleForm() {
               <span className="sr-only">Back</span>
             </Button>
           </Link>
-          <h1 className="text-lg font-semibold sm:text-xl">New Article</h1>
+          <h1 className="text-lg font-semibold sm:text-xl">Edit Article</h1>
           <div className="ml-auto flex gap-2">
             <Button variant="outline" type="button" onClick={resetForm}>
               Discard
@@ -126,19 +133,22 @@ export default function NewArticleForm() {
                 <FormItem>
                   <FormLabel>Article Content</FormLabel>
                   <FormControl>
-                    <TiptapEditor
-                      ref={editorRef}
-                      ssr
-                      output="html"
-                      placeholder={{
-                        paragraph: 'Type your content here...',
-                        imageCaption: 'Type caption for image (optional)',
-                      }}
-                      contentMinHeight={400}
-                      contentMaxHeight={640}
-                      onContentChange={field.onChange}
-                      initialContent={field.value}
-                    />
+                    {/** Only render TipTapEditor when data is loaded */}
+                    {!isLoading && (
+                      <TiptapEditor
+                        ref={editorRef}
+                        ssr
+                        output="html"
+                        placeholder={{
+                          paragraph: 'Type your content here...',
+                          imageCaption: 'Type caption for image (optional)',
+                        }}
+                        contentMinHeight={400}
+                        contentMaxHeight={640}
+                        onContentChange={field.onChange}
+                        initialContent={field.value || data?.content || ''}
+                      />
+                    )}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

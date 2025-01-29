@@ -1,18 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Upload, X } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { CgAsterisk } from "react-icons/cg";
-import { toast } from "react-toastify";
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Upload, X } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { CgAsterisk } from 'react-icons/cg';
+import { toast } from 'react-toastify';
 
 interface ProductImageProps {
   image: File | null;
@@ -30,10 +30,10 @@ export function ProductImage({ image, setImage, error }: ProductImageProps) {
     if (file) {
       if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
         setImageError(
-          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
+          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`
         );
         toast.error(
-          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
+          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`
         );
       } else {
         setImage(file);

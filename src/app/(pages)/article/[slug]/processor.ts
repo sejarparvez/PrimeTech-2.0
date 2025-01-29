@@ -1,8 +1,8 @@
-import * as prod from "react/jsx-runtime";
-import rehypeParse from "rehype-parse";
-import rehypeReact, { type Components } from "rehype-react";
-import { unified } from "unified";
-import { visit } from "unist-util-visit";
+import * as prod from 'react/jsx-runtime';
+import rehypeParse from 'rehype-parse';
+import rehypeReact, { type Components } from 'rehype-react';
+import { unified } from 'unified';
+import { visit } from 'unist-util-visit';
 
 interface ProcessorOptions {
   components?: Partial<Components>;
@@ -10,8 +10,8 @@ interface ProcessorOptions {
 
 const addHeadingIds = () => {
   return (tree: any) => {
-    visit(tree, "element", (node) => {
-      if (["h2", "h3", "h4"].includes(node.tagName)) {
+    visit(tree, 'element', (node) => {
+      if (['h2', 'h3', 'h4'].includes(node.tagName)) {
         // Safely extract all text content, even if nested
         const textContent = getTextContent(node).trim();
         if (textContent) {
@@ -24,23 +24,23 @@ const addHeadingIds = () => {
 };
 
 function getTextContent(node: any): string {
-  if (node.type === "text") {
+  if (node.type === 'text') {
     return node.value;
   }
   if (node.children && Array.isArray(node.children)) {
-    return node.children.map(getTextContent).join("");
+    return node.children.map(getTextContent).join('');
   }
-  return "";
+  return '';
 }
 
 function slugify(text: string): string {
   return text
     .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[^\w\s-]+/g, "")
-    .replace(/[-\s]+/g, "-")
+    .normalize('NFKD')
+    .replace(/[^\w\s-]+/g, '')
+    .replace(/[-\s]+/g, '-')
     .trim()
-    .replace(/^-+|-+$/g, "");
+    .replace(/^-+|-+$/g, '');
 }
 
 export function createProcessor({ components }: ProcessorOptions = {}) {

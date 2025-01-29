@@ -1,7 +1,7 @@
-import React from "react";
-import MenuButton from "../MenuButton";
-import { Editor, useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import MenuButton from '../MenuButton';
+import { Editor, useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
 
 const ClearFormatButton = () => {
   const { editor } = useTiptapContext();

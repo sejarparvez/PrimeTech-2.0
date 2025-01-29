@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { RegistrationForm } from "./RegistrationForm";
-import RegistrationSkeleton from "./loading";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { RegistrationForm } from './RegistrationForm';
+import RegistrationSkeleton from './loading';
 
 export default function RegistrationPage() {
   const { status } = useSession();
   const router = useRouter();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return (
       <>
         <RegistrationSkeleton />
@@ -17,8 +17,8 @@ export default function RegistrationPage() {
     );
   }
 
-  if (status === "authenticated") {
-    router.replace("/dashboard");
+  if (status === 'authenticated') {
+    router.replace('/dashboard');
   }
 
   return (

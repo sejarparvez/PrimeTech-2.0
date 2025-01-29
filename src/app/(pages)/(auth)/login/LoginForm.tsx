@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -9,34 +9,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import LoginImage from "@/image/login.jpg";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { SiGithub, SiGoogle } from "react-icons/si";
-import { toast } from "react-toastify";
-import { z } from "zod";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import LoginImage from '@/image/login.jpg';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { signIn } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { SiGithub, SiGoogle } from 'react-icons/si';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
 
 const FormSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email('Invalid email address'),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters long")
-    .max(20, "Password cannot be more than 20 characters"),
+    .min(6, 'Password must be at least 6 characters long')
+    .max(20, 'Password cannot be more than 20 characters'),
 });
 
 export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<'div'>) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -44,16 +44,16 @@ export function LoginForm({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setIsLoading(true);
-      toast.loading("Please wait...");
-      const response = await signIn("credentials", {
+      toast.loading('Please wait...');
+      const response = await signIn('credentials', {
         ...data,
         redirect: false,
       });
@@ -62,19 +62,19 @@ export function LoginForm({
         toast.error(response.error);
       } else {
         toast.dismiss();
-        toast.success("Successfully signed in");
-        router.replace("/dashboard");
+        toast.success('Successfully signed in');
+        router.replace('/dashboard');
       }
     } catch (error) {
       toast.dismiss();
-      toast.error("Sign in failed");
+      toast.error('Sign in failed');
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
           <Form {...form}>
@@ -116,7 +116,7 @@ export function LoginForm({
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showPassword ? "text" : "password"}
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="••••••••"
                             {...field}
                           />
@@ -125,7 +125,7 @@ export function LoginForm({
                             onClick={() => setShowPassword((prev) => !prev)}
                             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                             aria-label={
-                              showPassword ? "Hide password" : "Show password"
+                              showPassword ? 'Hide password' : 'Show password'
                             }
                           >
                             {showPassword ? (
@@ -155,7 +155,7 @@ export function LoginForm({
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => signIn("google")}
+                    onClick={() => signIn('google')}
                   >
                     <SiGoogle className="mr-2 h-4 w-4" />
                     Google
@@ -163,14 +163,14 @@ export function LoginForm({
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => signIn("github")}
+                    onClick={() => signIn('github')}
                   >
                     <SiGithub className="mr-2 h-4 w-4" />
                     GitHub
                   </Button>
                 </div>
                 <div className="text-center text-sm">
-                  Don&apos;t have an account?{" "}
+                  Don&apos;t have an account?{' '}
                   <Link
                     href="/registration"
                     className="underline underline-offset-4"
@@ -191,7 +191,7 @@ export function LoginForm({
         </CardContent>
         <CardFooter className="mx-auto flex items-center justify-center text-center">
           <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-            By clicking continue, you agree to our{" "}
+            By clicking continue, you agree to our{' '}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
         </CardFooter>

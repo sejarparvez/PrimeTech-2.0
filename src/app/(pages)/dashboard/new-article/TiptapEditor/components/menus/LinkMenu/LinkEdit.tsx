@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Input from "../../ui/Input";
-import Button from "../../ui/Button";
-import Label from "../../ui/Label";
+import Input from '../../ui/Input';
+import Button from '../../ui/Button';
+import Label from '../../ui/Label';
 
 interface LinkEditProps {
   initialUrl?: string;
@@ -12,9 +12,15 @@ interface LinkEditProps {
   onApply: (url: string, text?: string) => void;
 }
 
-const LinkEdit = ({ initialUrl, initialText, isCreate, onApply, onCancel }: LinkEditProps) => {
-  const [url, setUrl] = useState(initialUrl || "");
-  const [text, setText] = useState(initialText || "");
+const LinkEdit = ({
+  initialUrl,
+  initialText,
+  isCreate,
+  onApply,
+  onCancel,
+}: LinkEditProps) => {
+  const [url, setUrl] = useState(initialUrl || '');
+  const [text, setText] = useState(initialText || '');
   const [canSubmit, setCanSubmit] = useState(isCreate);
 
   const onSubmit = (event: React.FormEvent) => {

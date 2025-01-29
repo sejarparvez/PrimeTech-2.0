@@ -1,15 +1,15 @@
-import Figcaption from "../Figcaption";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
-import ImageFigure from "./ImageFigure";
+import Figcaption from '../Figcaption';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import ImageFigure from './ImageFigure';
 
 export const ImageCaption = Figcaption.extend({
-  name: "imageCaption",
+  name: 'imageCaption',
 
   addProseMirrorPlugins() {
     return [
       new Plugin({
-        key: new PluginKey("imageCaptionFocus"),
+        key: new PluginKey('imageCaptionFocus'),
         props: {
           decorations: ({ doc, selection }) => {
             const { isEditable, isFocused } = this.editor;
@@ -17,7 +17,11 @@ export const ImageCaption = Figcaption.extend({
 
             // If not editable, not focused, or selection is not in the imageCaption node,
             // return no decorations
-            if (!isEditable || !isFocused || $anchor.parent.type.name !== this.name) {
+            if (
+              !isEditable ||
+              !isFocused ||
+              $anchor.parent.type.name !== this.name
+            ) {
               return DecorationSet.create(doc, []);
             }
 
@@ -33,7 +37,7 @@ export const ImageCaption = Figcaption.extend({
             // Apply decoration to the figcaption node
             return DecorationSet.create(doc, [
               Decoration.node(captionPos, captionEndPos, {
-                class: "ProseMirror-selectednode", // Apply class to figcaption
+                class: 'ProseMirror-selectednode', // Apply class to figcaption
               }),
             ]);
           },

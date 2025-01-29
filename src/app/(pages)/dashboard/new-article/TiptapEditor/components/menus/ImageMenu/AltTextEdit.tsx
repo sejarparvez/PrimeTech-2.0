@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Input from "../../ui/Input";
-import Button from "../../ui/Button";
-import MenuButton from "../../MenuButton";
+import Input from '../../ui/Input';
+import Button from '../../ui/Button';
+import MenuButton from '../../MenuButton';
 
 interface AltTextEditProps {
   initialText?: string;
@@ -11,7 +11,7 @@ interface AltTextEditProps {
 }
 
 const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
-  const [text, setText] = useState(initialText || "");
+  const [text, setText] = useState(initialText || '');
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -26,8 +26,8 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
         placeholder="Text alternative"
         autoFocus
       />
-      <MenuButton buttonType="submit" icon={"Check"} tooltip={false} />
-      <MenuButton icon={"Close"} tooltip={false} onClick={onCancel} />
+      <MenuButton buttonType="submit" icon={'Check'} tooltip={false} />
+      <MenuButton icon={'Close'} tooltip={false} onClick={onCancel} />
     </form>
   );
 };

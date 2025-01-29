@@ -1,12 +1,12 @@
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Node as ProsemirrorNode } from "@tiptap/pm/model";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
-import { findChildren } from "@tiptap/core";
-import { loadLanguage } from "../../utils/codeLanguageLoader";
-import highlight from "highlight.js/lib/core";
-import { CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT } from "../../constants/code-languages";
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Node as ProsemirrorNode } from '@tiptap/pm/model';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import { findChildren } from '@tiptap/core';
+import { loadLanguage } from '../../utils/codeLanguageLoader';
+import highlight from 'highlight.js/lib/core';
+import { CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT } from '../../constants/code-languages';
 
-export const LowlightPluginKey = new PluginKey("lowlight");
+export const LowlightPluginKey = new PluginKey('lowlight');
 
 export function LowlightPlugin({
   name,
@@ -33,8 +33,14 @@ export function LowlightPlugin({
       apply(tr, decorationSet, oldState, newState) {
         const oldNodeName = oldState.selection.$head.parent.type.name;
         const newNodeName = newState.selection.$head.parent.type.name;
-        const oldNodes = findChildren(oldState.doc, (node) => node.type.name === name);
-        const newNodes = findChildren(newState.doc, (node) => node.type.name === name);
+        const oldNodes = findChildren(
+          oldState.doc,
+          (node) => node.type.name === name
+        );
+        const newNodes = findChildren(
+          newState.doc,
+          (node) => node.type.name === name
+        );
 
         const didChangeSomeCodeBlock =
           tr.docChanged &&
@@ -90,23 +96,32 @@ export function LowlightPlugin({
 
         async initDecorations() {
           const doc = view.state.doc;
-          const codeBlocks = findChildren(doc, (node) => node.type.name === name);
+          const codeBlocks = findChildren(
+            doc,
+            (node) => node.type.name === name
+          );
 
           const languages = [
             ...codeBlocks.map(
-              (block) => block.node.attrs.language || CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT
+              (block) =>
+                block.node.attrs.language || CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT
             ),
             defaultLanguage,
           ];
 
-          await Promise.all(languages.map((language) => loadLanguage(language, lowlight)));
+          await Promise.all(
+            languages.map((language) => loadLanguage(language, lowlight))
+          );
 
           const tr = view.state.tr.setMeta(LowlightPluginKey, true);
           view.dispatch(tr);
         }
 
         async checkUndecoratedBlocks() {
-          const codeBlocks = findChildren(view.state.doc, (node) => node.type.name === name);
+          const codeBlocks = findChildren(
+            view.state.doc,
+            (node) => node.type.name === name
+          );
 
           // Load missing themes or languages when necessary.
           // loadStates is an array with booleans depending on if a theme/lang
@@ -114,7 +129,8 @@ export function LowlightPlugin({
           const loadStates = await Promise.all(
             codeBlocks.flatMap((block) => [
               loadLanguage(
-                block.node.attrs.language || CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT,
+                block.node.attrs.language ||
+                  CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT,
                 lowlight
               ),
             ])
@@ -143,10 +159,16 @@ export function LowlightPlugin({
   return lowlightPlugin;
 }
 
-function parseNodes(nodes: any[], className: string[] = []): { text: string; classes: string[] }[] {
+function parseNodes(
+  nodes: any[],
+  className: string[] = []
+): { text: string; classes: string[] }[] {
   return nodes
     .map((node) => {
-      const classes = [...className, ...(node.properties ? node.properties.className : [])];
+      const classes = [
+        ...className,
+        ...(node.properties ? node.properties.className : []),
+      ];
 
       if (node.children) {
         return parseNodes(node.children, classes);
@@ -191,7 +213,9 @@ function getDecorations({
 
     const nodes =
       language && (languages.includes(language) || registered(language))
-        ? getHighlightNodes(lowlight.highlight(language, block.node.textContent))
+        ? getHighlightNodes(
+            lowlight.highlight(language, block.node.textContent)
+          )
         : getHighlightNodes(lowlight.highlightAuto(block.node.textContent));
 
     parseNodes(nodes).forEach((node) => {
@@ -199,7 +223,7 @@ function getDecorations({
 
       if (node.classes.length) {
         const decoration = Decoration.inline(from, to, {
-          class: node.classes.join(" "),
+          class: node.classes.join(' '),
         });
 
         decorations.push(decoration);

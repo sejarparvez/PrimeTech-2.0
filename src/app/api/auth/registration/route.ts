@@ -1,8 +1,8 @@
-import { sendVerificationEmail } from "@/components/email/SendVerificationEmail";
-import generateVerificationCode from "@/utils/generateVerificationCode";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import { NextRequest, NextResponse } from "next/server";
+import { sendVerificationEmail } from '@/components/email/SendVerificationEmail';
+import generateVerificationCode from '@/utils/generateVerificationCode';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     if (!name || !email || !password) {
-      return new NextResponse("Missing name, email, or password", {
+      return new NextResponse('Missing name, email, or password', {
         status: 400,
       });
     }
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (existingUser?.emailVerified) {
-      return new NextResponse("Email is already registered", { status: 409 });
+      return new NextResponse('Email is already registered', { status: 409 });
     } else if (existingUser?.emailVerified === null) {
       // Update the existing user with data from the request
       const updatedUser = await prisma.user.update({
@@ -52,22 +52,22 @@ export async function POST(req: NextRequest) {
 
       return new NextResponse(
         JSON.stringify({
-          message: "Verification code sent successfully",
+          message: 'Verification code sent successfully',
           userId: updatedUser.id,
         }),
         {
           status: 200,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     } else {
       const user = await prisma.user.create({
         data: {
           name,
           email,
-          status: "Subscriber",
+          status: 'Subscriber',
           password: hashedPassword,
           emailVerified: null,
           verificationCode: null,
@@ -86,20 +86,20 @@ export async function POST(req: NextRequest) {
 
       return new NextResponse(
         JSON.stringify({
-          message: "Verification code sent successfully",
+          message: 'Verification code sent successfully',
           userId: user.id,
         }),
         {
           status: 200,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
   } catch (error) {
-    console.error("Error:", error);
-    return new NextResponse("Internal server error", { status: 500 });
+    console.error('Error:', error);
+    return new NextResponse('Internal server error', { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
@@ -117,7 +117,7 @@ export async function PUT(req: NextRequest) {
     });
 
     if (!user) {
-      return new NextResponse("User not found", { status: 404 });
+      return new NextResponse('User not found', { status: 404 });
     }
 
     const verificationCode = code.toString();
@@ -136,13 +136,13 @@ export async function PUT(req: NextRequest) {
         },
       });
 
-      return new NextResponse("User verified successfully", { status: 200 });
+      return new NextResponse('User verified successfully', { status: 200 });
     } else {
-      return new NextResponse("Invalid verification code", { status: 400 });
+      return new NextResponse('Invalid verification code', { status: 400 });
     }
   } catch (error) {
-    console.error("Error during verification:", error);
-    return new NextResponse("Internal server error", { status: 500 });
+    console.error('Error during verification:', error);
+    return new NextResponse('Internal server error', { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

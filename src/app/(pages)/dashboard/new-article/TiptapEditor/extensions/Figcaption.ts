@@ -1,13 +1,13 @@
-import { Editor, mergeAttributes, Node } from "@tiptap/core";
-import { NodeType } from "@tiptap/pm/model";
-import { TextSelection } from "@tiptap/pm/state";
+import { Editor, mergeAttributes, Node } from '@tiptap/core';
+import { NodeType } from '@tiptap/pm/model';
+import { TextSelection } from '@tiptap/pm/state';
 
 export const Figcaption = Node.create({
-  name: "figcaption",
-  group: "block",
+  name: 'figcaption',
+  group: 'block',
   inline: false,
-  content: "inline*",
-  marks: "",
+  content: 'inline*',
+  marks: '',
 
   addOptions() {
     return {
@@ -16,18 +16,20 @@ export const Figcaption = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: "figcaption" }];
+    return [{ tag: 'figcaption' }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["figcaption", mergeAttributes(HTMLAttributes), 0];
+    return ['figcaption', mergeAttributes(HTMLAttributes), 0];
   },
 
   addKeyboardShortcuts() {
     return {
-      "Mod-a": ({ editor }) => handleSelectAll(editor, this.type),
-      Backspace: ({ editor }) => handleDeleteOrBackspace(editor, "Backspace", this.type),
-      Delete: ({ editor }) => handleDeleteOrBackspace(editor, "Delete", this.type),
+      'Mod-a': ({ editor }) => handleSelectAll(editor, this.type),
+      Backspace: ({ editor }) =>
+        handleDeleteOrBackspace(editor, 'Backspace', this.type),
+      Delete: ({ editor }) =>
+        handleDeleteOrBackspace(editor, 'Delete', this.type),
     };
   },
 });
@@ -54,7 +56,7 @@ function handleSelectAll(editor: Editor, nodeType: NodeType) {
 
 function handleDeleteOrBackspace(
   editor: Editor,
-  handle: "Delete" | "Backspace",
+  handle: 'Delete' | 'Backspace',
   nodeType: NodeType
 ) {
   const { selection } = editor.state;
@@ -68,10 +70,10 @@ function handleDeleteOrBackspace(
 
   // if the cursor is at the end of a node and `Delete` pressed
   // or the cursor is at the start of a node and `Backspace` pressed
-  if (handle === "Delete") {
+  if (handle === 'Delete') {
     const isAtEnd = empty && $from.parentOffset === $from.parent.nodeSize - 2;
     return isAtEnd;
-  } else if (handle === "Backspace") {
+  } else if (handle === 'Backspace') {
     const isAtStart = empty && $from.parentOffset === 0;
     return isAtStart;
   }

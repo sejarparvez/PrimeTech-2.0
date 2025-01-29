@@ -1,6 +1,6 @@
-import CodeMirrorEditor from "@/app/(pages)/dashboard/new-article/TiptapEditor/components/SourceEditor/Editor";
-import { EditorContent, type Editor } from "@tiptap/react";
-import clsx from "clsx";
+import CodeMirrorEditor from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/SourceEditor/Editor';
+import { EditorContent, type Editor } from '@tiptap/react';
+import clsx from 'clsx';
 import {
   createContext,
   HTMLAttributes,
@@ -9,10 +9,10 @@ import {
   useContext,
   useRef,
   useState,
-} from "react";
+} from 'react';
 import useTiptapEditor, {
   type UseTiptapEditorOptions,
-} from "../hooks/useTiptapEditor";
+} from '../hooks/useTiptapEditor';
 
 type TiptapContextType = {
   editor: Editor;
@@ -57,16 +57,16 @@ export const TiptapProvider = ({
     const target = event.target as Element;
     const content = contentElement.current;
     if (content && target.contains(content)) {
-      content.style.display = "flex";
+      content.style.display = 'flex';
       setTimeout(() => {
-        content.style.display = "";
+        content.style.display = '';
       }, 0);
     }
   };
 
   const editorContent = (
     <div
-      className={clsx("rte-editor", isFullScreen && "rte-editor--fullscreen")}
+      className={clsx('rte-editor', isFullScreen && 'rte-editor--fullscreen')}
     >
       {slotBefore}
       <div
@@ -74,7 +74,7 @@ export const TiptapProvider = ({
         onMouseDown={focusEditorViaContainer}
       >
         {isSourceMode ? (
-          <CodeMirrorEditor initialContent={editor.getHTML() || ""} />
+          <CodeMirrorEditor initialContent={editor.getHTML() || ''} />
         ) : (
           <EditorContent
             ref={contentElement}

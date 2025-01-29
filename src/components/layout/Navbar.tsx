@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { Menu, Search } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import * as React from "react";
+import { Menu, Search } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import * as React from 'react';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
-import ThemeSwitch from "./ThemeSwitch";
-import { UserMenu } from "./UserMenu";
+} from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import ThemeSwitch from './ThemeSwitch';
+import { UserMenu } from './UserMenu';
 
 const navItems = [
-  { title: "Home", href: "/" },
-  { title: "Articles", href: "/articles" },
-  { title: "About", href: "/about" },
-  { title: "Contact", href: "/contact" },
+  { title: 'Home', href: '/' },
+  { title: 'Articles', href: '/articles' },
+  { title: 'About', href: '/about' },
+  { title: 'Contact', href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -52,10 +52,10 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary",
+                    'text-sm font-medium transition-colors hover:text-primary',
                     pathname === item.href
-                      ? "text-primary"
-                      : "text-muted-foreground",
+                      ? 'text-primary'
+                      : 'text-muted-foreground'
                   )}
                 >
                   {item.title}
@@ -75,10 +75,10 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "relative transition-colors hover:text-primary",
+                'relative transition-colors hover:text-primary',
                 pathname === item.href
-                  ? "text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary"
-                  : "text-muted-foreground",
+                  ? 'text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary'
+                  : 'text-muted-foreground'
               )}
             >
               {item.title}
@@ -88,16 +88,16 @@ export default function Navbar() {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div
             className={cn(
-              "w-full flex-1 transition-all duration-300 ease-in-out md:w-auto md:flex-none",
+              'w-full flex-1 transition-all duration-300 ease-in-out md:w-auto md:flex-none',
               isSearchOpen
-                ? "md:w-[300px] lg:w-[400px]"
-                : "md:w-[200px] lg:w-[250px]",
+                ? 'md:w-[300px] lg:w-[400px]'
+                : 'md:w-[200px] lg:w-[250px]'
             )}
           >
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log("Search submitted");
+                console.log('Search submitted');
               }}
               className="relative hidden md:block"
             >

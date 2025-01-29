@@ -85,14 +85,14 @@
         rgba(255, 255, 255, 0.85),
         rgba(255, 255, 255, 0.95)
       ),
-      url("/background.svg");
+      url('/background.svg');
   }
   .dark body {
     background-image: linear-gradient(
         rgba(13, 16, 24, 0.85),
         rgba(13, 16, 24, 0.95)
       ),
-      url("/background.svg");
+      url('/background.svg');
   }
 }
 

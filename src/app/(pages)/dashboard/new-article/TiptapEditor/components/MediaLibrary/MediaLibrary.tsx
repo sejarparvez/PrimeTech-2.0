@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useRef, useState } from "react";
-import MediaGallery from "./MediaGallery";
-import "./style.scss";
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useRef, useState } from 'react';
+import MediaGallery from './MediaGallery';
+import './style.scss';
 
 interface MediaLibraryProps {
   onInsert?: (image: ImageData) => void;
@@ -29,7 +29,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
 
   const handleUploadClick = () => {
     const confirmUpload = window.confirm(
-      "Please avoid uploading too many images unnecessarily to save storage space. Also, ensure your images comply with copyright rules. Do you wish to continue?",
+      'Please avoid uploading too many images unnecessarily to save storage space. Also, ensure your images comply with copyright rules. Do you wish to continue?'
     );
 
     if (confirmUpload) {
@@ -46,7 +46,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
           url,
           width: image.width,
           height: image.height,
-          format: file.type.split("/")[1],
+          format: file.type.split('/')[1],
           display_name: file.name.split(/\.\w+$/)[0],
         });
       };
@@ -55,19 +55,19 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
   };
 
   const uploadImage = async (file: File) => {
-    if (!file.type.startsWith("image/")) return;
+    if (!file.type.startsWith('image/')) return;
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
     try {
-      const response = await fetch("/api/dashboard/single-article/image", {
-        method: "POST",
+      const response = await fetch('/api/dashboard/single-article/image', {
+        method: 'POST',
         body: formData,
       });
       return await response.json();
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error('Upload error:', error);
     }
   };
 
@@ -96,11 +96,11 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     const fetchImages = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/dashboard/single-article/image");
+        const response = await fetch('/api/dashboard/single-article/image');
         const data = await response.json();
         setImages(data);
       } catch (error) {
-        console.error("Error fetching images:", error);
+        console.error('Error fetching images:', error);
       } finally {
         setLoading(false);
       }
@@ -148,7 +148,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
       </footer>
 
       <input
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         type="file"
         multiple
         accept="image/*"

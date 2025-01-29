@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { useState } from "react";
-import Logout from "../common/Logout";
+} from '@/components/ui/dropdown-menu';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useState } from 'react';
+import Logout from '../common/Logout';
 
 export function UserMenu() {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <Skeleton className="h-10 w-10 rounded-full" />;
   }
 

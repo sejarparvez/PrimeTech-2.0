@@ -1,1 +1,1 @@
-export * from "./LinkMenu";
+export * from './LinkMenu';

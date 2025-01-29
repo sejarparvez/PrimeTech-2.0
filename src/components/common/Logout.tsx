@@ -8,14 +8,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { signOut } from "next-auth/react";
-import { FaPowerOff } from "react-icons/fa";
-import { Button } from "../ui/button";
+} from '@/components/ui/alert-dialog';
+import { signOut } from 'next-auth/react';
+import { FaPowerOff } from 'react-icons/fa';
+import { Button } from '../ui/button';
 
 export default function Logout() {
   const handleLogout = () => {
-    signOut({ redirect: true, callbackUrl: "/" });
+    signOut({ redirect: true, callbackUrl: '/' });
   };
   return (
     <AlertDialog>

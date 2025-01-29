@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import LoginSkeleton from "./loading";
-import { LoginForm } from "./LoginForm";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import LoginSkeleton from './loading';
+import { LoginForm } from './LoginForm';
 
 export default function LoginPage() {
   const { status } = useSession();
   const router = useRouter();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return (
       <div>
         <LoginSkeleton />
@@ -17,7 +17,7 @@ export default function LoginPage() {
     );
   }
 
-  if (status === "authenticated") {
+  if (status === 'authenticated') {
     <p>You are already loged in.</p>;
   }
 

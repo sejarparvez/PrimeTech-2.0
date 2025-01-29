@@ -1,6 +1,6 @@
-@use "functions";
-@use "mixins";
-@use "variables";
+@use 'functions';
+@use 'mixins';
+@use 'variables';
 
 // BUTTON
 .rte-button {
@@ -21,7 +21,7 @@
   padding-inline: 0.75rem;
 
   border: 1px solid transparent;
-  @include mixins.font-size("sm");
+  @include mixins.font-size('sm');
 
   &:disabled {
     opacity: 0.5;
@@ -105,7 +105,7 @@
   background-color: variables.$tooltip-color;
   color: variables.$tooltip-fg-color;
   font-weight: 500;
-  @include mixins.font-size("xs");
+  @include mixins.font-size('xs');
   line-height: 1.5;
 }
 
@@ -137,7 +137,7 @@
   outline: none;
   color: variables.$fg-color;
   cursor: pointer;
-  @include mixins.font-size("sm");
+  @include mixins.font-size('sm');
 
   &:hover {
     background-color: variables.$accent-color;
@@ -207,7 +207,7 @@
   background-color: variables.$muted-color;
   outline: transparent solid 2px;
   color: variables.$fg-color;
-  @include mixins.font-size("sm");
+  @include mixins.font-size('sm');
 
   &::placeholder {
     color: variables.$muted-fg-color;
@@ -310,7 +310,7 @@
     position: relative;
 
     &:first-child::after {
-      content: "";
+      content: '';
       position: absolute;
       right: -2px;
       width: 1px;
@@ -319,7 +319,7 @@
     }
 
     &[data-active]::before {
-      content: "";
+      content: '';
       position: absolute;
       left: -0.125rem;
       bottom: -0.125rem;

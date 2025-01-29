@@ -1,11 +1,11 @@
-import { Prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { Prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
     const lastUpdatedPost = await Prisma.post.findMany({
       where: {
-        category: "Featured",
+        category: 'Featured',
       },
       select: {
         id: true,
@@ -25,37 +25,37 @@ export async function GET() {
         },
       },
       orderBy: {
-        updatedAt: "desc",
+        updatedAt: 'desc',
       },
       take: 3,
     });
 
     if (lastUpdatedPost.length > 0) {
       return new NextResponse(JSON.stringify(lastUpdatedPost), {
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
     } else {
-      return new NextResponse("No featured posts found.", {
+      return new NextResponse('No featured posts found.', {
         status: 404,
-        headers: { "Content-Type": "text/plain" },
+        headers: { 'Content-Type': 'text/plain' },
       });
     }
   } catch (error) {
     if (
       error instanceof Error &&
-      error.name === "PrismaClientKnownRequestError"
+      error.name === 'PrismaClientKnownRequestError'
     ) {
-      return new NextResponse("Duplicate entry error.", {
+      return new NextResponse('Duplicate entry error.', {
         status: 400,
-        headers: { "Content-Type": "text/plain" },
+        headers: { 'Content-Type': 'text/plain' },
       });
     }
 
-    console.error("Error fetching last updated post:", error);
+    console.error('Error fetching last updated post:', error);
 
-    return new NextResponse("Internal Server Error", {
+    return new NextResponse('Internal Server Error', {
       status: 500,
-      headers: { "Content-Type": "text/plain" },
+      headers: { 'Content-Type': 'text/plain' },
     });
   } finally {
     await Prisma.$disconnect();

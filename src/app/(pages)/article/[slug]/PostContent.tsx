@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface PostContentProps {
   children: ReactNode;
@@ -12,6 +12,6 @@ const PostContent = ({ children }: PostContentProps) => {
   );
 };
 
-PostContent.displayName = "PostContent";
+PostContent.displayName = 'PostContent';
 
 export default PostContent;

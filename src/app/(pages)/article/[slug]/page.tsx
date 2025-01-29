@@ -1,7 +1,7 @@
-import { RemoveHtmlTags } from "@/utils/slug";
-import axios from "axios";
-import type { Metadata, ResolvingMetadata } from "next";
-import SingleDesign from "./SingleDesign";
+import { RemoveHtmlTags } from '@/utils/slug';
+import axios from 'axios';
+import type { Metadata, ResolvingMetadata } from 'next';
+import SingleDesign from './SingleDesign';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -18,38 +18,38 @@ function truncateString(str: string, maxLength: number): string {
 async function fetchArticleData(id: string) {
   try {
     const response = await axios.get(
-      `${siteUrl}/api/article/single-article?id=${id}`,
+      `${siteUrl}/api/article/single-article?id=${id}`
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching article data:", error);
+    console.error('Error fetching article data:', error);
     return null;
   }
 }
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const postlink = (await params).slug;
-  const id = postlink.split("_")[1];
+  const id = postlink.split('_')[1];
 
   const data = await fetchArticleData(id);
 
   if (!data) {
     // Fallback metadata in case of API failure
     return {
-      title: "Blog Post",
-      description: "Explore this amazing design",
+      title: 'Blog Post',
+      description: 'Explore this amazing design',
       alternates: {
         canonical: `${siteUrl}/article/${postlink}`,
       },
     };
   }
 
-  const title = data.title || "Blog Post";
+  const title = data.title || 'Blog Post';
   const rawDescription = RemoveHtmlTags(
-    data.content || "Explore this amazing design",
+    data.content || 'Explore this amazing design'
   );
   const description = truncateString(rawDescription, 160); // Limit to 160 characters
   const imageUrl = data.image || `${siteUrl}/default-image.jpg`; // Fallback for image
@@ -61,27 +61,27 @@ export async function generateMetadata(
     alternates: {
       canonical: pageUrl,
     },
-    keywords: data.tags?.length ? data.tags.join(", ") : "design, art, blog", // Comma-separated string
+    keywords: data.tags?.length ? data.tags.join(', ') : 'design, art, blog', // Comma-separated string
 
     openGraph: {
       title,
       description,
-      type: "article",
+      type: 'article',
       url: pageUrl,
-      authors: data.author?.name || "Unknown Author",
+      authors: data.author?.name || 'Unknown Author',
       publishedTime: data.createdAt || null,
       modifiedTime: data.updatedAt || null,
-      section: data.category || "Uncategorized",
+      section: data.category || 'Uncategorized',
       images: [
         {
           url: imageUrl,
           alt: title,
         },
       ],
-      locale: "en_US",
+      locale: 'en_US',
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title,
       description,
       images: imageUrl,

@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import Image from "next/image";
-import React from "react";
-import { LuCheck } from "react-icons/lu";
+import clsx from 'clsx';
+import Image from 'next/image';
+import React from 'react';
+import { LuCheck } from 'react-icons/lu';
 
 interface MediaGalleryProps {
   data: any[];
@@ -19,9 +19,9 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
       {data.map((image, index) => (
         <div
           key={image.id || index}
-          className={clsx("media-item", {
-            "media-item--selected": selected?.id === image?.id,
-            "media-item--uploading": !Boolean(image?.id),
+          className={clsx('media-item', {
+            'media-item--selected': selected?.id === image?.id,
+            'media-item--uploading': !Boolean(image?.id),
           })}
           onClick={() => onSelect(image)}
         >

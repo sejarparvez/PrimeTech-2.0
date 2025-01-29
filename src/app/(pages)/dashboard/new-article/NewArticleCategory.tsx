@@ -1,32 +1,32 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { X } from "lucide-react";
-import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { CgAsterisk } from "react-icons/cg";
-import { NewArticleSchemaType } from "./NewArticleSchema";
+} from '@/components/ui/select';
+import { X } from 'lucide-react';
+import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { CgAsterisk } from 'react-icons/cg';
+import { NewArticleSchemaType } from './NewArticleSchema';
 
 const categories = [
-  { value: "technology", label: "Technology" },
-  { value: "science", label: "Science" },
-  { value: "health", label: "Health" },
-  { value: "business", label: "Business" },
+  { value: 'technology', label: 'Technology' },
+  { value: 'science', label: 'Science' },
+  { value: 'health', label: 'Health' },
+  { value: 'business', label: 'Business' },
 ];
 
 export const RequiredLabel: React.FC<{ children: React.ReactNode }> = ({
@@ -40,33 +40,33 @@ export const RequiredLabel: React.FC<{ children: React.ReactNode }> = ({
 
 export const NewArticleCategoryAndTags: React.FC = () => {
   const { control, setValue, watch } = useFormContext<NewArticleSchemaType>();
-  const tags = watch("tags") || [];
+  const tags = watch('tags') || [];
 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const addTag = (tag: string) => {
     const trimmedTag = tag.trim(); // Trim whitespace from the input
     if (trimmedTag && !tags.includes(trimmedTag)) {
-      const currentTags = watch("tags") || [];
-      setValue("tags", [...currentTags, trimmedTag]); // Set the new tags array directly
-      setInput(""); // Clear the input field after adding the tag
+      const currentTags = watch('tags') || [];
+      setValue('tags', [...currentTags, trimmedTag]); // Set the new tags array directly
+      setInput(''); // Clear the input field after adding the tag
     } else if (!trimmedTag) {
-      console.warn("Cannot add an empty tag."); // Optional: Add a warning for empty tags
+      console.warn('Cannot add an empty tag.'); // Optional: Add a warning for empty tags
     }
   };
 
   const removeTag = (indexToRemove: number) => {
     setValue(
-      "tags",
-      tags.filter((_, index) => index !== indexToRemove),
+      'tags',
+      tags.filter((_, index) => index !== indexToRemove)
     );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       addTag(input);
-    } else if (e.key === "Backspace" && !input && tags.length > 0) {
+    } else if (e.key === 'Backspace' && !input && tags.length > 0) {
       removeTag(tags.length - 1);
     }
   };
@@ -97,7 +97,7 @@ export const NewArticleCategoryAndTags: React.FC = () => {
                           key={category.value}
                           value={category.value
                             .toLowerCase()
-                            .replace(/\s+/g, "_")}
+                            .replace(/\s+/g, '_')}
                         >
                           {category.label}
                         </SelectItem>
@@ -113,7 +113,7 @@ export const NewArticleCategoryAndTags: React.FC = () => {
             <FormLabel>Tags</FormLabel>
             <div className="mb-2 flex flex-wrap gap-2">
               {tags
-                .filter((tag) => tag.trim() !== "") // Filter out empty string tags
+                .filter((tag) => tag.trim() !== '') // Filter out empty string tags
                 .map((tag: string, index: number) => (
                   <Badge
                     key={index}

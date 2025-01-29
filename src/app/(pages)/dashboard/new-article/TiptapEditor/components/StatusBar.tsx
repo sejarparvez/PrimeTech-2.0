@@ -1,12 +1,17 @@
-import React, { memo } from "react";
-import { useEditorState } from "@tiptap/react";
-import { Toolbar } from "./ui/Toolbar";
-import MenuButton from "./MenuButton";
-import { useTiptapContext } from "./Provider";
+import React, { memo } from 'react';
+import { useEditorState } from '@tiptap/react';
+import { Toolbar } from './ui/Toolbar';
+import MenuButton from './MenuButton';
+import { useTiptapContext } from './Provider';
 
 const StatusBar = () => {
-  const { editor, isFullScreen, isSourceMode, toggleFullScreen, toggleSourceMode } =
-    useTiptapContext();
+  const {
+    editor,
+    isFullScreen,
+    isSourceMode,
+    toggleFullScreen,
+    toggleSourceMode,
+  } = useTiptapContext();
   const counter = useEditorState({
     editor,
     selector: (ctx) => ({
@@ -25,7 +30,7 @@ const StatusBar = () => {
           onClick={toggleSourceMode}
         />
         <MenuButton
-          icon={isFullScreen ? "Minimize" : "Maximize"}
+          icon={isFullScreen ? 'Minimize' : 'Maximize'}
           text="Fullscreen"
           active={isFullScreen}
           onClick={toggleFullScreen}

@@ -1,10 +1,10 @@
-import { CODE_BLOCK_LANGUAGUES } from "@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages";
-import { useMemo, useState } from "react";
-import MenuButton from "../../MenuButton";
-import { useTiptapContext } from "../../Provider";
-import Icon from "../../ui/Icon";
-import Input from "../../ui/Input";
-import { PopoverClose } from "../../ui/Popover";
+import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
+import { useMemo, useState } from 'react';
+import MenuButton from '../../MenuButton';
+import { useTiptapContext } from '../../Provider';
+import Icon from '../../ui/Icon';
+import Input from '../../ui/Input';
+import { PopoverClose } from '../../ui/Popover';
 
 interface CodeDropdownProps {
   value: string;
@@ -13,7 +13,7 @@ interface CodeDropdownProps {
 
 const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
   const { contentElement } = useTiptapContext();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const options = CODE_BLOCK_LANGUAGUES.map((item) => ({
     label: item.label,
@@ -30,16 +30,16 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
       text={options.find((item) => item.value === value)?.label}
       hideText={false}
       tooltip={false}
-      buttonStyle={{ minWidth: "6rem" }}
+      buttonStyle={{ minWidth: '6rem' }}
       dropdownClass="rte-code-dropdown"
       dropdownStyle={{
-        minWidth: "10rem",
+        minWidth: '10rem',
       }}
     >
       <Input
         className="code-search"
         placeholder="Seach language..."
-        style={{ width: "10rem" }}
+        style={{ width: '10rem' }}
         value={search}
         onChange={(e) => setSearch(e.target.value.trim())}
       />
@@ -55,7 +55,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
               className="code-item"
               onClick={() => {
                 onSelect(item.value);
-                setSearch("");
+                setSearch('');
               }}
             >
               {item.label}

@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useRecentPosts } from "@/app/services/article";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { articleInterFace } from "@/utils/interface";
-import { createSlug } from "@/utils/slug";
-import { formatDistanceToNow } from "date-fns";
-import { MessageCircle, MoveUpRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { FC } from "react";
+import { useRecentPosts } from '@/app/services/article';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { articleInterFace } from '@/utils/interface';
+import { createSlug } from '@/utils/slug';
+import { formatDistanceToNow } from 'date-fns';
+import { MessageCircle, MoveUpRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FC } from 'react';
 
-type Variant = "featured" | "horizontal";
+type Variant = 'featured' | 'horizontal';
 
 const ProgrammingPost: FC = () => {
   const { data, isLoading, isError, refetch } = useRecentPosts();
@@ -96,25 +96,25 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
   <Link href={`${createSlug({ id: post.id, name: post.title })}`}>
     <Card
       className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg ${
-        variant === "horizontal" ? "flex h-64" : "h-64 md:h-[33rem]"
+        variant === 'horizontal' ? 'flex h-64' : 'h-64 md:h-[33rem]'
       }`}
     >
       <Image
-        src={post.coverImage || "/default-image.jpg"}
+        src={post.coverImage || '/default-image.jpg'}
         alt={`Cover image for ${post.title}`}
-        width={variant === "horizontal" ? 300 : 800}
-        height={variant === "horizontal" ? 256 : 528}
+        width={variant === 'horizontal' ? 300 : 800}
+        height={variant === 'horizontal' ? 256 : 528}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        priority={variant === "featured"}
+        priority={variant === 'featured'}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-6 text-white">
         <h3
-          className={`mb-2 font-bold ${variant === "featured" ? "text-xl md:text-4xl" : "text-xl"}`}
+          className={`mb-2 font-bold ${variant === 'featured' ? 'text-xl md:text-4xl' : 'text-xl'}`}
         >
           {post.title}
         </h3>
-        {variant === "featured" && post.author && (
+        {variant === 'featured' && post.author && (
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Avatar className="h-8 w-8 border-2 border-white">

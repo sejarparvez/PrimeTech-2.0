@@ -1,12 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 function useProgress(containerSelector: string) {
   const [enable, setEnable] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const container = document.body.querySelector(containerSelector || "");
+    const container = document.body.querySelector(containerSelector || '');
 
     if (!container) return;
 
@@ -16,7 +16,7 @@ function useProgress(containerSelector: string) {
           if (!enable && entry.isIntersecting) setEnable(true);
         });
       },
-      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 },
+      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 }
     );
 
     observer.observe(container);
@@ -46,12 +46,12 @@ function useProgress(containerSelector: string) {
       setProgress(Math.min(100, Math.max(0, progress)));
     };
 
-    window.addEventListener("scroll", calculateProgress);
-    window.addEventListener("resize", calculateProgress);
+    window.addEventListener('scroll', calculateProgress);
+    window.addEventListener('resize', calculateProgress);
 
     return () => {
-      window.removeEventListener("scroll", calculateProgress);
-      window.removeEventListener("resize", calculateProgress);
+      window.removeEventListener('scroll', calculateProgress);
+      window.removeEventListener('resize', calculateProgress);
     };
   }, [enable, containerSelector]);
 
@@ -59,7 +59,7 @@ function useProgress(containerSelector: string) {
 }
 
 const PostReadingProgress = () => {
-  const { progress, enable } = useProgress(".article-content");
+  const { progress, enable } = useProgress('.article-content');
 
   return enable ? (
     <div

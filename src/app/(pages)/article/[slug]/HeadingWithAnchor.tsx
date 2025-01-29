@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React, { JSX, ReactNode } from "react";
+import Link from 'next/link';
+import React, { JSX, ReactNode } from 'react';
 
 interface HeadingWithAnchorProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
@@ -15,13 +15,13 @@ const HeadingWithAnchor: React.FC<HeadingWithAnchorProps> = ({
   const HeadingTag: keyof JSX.IntrinsicElements = `h${level}`;
 
   const generateId = (text: ReactNode): string => {
-    if (typeof text === "string") {
+    if (typeof text === 'string') {
       return text
         .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9\-]/g, "");
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9\-]/g, '');
     }
-    return "heading";
+    return 'heading';
   };
 
   const headingId = id || generateId(children);

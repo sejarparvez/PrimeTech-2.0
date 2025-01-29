@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useRecentPosts } from "@/app/services/article";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { articleInterFace } from "@/utils/interface";
-import { createSlug } from "@/utils/slug";
-import { formatDistanceToNow } from "date-fns";
-import { Calendar, MessageCircle, MoveUpRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { useRecentPosts } from '@/app/services/article';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { articleInterFace } from '@/utils/interface';
+import { createSlug } from '@/utils/slug';
+import { formatDistanceToNow } from 'date-fns';
+import { Calendar, MessageCircle, MoveUpRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function RecentPostsList() {
   const { data, isLoading, isError } = useRecentPosts();
@@ -86,13 +86,13 @@ function PostCard({ data }: { data: articleInterFace }) {
                     alt={data.author?.name}
                   />
                   <AvatarFallback>
-                    {data.author?.name?.charAt(0) ?? "A"}
+                    {data.author?.name?.charAt(0) ?? 'A'}
                   </AvatarFallback>
                 </Avatar>
 
                 <div>
                   <p className="font-semibold">
-                    {data.author?.name ?? "Author"}
+                    {data.author?.name ?? 'Author'}
                   </p>
                   <time
                     className="flex items-center text-muted-foreground"

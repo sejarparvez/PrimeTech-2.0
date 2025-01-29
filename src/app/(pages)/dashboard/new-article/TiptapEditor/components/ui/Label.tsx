@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import React, { JSX, ReactNode } from "react";
+import clsx from 'clsx';
+import React, { JSX, ReactNode } from 'react';
 
 interface LabelProps {
   as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
@@ -7,8 +7,12 @@ interface LabelProps {
   className?: string;
 }
 
-const Label = ({ as: Comp = "label", children, className = "" }: LabelProps) => {
-  return <Comp className={clsx("rte-label", className)}>{children}</Comp>;
+const Label = ({
+  as: Comp = 'label',
+  children,
+  className = '',
+}: LabelProps) => {
+  return <Comp className={clsx('rte-label', className)}>{children}</Comp>;
 };
 
 export default Label;

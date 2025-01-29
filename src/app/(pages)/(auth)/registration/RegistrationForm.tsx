@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -9,51 +9,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import RegistrationImage from "@/image/registration.jpg";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { z } from "zod";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import RegistrationImage from '@/image/registration.jpg';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
 
 const FormSchema = z.object({
   name: z
     .string()
-    .min(5, "Name must be at least 5 characters")
-    .max(20, "Name cannot be more than 20 characters"),
-  email: z.string().email("Invalid email address"),
+    .min(5, 'Name must be at least 5 characters')
+    .max(20, 'Name cannot be more than 20 characters'),
+  email: z.string().email('Invalid email address'),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters long")
-    .max(15, "Password cannot be more than 15 characters"),
+    .min(6, 'Password must be at least 6 characters long')
+    .max(15, 'Password cannot be more than 15 characters'),
   code: z.string().optional(),
 });
 
 export function RegistrationForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<'div'>) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState('');
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      code: "",
+      name: '',
+      email: '',
+      password: '',
+      code: '',
     },
   });
 
@@ -62,49 +62,49 @@ export function RegistrationForm({
       setIsLoading(true);
       if (showVerification) {
         const response = await toast.promise(
-          axios.put("/api/auth/registration", {
+          axios.put('/api/auth/registration', {
             userId,
             code: data.code,
           }),
           {
-            pending: "Verifying the code",
-            success: "Code verified successfully 👍",
-            error: "Invalid code. Please try again 🤯",
-          },
+            pending: 'Verifying the code',
+            success: 'Code verified successfully 👍',
+            error: 'Invalid code. Please try again 🤯',
+          }
         );
 
         if (response.status === 200) {
           setTimeout(() => {
-            router.push("/login");
+            router.push('/login');
           }, 1000);
         }
       } else {
         const response = await toast.promise(
-          axios.post("/api/auth/registration", data),
+          axios.post('/api/auth/registration', data),
           {
-            pending: "Sending the verification code",
-            success: "Email sent successfully 👌",
-          },
+            pending: 'Sending the verification code',
+            success: 'Email sent successfully 👌',
+          }
         );
 
         if (response && response.status === 200) {
           setUserId(response.data.userId);
           setShowVerification(true);
-          form.setValue("name", data.name);
-          form.setValue("email", data.email);
-          form.setValue("password", data.password);
+          form.setValue('name', data.name);
+          form.setValue('email', data.email);
+          form.setValue('password', data.password);
         }
       }
     } catch (error) {
-      console.error("Error during registration/verification:", error);
-      toast.error("An error occurred. Please try again.");
+      console.error('Error during registration/verification:', error);
+      toast.error('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
           <Form {...form}>
@@ -160,7 +160,7 @@ export function RegistrationForm({
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showPassword ? "text" : "password"}
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="••••••••"
                             {...field}
                             disabled={showVerification}
@@ -170,7 +170,7 @@ export function RegistrationForm({
                             onClick={() => setShowPassword((prev) => !prev)}
                             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                             aria-label={
-                              showPassword ? "Hide password" : "Show password"
+                              showPassword ? 'Hide password' : 'Show password'
                             }
                           >
                             {showPassword ? (
@@ -211,10 +211,10 @@ export function RegistrationForm({
                   {isLoading && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {showVerification ? "Verify" : "Register"}
+                  {showVerification ? 'Verify' : 'Register'}
                 </Button>
                 <div className="text-center text-sm">
-                  Already have an account?{" "}
+                  Already have an account?{' '}
                   <Link href="/login" className="underline underline-offset-4">
                     Login
                   </Link>
@@ -232,8 +232,8 @@ export function RegistrationForm({
         </CardContent>
         <CardFooter className="mx-auto flex items-center justify-center text-center">
           <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-            By clicking continue, you agree to our{" "}
-            <Link href="/terms">Terms of Service</Link> and{" "}
+            By clicking continue, you agree to our{' '}
+            <Link href="/terms">Terms of Service</Link> and{' '}
             <Link href="/policy">Privacy Policy</Link>.
           </div>
         </CardFooter>

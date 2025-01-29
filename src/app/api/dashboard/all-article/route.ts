@@ -1,6 +1,6 @@
-import { Prisma } from "@/lib/prisma";
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from '@/lib/prisma';
+import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
 
 const secret = process.env.NEXTAUTH_SECRET;
 
@@ -9,16 +9,16 @@ export async function GET(req: NextRequest) {
     const token = await getToken({ req, secret });
 
     if (!token)
-      return NextResponse.json({ message: "Token not found" }, { status: 401 });
+      return NextResponse.json({ message: 'Token not found' }, { status: 401 });
 
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
 
-    const page = queryParams.get("page")
-      ? parseInt(queryParams.get("page")!, 10)
+    const page = queryParams.get('page')
+      ? parseInt(queryParams.get('page')!, 10)
       : 1;
-    const category = queryParams.get("category") || "all";
-    const searchQuery = queryParams.get("searchQuery") || "";
+    const category = queryParams.get('category') || 'all';
+    const searchQuery = queryParams.get('searchQuery') || '';
 
     const limit = 12;
     const skip = (page - 1) * limit;
@@ -28,21 +28,21 @@ export async function GET(req: NextRequest) {
       category?: string;
       title?: {
         contains: string;
-        mode: "insensitive";
+        mode: 'insensitive';
       };
     } = {};
 
-    if (category !== "all") {
+    if (category !== 'all') {
       whereClause.category = category;
     }
 
-    if (token.role !== "ADMIN") {
+    if (token.role !== 'ADMIN') {
       whereClause.authorId = token.sub;
     }
     if (searchQuery) {
       whereClause.title = {
         contains: searchQuery,
-        mode: "insensitive",
+        mode: 'insensitive',
       };
     }
 
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
       take: limit,
 
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
       include: {
         author: {
@@ -82,6 +82,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { TbBrandFacebook, TbBrandLinkedin, TbBrandX } from "react-icons/tb";
+import React from 'react';
+import { TbBrandFacebook, TbBrandLinkedin, TbBrandX } from 'react-icons/tb';
 
 const PostSharing = () => {
   return (

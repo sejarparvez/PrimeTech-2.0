@@ -1,9 +1,9 @@
-"use client";
-import { toJsxRuntime } from "hast-util-to-jsx-runtime";
-import type { JSX } from "react";
-import { useLayoutEffect, useState } from "react";
-import * as prod from "react/jsx-runtime";
-import { codeToHast } from "shiki/bundle/full";
+'use client';
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
+import type { JSX } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import * as prod from 'react/jsx-runtime';
+import { codeToHast } from 'shiki/bundle/full';
 
 interface SyntaxHighlighterProps {
   content?: string;
@@ -28,8 +28,8 @@ async function highlight(code: string, lang: string) {
   const out = await codeToHast(code, {
     lang,
     themes: {
-      light: "github-light-default",
-      dark: "one-dark-pro",
+      light: 'github-light-default',
+      dark: 'one-dark-pro',
     },
     //  structure: "inline",
   });

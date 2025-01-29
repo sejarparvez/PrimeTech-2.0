@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { articleCategories } from "@/app/constants/articleCategory";
-import { useDashboardArticle } from "@/app/services/article";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { articleCategories } from '@/app/constants/articleCategory';
+import { useDashboardArticle } from '@/app/services/article';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -13,34 +13,34 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { articleInterFace } from "@/utils/interface";
-import { AnimatePresence, motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
-import { ArticleCard } from "./ArticleCard";
-import { ArticleListSkeleton } from "./ArticleSketon";
-import ArticlePagination from "./PaginationUi";
+} from '@/components/ui/select';
+import { articleInterFace } from '@/utils/interface';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
+import { ArticleCard } from './ArticleCard';
+import { ArticleListSkeleton } from './ArticleSketon';
+import ArticlePagination from './PaginationUi';
 
 export default function ArticleList() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [category, setCategory] = useState<string>(
-    searchParams.get("category") || "all",
+    searchParams.get('category') || 'all'
   );
   const [searchQuery, setSearchQuery] = useState<string>(
-    searchParams.get("query") || "",
+    searchParams.get('query') || ''
   );
 
   const handleFilterChange = useCallback(
     (value: string) => {
       setCategory(value);
       router.push(
-        `/dashboard/all-article?category=${value}&query=${searchQuery}&page=1`,
+        `/dashboard/all-article?category=${value}&query=${searchQuery}&page=1`
       );
     },
-    [router, searchQuery],
+    [router, searchQuery]
   );
 
   const handleSearchChange = useCallback(
@@ -48,21 +48,21 @@ export default function ArticleList() {
       const newQuery = e.target.value;
       setSearchQuery(newQuery);
       router.push(
-        `/dashboard/all-article?category=${category}&query=${newQuery}&page=1`,
+        `/dashboard/all-article?category=${category}&query=${newQuery}&page=1`
       );
     },
-    [router, category],
+    [router, category]
   );
 
   const handleSearch = useCallback(() => {
     router.push(
-      `/dashboard/all-article?category=${category}&query=${searchQuery}&page=1`,
+      `/dashboard/all-article?category=${category}&query=${searchQuery}&page=1`
     );
   }, [router, category, searchQuery]);
 
-  const categoryName = searchParams.get("category") || "All";
-  const query = searchParams.get("query") || "";
-  const page = parseInt(searchParams.get("page") || "1", 10);
+  const categoryName = searchParams.get('category') || 'All';
+  const query = searchParams.get('query') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
   const { isLoading, data, isError } = useDashboardArticle({
     page,
     category: categoryName,
@@ -86,7 +86,7 @@ export default function ArticleList() {
                 {articleCategories.map((category) => (
                   <SelectItem
                     key={category.value}
-                    value={category.value.toLowerCase().replace(/\s+/g, "_")}
+                    value={category.value.toLowerCase().replace(/\s+/g, '_')}
                   >
                     {category.name}
                   </SelectItem>
@@ -99,7 +99,7 @@ export default function ArticleList() {
             disabled={isLoading}
             className="w-full sm:w-auto"
           >
-            {isLoading ? "Loading..." : "Filter"}
+            {isLoading ? 'Loading...' : 'Filter'}
           </Button>
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -108,7 +108,7 @@ export default function ArticleList() {
             value={searchQuery}
             onChange={handleSearchChange}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 handleSearch();
               }
             }}
@@ -119,7 +119,7 @@ export default function ArticleList() {
             disabled={isLoading}
             className="w-full sm:w-auto"
           >
-            {isLoading ? "Loading..." : "Search"}
+            {isLoading ? 'Loading...' : 'Search'}
           </Button>
         </div>
       </div>

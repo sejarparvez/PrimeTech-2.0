@@ -1,15 +1,15 @@
-import { Prisma } from "@/lib/prisma";
-import { deleteImageFromCloudinary } from "@/utils/cloudinary";
-import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from '@/lib/prisma';
+import { deleteImageFromCloudinary } from '@/utils/cloudinary';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
-    const id = queryParams.get("id");
+    const id = queryParams.get('id');
 
     if (!id) {
-      return new NextResponse("Missing field", { status: 400 });
+      return new NextResponse('Missing field', { status: 400 });
     }
 
     // Fetch the design
@@ -27,14 +27,14 @@ export async function GET(req: NextRequest) {
 
         comments: {
           orderBy: {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
         },
       },
     });
 
     if (!design) {
-      return new NextResponse("Design not found", { status: 404 });
+      return new NextResponse('Design not found', { status: 404 });
     }
 
     // Add like and comments count to the response object
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(JSON.stringify(enhancedResponse), { status: 200 });
   } catch (error) {
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse('Internal Server Error', { status: 500 });
   } finally {
     Prisma.$disconnect();
   }
@@ -55,10 +55,10 @@ export async function DELETE(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const queryParams = new URLSearchParams(url.search);
-    const id = queryParams.get("id");
+    const id = queryParams.get('id');
 
     if (!id) {
-      return new NextResponse("Missing article ID", { status: 400 });
+      return new NextResponse('Missing article ID', { status: 400 });
     }
 
     // Check if the article exists
@@ -67,7 +67,7 @@ export async function DELETE(req: NextRequest) {
     });
 
     if (!article) {
-      return new NextResponse("Article not found", { status: 404 });
+      return new NextResponse('Article not found', { status: 404 });
     }
 
     // Delete associated comments
@@ -86,12 +86,12 @@ export async function DELETE(req: NextRequest) {
     });
 
     return new NextResponse(
-      "Article and associated data deleted successfully",
-      { status: 200 },
+      'Article and associated data deleted successfully',
+      { status: 200 }
     );
   } catch (error) {
-    console.error("Error deleting article and associated data:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    console.error('Error deleting article and associated data:', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
   } finally {
     Prisma.$disconnect();
   }

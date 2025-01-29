@@ -5,11 +5,13 @@ import { DashboardSidebar } from '@/components/layout/admin/DashboardSidebar';
 import Footer from '@/components/layout/Footer';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import NewArticleForm from './NewArticleFormField';
+import EditArticleForm from './EditArticleFormField';
 
 export default function NewDesign() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id') || '';
   const { status } = useSession();
   const router = useRouter();
 
@@ -118,7 +120,7 @@ export default function NewDesign() {
         <main className="w-full">
           <BreadCrumb />
           <div className="container px-2 md:px-10">
-            <NewArticleForm />
+            <EditArticleForm id={id} />
           </div>
           <Footer />
         </main>

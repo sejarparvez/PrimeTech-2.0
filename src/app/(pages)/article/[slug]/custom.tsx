@@ -1,10 +1,10 @@
-import dynamic from "next/dynamic";
-import Image from "next/image";
-import { Components } from "rehype-react";
-import CopyButton from "./CopyButton";
-import HeadingWithAnchor from "./HeadingWithAnchor";
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { Components } from 'rehype-react';
+import CopyButton from './CopyButton';
+import HeadingWithAnchor from './HeadingWithAnchor';
 
-const SyntaxHighlighter = dynamic(() => import("./SyntaxHighlighter"), {
+const SyntaxHighlighter = dynamic(() => import('./SyntaxHighlighter'), {
   ssr: false,
 });
 
@@ -15,9 +15,9 @@ export const components: Partial<Components> = {
   img: ({ src, alt, width, ...props }: any) => (
     <Image
       src={src}
-      alt={alt || ""}
-      width={props["data-width"]}
-      height={props["data-height"]}
+      alt={alt || ''}
+      width={props['data-width']}
+      height={props['data-height']}
       className="mx-auto rounded-lg"
     />
   ),
@@ -40,8 +40,8 @@ export const components: Partial<Components> = {
     );
   },
   code: ({ children, ...props }) => {
-    const match = /language-(\w+)/.exec(props.className || "");
-    const code = String(children).replace(/\n$/, "");
+    const match = /language-(\w+)/.exec(props.className || '');
+    const code = String(children).replace(/\n$/, '');
     return match ? (
       <SyntaxHighlighter language={match[1]} content={code} />
     ) : (

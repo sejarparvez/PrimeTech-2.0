@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useSinglePost } from "@/app/services/article";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle } from "lucide-react";
-import { useState } from "react";
-import PostContent from "./PostContent";
-import PostHeader from "./PostHeader";
-import PostReadingProgress from "./PostReadingProgress";
-import PostSharing from "./PostSharing";
-import PostToc from "./PostToc";
-import TiptapRenderer from "./TiptapRenderer";
+import { useSinglePost } from '@/app/services/article';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import PostContent from './PostContent';
+import PostHeader from './PostHeader';
+import PostReadingProgress from './PostReadingProgress';
+import PostSharing from './PostSharing';
+import PostToc from './PostToc';
+import TiptapRenderer from './TiptapRenderer';
 
 export default function SingleDesign({ postlink }: { postlink: string }) {
   const [retryCount, setRetryCount] = useState(0);
 
-  const id = postlink.split("_")[1];
+  const id = postlink.split('_')[1];
 
   const { isLoading, data, isError, refetch } = useSinglePost({ id });
 
@@ -40,7 +40,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
               disabled={retryCount >= 3}
               className="w-full"
             >
-              {retryCount >= 3 ? "Too many attempts" : "Retry"}
+              {retryCount >= 3 ? 'Too many attempts' : 'Retry'}
             </Button>
           </CardContent>
         </Card>

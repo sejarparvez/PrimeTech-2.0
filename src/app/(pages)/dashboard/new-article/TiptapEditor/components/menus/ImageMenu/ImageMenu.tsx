@@ -1,15 +1,15 @@
-import { getNodeContainer } from "@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer";
-import { Node } from "@tiptap/pm/model";
-import { NodeSelection, Selection, TextSelection } from "@tiptap/pm/state";
-import { useEditorState } from "@tiptap/react";
-import { useCallback, useRef, useState } from "react";
-import type { Instance } from "tippy.js";
-import { BubbleMenu } from "../../BubbleMenu";
-import MenuButton from "../../MenuButton";
-import { useTiptapContext } from "../../Provider";
-import { Toolbar, ToolbarDivider } from "../../ui/Toolbar";
-import AltTextEdit from "./AltTextEdit";
-import SizeDropdown from "./SizeDropdown";
+import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
+import { Node } from '@tiptap/pm/model';
+import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
+import { useEditorState } from '@tiptap/react';
+import { useCallback, useRef, useState } from 'react';
+import type { Instance } from 'tippy.js';
+import { BubbleMenu } from '../../BubbleMenu';
+import MenuButton from '../../MenuButton';
+import { useTiptapContext } from '../../Provider';
+import { Toolbar, ToolbarDivider } from '../../ui/Toolbar';
+import AltTextEdit from './AltTextEdit';
+import SizeDropdown from './SizeDropdown';
 
 export const ImageMenu = () => {
   const tippyInstance = useRef<Instance | null>(null);
@@ -20,8 +20,8 @@ export const ImageMenu = () => {
     editor,
     selector: (ctx) => {
       if (
-        !ctx.editor.isActive("image") &&
-        !ctx.editor.isActive("imageFigure")
+        !ctx.editor.isActive('image') &&
+        !ctx.editor.isActive('imageFigure')
       ) {
         return null;
       }
@@ -34,14 +34,14 @@ export const ImageMenu = () => {
         src: node.attrs.src,
         alt: node.attrs.alt,
         width: node.attrs.width,
-        hasCaption: ctx.editor.isActive("imageFigure"),
+        hasCaption: ctx.editor.isActive('imageFigure'),
       };
     },
   });
 
   // Get reference bounding box for Tippy
   const getReferenceClientRect = useCallback(() => {
-    const selector = editor.isActive("imageFigure") ? "figure" : "img";
+    const selector = editor.isActive('imageFigure') ? 'figure' : 'img';
     const node = getNodeContainer(editor, selector);
     return node?.getBoundingClientRect() || new DOMRect(-1000, -1000, 0, 0);
   }, [editor]);
@@ -57,7 +57,7 @@ export const ImageMenu = () => {
           return commands.setNodeSelection(image.pos);
         return true;
       })
-      .updateAttributes("image", { [name]: value })
+      .updateAttributes('image', { [name]: value })
       .focus()
       .run();
   };
@@ -67,39 +67,39 @@ export const ImageMenu = () => {
     editor
       .chain()
       .focus()
-      [image?.hasCaption ? "figureToImage" : "imageToFigure"]()
+      [image?.hasCaption ? 'figureToImage' : 'imageToFigure']()
       .run();
 
   // Toggle alt text edit form and update Tippy position
   const toggleEditAltText = () => {
     setIsEditText((prev) => !prev);
     requestAnimationFrame(() =>
-      tippyInstance.current?.popperInstance?.update(),
+      tippyInstance.current?.popperInstance?.update()
     );
   };
 
   const setAltText = (value: string) => {
-    updateImageAttr("alt", value);
+    updateImageAttr('alt', value);
     toggleEditAltText();
   };
 
-  const setSize = (value: number | null) => updateImageAttr("width", value);
+  const setSize = (value: number | null) => updateImageAttr('width', value);
 
   const removeImage = () => editor.chain().focus().removeImage().run();
 
   // Download image with proper filename
   const downloadImage = useCallback(async () => {
     if (!image?.src)
-      return console.error("No image source available for download.");
+      return console.error('No image source available for download.');
 
     try {
       const res = await fetch(image.src);
-      if (!res.ok) throw new Error("Failed to fetch the image.");
+      if (!res.ok) throw new Error('Failed to fetch the image.');
       const blob = await res.blob();
       const extension = blob.type.split(/\/|\+/)[1];
 
       const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = url;
       link.download = `image.${extension}`;
       document.body.appendChild(link);
@@ -107,7 +107,7 @@ export const ImageMenu = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error downloading image:", error);
+      console.error('Error downloading image:', error);
     }
   }, [image]);
 
@@ -118,11 +118,11 @@ export const ImageMenu = () => {
       editor={editor}
       pluginKey="image-bubble"
       shouldShow={({ editor }) =>
-        editor.isActive("imageFigure") || editor.isActive("image")
+        editor.isActive('imageFigure') || editor.isActive('image')
       }
       updateDelay={100}
       tippyOptions={{
-        maxWidth: "auto",
+        maxWidth: 'auto',
         offset: [0, 15],
         //   offset: ({ placement }) => {
         //     return placement == "top" ? [0, 15] : [0, 10];
@@ -150,12 +150,12 @@ export const ImageMenu = () => {
           <MenuButton
             text="Alt text"
             hideText={false}
-            tooltip={"Alternative text"}
+            tooltip={'Alternative text'}
             onClick={toggleEditAltText}
           />
           <MenuButton
             icon="ImageCaption"
-            tooltip={`Caption: ${image?.hasCaption ? "ON" : "OFF"}`}
+            tooltip={`Caption: ${image?.hasCaption ? 'ON' : 'OFF'}`}
             active={image?.hasCaption}
             onClick={toggleCaption}
           />
@@ -177,7 +177,7 @@ export const ImageMenu = () => {
 export default ImageMenu;
 
 const getImageOrFigureNode = (
-  selection: Selection,
+  selection: Selection
 ): { node: Node | null; pos: number | null } => {
   let node: Node | null = null;
   let pos: number | null = null;
@@ -192,7 +192,7 @@ const getImageOrFigureNode = (
     // is in figure or image
     node = selection.node;
     pos = selection.from;
-    if (node.type.name === "imageFigure") {
+    if (node.type.name === 'imageFigure') {
       node = node.firstChild;
       pos += 1; // Adjust position for the image inside the figure
     }

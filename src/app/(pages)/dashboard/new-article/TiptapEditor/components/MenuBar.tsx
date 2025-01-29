@@ -1,26 +1,26 @@
-import React, { memo } from "react";
+import React, { memo } from 'react';
 
-import { Toolbar, ToolbarDivider } from "./ui/Toolbar";
+import { Toolbar, ToolbarDivider } from './ui/Toolbar';
 
-import BoldButton from "./controls/BoldButton";
-import ItalicButton from "./controls/ItalicButton";
-import UndoButton from "./controls/UndoButton";
-import RedoButton from "./controls/RedoButton";
-import ClearFormatButton from "./controls/ClearFormatButton";
-import UnderlineButton from "./controls/UnderlineButton";
-import AlignPopover from "./controls/AlignPopover";
-import HeadingDropdown from "./controls/HeadingDropdown";
-import BlockquoteButton from "./controls/BlockquoteButton";
-import BulletListButton from "./controls/BulletListButton";
-import OrderedListButton from "./controls/OrderedList";
-import MoreMarkDropdown from "./controls/MoreMarkPopover";
-import LinkButton from "./controls/LinkButton";
-import CodeBlockButton from "./controls/CodeBlockButton";
-import ImageButton from "./controls/ImageButton2";
-import YoutubeButton from "./controls/YoutubeButton";
-import TextColorButton from "./controls/TextColorButton";
-import TextHighlightButton from "./controls/TextHighlightButton";
-import InsertDropdown from "./controls/InsertDropdown";
+import BoldButton from './controls/BoldButton';
+import ItalicButton from './controls/ItalicButton';
+import UndoButton from './controls/UndoButton';
+import RedoButton from './controls/RedoButton';
+import ClearFormatButton from './controls/ClearFormatButton';
+import UnderlineButton from './controls/UnderlineButton';
+import AlignPopover from './controls/AlignPopover';
+import HeadingDropdown from './controls/HeadingDropdown';
+import BlockquoteButton from './controls/BlockquoteButton';
+import BulletListButton from './controls/BulletListButton';
+import OrderedListButton from './controls/OrderedList';
+import MoreMarkDropdown from './controls/MoreMarkPopover';
+import LinkButton from './controls/LinkButton';
+import CodeBlockButton from './controls/CodeBlockButton';
+import ImageButton from './controls/ImageButton2';
+import YoutubeButton from './controls/YoutubeButton';
+import TextColorButton from './controls/TextColorButton';
+import TextHighlightButton from './controls/TextHighlightButton';
+import InsertDropdown from './controls/InsertDropdown';
 
 const MenuBar = () => {
   return (

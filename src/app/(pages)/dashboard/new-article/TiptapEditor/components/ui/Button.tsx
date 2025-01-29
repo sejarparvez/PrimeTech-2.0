@@ -1,8 +1,9 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost';
   iconOnly?: boolean;
   slotBefore?: React.ReactNode;
   slotAfter?: React.ReactNode;
@@ -13,8 +14,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       children,
-      type = "button",
-      variant = "primary",
+      type = 'button',
+      variant = 'primary',
       iconOnly,
       slotBefore,
       slotAfter,
@@ -23,9 +24,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const classes = clsx(
-      "rte-button",
+      'rte-button',
       `rte-button--${variant}`,
-      iconOnly && "rte-button--icon-only",
+      iconOnly && 'rte-button--icon-only',
       className
     );
 
@@ -44,6 +45,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 export default Button;

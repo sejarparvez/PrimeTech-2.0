@@ -1,6 +1,6 @@
-@use "sass:list";
-@use "sass:map";
-@use "variables";
+@use 'sass:list';
+@use 'sass:map';
+@use 'variables';
 
 @mixin font-size($size) {
   $values: map.get(variables.$font-sizes, $size);
