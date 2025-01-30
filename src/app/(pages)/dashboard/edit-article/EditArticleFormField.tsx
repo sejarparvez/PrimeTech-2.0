@@ -40,7 +40,7 @@ import {
 import EditArtilceImage from './EditArticleImage';
 
 export default function EditArticleForm({ id }: { id: string }) {
-  const { isLoading, data, isError } = useSinglePost({ id });
+  const { isLoading, data, isError, refetch } = useSinglePost({ id });
   const editorRef = useRef<TiptapEditorRef>(null);
   const [input, setInput] = useState('');
   const [newImage, setNewImage] = useState<File | null>(null);
@@ -177,6 +177,7 @@ export default function EditArticleForm({ id }: { id: string }) {
       // Display success notification
       toast.dismiss();
       toast.success('Article updated successfully!');
+      refetch();
     } catch (error) {
       toast.dismiss();
       // Display error notification
