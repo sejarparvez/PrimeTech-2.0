@@ -1,3 +1,4 @@
+import { articleCategories } from '@/app/constants/articleCategory';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,13 +22,6 @@ import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CgAsterisk } from 'react-icons/cg';
 import { NewArticleSchemaType } from './NewArticleSchema';
-
-const categories = [
-  { value: 'technology', label: 'Technology' },
-  { value: 'science', label: 'Science' },
-  { value: 'health', label: 'Health' },
-  { value: 'business', label: 'Business' },
-];
 
 export const RequiredLabel: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -74,7 +68,7 @@ export const NewArticleCategoryAndTags: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Design Category and Tags</CardTitle>
+        <CardTitle>Article Category and Tags</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6">
@@ -84,7 +78,7 @@ export const NewArticleCategoryAndTags: React.FC = () => {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <RequiredLabel>Design Category</RequiredLabel>
+                  <RequiredLabel>Article Category</RequiredLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -92,14 +86,9 @@ export const NewArticleCategoryAndTags: React.FC = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem
-                          key={category.value}
-                          value={category.value
-                            .toLowerCase()
-                            .replace(/\s+/g, '_')}
-                        >
-                          {category.label}
+                      {articleCategories.map((category) => (
+                        <SelectItem key={category.value} value={category.value}>
+                          {category.name}
                         </SelectItem>
                       ))}
                     </SelectContent>

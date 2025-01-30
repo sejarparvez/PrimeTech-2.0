@@ -84,7 +84,7 @@ export default function NewArticleForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex flex-wrap items-center gap-4">
-          <Link href="/admin-dashboard/">
+          <Link href="/dashboard/">
             <Button
               variant="outline"
               type="button"

@@ -63,6 +63,7 @@ model Post {
   content       String
   category      String
   coverImage    String
+  tags          String[]
   imageId       String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
