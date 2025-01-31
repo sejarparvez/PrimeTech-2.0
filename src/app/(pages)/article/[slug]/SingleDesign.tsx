@@ -53,14 +53,12 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <article className="flex flex-col items-center px-6 py-10">
+    <article className="flex flex-col items-center container py-6 md:py-10">
       <PostReadingProgress />
       <PostHeader
         title={data.title}
         authorName={data.author.name}
-        authorImage={data.author.image}
-        createdAt={data.createdAt}
-        category={data.category}
+        updatedAt={data.updatedAt}
         cover={data.coverImage}
       />
       <div className="grid w-full grid-cols-1 gap-6 lg:w-auto lg:grid-cols-[minmax(auto,256px)_minmax(720px,1fr)_minmax(auto,256px)] lg:gap-12">

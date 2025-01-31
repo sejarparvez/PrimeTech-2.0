@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
       take: limit,
 
       orderBy: {
-        createdAt: 'desc',
+        updatedAt: 'desc',
       },
       include: {
         author: {
