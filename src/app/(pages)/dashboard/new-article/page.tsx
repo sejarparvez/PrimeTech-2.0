@@ -1,12 +1,7 @@
 'use client';
 
-import BreadCrumb from '@/components/layout/admin/BreadCrumb';
-import { DashboardSidebar } from '@/components/layout/admin/DashboardSidebar';
-import Footer from '@/components/layout/Footer';
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
 import NewArticleForm from './NewArticleFormField';
 
 export default function NewDesign() {
@@ -110,19 +105,9 @@ export default function NewDesign() {
           --rte-shadow-3: 0px 0px 0px 1px #3d444d, 0px 24px 48px 0px #010409;
         }
       `}</style>
-
-      <SidebarProvider>
-        <Suspense fallback={<p>Loading...</p>}>
-          <DashboardSidebar />
-        </Suspense>
-        <main className="w-full">
-          <BreadCrumb />
-          <div className="container px-2 md:px-10">
-            <NewArticleForm />
-          </div>
-          <Footer />
-        </main>
-      </SidebarProvider>
+      <div className="md:mx-2">
+        <NewArticleForm />
+      </div>
     </>
   );
 }

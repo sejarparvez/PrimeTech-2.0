@@ -5,5 +5,6 @@ export const QUERY_KEYS = {
   RECENT_ARTICLES: 'Recent Articles',
   FEATURED_ARTICLES: 'Featured Articles',
   ALL_ARTICLES: 'All Articles',
-  USER_Profile: 'User Profile',
+  USER_PROFILE: 'User Profile',
+  EDIT_PROFILE: 'Edit Profile',
 };

@@ -12,7 +12,21 @@ export const useUserProfile = ({ id }: { id: string }) => {
   };
 
   return useQuery({
-    queryKey: [QUERY_KEYS.USER_Profile, id],
+    queryKey: [QUERY_KEYS.USER_PROFILE, id],
+    queryFn,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useEditProfile = () => {
+  const queryFn = async () => {
+    const response = await axios.get(`/api/dashboard/edit-profile`);
+    return response.data;
+  };
+
+  return useQuery({
+    queryKey: [QUERY_KEYS.EDIT_PROFILE],
     queryFn,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     refetchOnWindowFocus: false,

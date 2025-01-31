@@ -54,11 +54,11 @@ export function DashboardSidebar({
       items: [
         {
           title: 'View Profile',
-          url: `/profile?id=${session?.user?.id}`,
+          url: `/dashboard/profile?id=${session?.user?.id}`,
         },
         {
           title: 'Edit Profile',
-          url: '/edit-profile',
+          url: '/dashboard/edit-profile',
         },
       ],
     },

@@ -1,9 +1,12 @@
+import Footer from '@/components/layout/Footer';
+import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function NotFound() {
   return (
     <>
+      <Navbar />
       <div className="flex min-h-screen w-full flex-col border-l">
         <div className="flex  w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
           <div className="flex w-full flex-col items-center justify-center text-center lg:w-1/2 lg:px-2 xl:px-0">
@@ -220,6 +223,7 @@ export default function NotFound() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

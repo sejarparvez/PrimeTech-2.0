@@ -41,6 +41,7 @@ model User {
   password           String?
   emailVerified      DateTime?
   image              String?
+  imageId            String?
   verificationCode   String?
   status             String?
   createdAt          DateTime   @default(now())
