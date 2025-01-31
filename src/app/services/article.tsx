@@ -1,35 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import debounce from 'lodash.debounce';
-import { useEffect, useState } from 'react';
+
+import { useDebouncedValue } from '@/hooks/useDebounce';
+import { QUERY_KEYS } from '../constants/QeeryKeys';
 
 // Initialize Axios API Client
 const apiClient = axios.create({
   baseURL: '/api',
   timeout: 5000,
 });
-
-// Centralized Query Keys
-const QUERY_KEYS = {
-  SINGLE_ARTICLE: 'Single article',
-  DASHBOARD_ARTICLES: 'Dashboard Articles',
-  RECENT_ARTICLES: 'Recent Articles',
-  FEATURED_ARTICLES: 'Featured Articles',
-  ALL_ARTICLES: 'All Articles',
-};
-
-// Custom Hook for Debounced Value
-const useDebouncedValue = (value: string, delay: number = 300) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = debounce(() => setDebouncedValue(value), delay);
-    handler();
-    return () => handler.cancel();
-  }, [value, delay]);
-
-  return debouncedValue;
-};
 
 // Fetch Single Article
 export const useSinglePost = ({ id }: { id: string }) => {

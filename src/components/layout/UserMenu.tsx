@@ -18,7 +18,6 @@ import Logout from '../common/Logout';
 export function UserMenu() {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
   if (status === 'loading') {
     return <Skeleton className="h-10 w-10 rounded-full" />;
@@ -56,7 +55,11 @@ export function UserMenu() {
         <Link href="/dashboard">
           <DropdownMenuItem>Dashboard</DropdownMenuItem>
         </Link>
-        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={`/dashboard/profile?id=${session.user?.id}`}>
+            Profile
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <Logout />
       </DropdownMenuContent>

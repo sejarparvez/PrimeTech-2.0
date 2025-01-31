@@ -52,7 +52,7 @@ export default function RecentPostsList() {
   );
 }
 
-function PostCard({ data }: { data: articleInterFace }) {
+export function PostCard({ data }: { data: articleInterFace }) {
   return (
     <>
       <Link
@@ -118,7 +118,7 @@ function PostCard({ data }: { data: articleInterFace }) {
   );
 }
 
-function PostSkeleton() {
+export function PostSkeleton() {
   return (
     <div className="overflow-hidden rounded-lg bg-card shadow-md">
       <Skeleton className="h-48 w-full sm:h-64" />
