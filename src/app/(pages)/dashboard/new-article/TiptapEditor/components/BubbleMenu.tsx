@@ -35,6 +35,7 @@ export const BubbleMenu = ({
       updateDelay,
       shouldShow = null,
     } = props;
+
     const menuEditor = editor;
 
     if (!menuEditor) {
@@ -54,15 +55,11 @@ export const BubbleMenu = ({
     });
 
     menuEditor.registerPlugin(plugin);
-
-    // Use a stable reference for cleanup
-    const menuElement = menuEl.current;
-
     return () => {
       menuEditor.unregisterPlugin(pluginKey);
       window.requestAnimationFrame(() => {
-        if (menuElement.parentNode) {
-          menuElement.parentNode.removeChild(menuElement);
+        if (menuEl.current.parentNode) {
+          menuEl.current.parentNode.removeChild(menuEl.current);
         }
       });
     };

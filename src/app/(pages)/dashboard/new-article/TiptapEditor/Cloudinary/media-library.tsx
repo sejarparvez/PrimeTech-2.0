@@ -17,9 +17,9 @@ const MediaLibrary = ({
   onOpen,
   options = {},
 }: MediaLibraryProps) => {
-  const cloudinary: any = useRef(null);
-  const widget = useRef<any>(null);
-  const widgetContainerRef = useRef<HTMLDivElement>(null);
+  const cloudinary: any = useRef('');
+  const widget: any = useRef('');
+  const widgetContainerRef: any = useRef('');
 
   const [isScriptLoading, setIsScriptLoading] = useState(true);
 

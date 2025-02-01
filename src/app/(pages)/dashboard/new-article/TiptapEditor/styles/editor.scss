@@ -1,15 +1,12 @@
-@use 'mixins';
-@use 'variables';
-
 .rte-editor {
   all: unset;
   display: flex;
   flex-direction: column;
-  border: 1px solid variables.$border-color;
-  border-radius: variables.$radius;
-  font-family: variables.$editor-font;
-  box-shadow: variables.$shadow-1;
-  @include mixins.font-size('sm');
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  font-family: $editor-font;
+  box-shadow: $shadow-1;
+  @include font-size('sm');
 
   &--fullscreen {
     --rte-editor-max-height: auto;
@@ -26,8 +23,8 @@
     max-width: 45rem;
     width: 100%;
     margin: 0 auto;
-    font-size: variables.$editor-font-size;
-    line-height: variables.$editor-line-height;
+    font-size: $editor-font-size;
+    line-height: $editor-line-height;
   }
 
   &__container {
@@ -36,11 +33,11 @@
     flex: 1;
     position: relative;
     padding-inline: 1.75rem;
-    background-color: variables.$bg-color;
-    color: variables.$fg-color;
-    min-height: variables.$editor-min-height;
-    max-height: variables.$editor-max-height;
-    @include mixins.custom-scrollbar;
+    background-color: $bg-color;
+    color: $fg-color;
+    min-height: $editor-min-height;
+    max-height: $editor-max-height;
+    @include custom-scrollbar;
 
     &:has(.cm-editor) {
       padding-inline: 1rem;
@@ -48,8 +45,8 @@
 
     &:has(.cm-focused),
     &:has(.ProseMirror-focused) {
-      border-radius: variables.$radius-sm;
-      box-shadow: 0 0 0 2px variables.$primary-color;
+      border-radius: $radius-sm;
+      box-shadow: 0 0 0 2px $primary-color;
     }
   }
 }
@@ -59,20 +56,20 @@
   display: flex;
   align-items: center;
   min-height: 2.75rem;
-  background-color: variables.$bg-color;
+  background-color: $bg-color;
   padding: 0.125rem 0.125rem;
 }
 
 .rte-menu-bar {
-  border-bottom: 1px solid variables.$border-color;
-  border-top-left-radius: variables.$radius;
-  border-top-right-radius: variables.$radius;
+  border-bottom: 1px solid $border-color;
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
 }
 
 .rte-status-bar {
-  border-top: 1px solid variables.$border-color;
-  border-bottom-left-radius: variables.$radius;
-  border-bottom-right-radius: variables.$radius;
+  border-top: 1px solid $border-color;
+  border-bottom-left-radius: $radius;
+  border-bottom-right-radius: $radius;
 
   .rte-counter {
     margin-left: auto;
@@ -82,7 +79,7 @@
     gap: 0.75rem;
     //  font-size: 90%;
     font-weight: 500;
-    color: variables.$muted-fg-color;
+    color: $muted-fg-color;
   }
 }
 
@@ -92,8 +89,8 @@
 
   &[data-active],
   &[data-active]:hover {
-    color: variables.$primary-color;
-    background-color: variables.$accent-color;
+    color: $primary-color;
+    background-color: $accent-color;
     //  background-color: shade-color($primary-color, 0.7);
   }
 
@@ -115,9 +112,9 @@
 }
 
 .rte-bubble-menu {
-  border-radius: variables.$radius;
-  background-color: variables.$bubble;
-  box-shadow: variables.$shadow-2;
+  border-radius: $radius;
+  background-color: $bubble;
+  box-shadow: $shadow-2;
 }
 
 .rte-link {
@@ -167,7 +164,7 @@
     $size in ('p': 'sm', 'h1': '2xl', 'h2': 'xl', 'h3': 'lg', 'h4': 'base')
   {
     [data-heading='#{$heading}'] {
-      @include mixins.font-size($size);
+      @include font-size($size);
       @if $heading != 'p' {
         font-weight: bold;
       }
@@ -189,7 +186,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    @include mixins.custom-scrollbar;
+    @include custom-scrollbar;
   }
 
   .code-item {
@@ -198,12 +195,12 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.375rem 0.375rem 0.375rem 1.75rem;
-    border-radius: variables.$radius-sm;
+    border-radius: $radius-sm;
     cursor: pointer;
-    @include mixins.font-size('sm');
+    @include font-size('sm');
 
     &:hover {
-      background-color: variables.$accent-color;
+      background-color: $accent-color;
     }
 
     &__indicator {

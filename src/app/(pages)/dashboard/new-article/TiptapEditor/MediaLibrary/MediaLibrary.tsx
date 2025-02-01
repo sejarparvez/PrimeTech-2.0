@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/button';
 import React, { useEffect, useRef, useState } from 'react';
 import MediaGallery from './MediaGallery';
+
+import Button from '../components/ui/Button';
 import './style.scss';
 
 interface MediaLibraryProps {

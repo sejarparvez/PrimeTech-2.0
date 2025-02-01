@@ -1,9 +1,9 @@
-import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
 import { Node } from '@tiptap/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
 import { useEditorState } from '@tiptap/react';
 import { useCallback, useRef, useState } from 'react';
 import type { Instance } from 'tippy.js';
+import { getNodeContainer } from '../../../utils/getNodeContainer';
 import { BubbleMenu } from '../../BubbleMenu';
 import MenuButton from '../../MenuButton';
 import { useTiptapContext } from '../../Provider';

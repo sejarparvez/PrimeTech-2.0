@@ -1,5 +1,5 @@
-import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
 import { useMemo, useState } from 'react';
+import { CODE_BLOCK_LANGUAGUES } from '../../../constants/code-languages';
 import MenuButton from '../../MenuButton';
 import { useTiptapContext } from '../../Provider';
 import Icon from '../../ui/Icon';

@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </Suspense>
         <main className="w-full">
           <BreadCrumb />
-          <div className="container">{children}</div>
+          <div className="container md:px-4">{children}</div>
           <Footer />
         </main>
       </SidebarProvider>

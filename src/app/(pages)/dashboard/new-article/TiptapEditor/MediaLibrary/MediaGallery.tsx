@@ -15,7 +15,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
   onSelect,
 }) => {
   return (
-    <div className="scrollbar-thin grid flex-1 gap-5 overflow-auto p-6 [grid-template-columns:repeat(auto-fill,minmax(200px,1fr))]">
+    <div className="media-gallery">
       {data.map((image, index) => (
         <div
           key={image.id || index}
@@ -33,8 +33,8 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
 
           <div className="media-item__image-wrapper">
             <Image
-              width={200}
-              height={200}
+              height={300}
+              width={300}
               src={image.url}
               alt={image.display_name}
             />
