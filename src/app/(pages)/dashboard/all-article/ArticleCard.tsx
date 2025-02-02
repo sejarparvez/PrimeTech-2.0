@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { articleInterFace } from '@/utils/interface';
 import { createSlug } from '@/utils/slug';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Calendar, Edit, Eye, Trash2 } from 'lucide-react';
@@ -16,7 +17,15 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { DeleteArticleDialog } from './DeleteArticleDialog';
 
-export function ArticleCard({ article }: { article: articleInterFace }) {
+export function ArticleCard({
+  article,
+  refetch,
+}: {
+  article: articleInterFace;
+  refetch: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<any, Error>>;
+}) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   // Use the delete article mutation
@@ -30,6 +39,7 @@ export function ArticleCard({ article }: { article: articleInterFace }) {
       await deleteArticleMutation.mutateAsync(article.id);
       toast.dismiss();
       toast.success('Article deleted successfully!');
+      refetch();
       setIsDeleteDialogOpen(false); // Close the delete dialog
     } catch (error) {
       toast.dismiss();

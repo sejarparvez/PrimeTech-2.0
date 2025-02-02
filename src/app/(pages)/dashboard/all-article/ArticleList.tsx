@@ -63,7 +63,7 @@ export default function ArticleList() {
   const categoryName = searchParams.get('category') || 'All';
   const query = searchParams.get('query') || '';
   const page = parseInt(searchParams.get('page') || '1', 10);
-  const { isLoading, data, isError } = useDashboardArticle({
+  const { isLoading, data, isError, refetch } = useDashboardArticle({
     page,
     category: categoryName,
     searchQuery: query,
@@ -141,7 +141,7 @@ export default function ArticleList() {
               <>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {data.data.map((article: articleInterFace) => (
-                    <ArticleCard key={article.id} article={article} />
+                    <ArticleCard key={article.id} article={article} refetch={refetch} />
                   ))}
                 </div>
                 <ArticlePagination totalPages={data.meta.totalPages} />
