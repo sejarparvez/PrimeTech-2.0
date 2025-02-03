@@ -24,6 +24,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
     setRetryCount((prev) => prev + 1);
     refetch();
   };
+  const postLink = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${postlink}`;
 
   if (isError) {
     return (
@@ -61,12 +62,20 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
         updatedAt={data.updatedAt}
         cover={data.coverImage}
       />
-      <div className="grid w-full grid-cols-1 gap-6 lg:w-auto lg:grid-cols-[minmax(auto,256px)_minmax(720px,1fr)_minmax(auto,256px)] lg:gap-12">
-        <PostSharing />
-        <PostContent>
-          <TiptapRenderer>{data.content}</TiptapRenderer>
-        </PostContent>
-        <PostToc />
+      <div className="mx-auto mt-8">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12">
+          <PostSharing postlink={postLink} title={data.title} />
+
+          <main className="lg:col-span-8 order-2 max-w-5xl">
+            <PostContent>
+              <TiptapRenderer>{data.content}</TiptapRenderer>
+            </PostContent>
+          </main>
+
+          <aside className="lg:block order-1 lg:order-3 lg:col-span-3">
+            <PostToc />
+          </aside>
+        </div>
       </div>
     </article>
   );
@@ -74,17 +83,26 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
 
 function SinglePostSkeleton() {
   return (
-    <div className="container mx-auto my-8 max-w-4xl px-4">
-      <Skeleton className="mb-4 h-8 w-3/4" />
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <Skeleton className="h-4 w-1/2" />
-        <Skeleton className="h-6 w-24" />
-      </div>
-      <Skeleton className="aspect-video w-full rounded-lg" />
-      <div className="mt-8 space-y-4">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-5/6" />
-        <Skeleton className="h-4 w-4/5" />
+    <div className="container mx-auto max-w-4xl px-4 py-8">
+      <div className="flex flex-col gap-6">
+        <Skeleton className="h-9 w-3/4 rounded-lg md:h-10" />
+
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <Skeleton className="h-4 w-1/2 rounded-lg md:h-5" />
+          <Skeleton className="h-6 w-24 rounded-lg md:h-7" />
+        </div>
+
+        <Skeleton className="aspect-video w-full rounded-xl" />
+
+        <div className="mt-6 space-y-3">
+          {[...Array(5)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className="h-4 w-full rounded-lg last:w-4/5"
+              style={{ animationDelay: `${i * 0.1}s` }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

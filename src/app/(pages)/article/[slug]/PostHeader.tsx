@@ -18,7 +18,7 @@ const PostHeader = ({
     addSuffix: true,
   });
   return (
-    <div className="mx-auto lg:max-w-[45rem]">
+    <div className="mx-auto max-w-5xl">
       <h1 className="text-2xl font-bold leading-snug md:text-4xl md:leading-normal">
         {title}
       </h1>

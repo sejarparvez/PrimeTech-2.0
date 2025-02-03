@@ -97,32 +97,30 @@ const PostToc = () => {
   if (!items.length) return null;
 
   return (
-    <div className="order-1 lg:order-3">
-      <div className="overflow-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-        <h2 className="text-sm font-bold uppercase">On this page</h2>
-        <ul className="mt-4 space-y-3.5 text-sm">
-          {items.map((item) => (
-            <li
-              key={item.id}
-              style={{
-                paddingLeft: `${(item.level - 2) * 1}rem`,
-              }}
+    <div className="overflow-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
+      <h2 className="text-sm font-bold uppercase">On this page</h2>
+      <ul className="mt-4 space-y-3.5 text-sm">
+        {items.map((item) => (
+          <li
+            key={item.id}
+            style={{
+              paddingLeft: `${(item.level - 2) * 1}rem`,
+            }}
+          >
+            <Link
+              href={`#${item.id}`}
+              onClick={scrollToHeading(item.id)}
+              className={`transition-all hover:font-bold hover:tracking-wider hover:text-primary ${
+                activeId === item.id
+                  ? 'font-bold tracking-wider text-primary'
+                  : ''
+              }`}
             >
-              <Link
-                href={`#${item.id}`}
-                onClick={scrollToHeading(item.id)}
-                className={`transition-all hover:font-bold hover:tracking-wider hover:text-primary ${
-                  activeId === item.id
-                    ? 'font-bold tracking-wider text-primary'
-                    : ''
-                }`}
-              >
-                {item.text}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+              {item.text}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
