@@ -141,7 +141,11 @@ export default function ArticleList() {
               <>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {data.data.map((article: articleInterFace) => (
-                    <ArticleCard key={article.id} article={article} refetch={refetch} />
+                    <ArticleCard
+                      key={article.id}
+                      article={article}
+                      refetch={refetch}
+                    />
                   ))}
                 </div>
                 <ArticlePagination totalPages={data.meta.totalPages} />
