@@ -25,6 +25,8 @@ export const BubbleMenu = ({
   const menuEl = useRef<HTMLDivElement>(document.createElement('div'));
 
   useEffect(() => {
+    const element = menuEl.current;
+
     if (editor?.isDestroyed) {
       return;
     }
@@ -48,7 +50,7 @@ export const BubbleMenu = ({
     const plugin = BubbleMenuPlugin({
       updateDelay,
       editor: menuEditor || editor,
-      element: menuEl.current,
+      element: element,
       pluginKey,
       shouldShow,
       tippyOptions,
@@ -58,8 +60,8 @@ export const BubbleMenu = ({
     return () => {
       menuEditor.unregisterPlugin(pluginKey);
       window.requestAnimationFrame(() => {
-        if (menuEl.current.parentNode) {
-          menuEl.current.parentNode.removeChild(menuEl.current);
+        if (element.parentNode) {
+          element.parentNode.removeChild(element);
         }
       });
     };
