@@ -65,7 +65,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
         height={variant === 'horizontal' ? 256 : 528}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-2 text-white md:p-6">
         <h3
           className={`mb-2 font-bold ${

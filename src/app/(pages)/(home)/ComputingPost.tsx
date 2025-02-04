@@ -76,7 +76,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         priority={variant === 'featured'}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-6 text-white">
         <h3
           className={`mb-2 font-bold ${variant === 'featured' ? 'text-xl md:text-2xl' : 'text-xl'}`}

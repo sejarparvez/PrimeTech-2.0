@@ -55,14 +55,14 @@ export function ArticleCard({
       transition={{ duration: 0.3 }}
     >
       <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-zinc-700/25">
-        <div className="relative aspect-[16/10]">
+        <div className="relative aspect-16/10">
           <Image
             src={article.coverImage || '/placeholder.svg'}
             alt={article.title}
             fill
             className="object-cover brightness-50 transition-all duration-300 group-hover:scale-105 group-hover:brightness-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
         </div>
         <CardHeader className="absolute bottom-0 left-0 right-0 mb-16 p-4 md:mb-0">
           <div className="flex flex-col space-y-2">
