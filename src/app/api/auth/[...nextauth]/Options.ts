@@ -14,10 +14,6 @@ interface UserWithRole {
   role: string;
 }
 
-interface CustomSession extends Session {
-  name: string;
-}
-
 export const authOptions = {
   providers: [
     CredentialsProvider({
