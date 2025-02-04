@@ -1,10 +1,8 @@
 import { sendVerificationEmail } from '@/components/email/SendVerificationEmail';
+import { Prisma } from '@/lib/prisma';
 import generateVerificationCode from '@/utils/generateVerificationCode';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
-
-const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,7 +16,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await Prisma.user.findFirst({
       where: {
         email: email,
       },
@@ -28,7 +26,7 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Email is already registered', { status: 409 });
     } else if (existingUser?.emailVerified === null) {
       // Update the existing user with data from the request
-      const updatedUser = await prisma.user.update({
+      const updatedUser = await Prisma.user.update({
         where: {
           email: email,
         },
@@ -45,7 +43,7 @@ export async function POST(req: NextRequest) {
       await sendVerificationEmail(email, verificationCode);
 
       // Save the verification code in the database
-      await prisma.user.update({
+      await Prisma.user.update({
         where: { id: updatedUser.id },
         data: { verificationCode: verificationCode },
       });
@@ -63,7 +61,7 @@ export async function POST(req: NextRequest) {
         }
       );
     } else {
-      const user = await prisma.user.create({
+      const user = await Prisma.user.create({
         data: {
           name,
           email,
@@ -79,7 +77,7 @@ export async function POST(req: NextRequest) {
       await sendVerificationEmail(email, verificationCode);
 
       // Save the verification code in the database
-      await prisma.user.update({
+      await Prisma.user.update({
         where: { id: user.id },
         data: { verificationCode: verificationCode },
       });
@@ -101,7 +99,7 @@ export async function POST(req: NextRequest) {
     console.error('Error:', error);
     return new NextResponse('Internal server error', { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   }
 }
 
@@ -110,7 +108,7 @@ export async function PUT(req: NextRequest) {
     const data = await req.json();
     const { userId, code } = data;
 
-    const user = await prisma.user.findUnique({
+    const user = await Prisma.user.findUnique({
       where: {
         id: userId,
       },
@@ -126,7 +124,7 @@ export async function PUT(req: NextRequest) {
     if (user.verificationCode === verificationCode) {
       // Update user status or perform any other verification logic
 
-      await prisma.user.update({
+      await Prisma.user.update({
         where: {
           id: userId,
         },
@@ -144,6 +142,6 @@ export async function PUT(req: NextRequest) {
     console.error('Error during verification:', error);
     return new NextResponse('Internal server error', { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   }
 }
