@@ -8,7 +8,7 @@ export default function NotFound() {
     <>
       <Navbar />
       <div className="flex min-h-screen w-full flex-col border-l">
-        <div className="flex  w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
+        <div className="flex w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
           <div className="flex w-full flex-col items-center justify-center text-center lg:w-1/2 lg:px-2 xl:px-0">
             <p className="text-7xl font-bold tracking-wider md:text-8xl lg:text-9xl">
               404
@@ -16,7 +16,7 @@ export default function NotFound() {
             <p className="mt-2 text-4xl font-bold tracking-wider md:text-5xl lg:text-6xl">
               Page Not Found
             </p>
-            <p className="my-12 text-lg  md:text-xl lg:text-2xl">
+            <p className="my-12 text-lg md:text-xl lg:text-2xl">
               Sorry, the page you are looking for could not be found.
             </p>
             <Link href="/" title="Return Home">
