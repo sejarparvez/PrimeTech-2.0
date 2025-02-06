@@ -1,8 +1,5 @@
 'use client';
 
-import TiptapEditor, {
-  type TiptapEditorRef,
-} from '@/app/(pages)/dashboard/new-article/TiptapEditor';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +19,7 @@ import { useForm, useWatch } from 'react-hook-form';
 
 import { articleCategories } from '@/app/constants/articleCategory';
 import { useSinglePost } from '@/app/services/article';
+import TiptapEditor, { TiptapEditorRef } from '@/components/TiptapEditor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,
