@@ -1,9 +1,9 @@
+import MediaLibrary from '@/app/(pages)/dashboard/new-article/MediaLibrary';
+import Dialog from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Dialog';
+import useModal from '@/app/(pages)/dashboard/new-article/TiptapEditor/hooks/useModal';
 import { useEditorState } from '@tiptap/react';
-import useModal from '../../hooks/useModal';
-import MediaLibrary from '../../MediaLibrary';
 import MenuButton from '../MenuButton';
 import { useTiptapContext } from '../Provider';
-import Dialog from '../ui/Dialog';
 
 const ImageButton = () => {
   const { editor } = useTiptapContext();

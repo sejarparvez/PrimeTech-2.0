@@ -1,7 +1,7 @@
 'use client';
 
 import TiptapEditor, {
-  type TiptapEditorRef,
+  TiptapEditorRef,
 } from '@/app/(pages)/dashboard/new-article/TiptapEditor';
 import { Button } from '@/components/ui/button';
 import {

@@ -1,5 +1,8 @@
 import { memo } from 'react';
 
+import { Toolbar, ToolbarDivider } from './ui/Toolbar';
+
+import TableButton from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/controls/TableButton';
 import AlignPopover from './controls/AlignPopover';
 import BoldButton from './controls/BoldButton';
 import BulletListButton from './controls/BulletListButton';
@@ -15,7 +18,6 @@ import TextColorButton from './controls/TextColorButton';
 import TextHighlightButton from './controls/TextHighlightButton';
 import UnderlineButton from './controls/UnderlineButton';
 import UndoButton from './controls/UndoButton';
-import { Toolbar, ToolbarDivider } from './ui/Toolbar';
 
 const MenuBar = () => {
   return (
@@ -23,23 +25,38 @@ const MenuBar = () => {
       <Toolbar dense>
         <UndoButton />
         <RedoButton />
+        {/* <ClearFormatButton /> */}
+
         <ToolbarDivider />
+
         <HeadingDropdown />
+
         <ToolbarDivider />
+
         <BoldButton />
         <ItalicButton />
         <UnderlineButton />
         <MoreMarkDropdown />
+
         <ToolbarDivider />
+
         <TextColorButton />
         <TextHighlightButton />
+
         <ToolbarDivider />
+
         <AlignPopover />
         <BulletListButton />
         <OrderedListButton />
+
         <ToolbarDivider />
+
+        {/* <BlockquoteButton /> */}
         <LinkButton />
+        <TableButton />
         <ImageButton />
+        {/* <YoutubeButton /> */}
+        {/* <CodeBlockButton /> */}
         <InsertDropdown />
       </Toolbar>
     </div>

@@ -17,7 +17,8 @@ import ExtensionKit from '../kit';
 import { cssVar } from '../utils/cssVar';
 import { throttle } from '../utils/throttle';
 
-import '../styles/index.css';
+import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
+import '../styles/index.scss';
 
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;
@@ -106,6 +107,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
         <LinkMenu />
         <ImageMenu />
         <CodeBlockMenu />
+        <TableMenu />
       </>
     );
 

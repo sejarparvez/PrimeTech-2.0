@@ -1,3 +1,4 @@
+import CodeMirrorEditor from '@/app/(pages)/dashboard/new-article/SourceEditor/Editor';
 import { EditorContent, type Editor } from '@tiptap/react';
 import clsx from 'clsx';
 import {
@@ -12,7 +13,6 @@ import {
 import useTiptapEditor, {
   type UseTiptapEditorOptions,
 } from '../hooks/useTiptapEditor';
-import CodeMirrorEditor from '../SourceEditor/Editor';
 
 type TiptapContextType = {
   editor: Editor;

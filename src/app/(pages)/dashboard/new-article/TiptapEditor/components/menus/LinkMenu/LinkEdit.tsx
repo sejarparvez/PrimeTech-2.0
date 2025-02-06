@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Button from '../../ui/Button';
 import Input from '../../ui/Input';
+import Button from '../../ui/Button';
 import Label from '../../ui/Label';
 
 interface LinkEditProps {
@@ -35,7 +35,7 @@ const LinkEdit = ({
     if (!isCreate) {
       setCanSubmit((url && url !== initialUrl) || text !== initialText);
     }
-  }, [text, url, initialText, initialUrl, isCreate]);
+  }, [text, url]);
 
   return (
     <form className="rte-link__form" onSubmit={onSubmit}>

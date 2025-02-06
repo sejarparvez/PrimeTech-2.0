@@ -32,20 +32,20 @@ export default function useTiptapEditor({
     if (!editor || editor.isEditable === isEditable) return;
     editor.setOptions({ editable: Boolean(isEditable) });
     forceUpdate();
-  }, [editor, editorOptions.editable, forceUpdate]);
+  }, [editor, editorOptions.editable]);
 
   useEffect(() => {
     if (!editor) return;
     // @ts-ignore
     editor.setOptions({ editorProps: { placeholder } });
     forceUpdate();
-  }, [editor, placeholder, forceUpdate]);
+  }, [editor, placeholder]);
 
   useEffect(() => {
     return () => {
       editor?.destroy();
     };
-  }, [editor]);
+  }, []);
 
   return editor;
 }

@@ -9,8 +9,8 @@ import {
 } from './upload-widget.type';
 
 const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
-  const cloudinary = useRef<CloudinaryInstance | null>(null); // Explicitly initialize with null
-  const widget = useRef<UploadWidgetInstance | null>(null); // Explicitly initialize with null
+  const cloudinary = useRef<CloudinaryInstance>(null);
+  const widget = useRef<UploadWidgetInstance>(null);
 
   const [isScriptLoading, setIsScriptLoading] = useState(true);
 

@@ -31,19 +31,16 @@ export const LinkMenu = () => {
     return editor.isActive('link') && (mode.current == -1 || from !== to);
   }, []);
 
-  const applyLink = useCallback(
-    (url: string, text?: string) => {
-      editor
-        .chain()
-        .confirmEditLink({
-          href: url,
-          text: text || url,
-        })
-        .run();
-      setIsEditing(false);
-    },
-    [editor]
-  );
+  const applyLink = useCallback((url: string, text?: string) => {
+    editor
+      .chain()
+      .confirmEditLink({
+        href: url,
+        text: text || url,
+      })
+      .run();
+    setIsEditing(false);
+  }, []);
 
   const removeLink = useCallback(() => {
     editor.chain().focus().unsetLink().run();

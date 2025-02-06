@@ -1,7 +1,9 @@
-import { useEditorState } from '@tiptap/react';
-import UploadWidget from '../../Cloudinary/upload-widget';
+import React, { ChangeEvent, Fragment, useCallback, useRef } from 'react';
 import MenuButton from '../MenuButton';
+import { useEditorState } from '@tiptap/react';
 import { useTiptapContext } from '../Provider';
+import UploadWidget from '@/app/(pages)/dashboard/new-article/Cloudinary/upload-widget';
+import MediaLibrary from '@/app/(pages)/dashboard/new-article/Cloudinary/media-library';
 
 const ImageButton = () => {
   const { editor } = useTiptapContext();

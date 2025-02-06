@@ -1,6 +1,6 @@
-import { useEditorState } from '@tiptap/react';
 import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useEditorState } from '@tiptap/react';
 import { useTiptapContext } from './Provider';
 
 const clamp = (value: number, min: number, max: number) =>
@@ -56,7 +56,7 @@ const Resizer = () => {
   const { maxWidth, minWidth } = useMemo(() => {
     const width = contentElement.current?.getBoundingClientRect().width || 0;
     return { maxWidth: width, minWidth: width * 0.25 };
-  }, [contentElement]);
+  }, [contentElement.current]);
 
   const startResizing = (
     event: React.PointerEvent<HTMLDivElement>,
@@ -140,7 +140,7 @@ const Resizer = () => {
     resizeInfo.ratio = width / height;
 
     updateControlPosition();
-  }, [nodeState, updateControlPosition]);
+  }, [nodeState]);
 
   if (!nodeState || !contentElement.current) return;
 
