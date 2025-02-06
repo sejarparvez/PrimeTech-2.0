@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTiptapContext } from '../../Provider';
-import { BubbleMenu } from '../../BubbleMenu';
-import { Toolbar, ToolbarDivider } from '../../ui/Toolbar';
-import MenuButton from '../../MenuButton';
-import { useEditorState } from '@tiptap/react';
-import { getNodeContainer } from '@/components/TiptapEditor/utils/getNodeContainer';
-import AltTextEdit from './AltTextEdit';
-import type { Instance } from 'tippy.js';
-import SizeDropdown from './SizeDropdown';
-import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
+import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
 import { Node } from '@tiptap/pm/model';
+import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
+import { useEditorState } from '@tiptap/react';
+import { useCallback, useRef, useState } from 'react';
+import type { Instance } from 'tippy.js';
+import { BubbleMenu } from '../../BubbleMenu';
+import MenuButton from '../../MenuButton';
+import { useTiptapContext } from '../../Provider';
+import { Toolbar, ToolbarDivider } from '../../ui/Toolbar';
+import AltTextEdit from './AltTextEdit';
+import SizeDropdown from './SizeDropdown';
 
 export const ImageMenu = () => {
   const tippyInstance = useRef<Instance | null>(null);

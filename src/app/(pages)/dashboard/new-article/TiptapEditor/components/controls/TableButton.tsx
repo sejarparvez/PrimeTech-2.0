@@ -1,8 +1,7 @@
-import React from 'react';
-import MenuButton from '../MenuButton';
+import TableBuilder from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/TableBuilder';
 import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
 import { useTiptapContext } from '../Provider';
-import TableBuilder from '@/components/TiptapEditor/components/TableBuilder';
 
 const TableButton = () => {
   const { editor } = useTiptapContext();

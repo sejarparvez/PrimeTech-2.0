@@ -17,9 +17,11 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import TiptapEditor, {
+  TiptapEditorRef,
+} from '@/app/(pages)/dashboard/new-article/TiptapEditor';
 import { articleCategories } from '@/app/constants/articleCategory';
 import { useSinglePost } from '@/app/services/article';
-import TiptapEditor, { TiptapEditorRef } from '@/components/TiptapEditor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,

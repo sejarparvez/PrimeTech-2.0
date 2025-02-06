@@ -1,6 +1,8 @@
 'use client';
 
-import TiptapEditor, { TiptapEditorRef } from '@/components/TiptapEditor';
+import TiptapEditor, {
+  TiptapEditorRef,
+} from '@/app/(pages)/dashboard/new-article/TiptapEditor';
 import { Button } from '@/components/ui/button';
 import {
   Form,

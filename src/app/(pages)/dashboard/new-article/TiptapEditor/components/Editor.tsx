@@ -1,24 +1,24 @@
 'use client';
 
-import React, { forwardRef, useCallback, useEffect } from 'react';
 import { Content, type Editor } from '@tiptap/react';
+import { forwardRef, useCallback, useEffect } from 'react';
 
-import TiptapProvider from './Provider';
 import { type UseTiptapEditorOptions } from '../hooks/useTiptapEditor';
+import TiptapProvider from './Provider';
 
 import MenuBar from './MenuBar';
-import StatusBar from './StatusBar';
 import Resizer from './Resizer';
+import StatusBar from './StatusBar';
 
-import { TextMenu, LinkMenu, ImageMenu, CodeBlockMenu } from './menus';
+import { CodeBlockMenu, ImageMenu, LinkMenu } from './menus';
 
 import ExtensionKit from '../kit';
 
 import { cssVar } from '../utils/cssVar';
 import { throttle } from '../utils/throttle';
 
+import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
 import '../styles/index.scss';
-import TableMenu from '@/components/TiptapEditor/components/menus/TableMenu';
 
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;

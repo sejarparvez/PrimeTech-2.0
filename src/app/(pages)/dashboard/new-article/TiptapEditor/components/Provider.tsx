@@ -1,4 +1,4 @@
-import CodeMirrorEditor from '@/components/SourceEditor/Editor';
+import CodeMirrorEditor from '@/app/(pages)/dashboard/new-article/SourceEditor/Editor';
 import { EditorContent, type Editor } from '@tiptap/react';
 import clsx from 'clsx';
 import {

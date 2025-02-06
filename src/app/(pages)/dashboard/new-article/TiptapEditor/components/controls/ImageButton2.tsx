@@ -1,16 +1,9 @@
-import React, {
-  ChangeEvent,
-  Fragment,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
-import MenuButton from '../MenuButton';
+import MediaLibrary from '@/app/(pages)/dashboard/new-article/MediaLibrary';
+import Dialog from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Dialog';
+import useModal from '@/app/(pages)/dashboard/new-article/TiptapEditor/hooks/useModal';
 import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
 import { useTiptapContext } from '../Provider';
-import Dialog from '@/components/TiptapEditor/components/ui/Dialog';
-import MediaLibrary from '@/components/MediaLibrary';
-import useModal from '@/components/TiptapEditor/hooks/useModal';
 
 const ImageButton = () => {
   const { editor } = useTiptapContext();

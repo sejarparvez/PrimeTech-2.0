@@ -1,6 +1,6 @@
+import Button from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/ui/Button';
 import React, { useEffect, useRef, useState } from 'react';
 import MediaGallery from './MediaGallery';
-import Button from '@/components/TiptapEditor/components/ui/Button';
 
 import './style.scss';
 

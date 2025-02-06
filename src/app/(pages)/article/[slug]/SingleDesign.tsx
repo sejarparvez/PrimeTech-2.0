@@ -62,11 +62,11 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
         updatedAt={data.updatedAt}
         cover={data.coverImage}
       />
-      <div className="mx-auto mt-8">
+      <div className="mx-auto mt-8 w-full">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <PostSharing postlink={postLink} title={data.title} />
 
-          <main className="order-2 max-w-5xl lg:col-span-8">
+          <main className="order-2 lg:col-span-8">
             <PostContent>
               <TiptapRenderer>{data.content}</TiptapRenderer>
             </PostContent>
