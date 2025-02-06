@@ -1,1 +1,1 @@
-export {default} from './MediaLibrary'
+export { default } from './MediaLibrary';

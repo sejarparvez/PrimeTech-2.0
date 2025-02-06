@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from "react";
-import MenuButton from "../MenuButton";
-import { DropdownMenuItem } from "../ui/DropdownMenu";
-import { useTiptapContext } from "../Provider";
+import React, { useCallback, useMemo } from 'react';
+import MenuButton from '../MenuButton';
+import { DropdownMenuItem } from '../ui/DropdownMenu';
+import { useTiptapContext } from '../Provider';
 
 const InsertDropdown = () => {
   const { editor } = useTiptapContext();
@@ -11,7 +11,10 @@ const InsertDropdown = () => {
   const insertBlockquote = () => editor.chain().focus().setBlockquote().run();
 
   const insertYoutube = () => {
-    const src = prompt("Embed Youtube Video", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    const src = prompt(
+      'Embed Youtube Video',
+      'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    );
     if (src) {
       editor.chain().focus().embedYoutube({ src }).run();
     }
@@ -23,7 +26,7 @@ const InsertDropdown = () => {
       tooltip="Insert"
       disabled={!editor.isEditable}
       icon="Plus"
-      dropdownStyle={{ minWidth: "8rem" }}
+      dropdownStyle={{ minWidth: '8rem' }}
     >
       <DropdownMenuItem asChild>
         <MenuButton

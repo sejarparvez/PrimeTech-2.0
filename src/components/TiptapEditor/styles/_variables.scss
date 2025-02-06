@@ -31,27 +31,27 @@ $text-lineHeight-xl: 1.75rem;
 $text-lineHeight-2xl: 2rem;
 
 $font-sizes: (
-  "xs": (
+  'xs': (
     $text-size-xs,
     $text-lineHeight-xs,
   ),
-  "sm": (
+  'sm': (
     $text-size-sm,
     $text-lineHeight-sm,
   ),
-  "base": (
+  'base': (
     $text-size-base,
     $text-lineHeight-base,
   ),
-  "lg": (
+  'lg': (
     $text-size-lg,
     $text-lineHeight-lg,
   ),
-  "xl": (
+  'xl': (
     $text-size-xl,
     $text-lineHeight-xl,
   ),
-  "2xl": (
+  '2xl': (
     $text-size-2xl,
     $text-lineHeight-2xl,
   ),
@@ -77,7 +77,11 @@ $shadow-2: var(
   0px 24px 48px -12px #25292e14,
   0px 48px 96px -24px #25292e14
 );
-$shadow-3: var(--rte-shadow-3, 0px 0px 0px 1px #d1d9e0, 0px 40px 80px 0px #25292e3d);
+$shadow-3: var(
+  --rte-shadow-3,
+  0px 0px 0px 1px #d1d9e0,
+  0px 40px 80px 0px #25292e3d
+);
 
 // Editor
 $editor-min-height: var(--rte-editor-min-height);

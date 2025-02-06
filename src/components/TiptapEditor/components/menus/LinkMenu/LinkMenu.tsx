@@ -1,9 +1,9 @@
-import React, { memo, useCallback, useRef, useState } from "react";
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../../Provider";
-import { BubbleMenu } from "../../BubbleMenu";
-import LinkEdit from "./LinkEdit";
-import LinkView from "./LinkView";
+import React, { memo, useCallback, useRef, useState } from 'react';
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../../Provider';
+import { BubbleMenu } from '../../BubbleMenu';
+import LinkEdit from './LinkEdit';
+import LinkView from './LinkView';
 
 export const LinkMenu = () => {
   const { editor, contentElement } = useTiptapContext();
@@ -15,11 +15,11 @@ export const LinkMenu = () => {
     selector: (context) => {
       mode.current = context.editor.storage.link.mode;
 
-      if (!context.editor.isActive("link")) return null;
+      if (!context.editor.isActive('link')) return null;
       const {
         state: { selection, doc },
       } = context.editor;
-      const url = context.editor.getAttributes("link").href;
+      const url = context.editor.getAttributes('link').href;
       const text = doc.textBetween(selection.from, selection.to);
 
       return { url, text };
@@ -28,7 +28,7 @@ export const LinkMenu = () => {
 
   const shouldShow = useCallback(({ editor, from, to }: any) => {
     setIsEditing(mode.current == -1);
-    return editor.isActive("link") && (mode.current == -1 || from !== to);
+    return editor.isActive('link') && (mode.current == -1 || from !== to);
   }, []);
 
   const applyLink = useCallback((url: string, text?: string) => {
@@ -65,7 +65,7 @@ export const LinkMenu = () => {
       updateDelay={100}
       shouldShow={shouldShow}
       tippyOptions={{
-        placement: "bottom-start",
+        placement: 'bottom-start',
         duration: 100,
         appendTo: () => contentElement.current!,
         onHidden: () => setIsEditing(false),

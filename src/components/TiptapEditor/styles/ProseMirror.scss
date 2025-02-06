@@ -18,7 +18,7 @@
   padding-block: 1.75rem;
 
   // Editable content styles
-  &[contenteditable="true"] {
+  &[contenteditable='true'] {
     .ProseMirror-selectednode:has(iframe),
     img.ProseMirror-selectednode,
     img:has(+ figcaption.ProseMirror-selectednode) {
@@ -43,7 +43,7 @@
 
   // Indentation levels
   @for $i from 1 through 4 {
-    [data-indent="#{$i}"] {
+    [data-indent='#{$i}'] {
       text-indent: 1em * $i;
     }
   }
@@ -67,7 +67,7 @@
   .selectedCell:after {
     z-index: 2;
     position: absolute;
-    content: "";
+    content: '';
     inset: 0;
     background-color: $editor-selection;
     pointer-events: none;

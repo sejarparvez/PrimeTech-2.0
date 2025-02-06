@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { Toolbar } from "../ui/Toolbar";
-import MenuButton from "../MenuButton";
+import { Toolbar } from '../ui/Toolbar';
+import MenuButton from '../MenuButton';
 
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
-import StrikeButton from "./StrikeButton";
-import SubscriptButton from "./SubscriptButton";
-import SuperscriptButton from "./SuperscriptButton";
-import CodeButton from "./CodeButton";
-import { PopoverClose } from "../ui/Popover";
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
+import StrikeButton from './StrikeButton';
+import SubscriptButton from './SubscriptButton';
+import SuperscriptButton from './SuperscriptButton';
+import CodeButton from './CodeButton';
+import { PopoverClose } from '../ui/Popover';
 
 const MoreMarkPopover = () => {
   const { editor } = useTiptapContext();
@@ -24,7 +24,12 @@ const MoreMarkPopover = () => {
   });
 
   return (
-    <MenuButton type="popover" icon="LetterCase" tooltip="More format" disabled={isDisabled}>
+    <MenuButton
+      type="popover"
+      icon="LetterCase"
+      tooltip="More format"
+      disabled={isDisabled}
+    >
       <PopoverClose asChild>
         <Toolbar dense={true}>
           <StrikeButton />

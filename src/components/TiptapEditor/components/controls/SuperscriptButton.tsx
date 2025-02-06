@@ -1,7 +1,7 @@
-import React from "react";
-import { useEditorState } from "@tiptap/react";
-import MenuButton from "../MenuButton";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
+import { useTiptapContext } from '../Provider';
 
 const SuperscriptButton = () => {
   const { editor } = useTiptapContext();
@@ -10,7 +10,7 @@ const SuperscriptButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("superscript"),
+        active: ctx.editor.isActive('superscript'),
         disabled: !ctx.editor.can().toggleSuperscript(),
       };
     },
@@ -20,7 +20,7 @@ const SuperscriptButton = () => {
     <MenuButton
       icon="Superscript"
       tooltip="Superscript"
-      shortcuts={["Mod", "."]}
+      shortcuts={['Mod', '.']}
       onClick={() => editor.chain().focus().toggleSuperscript().run()}
       {...state}
     />

@@ -1,7 +1,7 @@
-import React from "react";
-import MenuButton from "../MenuButton";
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import MenuButton from '../MenuButton';
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
 
 const UnderlineButton = () => {
   const { editor } = useTiptapContext();
@@ -10,7 +10,7 @@ const UnderlineButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("underline"),
+        active: ctx.editor.isActive('underline'),
         disabled: !ctx.editor.can().toggleUnderline(),
       };
     },
@@ -20,7 +20,7 @@ const UnderlineButton = () => {
     <MenuButton
       icon="Underline"
       tooltip="Underline"
-      shortcuts={["Mod", "U"]}
+      shortcuts={['Mod', 'U']}
       onClick={() => editor.chain().focus().toggleUnderline().run()}
       {...state}
     />

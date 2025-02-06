@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from "react";
-import MenuButton from "../../MenuButton";
-import { CODE_BLOCK_LANGUAGUES } from "@/components/TiptapEditor/constants/code-languages";
-import { useTiptapContext } from "../../Provider";
-import Icon from "../../ui/Icon";
-import Input from "../../ui/Input";
-import { PopoverClose } from "../../ui/Popover";
+import React, { useMemo, useState } from 'react';
+import MenuButton from '../../MenuButton';
+import { CODE_BLOCK_LANGUAGUES } from '@/components/TiptapEditor/constants/code-languages';
+import { useTiptapContext } from '../../Provider';
+import Icon from '../../ui/Icon';
+import Input from '../../ui/Input';
+import { PopoverClose } from '../../ui/Popover';
 
 interface CodeDropdownProps {
   value: string;
@@ -13,9 +13,12 @@ interface CodeDropdownProps {
 
 const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
   const { contentElement } = useTiptapContext();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
-  const options = CODE_BLOCK_LANGUAGUES.map((item) => ({ label: item.label, value: item.syntax }));
+  const options = CODE_BLOCK_LANGUAGUES.map((item) => ({
+    label: item.label,
+    value: item.syntax,
+  }));
   const filterOptions = useMemo(() => {
     if (!search) return options;
     return options.filter((item) => item.label.includes(search));
@@ -27,16 +30,16 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
       text={options.find((item) => item.value === value)?.label}
       hideText={false}
       tooltip={false}
-      buttonStyle={{ minWidth: "6rem" }}
+      buttonStyle={{ minWidth: '6rem' }}
       dropdownClass="rte-code-dropdown"
       dropdownStyle={{
-        minWidth: "10rem",
+        minWidth: '10rem',
       }}
     >
       <Input
         className="code-search"
         placeholder="Seach language..."
-        style={{ width: "10rem" }}
+        style={{ width: '10rem' }}
         value={search}
         onChange={(e) => setSearch(e.target.value.trim())}
       />
@@ -52,12 +55,17 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
               className="code-item"
               onClick={() => {
                 onSelect(item.value);
-                setSearch("");
+                setSearch('');
               }}
             >
               {item.label}
               {item.value === value && (
-                <Icon name="Check" className="code-item__indicator" size={14} strokeWidth={2.5} />
+                <Icon
+                  name="Check"
+                  className="code-item__indicator"
+                  size={14}
+                  strokeWidth={2.5}
+                />
               )}
             </div>
           </PopoverClose>

@@ -1,16 +1,16 @@
-import React, { useCallback } from "react";
-import { BubbleMenu } from "../BubbleMenu";
-import { Toolbar, ToolbarDivider } from "../ui/Toolbar";
-import BoldButton from "../controls/BoldButton";
-import ItalicButton from "../controls/ItalicButton";
-import UnderlineButton from "../controls/UnderlineButton";
-import AlignDropdown from "../controls/AlignPopover";
-import { useTiptapContext } from "../Provider";
-import { isNodeSelected } from "../../utils/isNodeSelected";
-import isTextSelected from "../../utils/isTextSelected";
-import HeadingDropdown from "../controls/HeadingDropdown";
-import MoreMarkDropdown from "../controls/MoreMarkPopover";
-import LinkButton from "../controls/LinkButton";
+import React, { useCallback } from 'react';
+import { BubbleMenu } from '../BubbleMenu';
+import { Toolbar, ToolbarDivider } from '../ui/Toolbar';
+import BoldButton from '../controls/BoldButton';
+import ItalicButton from '../controls/ItalicButton';
+import UnderlineButton from '../controls/UnderlineButton';
+import AlignDropdown from '../controls/AlignPopover';
+import { useTiptapContext } from '../Provider';
+import { isNodeSelected } from '../../utils/isNodeSelected';
+import isTextSelected from '../../utils/isTextSelected';
+import HeadingDropdown from '../controls/HeadingDropdown';
+import MoreMarkDropdown from '../controls/MoreMarkPopover';
+import LinkButton from '../controls/LinkButton';
 
 export const TextMenu = ({ enable }: { enable: boolean }) => {
   const { editor } = useTiptapContext();
@@ -32,12 +32,12 @@ export const TextMenu = ({ enable }: { enable: boolean }) => {
   return (
     <BubbleMenu
       editor={editor}
-      pluginKey={"text-bubble"}
+      pluginKey={'text-bubble'}
       shouldShow={shouldShow}
       tippyOptions={{
-        placement: "top-start",
-        maxWidth: "auto",
-        appendTo: "parent",
+        placement: 'top-start',
+        maxWidth: 'auto',
+        appendTo: 'parent',
       }}
     >
       <Toolbar>

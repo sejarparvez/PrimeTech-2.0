@@ -1,7 +1,7 @@
-import React from "react";
-import MenuButton from "../MenuButton";
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import MenuButton from '../MenuButton';
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
 
 const CodeButton = () => {
   const { editor } = useTiptapContext();
@@ -9,7 +9,7 @@ const CodeButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("code"),
+        active: ctx.editor.isActive('code'),
         disabled: !ctx.editor.can().toggleCode(),
       };
     },
@@ -19,7 +19,7 @@ const CodeButton = () => {
     <MenuButton
       icon="CodeInline"
       tooltip="Inline code"
-      shortcuts={["Mod", "E"]}
+      shortcuts={['Mod', 'E']}
       onClick={() => editor.chain().focus().toggleCode().run()}
       {...state}
     />

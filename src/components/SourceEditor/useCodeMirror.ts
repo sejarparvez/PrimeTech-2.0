@@ -1,16 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { EditorState } from "@codemirror/state";
-import { EditorView } from "codemirror";
-import { html } from "@codemirror/lang-html";
-import { theme } from "./theme";
-import { lineNumbers } from "@codemirror/view";
+import { useEffect, useRef, useState } from 'react';
+import { EditorState } from '@codemirror/state';
+import { EditorView } from 'codemirror';
+import { html } from '@codemirror/lang-html';
+import { theme } from './theme';
+import { lineNumbers } from '@codemirror/view';
 
 interface UseCodeMirrorProps {
   initialContent: string;
   onChange?: (content: string) => void;
 }
 
-export function useCodeMirror({ initialContent, onChange }: UseCodeMirrorProps) {
+export function useCodeMirror({
+  initialContent,
+  onChange,
+}: UseCodeMirrorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

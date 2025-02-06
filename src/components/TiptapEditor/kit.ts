@@ -18,7 +18,7 @@ import {
   Color,
   Highlight,
   Table,
-} from "./extensions";
+} from './extensions';
 
 const ExtensionKit = [
   StarterKit.configure({
@@ -31,7 +31,7 @@ const ExtensionKit = [
     showOnlyCurrent: true,
     placeholder: ({ editor, node }) => {
       // @ts-ignore
-      const placeholder = editor.options.editorProps["placeholder"];
+      const placeholder = editor.options.editorProps['placeholder'];
       switch (node.type.name) {
         case ImageCaption.name:
           return placeholder?.imageCaption;
@@ -45,7 +45,7 @@ const ExtensionKit = [
   Underline,
   Superscript,
   Subscript,
-  TextAlign.configure({ types: ["heading", "paragraph"] }),
+  TextAlign.configure({ types: ['heading', 'paragraph'] }),
   TextStyle,
   Color,
   Highlight.configure({ multicolor: true }),

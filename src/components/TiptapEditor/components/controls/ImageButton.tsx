@@ -1,9 +1,9 @@
-import React, { ChangeEvent, Fragment, useCallback, useRef } from "react";
-import MenuButton from "../MenuButton";
-import { useEditorState } from "@tiptap/react";
-import { useTiptapContext } from "../Provider";
-import UploadWidget from "@/components/Cloudinary/upload-widget";
-import MediaLibrary from "@/components/Cloudinary/media-library";
+import React, { ChangeEvent, Fragment, useCallback, useRef } from 'react';
+import MenuButton from '../MenuButton';
+import { useEditorState } from '@tiptap/react';
+import { useTiptapContext } from '../Provider';
+import UploadWidget from '@/components/Cloudinary/upload-widget';
+import MediaLibrary from '@/components/Cloudinary/media-library';
 
 const ImageButton = () => {
   const { editor } = useTiptapContext();
@@ -11,7 +11,7 @@ const ImageButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("image"),
+        active: ctx.editor.isActive('image'),
         disabled: !ctx.editor.isEditable,
       };
     },
@@ -78,7 +78,9 @@ const ImageButton = () => {
       }}
     >
       {({ open }) => {
-        return <MenuButton icon="Image" tooltip="Image" {...state} onClick={open} />;
+        return (
+          <MenuButton icon="Image" tooltip="Image" {...state} onClick={open} />
+        );
       }}
     </UploadWidget>
 

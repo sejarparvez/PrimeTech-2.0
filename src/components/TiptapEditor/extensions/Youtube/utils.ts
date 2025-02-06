@@ -25,7 +25,7 @@ export function getEmbedYoutubeUrl({
   }
 
   // if is already an embed url, return it
-  if (url.includes("/embed/")) {
+  if (url.includes('/embed/')) {
     return url;
   }
 
@@ -37,21 +37,22 @@ export function getEmbedYoutubeUrl({
   }
 
   const outputUrl =
-    (nocookie ? "https://www.youtube-nocookie.com/embed/" : "https://www.youtube.com/embed/") +
-    matches[1];
+    (nocookie
+      ? 'https://www.youtube-nocookie.com/embed/'
+      : 'https://www.youtube.com/embed/') + matches[1];
 
   const params = [];
 
   if (!allowFullscreen) {
-    params.push("fs=0");
+    params.push('fs=0');
   }
 
   if (autoplay) {
-    params.push("autoplay=1");
+    params.push('autoplay=1');
   }
 
   if (!controls) {
-    params.push("controls=0");
+    params.push('controls=0');
   }
 
   return outputUrl;

@@ -1,7 +1,7 @@
-import { Ref, useEffect, useImperativeHandle, useRef } from "react";
-import { Editor, useEditor, type UseEditorOptions } from "@tiptap/react";
-import useForceUpdate from "./useForceUpdate";
-import { TiptapEditorRef } from "../components/Editor";
+import { Ref, useEffect, useImperativeHandle, useRef } from 'react';
+import { Editor, useEditor, type UseEditorOptions } from '@tiptap/react';
+import useForceUpdate from './useForceUpdate';
+import { TiptapEditorRef } from '../components/Editor';
 
 export type UseTiptapEditorOptions = UseEditorOptions & {
   ref?: Ref<TiptapEditorRef>;

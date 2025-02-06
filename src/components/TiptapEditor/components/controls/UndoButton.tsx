@@ -1,7 +1,7 @@
-import React, { memo, useEffect } from "react";
-import { useEditorState } from "@tiptap/react";
-import MenuButton from "../MenuButton";
-import { useTiptapContext } from "../Provider";
+import React, { memo, useEffect } from 'react';
+import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
+import { useTiptapContext } from '../Provider';
 
 const UndoButton = () => {
   const { editor } = useTiptapContext();
@@ -17,7 +17,7 @@ const UndoButton = () => {
     <MenuButton
       icon="Undo"
       tooltip="Undo"
-      shortcuts={["Mod", "Z"]}
+      shortcuts={['Mod', 'Z']}
       onClick={() => editor.chain().focus().undo().run()}
       {...state}
     />

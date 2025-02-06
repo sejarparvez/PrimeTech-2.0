@@ -1,5 +1,5 @@
-import React from "react";
-import { IconType } from ".";
+import React from 'react';
+import { IconType } from '.';
 
 const IconTextHighlight: IconType = ({ size = 24, ...props }) => {
   return (

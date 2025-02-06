@@ -1,19 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import type {
+  MediaLibraryInsertResults,
   MediaLibraryOptions,
   MediaLibraryProps,
   MediaLibraryPropsOptions,
-  MediaLibraryInsertResults,
-} from "./media-library.type";
-import Script from "./script";
+} from './media-library.type';
+import Script from './script';
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 
-const MediaLibrary = ({ children, onClose, onInsert, onOpen, options = {} }: MediaLibraryProps) => {
-  const cloudinary: any = useRef();
-  const widget: any = useRef();
-  const widgetContainerRef: any = useRef();
+const MediaLibrary = ({
+  children,
+  onClose,
+  onInsert,
+  onOpen,
+  options = {},
+}: MediaLibraryProps) => {
+  const cloudinary: any = useRef(null);
+  const widget: any = useRef(null);
+  const widgetContainerRef: any = useRef(null);
 
   const [isScriptLoading, setIsScriptLoading] = useState(true);
 
@@ -22,7 +28,7 @@ const MediaLibrary = ({ children, onClose, onInsert, onOpen, options = {} }: Med
       const iframe = document.querySelector("iframe[src*='cloudinary']");
       if (iframe && iframe.parentNode) {
         document.body.removeChild(iframe.parentNode);
-        console.log("Media Library widget destroyed successfully.");
+        console.log('Media Library widget destroyed successfully.');
       }
     }
 
@@ -53,7 +59,7 @@ const MediaLibrary = ({ children, onClose, onInsert, onOpen, options = {} }: Med
       }
     }
 
-    if ("requestIdleCallback" in window) {
+    if ('requestIdleCallback' in window) {
       requestIdleCallback(onIdle);
     } else {
       setTimeout(onIdle, 1);
@@ -112,17 +118,17 @@ const MediaLibrary = ({ children, onClose, onInsert, onOpen, options = {} }: Med
 
     return cloudinary.current.createMediaLibrary(mediaLibraryOptions, {
       showHandler: () => {
-        if (typeof onOpen === "function") {
+        if (typeof onOpen === 'function') {
           onOpen(callbackOptions);
         }
       },
       hideHandler: () => {
-        if (typeof onClose === "function") {
+        if (typeof onClose === 'function') {
           onClose(callbackOptions);
         }
       },
       insertHandler: (data: MediaLibraryInsertResults) => {
-        if (typeof onInsert === "function") {
+        if (typeof onInsert === 'function') {
           onInsert(data, callbackOptions);
         }
       },
@@ -148,7 +154,7 @@ const MediaLibrary = ({ children, onClose, onInsert, onOpen, options = {} }: Med
 
   return (
     <>
-      {typeof children === "function" && children(callbackOptions)}
+      {typeof children === 'function' && children(callbackOptions)}
       <div ref={widgetContainerRef}></div>
       <Script
         src="https://media-library.cloudinary.com/global/all.js"

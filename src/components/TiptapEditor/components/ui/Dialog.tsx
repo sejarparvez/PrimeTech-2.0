@@ -1,5 +1,5 @@
-import React from "react";
-import { createPortal } from "react-dom";
+import React from 'react';
+import { createPortal } from 'react-dom';
 
 interface DialogProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface DialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-const Dialog = ({ children, open,  onOpenChange }: DialogProps) => {
+const Dialog = ({ children, open, onOpenChange }: DialogProps) => {
   const onDismiss = () => {
     onOpenChange?.(false);
   };
@@ -20,7 +20,7 @@ const Dialog = ({ children, open,  onOpenChange }: DialogProps) => {
         {children}
       </div>
     </div>,
-    document.querySelector("body")!
+    document.querySelector('body')!
   );
 };
 

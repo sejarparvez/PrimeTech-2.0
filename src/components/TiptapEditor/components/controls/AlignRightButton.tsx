@@ -1,7 +1,7 @@
-import React from "react";
-import { useEditorState } from "@tiptap/react";
-import MenuButton from "../MenuButton";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
+import { useTiptapContext } from '../Provider';
 
 const AlignRightButton = () => {
   const { editor } = useTiptapContext();
@@ -9,8 +9,8 @@ const AlignRightButton = () => {
   const state = useEditorState({
     editor,
     selector: (ctx) => ({
-      active: ctx.editor.isActive({ textAlign: "right" }),
-      disabled: !ctx.editor.can().setTextAlign("right"),
+      active: ctx.editor.isActive({ textAlign: 'right' }),
+      disabled: !ctx.editor.can().setTextAlign('right'),
     }),
   });
 
@@ -18,8 +18,8 @@ const AlignRightButton = () => {
     <MenuButton
       icon="AlignRight"
       tooltip="Right"
-      shortcuts={["Mod", "Shift", "R"]}
-      onClick={() => editor.chain().focus().setTextAlign("right").run()}
+      shortcuts={['Mod', 'Shift', 'R']}
+      onClick={() => editor.chain().focus().setTextAlign('right').run()}
       {...state}
     />
   );

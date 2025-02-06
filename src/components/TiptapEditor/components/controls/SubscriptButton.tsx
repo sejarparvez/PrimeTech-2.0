@@ -1,7 +1,7 @@
-import React from "react";
-import { Editor, useEditorState } from "@tiptap/react";
-import MenuButton from "../MenuButton";
-import { useTiptapContext } from "../Provider";
+import React from 'react';
+import { Editor, useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
+import { useTiptapContext } from '../Provider';
 
 const SubscriptButton = () => {
   const { editor } = useTiptapContext();
@@ -10,7 +10,7 @@ const SubscriptButton = () => {
     editor,
     selector: (ctx) => {
       return {
-        active: ctx.editor.isActive("subscript"),
+        active: ctx.editor.isActive('subscript'),
         disabled: !ctx.editor.can().toggleSubscript(),
       };
     },
@@ -20,7 +20,7 @@ const SubscriptButton = () => {
     <MenuButton
       icon="Subscript"
       tooltip="Subscript"
-      shortcuts={["Mod", ","]}
+      shortcuts={['Mod', ',']}
       onClick={() => editor.chain().focus().toggleSubscript().run()}
       {...state}
     />

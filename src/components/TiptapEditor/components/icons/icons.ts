@@ -1,4 +1,4 @@
-import { IconType, IconBaseProps } from "react-icons";
+import { IconType, IconBaseProps } from 'react-icons';
 import {
   TbBold,
   TbItalic,
@@ -53,13 +53,13 @@ import {
   TbRowInsertBottom,
   TbRowRemove,
   TbColumnRemove,
-} from "react-icons/tb";
-import { AiOutlineMergeCells, AiOutlineSplitCells } from "react-icons/ai";
-import IconCorner from "./Corner";
-import IconInlineCode from "./InlineCode";
-import IconQuote from "./Quote";
-import IconTextHighlight from "./TextHighlight";
-import IconTextColor from "./TextColor";
+} from 'react-icons/tb';
+import { AiOutlineMergeCells, AiOutlineSplitCells } from 'react-icons/ai';
+import IconCorner from './Corner';
+import IconInlineCode from './InlineCode';
+import IconQuote from './Quote';
+import IconTextHighlight from './TextHighlight';
+import IconTextColor from './TextColor';
 
 export const icons = {
   Bold: TbBold,

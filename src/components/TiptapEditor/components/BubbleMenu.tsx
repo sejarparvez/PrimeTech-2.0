@@ -1,33 +1,46 @@
-import React, { useEffect, useRef } from "react";
-import clsx from "clsx";
-import { createPortal } from "react-dom";
-import { BubbleMenuPluginProps, BubbleMenuPlugin } from "@tiptap/extension-bubble-menu";
+import React, { useEffect, useRef } from 'react';
+import clsx from 'clsx';
+import { createPortal } from 'react-dom';
+import {
+  BubbleMenuPluginProps,
+  BubbleMenuPlugin,
+} from '@tiptap/extension-bubble-menu';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export type BubbleMenuProps = Omit<
-  Optional<BubbleMenuPluginProps, "pluginKey" | "editor">,
-  "element"
+  Optional<BubbleMenuPluginProps, 'pluginKey' | 'editor'>,
+  'element'
 > & {
   className?: string;
   children: React.ReactNode;
 };
 
-export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenuProps) => {
-  const menuEl = useRef<HTMLDivElement>(document.createElement("div"));
+export const BubbleMenu = ({
+  editor,
+  className,
+  children,
+  ...props
+}: BubbleMenuProps) => {
+  const menuEl = useRef<HTMLDivElement>(document.createElement('div'));
 
   useEffect(() => {
     if (editor?.isDestroyed) {
       return;
     }
 
-    const { pluginKey = "bubbleMenu", tippyOptions = {}, updateDelay, shouldShow = null } = props;
+    const {
+      pluginKey = 'bubbleMenu',
+      tippyOptions = {},
+      updateDelay,
+      shouldShow = null,
+    } = props;
 
     const menuEditor = editor;
 
     if (!menuEditor) {
       console.warn(
-        "BubbleMenu component is not rendered inside of an editor component or does not have editor prop."
+        'BubbleMenu component is not rendered inside of an editor component or does not have editor prop.'
       );
       return;
     }
@@ -53,7 +66,7 @@ export const BubbleMenu = ({ editor, className, children, ...props }: BubbleMenu
   }, [editor]);
 
   const portal = createPortal(
-    <div className={clsx("rte-bubble-menu", className)}>{children}</div>,
+    <div className={clsx('rte-bubble-menu', className)}>{children}</div>,
     menuEl.current
   );
 

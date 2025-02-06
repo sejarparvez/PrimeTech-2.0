@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import clsx from "clsx";
-import Icon from "./Icon";
+import React from 'react';
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import clsx from 'clsx';
+import Icon from './Icon';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -24,12 +24,12 @@ const DropdownMenuSubContent = DropdownMenuPrimitive.DropdownMenuSubContent;
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, align = "start", sideOffset = 4, ...props }, ref) => (
+>(({ className, align = 'start', sideOffset = 4, ...props }, ref) => (
   <DropdownMenuPrimitive.Content
     ref={ref}
     align={align}
     sideOffset={sideOffset}
-    className={clsx("rte-dropdown", className)}
+    className={clsx('rte-dropdown', className)}
     {...props}
   />
 ));
@@ -43,7 +43,11 @@ const DropdownMenuItem = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={clsx("rte-dropdown__item", inset && "rte-dropdown-item-inset", className)}
+    className={clsx(
+      'rte-dropdown__item',
+      inset && 'rte-dropdown-item-inset',
+      className
+    )}
     {...props}
   />
 ));
@@ -55,7 +59,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 >(({ className, children, checked, ...props }, ref) => (
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
-    className={clsx("rte-dropdown__item", className)}
+    className={clsx('rte-dropdown__item', className)}
     checked={checked}
     {...props}
   >
@@ -65,7 +69,8 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     </DropdownMenuPrimitive.ItemIndicator>
   </DropdownMenuPrimitive.CheckboxItem>
 ));
-DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
+DropdownMenuCheckboxItem.displayName =
+  DropdownMenuPrimitive.CheckboxItem.displayName;
 
 const DropdownMenuRadioItem = DropdownMenuPrimitive.DropdownMenuRadioItem;
 
@@ -77,7 +82,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={clsx("rte-dropdown__separator", className)}
+    className={clsx('rte-dropdown__separator', className)}
     {...props}
   />
 ));

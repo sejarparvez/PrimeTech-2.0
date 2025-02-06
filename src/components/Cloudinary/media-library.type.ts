@@ -1,5 +1,7 @@
 // Via https://cloudinary.com/documentation/media_library_widget
 
+import { JSX } from 'react';
+
 export interface MediaLibraryOptions {
   // Authentication
 
@@ -41,21 +43,21 @@ export interface MediaLibraryProps {
 }
 
 export interface MediaLibraryPropsOptions {
-  asset?: MediaLibraryOptions["asset"];
-  buttonCaption?: MediaLibraryOptions["button_caption"];
-  buttonClass?: MediaLibraryOptions["button_class"];
-  collection?: MediaLibraryOptions["collection"];
-  defaultTransformations?: MediaLibraryOptions["default_transformations"];
-  folder?: MediaLibraryOptions["folder"];
-  inlineContainer?: MediaLibraryOptions["inline_container"];
-  insertCaption?: MediaLibraryOptions["insert_caption"];
-  maxFiles?: MediaLibraryOptions["max_files"];
-  multiple?: MediaLibraryOptions["multiple"];
-  removeHeader?: MediaLibraryOptions["remove_header"];
-  search?: MediaLibraryOptions["search"];
-  transformation?: MediaLibraryOptions["transformation"];
-  username?: MediaLibraryOptions["username"];
-  zIndex?: MediaLibraryOptions["z_index"];
+  asset?: MediaLibraryOptions['asset'];
+  buttonCaption?: MediaLibraryOptions['button_caption'];
+  buttonClass?: MediaLibraryOptions['button_class'];
+  collection?: MediaLibraryOptions['collection'];
+  defaultTransformations?: MediaLibraryOptions['default_transformations'];
+  folder?: MediaLibraryOptions['folder'];
+  inlineContainer?: MediaLibraryOptions['inline_container'];
+  insertCaption?: MediaLibraryOptions['insert_caption'];
+  maxFiles?: MediaLibraryOptions['max_files'];
+  multiple?: MediaLibraryOptions['multiple'];
+  removeHeader?: MediaLibraryOptions['remove_header'];
+  search?: MediaLibraryOptions['search'];
+  transformation?: MediaLibraryOptions['transformation'];
+  username?: MediaLibraryOptions['username'];
+  zIndex?: MediaLibraryOptions['z_index'];
 }
 
 export interface MediaLibraryCallbackOptions {

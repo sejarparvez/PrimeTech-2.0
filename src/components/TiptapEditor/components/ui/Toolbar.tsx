@@ -1,5 +1,5 @@
-import React, { HTMLProps, forwardRef } from "react";
-import clsx from "clsx";
+import React, { HTMLProps, forwardRef } from 'react';
+import clsx from 'clsx';
 
 export type ToolbarProps = {
   dense?: boolean;
@@ -9,9 +9,9 @@ export type ToolbarProps = {
 const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   ({ children, dense, vertical = false, className, ...rest }, ref) => {
     const toolbarClassName = clsx(
-      "rte-toolbar",
-      dense && "rte-toolbar--dense",
-      vertical && "rte-toolbar--vertical",
+      'rte-toolbar',
+      dense && 'rte-toolbar--dense',
+      vertical && 'rte-toolbar--vertical',
       className
     );
 
@@ -23,7 +23,7 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   }
 );
 
-Toolbar.displayName = "Toolbar";
+Toolbar.displayName = 'Toolbar';
 
 export type ToolbarDividerProps = {
   horizontal?: boolean;
@@ -32,8 +32,8 @@ export type ToolbarDividerProps = {
 const ToolbarDivider = forwardRef<HTMLDivElement, ToolbarDividerProps>(
   ({ horizontal, className, ...rest }, ref) => {
     const dividerClassName = clsx(
-      "bg-neutral-200 dark:bg-neutral-800 rte-toolbar__divider",
-      horizontal && "rte-toolbar__divider--horizontal",
+      'bg-neutral-200 dark:bg-neutral-800 rte-toolbar__divider',
+      horizontal && 'rte-toolbar__divider--horizontal',
       className
     );
 
@@ -41,6 +41,6 @@ const ToolbarDivider = forwardRef<HTMLDivElement, ToolbarDividerProps>(
   }
 );
 
-ToolbarDivider.displayName = "Toolbar.Divider";
+ToolbarDivider.displayName = 'Toolbar.Divider';
 
 export { Toolbar, ToolbarDivider };
