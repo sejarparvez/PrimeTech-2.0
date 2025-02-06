@@ -22,7 +22,7 @@ const PostHeader = ({
       <h1 className="text-2xl font-bold leading-snug md:text-4xl md:leading-normal">
         {title}
       </h1>
-      <div className="flex items-center mt-3 flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-2">
         This Article Was Last Updated
         <div className="flex items-center text-sm">
           <span>{formattedDate}</span>

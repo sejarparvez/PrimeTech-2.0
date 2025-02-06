@@ -17,7 +17,7 @@ import ExtensionKit from '../kit';
 import { cssVar } from '../utils/cssVar';
 import { throttle } from '../utils/throttle';
 
-import '../styles/index.scss';
+import '../styles/index.css';
 
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;

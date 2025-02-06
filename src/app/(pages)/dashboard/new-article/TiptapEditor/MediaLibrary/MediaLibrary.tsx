@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Loader2, Upload, X } from 'lucide-react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MediaGallery from './MediaGallery';
-
-import Button from '../components/ui/Button';
-import './style.scss';
 
 interface MediaLibraryProps {
   onInsert?: (image: ImageData) => void;
@@ -26,16 +27,20 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
   const [images, setImages] = useState<ImageData[]>([]);
   const [previews, setPreviews] = useState<ImageData[]>([]);
   const [selected, setSelected] = useState<ImageData | null>(null);
+  const [showUploadConfirm, setShowUploadConfirm] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
-    const confirmUpload = window.confirm(
-      'Please avoid uploading too many images unnecessarily to save storage space. Also, ensure your images comply with copyright rules. Do you wish to continue?'
-    );
+    setShowUploadConfirm(true);
+  };
 
-    if (confirmUpload) {
-      fileInput.current?.click();
-    }
+  const handleUploadConfirm = () => {
+    setShowUploadConfirm(false);
+    fileInput.current?.click();
+  };
+
+  const handleUploadCancel = () => {
+    setShowUploadConfirm(false);
   };
 
   const loadImage = (file: File): Promise<ImageData> => {
@@ -111,17 +116,48 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
   }, []);
 
   return (
-    <div className="media-library">
-      <header className="media-library__header">
-        <h2>Assets</h2>
-        <Button disabled={loading || uploading} onClick={handleUploadClick}>
-          Upload
-        </Button>
+    <div className="mx-auto flex h-[600px] max-h-[90vh] w-[90vw] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-lg">
+      <header className="flex items-center justify-between border-b border-border px-6 py-4">
+        <h2 className="text-2xl font-bold text-foreground">Assets</h2>
+        {!showUploadConfirm ? (
+          <Button
+            onClick={handleUploadClick}
+            disabled={loading || uploading}
+            className="flex items-center gap-2"
+          >
+            <Upload className="h-4 w-4" />
+            Upload
+          </Button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Alert className="p-2">
+              <AlertDescription>
+                Please avoid uploading unnecessary images and ensure copyright
+                compliance.
+              </AlertDescription>
+            </Alert>
+            <Button
+              onClick={handleUploadConfirm}
+              className="flex items-center gap-2"
+            >
+              Continue
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleUploadCancel}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </header>
 
-      <div className="media-library__content">
+      <div className="h-[calc(100%-120px)] flex-1 overflow-y-auto">
         {loading ? (
-          <div className="media-library__spinner" aria-label="Loading images" />
+          <div className="flex h-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
         ) : (
           <MediaGallery
             data={[...previews, ...images]}
@@ -131,25 +167,20 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         )}
       </div>
 
-      <footer className="media-library__footer">
-        <Button
-          variant="outline"
-          className="media-library__btn media-library__btn--cancel"
-          onClick={onClose}
-        >
+      <footer className="flex items-center justify-end gap-4 border-t border-border px-6 py-4">
+        <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>
         <Button
-          className="media-library__btn media-library__btn--finish"
-          disabled={!selected || loading || uploading}
           onClick={handleFinish}
+          disabled={!selected || loading || uploading}
         >
           Insert
         </Button>
       </footer>
 
       <input
-        style={{ display: 'none' }}
+        className="hidden"
         type="file"
         multiple
         accept="image/*"

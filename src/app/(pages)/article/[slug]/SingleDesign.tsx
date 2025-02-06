@@ -54,7 +54,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <article className="flex flex-col items-center container py-6 md:py-10">
+    <article className="container flex flex-col items-center py-6 md:py-10">
       <PostReadingProgress />
       <PostHeader
         title={data.title}
@@ -66,13 +66,13 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <PostSharing postlink={postLink} title={data.title} />
 
-          <main className="lg:col-span-8 order-2 max-w-5xl">
+          <main className="order-2 max-w-5xl lg:col-span-8">
             <PostContent>
               <TiptapRenderer>{data.content}</TiptapRenderer>
             </PostContent>
           </main>
 
-          <aside className="lg:block order-1 lg:order-3 lg:col-span-3">
+          <aside className="order-1 lg:order-3 lg:col-span-3 lg:block">
             <PostToc />
           </aside>
         </div>

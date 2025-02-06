@@ -97,7 +97,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
   }) => (
     <button
       onClick={onClick}
-      className="p-2 rounded-full border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+      className="rounded-full border border-neutral-300 p-2 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
     >
       <Icon size={24} />
     </button>
@@ -110,8 +110,8 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
   );
 
   return (
-    <div className="flex justify-center lg:justify-end order-3 lg:order-1">
-      <div className="sticky lg:h-[calc(100vh-120px)] top-24 flex lg:flex-col gap-4">
+    <div className="order-3 flex justify-center lg:order-1 lg:justify-end">
+      <div className="sticky top-24 flex gap-4 lg:h-[calc(100vh-120px)] lg:flex-col">
         <IconButton
           icon={TbBrandFacebook}
           onClick={() =>
