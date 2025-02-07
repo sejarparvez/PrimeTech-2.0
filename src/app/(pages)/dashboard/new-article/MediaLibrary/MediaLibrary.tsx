@@ -62,7 +62,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/images', {
+      const response = await fetch('/api/dashboard/single-article/image', {
         method: 'POST',
         body: formData,
       });
