@@ -1,12 +1,7 @@
-import React, {
-  useEffect,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
-import { useCodeMirror } from './useCodeMirror';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import './CodeMirror.css';
 import { formatHtml } from './format';
-import './CodeMirror.scss';
+import { useCodeMirror } from './useCodeMirror';
 
 interface SourceEditorProps {
   initialContent: string;

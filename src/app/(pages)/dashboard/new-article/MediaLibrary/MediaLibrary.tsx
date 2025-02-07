@@ -2,7 +2,7 @@ import Button from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/
 import React, { useEffect, useRef, useState } from 'react';
 import MediaGallery from './MediaGallery';
 
-import './style.scss';
+import './style.css';
 
 interface MediaLibraryProps {
   onInsert?: (image: ImageData) => void;
@@ -97,7 +97,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     const fetchImages = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/images');
+        const response = await fetch('/api/dashboard/single-article/image');
         const data = await response.json();
         setImages(data);
       } catch (error) {

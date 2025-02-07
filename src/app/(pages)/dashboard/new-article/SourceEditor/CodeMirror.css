@@ -31,34 +31,44 @@ html.dark {
 .cm-tag {
   color: var(--cm-tag);
 }
+
 .cm-comment {
   color: var(--cm-comment);
 }
+
 .cm-class {
   color: var(--cm-class);
 }
+
 .cm-variable {
   color: var(--cm-variable);
 }
+
 .cm-keyword {
   color: var(--cm-keyword);
 }
+
 .cm-string {
   color: var(--cm-string);
 }
+
 .cm-name {
   color: var(--cm-name);
 }
+
 .cm-heading {
   color: var(--cm-heading);
 }
+
 .cm-deleted {
   color: var(--cm-deleted);
   background-color: var(--cm-deleted-bg);
 }
+
 .cm-atom {
   color: var(--cm-atom);
 }
+
 .cm-invalid {
   color: var(--cm-invalid);
 }

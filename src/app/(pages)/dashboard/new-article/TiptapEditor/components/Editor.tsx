@@ -13,8 +13,8 @@ import ExtensionKit from '../kit';
 import { cssVar } from '../utils/cssVar';
 import { throttle } from '../utils/throttle';
 import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
-import '../styles/index.scss';
-import './style.scss';
+import '../styles/index.css';
+import './style.css';
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;
 };
