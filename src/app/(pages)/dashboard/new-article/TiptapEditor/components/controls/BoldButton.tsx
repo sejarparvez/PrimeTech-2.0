@@ -1,27 +1,41 @@
+import { Button } from '@/components/ui/button'; // Adjust the path as needed
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
-import MenuButton from '../MenuButton';
+import { Bold } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const BoldButton = () => {
   const { editor } = useTiptapContext();
   const state = useEditorState({
     editor,
-    selector: (ctx) => {
-      return {
-        active: ctx.editor.isActive('bold'),
-        disabled: !ctx.editor.can().toggleBold(),
-      };
-    },
+    selector: (ctx) => ({
+      active: ctx.editor.isActive('bold'),
+      disabled: !ctx.editor.can().toggleBold(),
+    }),
   });
 
   return (
-    <MenuButton
-      icon="Bold"
-      tooltip="Bold"
-      shortcuts={['Mod', 'B']}
-      onClick={() => editor.chain().focus().toggleBold().run()}
-      {...state}
-    />
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={state.active ? 'default' : 'ghost'}
+            disabled={state.disabled}
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            type="button"
+            size="icon"
+          >
+            <Bold className="h-4 w-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Bold (Mod+B)</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

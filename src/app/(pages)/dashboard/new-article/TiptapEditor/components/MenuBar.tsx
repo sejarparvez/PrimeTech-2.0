@@ -9,7 +9,6 @@ import BulletListButton from './controls/BulletListButton';
 import HeadingDropdown from './controls/HeadingDropdown';
 import ImageButton from './controls/ImageButton2';
 import InsertDropdown from './controls/InsertDropdown';
-import ItalicButton from './controls/ItalicButton';
 import LinkButton from './controls/LinkButton';
 import MoreMarkDropdown from './controls/MoreMarkPopover';
 import OrderedListButton from './controls/OrderedList';
@@ -34,7 +33,7 @@ const MenuBar = () => {
         <ToolbarDivider />
 
         <BoldButton />
-        <ItalicButton />
+
         <UnderlineButton />
         <MoreMarkDropdown />
 
