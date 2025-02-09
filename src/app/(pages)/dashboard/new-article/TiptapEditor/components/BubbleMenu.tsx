@@ -66,7 +66,9 @@ export const BubbleMenu = ({
   }, [editor]);
 
   const portal = createPortal(
-    <div className={clsx('rte-bubble-menu', className)}>{children}</div>,
+    <div className={clsx('rounded bg-background shadow', className)}>
+      {children}
+    </div>,
     menuEl.current
   );
 

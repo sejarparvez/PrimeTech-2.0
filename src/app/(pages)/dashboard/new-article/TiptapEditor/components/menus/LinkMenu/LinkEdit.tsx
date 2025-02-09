@@ -1,8 +1,7 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import React, { useEffect, useState } from 'react';
-
-import Input from '../../ui/Input';
-import Button from '../../ui/Button';
-import Label from '../../ui/Label';
 
 interface LinkEditProps {
   initialUrl?: string;
@@ -38,27 +37,28 @@ const LinkEdit = ({
   }, [text, url]);
 
   return (
-    <form className="rte-link__form" onSubmit={onSubmit}>
-      <Label className="rte-link__label">URL</Label>
-      <Input
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        className="rte-link__input"
-        placeholder="Paste link"
-        type="url"
-        required
-        autoFocus
-      />
+    <form className="w-80 space-y-2 rounded border p-4" onSubmit={onSubmit}>
+      <div>
+        <Label>URL</Label>
+        <Input
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="Paste link"
+          type="url"
+          required
+          autoFocus
+        />
+      </div>
+      <div>
+        <Label>Display Text</Label>
+        <Input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter link text"
+        />
+      </div>
 
-      <Label className="rte-link__label">Display Text</Label>
-      <Input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="rte-link__input"
-        placeholder="Enter link text"
-      />
-
-      <div className="rte-link__actions">
+      <div className="mt-3 flex items-center justify-end gap-2">
         <Button variant="secondary" onClick={onCancel}>
           Cancel
         </Button>

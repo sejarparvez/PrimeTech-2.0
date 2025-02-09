@@ -1,6 +1,5 @@
-import React from 'react';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import MenuButton from '../../MenuButton';
-import { DropdownMenuItem } from '../../ui/DropdownMenu';
 
 interface SizeDropdownProps {
   value: number;

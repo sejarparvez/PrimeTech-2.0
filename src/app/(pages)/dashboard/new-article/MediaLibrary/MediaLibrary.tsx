@@ -2,13 +2,8 @@
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -145,8 +140,9 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
   }, [toast]);
 
   return (
-    <Card className="mx-auto flex h-[95vh] w-[90vw] max-w-5xl flex-col md:h-[90vh] md:w-[70vw]">
-      <CardHeader className="flex-row items-center justify-between space-y-0 px-6 py-3">
+    <ScrollArea>
+      {/* Sticky header */}
+      <div className="sticky top-0 z-10 mx-6 flex items-center justify-between space-y-0 bg-background py-3 shadow-md">
         <h2 className="text-xl font-medium">Assets</h2>
         <Button onClick={handleUploadClick} disabled={loading || uploading}>
           {uploading ? (
@@ -158,7 +154,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
             'Upload'
           )}
         </Button>
-      </CardHeader>
+      </div>
 
       {warning && (
         <Alert variant="destructive" className="mx-6 my-2">
@@ -168,7 +164,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         </Alert>
       )}
 
-      <CardContent className="flex-1 overflow-hidden p-0">
+      <div className="flex-1 overflow-hidden p-0">
         {loading ? (
           <div className="flex h-full items-center justify-center">
             <Loader2 className="h-12 w-12 animate-spin" />
@@ -180,19 +176,20 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
             selected={selected}
           />
         )}
-      </CardContent>
+      </div>
 
-      <CardFooter className="justify-end gap-4 px-6 py-3">
+      {/* Sticky footer */}
+      <div className="sticky bottom-0 z-10 flex justify-end gap-4 bg-background px-6 py-3 shadow-md">
         <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>
         <Button
           disabled={!selected || loading || uploading}
-          onClick={handleFinish}
+          onClick={() => selected !== null && onInsert?.(selected)}
         >
           Insert
         </Button>
-      </CardFooter>
+      </div>
 
       <Input
         className="hidden"
@@ -200,9 +197,9 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         multiple
         accept="image/*"
         ref={fileInput}
-        onChange={handleFileChange}
+        onChange={(e) => handleFileChange(e)}
       />
-    </Card>
+    </ScrollArea>
   );
 };
 

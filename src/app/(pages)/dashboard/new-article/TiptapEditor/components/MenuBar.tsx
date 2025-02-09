@@ -21,7 +21,7 @@ import UndoButton from './controls/UndoButton';
 
 const MenuBar = () => {
   return (
-    <div className="rte-menu-bar">
+    <div className="flex min-h-10 items-center rounded-t-md border-b bg-background">
       <Toolbar dense>
         <UndoButton />
         <RedoButton />

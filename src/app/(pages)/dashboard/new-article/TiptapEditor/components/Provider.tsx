@@ -66,11 +66,14 @@ export const TiptapProvider = ({
 
   const editorContent = (
     <div
-      className={clsx('rte-editor', isFullScreen && 'rte-editor--fullscreen')}
+      className={clsx(
+        'flex flex-col rounded-md border text-sm',
+        isFullScreen && 'fixed inset-0 z-50'
+      )}
     >
       {slotBefore}
       <div
-        className="rte-editor__container"
+        className="relative flex max-h-[80vh] min-h-80 flex-1 cursor-text overflow-auto bg-background px-2 md:px-4"
         onMouseDown={focusEditorViaContainer}
       >
         {isSourceMode ? (
@@ -79,7 +82,7 @@ export const TiptapProvider = ({
           <EditorContent
             ref={contentElement}
             editor={editor}
-            className="rte-editor__content"
+            className="relative mx-auto w-full max-w-[45rem] flex-1"
           />
         )}
       </div>

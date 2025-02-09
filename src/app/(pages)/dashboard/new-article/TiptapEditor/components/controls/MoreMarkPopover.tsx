@@ -1,15 +1,24 @@
-import React from 'react';
+'use client';
 
-import { Toolbar } from '../ui/Toolbar';
-import MenuButton from '../MenuButton';
-
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
+import { CaseSensitiveIcon as LetterCase } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
+import CodeButton from './CodeButton';
 import StrikeButton from './StrikeButton';
 import SubscriptButton from './SubscriptButton';
 import SuperscriptButton from './SuperscriptButton';
-import CodeButton from './CodeButton';
-import { PopoverClose } from '../ui/Popover';
 
 const MoreMarkPopover = () => {
   const { editor } = useTiptapContext();
@@ -24,21 +33,35 @@ const MoreMarkPopover = () => {
   });
 
   return (
-    <MenuButton
-      type="popover"
-      icon="LetterCase"
-      tooltip="More format"
-      disabled={isDisabled}
-    >
-      <PopoverClose asChild>
-        <Toolbar dense={true}>
-          <StrikeButton />
-          <SuperscriptButton />
-          <SubscriptButton />
-          <CodeButton />
-        </Toolbar>
-      </PopoverClose>
-    </MenuButton>
+    <TooltipProvider>
+      <Tooltip>
+        <Popover>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                disabled={isDisabled}
+                aria-label="More format options"
+              >
+                <LetterCase />
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>More format options</p>
+          </TooltipContent>
+          <PopoverContent className="w-auto p-2">
+            <div className="flex space-x-1">
+              <StrikeButton />
+              <SuperscriptButton />
+              <SubscriptButton />
+              <CodeButton />
+            </div>
+          </PopoverContent>
+        </Popover>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

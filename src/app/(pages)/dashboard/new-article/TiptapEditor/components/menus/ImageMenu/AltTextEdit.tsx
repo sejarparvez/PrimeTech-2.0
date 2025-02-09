@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import Input from '../../ui/Input';
-import Button from '../../ui/Button';
+import { Input } from '@/components/ui/input';
 import MenuButton from '../../MenuButton';
 
 interface AltTextEditProps {
@@ -19,11 +18,12 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
   };
 
   return (
-    <form className="rte-text-alternative__form" onSubmit={onSubmit}>
+    <form className="flex min-w-80 flex-1 gap-2 px-2 py-1" onSubmit={onSubmit}>
       <Input
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Text alternative"
+        className="w-full flex-1"
         autoFocus
       />
       <MenuButton buttonType="submit" icon={'Check'} tooltip={false} />

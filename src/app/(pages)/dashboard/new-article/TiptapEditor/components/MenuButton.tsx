@@ -1,16 +1,19 @@
-import React, { CSSProperties, memo, useEffect, useMemo } from 'react';
-import clsx from 'clsx';
+import React, { CSSProperties, memo, useMemo } from 'react';
 
-import Tooltip from './ui/Tooltip';
-import Icon, { type IconProps } from './ui/Icon';
-import Button, { type ButtonProps } from './ui/Button';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-} from './ui/DropdownMenu';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/Popover';
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import Icon, { type IconProps } from './ui/Icon';
+import Tooltip from './ui/Tooltip';
 
+import { Button, ButtonProps } from '@/components/ui/button';
 import { getShortcutKey } from '../utils/shortcut';
 import { useTiptapContext } from './Provider';
 
@@ -80,19 +83,10 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     const renderButton = (
       <Button
         ref={ref}
-        type={buttonType}
+        type="button"
         variant="ghost"
-        className={clsx('rte-menu__button', buttonClass)}
         style={buttonStyle}
-        iconOnly={hasIconOnly}
-        slotBefore={!hasIconOnly && renderIcon}
-        slotAfter={
-          hasArrowIcon && (
-            <span className="rte-icon-arrow">
-              <Icon name="ChevronDown" size={16} />
-            </span>
-          )
-        }
+        size="icon"
         onFocusCapture={(e) => e.stopPropagation()}
         data-active={(editor.isEditable && active) || undefined}
         aria-label={typeof tooltip === 'string' ? tooltip : text}

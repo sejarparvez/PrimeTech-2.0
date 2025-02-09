@@ -1,4 +1,4 @@
-import React from 'react';
+import clsx from 'clsx';
 import Tooltip from '../ui/Tooltip';
 
 interface ColorButtonProps {
@@ -19,7 +19,10 @@ const ColorButton = ({
       type="button"
       tabIndex={-1}
       data-active={active ? 'true' : undefined}
-      className="rte-color__btn"
+      className={clsx(
+        'hover:scale-120 h-[1.25rem] min-w-[1.25rem] transform rounded border transition-transform duration-300 ease-in',
+        active && 'shadow'
+      )}
       style={{ background: color }}
       onClick={() => onClick?.(color)}
     />

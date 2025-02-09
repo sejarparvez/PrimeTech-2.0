@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
 import { useEditorState } from '@tiptap/react';
-import { Toolbar } from './ui/Toolbar';
+import { memo } from 'react';
 import MenuButton from './MenuButton';
 import { useTiptapContext } from './Provider';
+import { Toolbar } from './ui/Toolbar';
 
 const StatusBar = () => {
   const {
@@ -21,7 +21,7 @@ const StatusBar = () => {
   });
 
   return (
-    <div className="rte-status-bar">
+    <div className="flex min-h-11 items-center rounded-b-md border-t bg-background">
       <Toolbar dense>
         <MenuButton
           icon="SourceCode"
@@ -37,9 +37,9 @@ const StatusBar = () => {
         />
       </Toolbar>
 
-      <div className="rte-counter">
-        <span className="rte-word-count">Words: {counter.words}</span>
-        <span className="rte-charater">Characters: {counter.characters}</span>
+      <div className="ml-auto space-x-2 px-2 py-1">
+        <span>Words: {counter.words}</span>
+        <span>Characters: {counter.characters}</span>
       </div>
     </div>
   );

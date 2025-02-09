@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
 import {
-  Tooltip as TooltipRoot,
-  TooltipProvider,
-  TooltipTrigger,
-  TooltipPortal,
   TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  Tooltip as TooltipRoot,
+  TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
+import React from 'react';
 
 type TooltipOptions = Pick<
   TooltipContentProps,
@@ -46,8 +46,8 @@ const Tooltip = React.forwardRef<
         </TooltipTrigger>
         <Wrapper>
           <TooltipContent
-            className="rte-tooltip"
-            side={'top'}
+            className="rte-tooltip z-50 text-nowrap rounded-sm bg-secondary px-2 py-1 text-xs"
+            side="bottom"
             align={'center'}
             {...options}
           >

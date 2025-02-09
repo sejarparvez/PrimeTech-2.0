@@ -1,10 +1,10 @@
 import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
+import { Input } from '@/components/ui/input';
+import { Popover } from '@/components/ui/popover';
 import { useMemo, useState } from 'react';
 import MenuButton from '../../MenuButton';
 import { useTiptapContext } from '../../Provider';
 import Icon from '../../ui/Icon';
-import Input from '../../ui/Input';
-import { PopoverClose } from '../../ui/Popover';
 
 interface CodeDropdownProps {
   value: string;
@@ -31,28 +31,27 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
       hideText={false}
       tooltip={false}
       buttonStyle={{ minWidth: '6rem' }}
-      dropdownClass="rte-code-dropdown"
+      dropdownClass="flex flex-col gap-2 p-2"
       dropdownStyle={{
         minWidth: '10rem',
       }}
     >
       <Input
-        className="code-search"
-        placeholder="Seach language..."
-        style={{ width: '10rem' }}
+        className="h-9 w-40"
+        placeholder="Search language..."
         value={search}
         onChange={(e) => setSearch(e.target.value.trim())}
       />
       <div
-        className="code-list"
+        className="flex flex-col gap-1 overflow-auto"
         style={{
           maxHeight: `${((contentElement.current as HTMLElement)?.clientHeight || 0) * 0.375}px`,
         }}
       >
         {filterOptions.map((item) => (
-          <PopoverClose asChild key={item.value}>
+          <Popover key={item.value}>
             <div
-              className="code-item"
+              className="relative flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 pl-7 text-sm leading-5 hover:bg-accent"
               onClick={() => {
                 onSelect(item.value);
                 setSearch('');
@@ -62,13 +61,13 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
               {item.value === value && (
                 <Icon
                   name="Check"
-                  className="code-item__indicator"
+                  className="absolute left-1.5"
                   size={14}
                   strokeWidth={2.5}
                 />
               )}
             </div>
-          </PopoverClose>
+          </Popover>
         ))}
       </div>
     </MenuButton>

@@ -1,7 +1,15 @@
-import React, { useCallback, useMemo } from 'react';
+'use client';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useEditorState } from '@tiptap/react';
-import MenuButton from '../MenuButton';
-import { DropdownMenuItem } from '../ui/DropdownMenu';
+import { ChevronDown } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
 import { useTiptapContext } from '../Provider';
 
 const HEADING_LEVELS = [1, 2, 3, 4, 5, 6] as const;
@@ -31,22 +39,27 @@ const HeadingDropdown = () => {
       {
         value: 'p',
         label: 'Paragraph',
+        class: 'text-base font-normal',
       },
       {
         value: 'h1',
         label: 'Heading 1',
+        class: 'text-2xl font-bold',
       },
       {
         value: 'h2',
         label: 'Heading 2',
+        class: 'text-xl font-semibold',
       },
       {
         value: 'h3',
         label: 'Heading 3',
+        class: 'text-lg font-semibold',
       },
       {
         value: 'h4',
         label: 'Heading 4',
+        class: 'text-md font-semibold',
       },
     ],
     []
@@ -71,26 +84,29 @@ const HeadingDropdown = () => {
     options.find((item) => item.value === current)?.label || 'Headings';
 
   return (
-    <MenuButton
-      type="dropdown"
-      text={currentLabel}
-      tooltip="Headings"
-      hideText={false}
-      disabled={!editor.isEditable || !current}
-      buttonStyle={{ minWidth: '6.5rem' }}
-      dropdownClass="rte-heading-dropdown"
-    >
-      {options.map((item) => (
-        <DropdownMenuItem
-          key={item.value}
-          data-active={item.value === current || undefined}
-          data-heading={item.value}
-          onSelect={() => onSelect(item.value as Heading)}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="min-w-[6.5rem] justify-between"
+          disabled={!editor.isEditable || !current}
         >
-          {item.label}
-        </DropdownMenuItem>
-      ))}
-    </MenuButton>
+          <span className="truncate">{currentLabel}</span>
+          <ChevronDown className="ml-2 h-4 w-4 shrink-0" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {options.map((item) => (
+          <DropdownMenuItem
+            key={item.value}
+            onSelect={() => onSelect(item.value as Heading)}
+            className={`${item.class} ${current === item.value ? 'bg-accent' : ''}`}
+          >
+            {item.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
 import { PopoverClose } from '@radix-ui/react-popover';
 import clsx from 'clsx';
+import { useMemo, useState } from 'react';
 
 const COLUMNS = 7;
 const ROWS = 5;
@@ -20,13 +20,13 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
   const grid = useMemo(
     () =>
       Array.from({ length: ROWS }, (_, rowIndex) => (
-        <div key={`row-${rowIndex}`} className="rte-tb__row">
+        <div key={`row-${rowIndex}`} className="flex gap-1">
           {Array.from({ length: COLUMNS }, (_, colIndex) => (
             <div
               key={`col-${colIndex}`}
               className={clsx(
-                'rte-tb__cell',
-                isActiveCell(rowIndex, colIndex) && 'rte-tb__cell--active'
+                'h-4 w-4 border border-border bg-muted transition-all',
+                isActiveCell(rowIndex, colIndex) && 'border-primary bg-primary'
               )}
               onMouseMove={() =>
                 setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 })
@@ -40,11 +40,11 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
   );
 
   return (
-    <div className="rte-tb__builder">
+    <div className="text-sm">
       <PopoverClose asChild>
-        <div className="rte-tb__grid">{grid}</div>
+        <div className="flex flex-col gap-2 p-2">{grid}</div>
       </PopoverClose>
-      <div style={{ textAlign: 'center', marginBlock: 3 }}>
+      <div className="mt-2 text-center">
         {gridSize.rows} x {gridSize.cols}
       </div>
     </div>

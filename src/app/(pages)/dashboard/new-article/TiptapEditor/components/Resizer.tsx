@@ -1,6 +1,6 @@
+import { useEditorState } from '@tiptap/react';
 import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useEditorState } from '@tiptap/react';
 import { useTiptapContext } from './Provider';
 
 const clamp = (value: number, min: number, max: number) =>
@@ -150,14 +150,17 @@ const Resizer = () => {
     position: React.CSSProperties
   ) => (
     <div
-      className="rte-resizer__control"
+      className="pointer-events-auto absolute aspect-square border-2 bg-primary transition-none"
       style={{ cursor, ...position }}
       onPointerDown={(event) => startResizing(event, direction)}
     />
   );
 
   return createPortal(
-    <div ref={controlRef} className="rte-resizer">
+    <div
+      ref={controlRef}
+      className="pointer-events-none absolute left-0 top-0 transition-none"
+    >
       {renderResizerHandle('nw-resize', 0, { width: 12, left: -10, top: -10 })}
       {renderResizerHandle('sw-resize', 0, {
         width: 12,

@@ -1,6 +1,19 @@
-import React, { useCallback, useMemo } from 'react';
-import MenuButton from '../MenuButton';
-import { DropdownMenuItem } from '../ui/DropdownMenu';
+'use client';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { Code2, Plus, Quote, Youtube } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const InsertDropdown = () => {
@@ -20,42 +33,42 @@ const InsertDropdown = () => {
     }
   };
 
+  const menuItems = [
+    { text: 'Blockquote', icon: Quote, onClick: insertBlockquote },
+    { text: 'Code block', icon: Code2, onClick: insertCodeBlock },
+    { text: 'Youtube', icon: Youtube, onClick: insertYoutube },
+  ];
+
   return (
-    <MenuButton
-      type="dropdown"
-      tooltip="Insert"
-      disabled={!editor.isEditable}
-      icon="Plus"
-      dropdownStyle={{ minWidth: '8rem' }}
-    >
-      <DropdownMenuItem asChild>
-        <MenuButton
-          text="Blockquote"
-          hideText={false}
-          tooltip={false}
-          icon="Quote"
-          onClick={insertBlockquote}
-        />
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <MenuButton
-          text="Code block"
-          hideText={false}
-          tooltip={false}
-          icon="CodeBlock"
-          onClick={insertCodeBlock}
-        />
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <MenuButton
-          text="Youtube"
-          hideText={false}
-          tooltip={false}
-          icon="Youtube"
-          onClick={insertYoutube}
-        />
-      </DropdownMenuItem>
-    </MenuButton>
+    <TooltipProvider>
+      <Tooltip>
+        <DropdownMenu>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                disabled={!editor.isEditable}
+                aria-label="Insert"
+              >
+                <Plus />
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Insert</p>
+          </TooltipContent>
+          <DropdownMenuContent className="w-40">
+            {menuItems.map((item) => (
+              <DropdownMenuItem key={item.text} onSelect={item.onClick}>
+                <item.icon className="mr-2 h-4 w-4" />
+                <span>{item.text}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

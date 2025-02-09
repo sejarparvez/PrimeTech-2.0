@@ -3,17 +3,17 @@
 import { Content, type Editor } from '@tiptap/react';
 import { forwardRef, useCallback, useEffect } from 'react';
 
+import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
 import { type UseTiptapEditorOptions } from '../hooks/useTiptapEditor';
-import TiptapProvider from './Provider';
+import ExtensionKit from '../kit';
+import '../styles/index.css';
+import { cssVar } from '../utils/cssVar';
+import { throttle } from '../utils/throttle';
 import MenuBar from './MenuBar';
+import TiptapProvider from './Provider';
 import Resizer from './Resizer';
 import StatusBar from './StatusBar';
 import { CodeBlockMenu, ImageMenu, LinkMenu } from './menus';
-import ExtensionKit from '../kit';
-import { cssVar } from '../utils/cssVar';
-import { throttle } from '../utils/throttle';
-import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
-import '../styles/index.css';
 import './style.css';
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;

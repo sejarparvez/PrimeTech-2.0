@@ -1,5 +1,5 @@
-import React, { HTMLProps, forwardRef } from 'react';
 import clsx from 'clsx';
+import { forwardRef, HTMLProps } from 'react';
 
 export type ToolbarProps = {
   dense?: boolean;
@@ -9,9 +9,9 @@ export type ToolbarProps = {
 const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   ({ children, dense, vertical = false, className, ...rest }, ref) => {
     const toolbarClassName = clsx(
-      'rte-toolbar',
-      dense && 'rte-toolbar--dense',
-      vertical && 'rte-toolbar--vertical',
+      'flex flex-wrap items-center gap-y-1.5 gap-x-1 p-1.5',
+      dense && 'p-0.5',
+      vertical && 'flex-col',
       className
     );
 
@@ -32,8 +32,10 @@ export type ToolbarDividerProps = {
 const ToolbarDivider = forwardRef<HTMLDivElement, ToolbarDividerProps>(
   ({ horizontal, className, ...rest }, ref) => {
     const dividerClassName = clsx(
-      'bg-neutral-200 dark:bg-neutral-800 rte-toolbar__divider',
-      horizontal && 'rte-toolbar__divider--horizontal',
+      'bg-neutral-200 dark:bg-neutral-800 flex-shrink-0',
+      horizontal
+        ? 'border-0 border-b border-neutral-300 w-full h-px my-1'
+        : 'border-0 border-r border-neutral-300 h-5 w-px mx-1',
       className
     );
 

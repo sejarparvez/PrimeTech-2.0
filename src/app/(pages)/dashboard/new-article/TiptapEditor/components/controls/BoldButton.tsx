@@ -1,6 +1,5 @@
-import React from 'react';
-import MenuButton from '../MenuButton';
 import { useEditorState } from '@tiptap/react';
+import MenuButton from '../MenuButton';
 import { useTiptapContext } from '../Provider';
 
 const BoldButton = () => {
