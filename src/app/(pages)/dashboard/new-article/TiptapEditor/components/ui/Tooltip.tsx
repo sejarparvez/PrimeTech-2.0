@@ -46,8 +46,8 @@ const Tooltip = React.forwardRef<
         </TooltipTrigger>
         <Wrapper>
           <TooltipContent
-            className="rte-tooltip z-50 text-nowrap rounded-sm bg-secondary px-2 py-1 text-xs"
-            side="bottom"
+            className="rte-tooltip"
+            side={'top'}
             align={'center'}
             {...options}
           >

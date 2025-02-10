@@ -1,4 +1,5 @@
 import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
+import { Separator } from '@/components/ui/separator';
 import { Node } from '@tiptap/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
 import { useEditorState } from '@tiptap/react';
@@ -7,7 +8,6 @@ import type { Instance } from 'tippy.js';
 import { BubbleMenu } from '../../BubbleMenu';
 import MenuButton from '../../MenuButton';
 import { useTiptapContext } from '../../Provider';
-import { Toolbar, ToolbarDivider } from '../../ui/Toolbar';
 import AltTextEdit from './AltTextEdit';
 import SizeDropdown from './SizeDropdown';
 
@@ -146,7 +146,7 @@ export const ImageMenu = () => {
           }}
         />
       ) : (
-        <Toolbar>
+        <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
           <MenuButton
             text="Alt text"
             hideText={false}
@@ -159,16 +159,16 @@ export const ImageMenu = () => {
             active={image?.hasCaption}
             onClick={toggleCaption}
           />
-          <ToolbarDivider />
+          <Separator orientation="vertical" className="mx-1 h-5" />
           <SizeDropdown value={image?.width} onChange={setSize} />
-          <ToolbarDivider />
+          <Separator orientation="vertical" className="mx-1 h-5" />
           <MenuButton
             icon="Download"
             tooltip="Download"
             onClick={downloadImage}
           />
           <MenuButton icon="Trash" tooltip="Delete" onClick={removeImage} />
-        </Toolbar>
+        </div>
       )}
     </BubbleMenu>
   );

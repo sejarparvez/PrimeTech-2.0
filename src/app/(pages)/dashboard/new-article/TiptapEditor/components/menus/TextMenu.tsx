@@ -1,3 +1,4 @@
+import { Separator } from '@/components/ui/separator';
 import { useCallback } from 'react';
 import { isNodeSelected } from '../../utils/isNodeSelected';
 import isTextSelected from '../../utils/isTextSelected';
@@ -7,9 +8,7 @@ import BoldButton from '../controls/BoldButton';
 import HeadingDropdown from '../controls/HeadingDropdown';
 import LinkButton from '../controls/LinkButton';
 import MoreMarkDropdown from '../controls/MoreMarkPopover';
-import UnderlineButton from '../controls/UnderlineButton';
 import { useTiptapContext } from '../Provider';
-import { Toolbar, ToolbarDivider } from '../ui/Toolbar';
 
 export const TextMenu = ({ enable }: { enable: boolean }) => {
   const { editor } = useTiptapContext();
@@ -39,21 +38,15 @@ export const TextMenu = ({ enable }: { enable: boolean }) => {
         appendTo: 'parent',
       }}
     >
-      <Toolbar>
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
         <HeadingDropdown />
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <BoldButton />
-
-        <UnderlineButton />
         <MoreMarkDropdown />
         <LinkButton />
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <AlignDropdown />
-      </Toolbar>
+      </div>
     </BubbleMenu>
   );
 };

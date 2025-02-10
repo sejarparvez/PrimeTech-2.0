@@ -2,7 +2,6 @@ import { useEditorState } from '@tiptap/react';
 import { memo } from 'react';
 import MenuButton from './MenuButton';
 import { useTiptapContext } from './Provider';
-import { Toolbar } from './ui/Toolbar';
 
 const StatusBar = () => {
   const {
@@ -22,7 +21,7 @@ const StatusBar = () => {
 
   return (
     <div className="flex min-h-11 items-center rounded-b-md border-t bg-background">
-      <Toolbar dense>
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
         <MenuButton
           icon="SourceCode"
           text="Source Code"
@@ -35,7 +34,7 @@ const StatusBar = () => {
           active={isFullScreen}
           onClick={toggleFullScreen}
         />
-      </Toolbar>
+      </div>
 
       <div className="ml-auto space-x-2 px-2 py-1">
         <span>Words: {counter.words}</span>

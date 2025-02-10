@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import { useTiptapContext } from '../Provider';
+import { useCallback } from 'react';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu } from '../BubbleMenu';
 import MenuButton from '../MenuButton';
-import { Toolbar } from '../ui/Toolbar';
+import { useTiptapContext } from '../Provider';
 
 const TableMenu = () => {
   const { editor, contentElement } = useTiptapContext();
@@ -67,7 +66,7 @@ const TableMenu = () => {
         getReferenceClientRect,
       }}
     >
-      <Toolbar>
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
         <MenuButton
           icon="RowInsertTop"
           tooltip="Add row above"
@@ -94,8 +93,8 @@ const TableMenu = () => {
           tooltip="Merge cells"
           onClick={mergeCells}
         />
-      </Toolbar>
-      <Toolbar style={{ justifyContent: 'center' }}>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5 p-1.5">
         <MenuButton
           icon="RowHeader"
           tooltip="Toggle row header"
@@ -117,7 +116,7 @@ const TableMenu = () => {
           onClick={deleteRowOrColumn('Column')}
         />
         <MenuButton icon="Trash" tooltip="Delete table" onClick={deleteTable} />
-      </Toolbar>
+      </div>
     </BubbleMenu>
   );
 };

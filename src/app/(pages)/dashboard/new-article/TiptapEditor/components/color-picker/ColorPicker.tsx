@@ -1,11 +1,11 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { COLORS, MORE_COLORS } from '../../constants/color';
+import Button from '../ui/Button';
 import Icon from '../ui/Icon';
+import Input from '../ui/Input';
+import Label from '../ui/Label';
 import ColorButton from './ColorButton';
 
 interface ColorPickerProps {
@@ -41,8 +41,8 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   const renderColorList = (colors: string[], label: string) => (
     <div>
-      <Label>{label}</Label>
-      <div className="flex flex-wrap gap-2">
+      <Label as="span">{label}</Label>
+      <div className="rte-color__list">
         {colors.map((item) => (
           <ColorButton
             key={item}
@@ -56,45 +56,42 @@ const ColorPicker = (props: ColorPickerProps) => {
   );
 
   return (
-    <div className="flex w-64 flex-col">
-      <div className="-mx-1 flex border-b">
+    <div className="rte-cp">
+      <div className="rte-cp__tabs">
         {['swatches', 'custom'].map((tab) => (
           <Button
             key={tab}
             variant="ghost"
             data-active={activeTab === tab || undefined}
             onClick={() => setActiveTab(tab as 'swatches' | 'custom')}
-            className={`relative w-full text-xs after:absolute after:right-[-2px] after:h-full after:w-[1px] after:border-l after:border-gray-300 ${
-              activeTab === tab
-                ? 'before:absolute before:bottom-[-0.5rem] before:left-[-0.5rem] before:h-[2px] before:w-full before:bg-blue-500 before:content-[""]'
-                : ''
-            }`}
+            className={`rte-cp__tab`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </Button>
         ))}
       </div>
 
-      <div className="my-3 px-2">
+      <div className="rte-cp__main">
         {activeTab === 'swatches' && (
-          <div className="flex flex-col gap-[0.625rem]">
+          <div className="rte-cp-swatches">
             {renderColorList(COLORS, 'Default Colors')}
             {renderColorList(MORE_COLORS, 'More Colors')}
           </div>
         )}
 
         {activeTab === 'custom' && (
-          <div className="flex flex-col gap-[0.625rem]">
+          <div className="rte-cp-custom">
             <HexColorPicker
-              className="w-full"
+              className="rte-cp-custom__picker"
+              style={{ width: '100%' }}
               color={color}
               onChange={handleColorChange}
             />
-            <div className="flex items-center gap-2">
+            <div className="rte-cp-custom__preview">
               <ColorButton color={color} tooltip={false} />
               <Input
                 value={color!}
-                className="uppercase"
+                style={{ textTransform: 'uppercase' }}
                 onChange={(e) => handleColorChange(e.target.value)}
                 autoFocus
               />
@@ -104,11 +101,11 @@ const ColorPicker = (props: ColorPickerProps) => {
       </div>
 
       <PopoverClose asChild>
-        <div className="mb-2 mt-0.5 flex gap-2 px-2">
-          <Button variant="secondary" size="icon" onClick={props.onReset}>
+        <div className="rte-cp__actions">
+          <Button variant="secondary" iconOnly onClick={props.onReset}>
             <Icon name="PaletteOff" />
           </Button>
-          <Button className="w-full" onClick={handleApply}>
+          <Button style={{ width: '100%' }} onClick={handleApply}>
             Apply
           </Button>
         </div>

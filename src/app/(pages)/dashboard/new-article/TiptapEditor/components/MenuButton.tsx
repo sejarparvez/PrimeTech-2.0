@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { CSSProperties, memo, useMemo } from 'react';
 
 import {
@@ -10,10 +11,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import Button, { type ButtonProps } from './ui/Button';
 import Icon, { type IconProps } from './ui/Icon';
 import Tooltip from './ui/Tooltip';
 
-import { Button, ButtonProps } from '@/components/ui/button';
 import { getShortcutKey } from '../utils/shortcut';
 import { useTiptapContext } from './Provider';
 
@@ -83,10 +84,19 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     const renderButton = (
       <Button
         ref={ref}
-        type="button"
+        type={buttonType}
         variant="ghost"
+        className={clsx('rte-menu__button', buttonClass)}
         style={buttonStyle}
-        size="icon"
+        iconOnly={hasIconOnly}
+        slotBefore={!hasIconOnly && renderIcon}
+        slotAfter={
+          hasArrowIcon && (
+            <span className="rte-icon-arrow">
+              <Icon name="ChevronDown" size={16} />
+            </span>
+          )
+        }
         onFocusCapture={(e) => e.stopPropagation()}
         data-active={(editor.isEditable && active) || undefined}
         aria-label={typeof tooltip === 'string' ? tooltip : text}

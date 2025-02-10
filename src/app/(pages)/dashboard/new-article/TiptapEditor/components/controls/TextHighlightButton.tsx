@@ -1,8 +1,20 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import MenuButton from '../MenuButton';
-import useMount from '../../hooks/useMount';
-import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
+import React, { CSSProperties, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { BiSolidColorFill } from 'react-icons/bi';
+import useMount from '../../hooks/useMount';
 import { useTiptapContext } from '../Provider';
 import ColorPicker from '../color-picker';
 
@@ -42,24 +54,45 @@ const TextHighlightButton: React.FC = () => {
 
   return (
     <>
-      <MenuButton
-        ref={buttonRef}
-        type="popover"
-        icon="TextHighlight"
-        hideArrow={true}
-        tooltip="Highlight"
-        disabled={state.disabled}
-      >
-        <ColorPicker
-          //  color={highlightColor}
-          color={state.color}
-          onChange={(color) =>
-            editor.chain().focus().setHighlight({ color }).run()
-          }
-          onReset={() => editor.chain().focus().unsetHighlight().run()}
-        />
-      </MenuButton>
       {renderBar}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {/* Use a plain div as a non-interactive wrapper */}
+            <div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    ref={buttonRef}
+                    variant="ghost"
+                    size="icon"
+                    type="button"
+                    disabled={state.disabled}
+                    aria-label="Text color"
+                    style={{ position: 'relative' }}
+                  >
+                    <BiSolidColorFill size={20} />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                  <ColorPicker
+                    //  color={highlightColor}
+                    color={state.color}
+                    onChange={(color) =>
+                      editor.chain().focus().setHighlight({ color }).run()
+                    }
+                    onReset={() =>
+                      editor.chain().focus().unsetHighlight().run()
+                    }
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>Color (Ctrl+Shift+C)</TooltipContent>
+        </Tooltip>
+        {renderBar}
+      </TooltipProvider>
     </>
   );
 };

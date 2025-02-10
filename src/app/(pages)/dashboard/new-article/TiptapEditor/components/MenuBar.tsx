@@ -1,8 +1,6 @@
 import { memo } from 'react';
 
-import { Toolbar, ToolbarDivider } from './ui/Toolbar';
-
-import TableButton from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/controls/TableButton';
+import { Separator } from '@/components/ui/separator';
 import AlignPopover from './controls/AlignPopover';
 import BoldButton from './controls/BoldButton';
 import BulletListButton from './controls/BulletListButton';
@@ -15,49 +13,31 @@ import OrderedListButton from './controls/OrderedList';
 import RedoButton from './controls/RedoButton';
 import TextColorButton from './controls/TextColorButton';
 import TextHighlightButton from './controls/TextHighlightButton';
-import UnderlineButton from './controls/UnderlineButton';
 import UndoButton from './controls/UndoButton';
 
 const MenuBar = () => {
   return (
     <div className="flex min-h-10 items-center rounded-t-md border-b bg-background">
-      <Toolbar dense>
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
         <UndoButton />
         <RedoButton />
-        {/* <ClearFormatButton /> */}
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <HeadingDropdown />
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <BoldButton />
-
-        <UnderlineButton />
         <MoreMarkDropdown />
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <TextColorButton />
         <TextHighlightButton />
-
-        <ToolbarDivider />
-
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <AlignPopover />
         <BulletListButton />
         <OrderedListButton />
-
-        <ToolbarDivider />
-
-        {/* <BlockquoteButton /> */}
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <LinkButton />
-        <TableButton />
         <ImageButton />
-        {/* <YoutubeButton /> */}
-        {/* <CodeBlockButton /> */}
         <InsertDropdown />
-      </Toolbar>
+      </div>
     </div>
   );
 };

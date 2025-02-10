@@ -1,12 +1,12 @@
-import React, { memo, useCallback } from 'react';
-import { BubbleMenu } from '../../BubbleMenu';
-import { Toolbar, ToolbarDivider } from '../../ui/Toolbar';
-import { useTiptapContext } from '../../Provider';
-import MenuButton from '../../MenuButton';
+import { Separator } from '@/components/ui/separator';
 import { useEditorState } from '@tiptap/react';
-import CodeDropdown from './CodeDropdown';
+import { memo, useCallback } from 'react';
 import useCopyToClipboard from '../../../hooks/useCopyToClipboard';
 import { getNodeContainer } from '../../../utils/getNodeContainer';
+import { BubbleMenu } from '../../BubbleMenu';
+import MenuButton from '../../MenuButton';
+import { useTiptapContext } from '../../Provider';
+import CodeDropdown from './CodeDropdown';
 
 export const CodeBlockMenu = () => {
   const { editor, contentElement } = useTiptapContext();
@@ -60,16 +60,16 @@ export const CodeBlockMenu = () => {
         getReferenceClientRect,
       }}
     >
-      <Toolbar>
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
         <CodeDropdown value={language} onSelect={handleSelect} />
-        <ToolbarDivider />
+        <Separator orientation="vertical" className="mx-1 h-5" />
         <MenuButton
           icon={isCopied ? 'Check' : 'Clipboard'}
           tooltip="Copy code"
           onClick={handleCopy}
         />
         <MenuButton icon="Trash" tooltip="Delete code" onClick={handleDelete} />
-      </Toolbar>
+      </div>
     </BubbleMenu>
   );
 };
