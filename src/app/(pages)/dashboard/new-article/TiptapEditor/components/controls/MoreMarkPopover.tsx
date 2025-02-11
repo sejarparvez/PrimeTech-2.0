@@ -72,7 +72,7 @@ const MoreMarkPopover = () => {
               </Button>
             </PopoverTrigger>
           </TooltipTrigger>
-          <TooltipContent side="bottom">
+          <TooltipContent>
             <p>More formatting options</p>
           </TooltipContent>
         </Tooltip>
@@ -151,11 +151,10 @@ const ToggleButton = ({
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          variant={state.active ? 'secondary' : 'ghost'}
+          variant={state.active ? 'default' : 'ghost'}
           size="icon"
           disabled={state.disabled}
           onClick={() => action(editor).run()}
-          className={`h-9 w-9 ${state.active ? 'bg-accent/50 hover:bg-accent/60' : ''}`}
           aria-label={command}
         >
           <Icon className="h-4 w-4" />
