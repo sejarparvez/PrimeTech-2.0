@@ -33,7 +33,7 @@ const BoldButton = () => {
             <Bold className="h-4 w-4" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Bold (Mod+B)</TooltipContent>
+        <TooltipContent>Bold (Ctrl+B)</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

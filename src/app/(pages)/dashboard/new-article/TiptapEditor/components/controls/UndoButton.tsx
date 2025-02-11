@@ -1,6 +1,12 @@
-import React, { memo, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
-import MenuButton from '../MenuButton';
+import { TbArrowBackUp } from 'react-icons/tb';
 import { useTiptapContext } from '../Provider';
 
 const UndoButton = () => {
@@ -14,13 +20,22 @@ const UndoButton = () => {
   });
 
   return (
-    <MenuButton
-      icon="Undo"
-      tooltip="Undo"
-      shortcuts={['Mod', 'Z']}
-      onClick={() => editor.chain().focus().undo().run()}
-      {...state}
-    />
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            disabled={state.disabled}
+            onClick={() => editor.chain().focus().undo().run()}
+            type="button"
+            size="icon"
+          >
+            <TbArrowBackUp size={20} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Undo (Ctrl+Z)</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
