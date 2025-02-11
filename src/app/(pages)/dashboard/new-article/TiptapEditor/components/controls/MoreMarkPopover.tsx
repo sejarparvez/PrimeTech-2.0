@@ -14,13 +14,32 @@ import { useEditorState } from '@tiptap/react';
 import {
   Code,
   Italic,
-  LetterText,
+  MoreHorizontal,
   Strikethrough,
   Subscript,
   Superscript,
   Underline,
 } from 'lucide-react';
+import React from 'react';
 import { useTiptapContext } from '../Provider';
+
+type ToggleCommand =
+  | 'strike'
+  | 'italic'
+  | 'underline'
+  | 'superscript'
+  | 'subscript'
+  | 'code';
+
+// Map each command to its corresponding chain method name
+const commandMap: Record<ToggleCommand, string> = {
+  strike: 'toggleStrike',
+  italic: 'toggleItalic',
+  underline: 'toggleUnderline',
+  superscript: 'toggleSuperscript',
+  subscript: 'toggleSubscript',
+  code: 'toggleCode',
+};
 
 const MoreMarkPopover = () => {
   const { editor } = useTiptapContext();
@@ -38,223 +57,116 @@ const MoreMarkPopover = () => {
 
   return (
     <TooltipProvider>
-      <Tooltip>
-        <Popover>
+      <Popover>
+        <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
                 disabled={isDisabled}
-                aria-label="More format options"
+                className="rounded-lg"
+                aria-label="More formatting options"
               >
-                <LetterText />
+                <MoreHorizontal className="h-4 w-4" />
               </Button>
             </PopoverTrigger>
           </TooltipTrigger>
-          <TooltipContent>
-            <p>More format options</p>
+          <TooltipContent side="bottom">
+            <p>More formatting options</p>
           </TooltipContent>
-          <PopoverContent className="w-auto p-2">
-            <div className="flex space-x-1">
-              <StrikeButton />
-              <ItalicButton />
-              <UnderlineButton />
-              <SuperscriptButton />
-              <SubscriptButton />
-              <CodeButton />
-            </div>
-          </PopoverContent>
-        </Popover>
-      </Tooltip>
+        </Tooltip>
+
+        <PopoverContent className="w-auto rounded-xl p-2 shadow-lg">
+          <div className="grid grid-cols-3 gap-2">
+            <ToggleButton
+              icon={Strikethrough}
+              command="strike"
+              shortcut="Ctrl+Shift+S"
+              action={(editor) => editor.chain().focus().toggleStrike()}
+            />
+            <ToggleButton
+              icon={Italic}
+              command="italic"
+              shortcut="Ctrl+I"
+              action={(editor) => editor.chain().focus().toggleItalic()}
+            />
+            <ToggleButton
+              icon={Underline}
+              command="underline"
+              shortcut="Ctrl+U"
+              action={(editor) => editor.chain().focus().toggleUnderline()}
+            />
+            <ToggleButton
+              icon={Superscript}
+              command="superscript"
+              shortcut="Ctrl+."
+              action={(editor) => editor.chain().focus().toggleSuperscript()}
+            />
+            <ToggleButton
+              icon={Subscript}
+              command="subscript"
+              shortcut="Ctrl+,"
+              action={(editor) => editor.chain().focus().toggleSubscript()}
+            />
+            <ToggleButton
+              icon={Code}
+              command="code"
+              shortcut="Ctrl+E"
+              action={(editor) => editor.chain().focus().toggleCode()}
+            />
+          </div>
+        </PopoverContent>
+      </Popover>
     </TooltipProvider>
+  );
+};
+
+const ToggleButton = ({
+  icon: Icon,
+  command,
+  shortcut,
+  action,
+}: {
+  icon: React.ElementType;
+  command: ToggleCommand;
+  shortcut: string;
+  action: (editor: any) => any;
+}) => {
+  const { editor } = useTiptapContext();
+
+  // Get the method name from the command mapping.
+  const methodName = commandMap[command];
+
+  const state = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      active: ctx.editor.isActive(command),
+      // Cast the chain object to any so that dynamic indexing is allowed.
+      disabled: !(ctx.editor.can().chain().focus() as any)[methodName]?.(),
+    }),
+  });
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant={state.active ? 'secondary' : 'ghost'}
+          size="icon"
+          disabled={state.disabled}
+          onClick={() => action(editor).run()}
+          className={`h-9 w-9 ${state.active ? 'bg-accent/50 hover:bg-accent/60' : ''}`}
+          aria-label={command}
+        >
+          <Icon className="h-4 w-4" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom" className="flex items-center gap-2">
+        <span className="capitalize">{command}</span>
+        <span className="text-xs text-muted-foreground">{shortcut}</span>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
 export default MoreMarkPopover;
-
-const ItalicButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('italic'),
-      disabled: !ctx.editor.can().toggleItalic(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            type="button"
-            size="icon"
-          >
-            <Italic className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Italic (Ctrl+I)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const UnderlineButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('underline'),
-      disabled: !ctx.editor.can().toggleUnderline(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            type="button"
-            size="icon"
-          >
-            <Underline className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Underline (Ctrl+U)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const StrikeButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('strike'),
-      disabled: !ctx.editor.can().toggleStrike(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            type="button"
-            size="icon"
-          >
-            <Strikethrough className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Strikethrough (Ctrl+Shift+S)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const SuperscriptButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('superscript'),
-      disabled: !ctx.editor.can().toggleSuperscript(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleSuperscript().run()}
-            type="button"
-            size="icon"
-          >
-            <Superscript className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Superscript (Ctrl+.)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const SubscriptButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('subscript'),
-      disabled: !ctx.editor.can().toggleSubscript(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleSubscript().run()}
-            type="button"
-            size="icon"
-          >
-            <Subscript className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Subscript (Ctrl+,)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const CodeButton = () => {
-  const { editor } = useTiptapContext();
-
-  const state = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      active: ctx.editor.isActive('code'),
-      disabled: !ctx.editor.can().toggleCode(),
-    }),
-  });
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={state.active ? 'default' : 'ghost'}
-            disabled={state.disabled}
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            type="button"
-            size="icon"
-          >
-            <Code className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Inline code (Ctrl+E)</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};

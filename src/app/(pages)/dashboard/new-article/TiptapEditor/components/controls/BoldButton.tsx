@@ -30,7 +30,7 @@ const BoldButton = () => {
             type="button"
             size="icon"
           >
-            <Bold className="h-4 w-4" />
+            <Bold size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Bold (Ctrl+B)</TooltipContent>
