@@ -12,9 +12,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
+import { Palette } from 'lucide-react';
 import React, { CSSProperties, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { ImTextColor } from 'react-icons/im';
 import useMount from '../../hooks/useMount';
 import ColorPicker from '../color-picker';
 import { useTiptapContext } from '../Provider';
@@ -32,7 +32,6 @@ const TextColorButton: React.FC = () => {
     }),
   });
 
-  // Adjusted style: the button is relatively positioned and the color bar is flush at the bottom.
   const colorBarStyle: CSSProperties = {
     position: 'absolute',
     bottom: 0,
@@ -42,7 +41,7 @@ const TextColorButton: React.FC = () => {
     borderRadius: 4,
     pointerEvents: 'none',
     background:
-      state.color === 'DEFAULT' ? 'var(--rte-fg, black)' : state.color,
+      state.color === 'DEFAULT' ? 'hsl(var(--foreground))' : state.color,
   };
 
   const renderBar =
@@ -54,7 +53,6 @@ const TextColorButton: React.FC = () => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          {/* Use a plain div as a non-interactive wrapper */}
           <div>
             <Popover>
               <PopoverTrigger asChild>
@@ -67,7 +65,7 @@ const TextColorButton: React.FC = () => {
                   aria-label="Text color"
                   style={{ position: 'relative' }}
                 >
-                  <ImTextColor size={20} />
+                  <Palette size={16} />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-2">

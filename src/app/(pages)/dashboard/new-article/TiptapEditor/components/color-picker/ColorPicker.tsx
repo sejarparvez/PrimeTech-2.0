@@ -1,11 +1,14 @@
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PopoverClose } from '@radix-ui/react-popover';
+import { PaletteIcon } from 'lucide-react';
 import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { COLORS, MORE_COLORS } from '../../constants/color';
-import Button from '../ui/Button';
-import Icon from '../ui/Icon';
-import Input from '../ui/Input';
-import Label from '../ui/Label';
 import ColorButton from './ColorButton';
 
 interface ColorPickerProps {
@@ -14,9 +17,12 @@ interface ColorPickerProps {
   onReset?: () => void;
 }
 
-const ColorPicker = (props: ColorPickerProps) => {
-  const [activeTab, setActiveTab] = useState<'swatches' | 'custom'>('swatches');
-  const [color, setColor] = useState(props.color);
+const ColorPicker = ({
+  color: initialColor,
+  onChange,
+  onReset,
+}: ColorPickerProps) => {
+  const [color, setColor] = useState(initialColor);
 
   const normalizeColor = (color: string): string => {
     const normalized = color.startsWith('#') ? color : `#${color}`;
@@ -35,14 +41,14 @@ const ColorPicker = (props: ColorPickerProps) => {
   const handleApply = () => {
     const regex = /^#?[0-9A-F]{3,6}$/i;
     if (color && regex.test(color)) {
-      props.onChange?.(normalizeColor(color));
+      onChange?.(normalizeColor(color));
     }
   };
 
   const renderColorList = (colors: string[], label: string) => (
-    <div>
-      <Label as="span">{label}</Label>
-      <div className="rte-color__list">
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      <div className="flex flex-wrap gap-2">
         {colors.map((item) => (
           <ColorButton
             key={item}
@@ -56,56 +62,40 @@ const ColorPicker = (props: ColorPickerProps) => {
   );
 
   return (
-    <div className="rte-cp">
-      <div className="rte-cp__tabs">
-        {['swatches', 'custom'].map((tab) => (
-          <Button
-            key={tab}
-            variant="ghost"
-            data-active={activeTab === tab || undefined}
-            onClick={() => setActiveTab(tab as 'swatches' | 'custom')}
-            className={`rte-cp__tab`}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </Button>
-        ))}
-      </div>
-
-      <div className="rte-cp__main">
-        {activeTab === 'swatches' && (
-          <div className="rte-cp-swatches">
-            {renderColorList(COLORS, 'Default Colors')}
-            {renderColorList(MORE_COLORS, 'More Colors')}
-          </div>
-        )}
-
-        {activeTab === 'custom' && (
-          <div className="rte-cp-custom">
-            <HexColorPicker
-              className="rte-cp-custom__picker"
-              style={{ width: '100%' }}
-              color={color}
-              onChange={handleColorChange}
+    <div className="w-72 space-y-4 p-4">
+      <Tabs defaultValue="swatches" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="swatches">Swatches</TabsTrigger>
+          <TabsTrigger value="custom">Custom</TabsTrigger>
+        </TabsList>
+        <TabsContent value="swatches" className="mt-4 space-y-4">
+          {renderColorList(COLORS, 'Default Colors')}
+          {renderColorList(MORE_COLORS, 'More Colors')}
+        </TabsContent>
+        <TabsContent value="custom" className="mt-4 space-y-4">
+          <HexColorPicker
+            color={color}
+            onChange={handleColorChange}
+            className="w-full"
+          />
+          <div className="flex items-center space-x-2">
+            <ColorButton color={color} tooltip={false} />
+            <Input
+              value={color}
+              className="uppercase"
+              onChange={(e) => handleColorChange(e.target.value)}
+              autoFocus
             />
-            <div className="rte-cp-custom__preview">
-              <ColorButton color={color} tooltip={false} />
-              <Input
-                value={color!}
-                style={{ textTransform: 'uppercase' }}
-                onChange={(e) => handleColorChange(e.target.value)}
-                autoFocus
-              />
-            </div>
           </div>
-        )}
-      </div>
+        </TabsContent>
+      </Tabs>
 
       <PopoverClose asChild>
-        <div className="rte-cp__actions">
-          <Button variant="secondary" iconOnly onClick={props.onReset}>
-            <Icon name="PaletteOff" />
+        <div className="flex space-x-2">
+          <Button variant="outline" size="icon" onClick={onReset}>
+            <PaletteIcon className="h-4 w-4" />
           </Button>
-          <Button style={{ width: '100%' }} onClick={handleApply}>
+          <Button className="w-full" onClick={handleApply}>
             Apply
           </Button>
         </div>
