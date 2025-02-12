@@ -1,6 +1,12 @@
-import React from 'react';
-import MenuButton from '../MenuButton';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
+import { TbListNumbers } from 'react-icons/tb';
 import { useTiptapContext } from '../Provider';
 
 const OrderedListButton = () => {
@@ -16,13 +22,22 @@ const OrderedListButton = () => {
   });
 
   return (
-    <MenuButton
-      icon="OrderedList"
-      tooltip="Numbered List"
-      shortcuts={['Mod', 'Shift', '7']}
-      onClick={() => editor.chain().focus().toggleOrderedList().run()}
-      {...state}
-    />
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={state.active ? 'default' : 'ghost'}
+            disabled={state.disabled}
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            type="button"
+            size="icon"
+          >
+            <TbListNumbers size={20} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Ordered List (Ctrl+Shift+7)</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

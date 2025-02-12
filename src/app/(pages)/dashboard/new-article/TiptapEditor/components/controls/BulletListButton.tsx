@@ -1,6 +1,12 @@
-import React from 'react';
-import MenuButton from '../MenuButton';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
+import { TbList } from 'react-icons/tb';
 import { useTiptapContext } from '../Provider';
 
 const BulletListButton = () => {
@@ -16,13 +22,22 @@ const BulletListButton = () => {
   });
 
   return (
-    <MenuButton
-      icon="BulletList"
-      tooltip="Bullet List"
-      shortcuts={['Mod', 'Shift', '8']}
-      onClick={() => editor.chain().focus().toggleBulletList().run()}
-      {...state}
-    />
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={state.active ? 'default' : 'ghost'}
+            disabled={state.disabled}
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            type="button"
+            size="icon"
+          >
+            <TbList size={20} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Bullet List (Ctrl+Shift+8)</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
