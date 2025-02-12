@@ -1,10 +1,14 @@
 import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Popover } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { useMemo, useState } from 'react';
-import MenuButton from '../../MenuButton';
+import { TbCheck, TbChevronDown } from 'react-icons/tb';
 import { useTiptapContext } from '../../Provider';
-import Icon from '../../ui/Icon';
 
 interface CodeDropdownProps {
   value: string;
@@ -19,58 +23,65 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
     label: item.label,
     value: item.syntax,
   }));
+
   const filterOptions = useMemo(() => {
     if (!search) return options;
-    return options.filter((item) => item.label.includes(search));
+    return options.filter((item) =>
+      item.label.toLowerCase().includes(search.toLowerCase())
+    );
   }, [options, search]);
 
+  const selectedOption = options.find((item) => item.value === value);
+
   return (
-    <MenuButton
-      type="popover"
-      text={options.find((item) => item.value === value)?.label}
-      hideText={false}
-      tooltip={false}
-      buttonStyle={{ minWidth: '6rem' }}
-      dropdownClass="flex flex-col gap-2 p-2"
-      dropdownStyle={{
-        minWidth: '10rem',
-      }}
-    >
-      <Input
-        className="h-9 w-40"
-        placeholder="Search language..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value.trim())}
-      />
-      <div
-        className="flex flex-col gap-1 overflow-auto"
-        style={{
-          maxHeight: `${((contentElement.current as HTMLElement)?.clientHeight || 0) * 0.375}px`,
-        }}
-      >
-        {filterOptions.map((item) => (
-          <Popover key={item.value}>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          className="flex min-w-[6rem] items-center justify-between"
+        >
+          <span>
+            {selectedOption ? selectedOption.label : 'Select language'}
+          </span>
+          <TbChevronDown size={16} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-60 p-2">
+        <Input
+          className="mb-2 h-9 w-full"
+          placeholder="Search language..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value.trim())}
+        />
+        <div
+          className="flex flex-col gap-1 overflow-auto"
+          style={{
+            maxHeight: `${
+              ((contentElement.current as HTMLElement)?.clientHeight || 0) *
+              0.375
+            }px`,
+          }}
+        >
+          {filterOptions.map((item) => (
             <div
-              className="relative flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 pl-7 text-sm leading-5 hover:bg-accent"
+              key={item.value}
+              className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm leading-5 hover:bg-accent"
               onClick={() => {
                 onSelect(item.value);
                 setSearch('');
               }}
             >
-              {item.label}
-              {item.value === value && (
-                <Icon
-                  name="Check"
-                  className="absolute left-1.5"
-                  size={14}
-                  strokeWidth={2.5}
-                />
+              {item.value === value ? (
+                <TbCheck size={14} className="text-primary" />
+              ) : (
+                <span className="w-4" />
               )}
+              <span>{item.label}</span>
             </div>
-          </Popover>
-        ))}
-      </div>
-    </MenuButton>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 
