@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2, Upload } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -119,8 +119,6 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     }
   };
 
-  const handleFinish = () => selected !== null && onInsert?.(selected);
-
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -142,7 +140,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
   return (
     <ScrollArea>
       {/* Sticky header */}
-      <div className="sticky top-0 z-10 mx-6 flex items-center justify-between space-y-0 bg-background py-3 shadow-md">
+      <div className="sticky top-0 z-10 mx-6 flex items-center justify-between space-y-0 bg-background py-3 md:px-10">
         <h2 className="text-xl font-medium">Assets</h2>
         <Button onClick={handleUploadClick} disabled={loading || uploading}>
           {uploading ? (
@@ -151,7 +149,9 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
               Uploading...
             </>
           ) : (
-            'Upload'
+            <div className="flex items-center gap-2">
+              <Upload size={20} /> Upload
+            </div>
           )}
         </Button>
       </div>
