@@ -98,7 +98,6 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
 
     const menus = displayBubbleMenu && (
       <>
-        {/* <TextMenu  /> */}
         <LinkMenu />
         <ImageMenu />
         <CodeBlockMenu />

@@ -5,7 +5,7 @@ import AlignPopover from './controls/AlignPopover';
 import BoldButton from './controls/BoldButton';
 import BulletListButton from './controls/BulletListButton';
 import HeadingDropdown from './controls/HeadingDropdown';
-import ImageButton from './controls/ImageButton2';
+import ImageButton from './controls/ImageButton';
 import InsertDropdown from './controls/InsertDropdown';
 import LinkButton from './controls/LinkButton';
 import MoreMarkDropdown from './controls/MoreMarkPopover';

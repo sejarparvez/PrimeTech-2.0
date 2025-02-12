@@ -166,7 +166,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
 
       <div className="flex-1 overflow-hidden p-0">
         {loading ? (
-          <div className="flex h-full items-center justify-center">
+          <div className="flex h-full min-h-96 items-center justify-center">
             <Loader2 className="h-12 w-12 animate-spin" />
           </div>
         ) : (
