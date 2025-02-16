@@ -1,12 +1,21 @@
+'use client';
+
 import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Node } from '@tiptap/pm/model';
-import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import type { Node } from '@tiptap/pm/model';
+import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
 import { useEditorState } from '@tiptap/react';
 import { useCallback, useRef, useState } from 'react';
+import { TbDownload, TbTextCaption, TbTrash } from 'react-icons/tb';
 import type { Instance } from 'tippy.js';
 import { BubbleMenu } from '../../BubbleMenu';
-import MenuButton from '../../MenuButton';
 import { useTiptapContext } from '../../Provider';
 import AltTextEdit from './AltTextEdit';
 import SizeDropdown from './SizeDropdown';
@@ -39,7 +48,6 @@ export const ImageMenu = () => {
     },
   });
 
-  // Get reference bounding box for Tippy
   const getReferenceClientRect = useCallback(() => {
     const selector = editor.isActive('imageFigure') ? 'figure' : 'img';
     const node = getNodeContainer(editor, selector);
@@ -62,7 +70,6 @@ export const ImageMenu = () => {
       .run();
   };
 
-  // Toggle caption between figure and image
   const toggleCaption = () =>
     editor
       .chain()
@@ -70,7 +77,6 @@ export const ImageMenu = () => {
       [image?.hasCaption ? 'figureToImage' : 'imageToFigure']()
       .run();
 
-  // Toggle alt text edit form and update Tippy position
   const toggleEditAltText = () => {
     setIsEditText((prev) => !prev);
     requestAnimationFrame(() =>
@@ -87,7 +93,6 @@ export const ImageMenu = () => {
 
   const removeImage = () => editor.chain().focus().removeImage().run();
 
-  // Download image with proper filename
   const downloadImage = useCallback(async () => {
     if (!image?.src)
       return console.error('No image source available for download.');
@@ -124,9 +129,6 @@ export const ImageMenu = () => {
       tippyOptions={{
         maxWidth: 'auto',
         offset: [0, 15],
-        //   offset: ({ placement }) => {
-        //     return placement == "top" ? [0, 15] : [0, 10];
-        //   },
         appendTo: () => contentElement.current!,
         getReferenceClientRect,
         onShow: (instance) => {
@@ -146,29 +148,76 @@ export const ImageMenu = () => {
           }}
         />
       ) : (
-        <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
-          <MenuButton
-            text="Alt text"
-            hideText={false}
-            tooltip={'Alternative text'}
-            onClick={toggleEditAltText}
-          />
-          <MenuButton
-            icon="ImageCaption"
-            tooltip={`Caption: ${image?.hasCaption ? 'ON' : 'OFF'}`}
-            active={image?.hasCaption}
-            onClick={toggleCaption}
-          />
-          <Separator orientation="vertical" className="mx-1 h-5" />
-          <SizeDropdown value={image?.width} onChange={setSize} />
-          <Separator orientation="vertical" className="mx-1 h-5" />
-          <MenuButton
-            icon="Download"
-            tooltip="Download"
-            onClick={downloadImage}
-          />
-          <MenuButton icon="Trash" tooltip="Delete" onClick={removeImage} />
-        </div>
+        <TooltipProvider>
+          <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={toggleEditAltText}
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                >
+                  Alt Text
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Edit alt text</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={toggleCaption}
+                  type="button"
+                  size="icon"
+                  variant={image?.hasCaption ? 'secondary' : 'ghost'}
+                >
+                  <TbTextCaption size={20} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Toggle caption</TooltipContent>
+            </Tooltip>
+
+            <Separator orientation="vertical" className="mx-1 h-5" />
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <SizeDropdown value={image?.width} onChange={setSize} />
+              </TooltipTrigger>
+              <TooltipContent>Resize image</TooltipContent>
+            </Tooltip>
+
+            <Separator orientation="vertical" className="mx-1 h-5" />
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={downloadImage}
+                >
+                  <TbDownload size={20} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Download image</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={removeImage}
+                >
+                  <TbTrash size={20} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Remove image</TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
       )}
     </BubbleMenu>
   );
@@ -183,18 +232,16 @@ const getImageOrFigureNode = (
   let pos: number | null = null;
 
   if (selection instanceof TextSelection) {
-    // is in figcaption
     const $anchor = selection.$anchor;
     const figure = $anchor.node(-1);
     node = figure.firstChild;
-    pos = $anchor.before(-1) + 1; // Position of the image inside the figure
+    pos = $anchor.before(-1) + 1;
   } else if (selection instanceof NodeSelection) {
-    // is in figure or image
     node = selection.node;
     pos = selection.from;
     if (node.type.name === 'imageFigure') {
       node = node.firstChild;
-      pos += 1; // Adjust position for the image inside the figure
+      pos += 1;
     }
   }
 

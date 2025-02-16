@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import MenuButton from '../../MenuButton';
+import { TbCheck, TbX } from 'react-icons/tb';
 
 interface AltTextEditProps {
   initialText?: string;
@@ -18,7 +19,7 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
   };
 
   return (
-    <form className="flex min-w-80 flex-1 gap-2 px-2 py-1" onSubmit={onSubmit}>
+    <div className="flex min-w-80 flex-1 gap-2 px-2 py-1">
       <Input
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -26,9 +27,14 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
         className="w-full flex-1"
         autoFocus
       />
-      <MenuButton buttonType="submit" icon={'Check'} tooltip={false} />
-      <MenuButton icon={'Close'} tooltip={false} onClick={onCancel} />
-    </form>
+
+      <Button variant="ghost" size="icon" type="button" onClick={onSubmit}>
+        <TbCheck size={20} />
+      </Button>
+      <Button variant="ghost" size="icon" type="button" onClick={onCancel}>
+        <TbX size={20} />
+      </Button>
+    </div>
   );
 };
 

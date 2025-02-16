@@ -1,18 +1,14 @@
 import clsx from 'clsx';
 import React, { CSSProperties, memo, useMemo } from 'react';
 
+import Button, { type ButtonProps } from './ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import Button, { type ButtonProps } from './ui/Button';
+} from './ui/DropdownMenu';
 import Icon, { type IconProps } from './ui/Icon';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/Popover';
 import Tooltip from './ui/Tooltip';
 
 import { getShortcutKey } from '../utils/shortcut';
