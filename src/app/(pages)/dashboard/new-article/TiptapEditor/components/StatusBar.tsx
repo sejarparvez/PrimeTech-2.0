@@ -1,9 +1,16 @@
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useEditorState } from '@tiptap/react';
-import { memo } from 'react';
-import MenuButton from './MenuButton';
+import { Code, Maximize2, Minimize2 } from 'lucide-react';
+import React from 'react';
 import { useTiptapContext } from './Provider';
 
-const StatusBar = () => {
+const StatusBar: React.FC = () => {
   const {
     editor,
     isFullScreen,
@@ -11,6 +18,7 @@ const StatusBar = () => {
     toggleFullScreen,
     toggleSourceMode,
   } = useTiptapContext();
+
   const counter = useEditorState({
     editor,
     selector: (ctx) => ({
@@ -22,18 +30,45 @@ const StatusBar = () => {
   return (
     <div className="flex min-h-11 items-center rounded-b-md border-t bg-background">
       <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
-        <MenuButton
-          icon="SourceCode"
-          text="Source Code"
-          active={isSourceMode}
-          onClick={toggleSourceMode}
-        />
-        <MenuButton
-          icon={isFullScreen ? 'Minimize' : 'Maximize'}
-          text="Fullscreen"
-          active={isFullScreen}
-          onClick={toggleFullScreen}
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={isSourceMode ? 'secondary' : 'ghost'}
+                size="icon"
+                type="button"
+                onClick={toggleSourceMode}
+              >
+                <Code className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Source Code</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={isFullScreen ? 'secondary' : 'ghost'}
+                size="icon"
+                type="button"
+                onClick={toggleFullScreen}
+              >
+                {isFullScreen ? (
+                  <Minimize2 className="h-4 w-4" />
+                ) : (
+                  <Maximize2 className="h-4 w-4" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Fullscreen</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div className="ml-auto space-x-2 px-2 py-1">
@@ -44,4 +79,4 @@ const StatusBar = () => {
   );
 };
 
-export default memo(StatusBar);
+export default React.memo(StatusBar);
