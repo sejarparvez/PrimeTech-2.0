@@ -17,9 +17,6 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
-import TiptapEditor, {
-  TiptapEditorRef,
-} from '@/app/(pages)/dashboard/new-article/TiptapEditor';
 import { articleCategories } from '@/app/constants/articleCategory';
 import { useSinglePost } from '@/app/services/article';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,13 +27,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { EditArticleSchema, EditArticleSchemaType } from '@/lib/Schemas';
 import axios from 'axios';
 import { CgAsterisk } from 'react-icons/cg';
 import { toast } from 'react-toastify';
-import {
-  EditArticleSchema,
-  EditArticleSchemaType,
-} from '../new-article/NewArticleSchema';
+import TiptapEditor, {
+  TiptapEditorRef,
+} from '../new-article/TiptapEditor/components/Editor';
 import EditArtilceImage from './EditArticleImage';
 
 export default function EditArticleForm({ id }: { id: string }) {

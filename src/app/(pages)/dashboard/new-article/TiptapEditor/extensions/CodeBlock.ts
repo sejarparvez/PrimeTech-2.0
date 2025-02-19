@@ -1,10 +1,82 @@
-import { Plugin, PluginKey } from '@tiptap/pm/state';
-import { Node as ProsemirrorNode } from '@tiptap/pm/model';
-import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { findChildren } from '@tiptap/core';
-import { loadLanguage } from '../../utils/codeLanguageLoader';
+import { CodeBlockLowlight as TiptapCodeBlockLowlight } from '@tiptap/extension-code-block-lowlight';
+import { Node as ProsemirrorNode } from '@tiptap/pm/model';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import {
+  ExtendedRegExpMatchArray,
+  isNodeActive,
+  textblockTypeInputRule,
+} from '@tiptap/react';
 import highlight from 'highlight.js/lib/core';
-import { CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT } from '../../constants/code-languages';
+import { CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT } from '../constants/code-languages';
+import { findLanguage, loadLanguage } from '../utils/codeLanguageLoader';
+
+import plaintext from 'highlight.js/lib/languages/plaintext';
+import { createLowlight } from 'lowlight';
+
+export const backtickInputRegex = /^```([a-z]+)?[\s\n]$/;
+export const tildeInputRegex = /^~~~([a-z]+)?[\s\n]$/;
+
+const lowlight = createLowlight();
+lowlight.register('plaintext', plaintext);
+
+export const CodeBlock = TiptapCodeBlockLowlight.extend({
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      defaultLanguage: CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT,
+    };
+  },
+
+  addInputRules() {
+    const findAndLoadLanguage = (match: ExtendedRegExpMatchArray) => {
+      const language = findLanguage(match[1]);
+      const syntax = language?.syntax || CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT;
+      loadLanguage(syntax, lowlight);
+      return { language: syntax };
+    };
+
+    return [
+      textblockTypeInputRule({
+        find: backtickInputRegex,
+        type: this.type,
+        getAttributes: findAndLoadLanguage,
+      }),
+      textblockTypeInputRule({
+        find: tildeInputRegex,
+        type: this.type,
+        getAttributes: findAndLoadLanguage,
+      }),
+    ];
+  },
+
+  addProseMirrorPlugins() {
+    return [
+      LowlightPlugin({
+        lowlight,
+        name: this.name,
+        defaultLanguage: CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT,
+      }),
+    ];
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      ...this.parent?.(),
+      Tab: ({ editor }) => {
+        const { state, view } = editor;
+        if (isNodeActive(editor.state, this.type)) {
+          view.dispatch(state.tr.insertText('\t'));
+          return true;
+        }
+        return false;
+      },
+    };
+  },
+}).configure({
+  lowlight,
+});
 
 export const LowlightPluginKey = new PluginKey('lowlight');
 
@@ -44,14 +116,8 @@ export function LowlightPlugin({
 
         const didChangeSomeCodeBlock =
           tr.docChanged &&
-          // Apply decorations if:
-          // selection includes named node,
           ([oldNodeName, newNodeName].includes(name) ||
-            // OR transaction adds/removes named node,
             newNodes.length !== oldNodes.length ||
-            // OR transaction has changes that completely encapsulte a node
-            // (for example, a transaction that affects the entire document).
-            // Such transactions can happen during collab syncing via y-prosemirror, for example.
             tr.steps.some((step) => {
               return (
                 // @ts-ignore
@@ -70,7 +136,7 @@ export function LowlightPlugin({
             }));
 
         const languageLoaded = Boolean(tr.getMeta(LowlightPluginKey));
-        // only create code decoration when it's necessary to do so
+
         if (languageLoaded || didChangeSomeCodeBlock) {
           return getDecorations({
             doc: tr.doc,
@@ -123,9 +189,6 @@ export function LowlightPlugin({
             (node) => node.type.name === name
           );
 
-          // Load missing themes or languages when necessary.
-          // loadStates is an array with booleans depending on if a theme/lang
-          // got loaded.
           const loadStates = await Promise.all(
             codeBlocks.flatMap((block) => [
               loadLanguage(
@@ -137,8 +200,6 @@ export function LowlightPlugin({
           );
           const didLoadSomething = loadStates.includes(true);
 
-          // The asynchronous nature of this is potentially prone to
-          // race conditions. Imma just hope it's fine lol
           if (didLoadSomething) {
             const tr = view.state.tr.setMeta(LowlightPluginKey, true);
             view.dispatch(tr);
@@ -183,7 +244,6 @@ function parseNodes(
 }
 
 function getHighlightNodes(result: any) {
-  // `.value` for lowlight v1, `.children` for lowlight v2
   return result.value || result.children || [];
 }
 
