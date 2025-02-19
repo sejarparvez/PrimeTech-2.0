@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -37,47 +36,7 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-
-    --rte-fg: #1f2328;
-    --rte-border: #d1d9e0;
-    --rte-primary: #0969da;
-    --rte-primary-fg: #fff;
-    --rte-secondary: #f0f1f3;
-    --rte-secondary-fg: #59636e;
-    --rte-muted: #f6f8fa;
-    --rte-muted-fg: #59636e;
-    --rte-accent: #818b981f;
-    --rte-accent-fg: #59636e;
-    --rte-tooltip: #25292e;
-    --rte-tooltip-fg: #f0f0f0;
-    --rte-overlay: #32324d33;
-
-    --rte-hljs-comment: #8b949e;
-    --rte-hljs-keyword: #ff7b72;
-    --rte-hljs-entity: #d2a8ff;
-    --rte-hljs-function: #d2a8ff;
-    --rte-hljs-variable: #79c0ff;
-    --rte-hljs-constant: #79c0ff;
-    --rte-hljs-string: #a5d6ff;
-    --rte-hljs-regexp: #a5d6ff;
-    --rte-hljs-markup: #7ee787;
-    --rte-hljs-builtin: #ffa657;
-    --rte-hljs-inserted: #3fb950;
-    --rte-hljs-deleted: #f85149;
-    --rte-hljs-changed: #ffa657;
-    --rte-hljs-ignored: #161b22;
-
-    --rte-editor-code-bg: #1a2029;
-    --rte-editor-scrollbar: #ffffff40;
-
-    --rte-shadow-1: 0px 0px 0px 1px #3d444d, 0px 6px 12px -3px #01040966,
-      0px 6px 18px 0px #01040966;
-    --rte-shadow-2: 0px 0px 0px 1px #3d444d, 0px 8px 16px -4px #01040966,
-      0px 4px 32px -4px #01040966, 0px 24px 48px -12px #01040966,
-      0px 48px 96px -24px #01040966;
-    --rte-shadow-3: 0px 0px 0px 1px #3d444d, 0px 24px 48px 0px #010409;
   }
-
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -111,41 +70,6 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-
-    --rte-fg: #f0f6fc;
-    --rte-border: #3d444d;
-    --rte-primary: #4493f8;
-    --rte-tooltip: #3d444d;
-    --rte-bubble: #151b23;
-    --rte-overlay: #ffffff30;
-
-    --rte-secondary: #2e373e;
-    --rte-secondary-fg: #b1b8c0;
-    --rte-muted: #1a2029;
-    --rte-muted-fg: #b1b8c0;
-    --rte-accent: #2d3440;
-    --rte-accent-fg: #b1b8c0;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply text-foreground;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.85),
-        rgba(255, 255, 255, 0.95)
-      ),
-      url('/background.svg');
-  }
-  .dark body {
-    background-image: linear-gradient(
-        rgba(13, 16, 24, 0.85),
-        rgba(13, 16, 24, 0.95)
-      ),
-      url('/background.svg');
   }
 }
 
@@ -157,130 +81,69 @@
     @apply bg-background text-foreground;
   }
 }
-
 .ProseMirror {
   @apply prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-none dark:prose-invert;
 }
-
 .ProseMirror > * {
   @apply mt-5;
 }
-
 .ProseMirror > *:first-child {
   @apply mt-0;
 }
-
 :where(
     .ProseMirror > p.is-editor-empty:first-child,
     figcaption.is-empty
   )::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: var(--rte-muted-fg);
-  pointer-events: none;
-  width: 100%;
-  height: 0;
-}
-.ProseMirror ::selection,
-.ProseMirror .selection {
-  background-color: var(
-    --rte-editor-selection,
-    tint-color(var(--rte-primary), 0.2)
-  );
-}
-.ProseMirror .selectedCell:after {
-  z-index: 2;
-  position: absolute;
-  content: '';
-  inset: 0;
-  background-color: var(
-    --rte-editor-selection,
-    tint-color(var(--rte-primary), 0.2)
-  );
-  pointer-events: none;
+  @apply pointer-events-none float-left h-0 w-full text-muted-foreground content-[attr(data-placeholder)];
 }
 
+.ProseMirror .selectedCell:after {
+  @apply pointer-events-none absolute inset-0 z-[2] bg-primary content-[''];
+}
 .ProseMirror iframe,
 .ProseMirror video {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin-inline: auto;
-  cursor: default;
+  @apply mx-auto block h-auto max-w-full cursor-default;
 }
 .ProseMirror iframe {
-  width: 100%;
-  margin: 0 auto;
-  pointer-events: none;
-  aspect-ratio: 16/9;
-  position: relative;
+  @apply pointer-events-none relative mx-auto my-0 aspect-[16/9] w-full;
 }
 .ProseMirror figure {
-  cursor: default;
-  user-select: none;
+  @apply cursor-default select-none;
 }
 .ProseMirror figcaption {
-  font-size: 90%;
-  color: var(--rte-muted-fg);
-  text-align: center;
-  line-height: 1.4;
-  cursor: text;
-  padding: 0.5rem 1.5rem 0.25rem;
-  margin-bottom: -0.25rem;
+  @apply text-center text-sm text-muted-foreground;
 }
-
 .ProseMirror pre {
   @apply !whitespace-pre border dark:bg-gray-900;
 }
-
 .ProseMirror .tableWrapper {
-  overflow: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--rte-editor-scrollbar, rgba(0, 0, 0, 0.2509803922))
-    transparent;
+  @apply overflow-auto;
 }
 .ProseMirror table {
-  border: 1px solid var(--rte-border);
-  font-size: 90%;
-  overflow: hidden;
-  border-collapse: collapse;
-  table-layout: fixed;
-  margin-inline: auto;
+  @apply mx-auto table-fixed border-collapse overflow-hidden border text-sm;
 }
 .ProseMirror table th,
 .ProseMirror table td {
-  border: 1px solid var(--rte-border);
-  padding: 0.5rem 0.75rem;
-  position: relative;
-  vertical-align: top;
-  text-align: left;
+  @apply relative border px-3 py-2 text-left align-top;
 }
 .ProseMirror table th {
-  background-color: var(--rte-muted);
+  @apply bg-muted;
 }
 .ProseMirror table .column-resize-handle {
-  background-color: var(--rte-primary);
-  bottom: -2px;
-  pointer-events: none;
-  position: absolute;
-  right: -1px;
-  top: 0;
-  width: 3.5px;
-  z-index: 10;
+  @apply pointer-events-none absolute -bottom-0.5 -right-0.5 top-0 z-10 w-1 bg-primary;
 }
-
 .hljs-keyword,
 .hljs-meta .hljs-keyword,
 .hljs-template-tag,
 .hljs-template-variable,
 .hljs-type {
-  color: var(--rte-hljs-keyword);
+  @apply text-[#ff7b72];
 }
 .hljs-title,
 .hljs-title.class_,
 .hljs-title.class_.inherited__,
 .hljs-title.function_ {
-  color: var(--rte-hljs-function);
+  @apply text-[#d2a8ff];
 }
 .hljs-attr,
 .hljs-attribute,
@@ -292,49 +155,44 @@
 .hljs-selector-attr,
 .hljs-selector-id,
 .hljs-variable.language_ {
-  color: var(--rte-hljs-variable);
+  @apply text-[#79c0ff];
 }
 .hljs-meta .hljs-string,
 .hljs-regexp,
 .hljs-string {
-  color: var(--rte-hljs-string);
+  @apply text-[#a5d6ff];
 }
 .hljs-built_in,
 .hljs-symbol,
 .hljs-params {
-  color: var(--rte-hljs-builtin);
+  @apply text-[#ffa657];
 }
 .hljs-code,
 .hljs-comment,
 .hljs-formula {
-  color: var(--rte-hljs-comment);
+  @apply text-[#8b949e];
 }
 .hljs-name,
 .hljs-quote,
 .hljs-selector-tag,
 .hljs-selector-pseudo {
-  color: var(--rte-hljs-markup);
+  @apply text-[#7ee787];
 }
 .hljs-addition {
-  color: var(--rte-hljs-inserted);
-  background-color: #1b4721;
+  @apply bg-[#1b4721] text-[#3fb950];
 }
 .hljs-deletion {
-  color: var(--rte-hljs-deleted);
-  background-color: #78191b;
+  @apply bg-[#78191b] text-[#f85149];
 }
 .hljs-changed {
-  color: var(--rte-hljs-changed);
+  @apply text-[#ffa657];
 }
 .hljs-section {
-  color: var(--rte-hljs-constant);
-  font-weight: bold;
+  @apply font-bold text-[#79c0ff];
 }
 .hljs-emphasis {
-  color: var(--rte-hljs-fg);
-  font-style: italic;
+  @apply italic;
 }
 .hljs-strong {
-  color: var(--rte-hljs-fg);
-  font-weight: bold;
+  @apply font-bold;
 }
