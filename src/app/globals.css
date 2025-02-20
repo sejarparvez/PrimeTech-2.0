@@ -81,15 +81,7 @@
     @apply bg-background text-foreground;
   }
 }
-.ProseMirror {
-  @apply prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-none dark:prose-invert;
-}
-.ProseMirror > * {
-  @apply mt-5;
-}
-.ProseMirror > *:first-child {
-  @apply mt-0;
-}
+
 :where(
     .ProseMirror > p.is-editor-empty:first-child,
     figcaption.is-empty

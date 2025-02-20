@@ -1,5 +1,4 @@
 'use client';
-
 import { Content, type Editor } from '@tiptap/react';
 import { forwardRef, useCallback, useEffect } from 'react';
 
@@ -87,6 +86,12 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
       shouldRerenderOnTransaction: false,
       autofocus: false,
       onUpdate: ({ editor }) => handleUpdate(editor),
+      editorProps: {
+        attributes: {
+          class:
+            'prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-none dark:prose-invert [&>*]:mt-5 [&>*:first-child]:mt-0',
+        },
+      },
     };
 
     useEffect(() => {

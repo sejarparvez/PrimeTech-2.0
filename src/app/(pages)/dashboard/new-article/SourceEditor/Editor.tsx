@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import './CodeMirror.css';
 import { formatHtml } from './format';
 import { useCodeMirror } from './useCodeMirror';
 
