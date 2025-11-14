@@ -55,7 +55,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
 	<Link href={`${createSlug({ id: post.id, name: post.title })}`}>
 		<Card
 			className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg ${
-				variant === "horizontal" ? "flex h-64" : "h-64 md:h-[33rem]"
+				variant === "horizontal" ? "flex h-64" : "h-64 md:h-132"
 			}`}
 		>
 			<Image
@@ -65,7 +65,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
 				height={variant === "horizontal" ? 256 : 528}
 				className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 			/>
-			<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+			<div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent" />
 			<div className="relative flex h-full flex-col justify-end p-2 text-white md:p-6">
 				<h3
 					className={`mb-2 font-bold ${
@@ -105,7 +105,7 @@ const SkeletonFeaturedPosts = () => (
 	<section className="container pt-4">
 		<div className="grid grid-cols-1 gap-8 md:grid-cols-12">
 			<div className="md:col-span-8">
-				<Card className="relative h-64 overflow-hidden md:h-[33rem]">
+				<Card className="relative h-64 overflow-hidden md:h-132">
 					<Skeleton className="absolute inset-0 h-full w-full" />
 				</Card>
 			</div>

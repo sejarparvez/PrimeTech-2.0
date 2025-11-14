@@ -59,7 +59,7 @@ export default function Footer() {
     }
   }
   return (
-    <footer className="mt-20 bg-gradient-to-tl from-primary/10 via-primary/5 to-background px-4 pb-8 pt-16 sm:px-6 lg:px-8">
+    <footer className="mt-20 bg-linear-to-tl from-primary/10 via-primary/5 to-background px-4 pb-8 pt-16 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           <div className="flex flex-col items-center text-center lg:col-span-2 lg:items-start lg:text-left">
@@ -209,7 +209,7 @@ export default function Footer() {
                         <Input
                           placeholder="Email Address"
                           aria-label="Email for newsletter"
-                          className="border-primary/20 bg-background/50 pr-10 backdrop-blur-sm focus:border-primary md:min-w-80"
+                          className="border-primary/20 bg-background/50 pr-10 backdrop-blur-xs focus:border-primary md:min-w-80"
                           {...field}
                         />
                       </FormControl>

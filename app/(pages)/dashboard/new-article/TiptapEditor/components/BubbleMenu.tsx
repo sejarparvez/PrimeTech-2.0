@@ -66,7 +66,7 @@ export const BubbleMenu = ({
   }, [editor]);
 
   const portal = createPortal(
-    <div className={clsx('rounded bg-background shadow', className)}>
+    <div className={clsx('rounded bg-background shadow-sm', className)}>
       {children}
     </div>,
     menuEl.current

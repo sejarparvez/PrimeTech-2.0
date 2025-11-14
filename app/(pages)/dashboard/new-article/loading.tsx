@@ -15,7 +15,7 @@ export default function ArticleSkeleton() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr,300px]">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_300px]">
         <div className="space-y-6">
           {/* Article Title */}
           <div className="space-y-2">

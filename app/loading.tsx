@@ -32,10 +32,10 @@ export default function HomeSkeleton() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr,1fr]">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
           {/* Featured Article */}
           <div className="space-y-4">
-            <Skeleton className="aspect-[16/9] w-full rounded-lg" />
+            <Skeleton className="aspect-video w-full rounded-lg" />
             <div className="space-y-2">
               <Skeleton className="h-8 w-3/4" />
               <div className="flex items-center gap-2">

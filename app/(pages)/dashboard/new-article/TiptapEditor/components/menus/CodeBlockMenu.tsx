@@ -156,7 +156,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className="flex min-w-[6rem] items-center justify-between"
+          className="flex min-w-24 items-center justify-between"
         >
           <span>
             {selectedOption ? selectedOption.label : 'Select language'}

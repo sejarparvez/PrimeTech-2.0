@@ -82,7 +82,7 @@ export const TiptapProvider = ({
           <EditorContent
             ref={contentElement}
             editor={editor}
-            className="relative mx-auto w-full max-w-[45rem] flex-1"
+            className="relative mx-auto w-full max-w-180 flex-1"
           />
         )}
       </div>

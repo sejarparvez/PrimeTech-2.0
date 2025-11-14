@@ -88,7 +88,7 @@ const HeadingDropdown = () => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="min-w-[6.5rem] justify-between"
+          className="min-w-26 justify-between"
           disabled={!editor.isEditable || !current}
         >
           <span className="truncate">{currentLabel}</span>

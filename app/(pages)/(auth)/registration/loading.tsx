@@ -27,9 +27,9 @@ export default function RegistrationSkeleton() {
                   </div>
                   <Skeleton className="h-10 w-full" />
                   <div className="flex items-center gap-2">
-                    <Skeleton className="h-px flex-grow" />
+                    <Skeleton className="h-px grow" />
                     <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-px flex-grow" />
+                    <Skeleton className="h-px grow" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <Skeleton className="h-10 w-full" />

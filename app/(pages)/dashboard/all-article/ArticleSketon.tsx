@@ -6,7 +6,7 @@ export function ArticleListSkeleton() {
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {[...Array(6)].map((_, i) => (
         <Card key={i} className="relative overflow-hidden">
-          <div className="relative aspect-[16/10]">
+          <div className="relative aspect-16/10">
             <Skeleton className="absolute inset-0" />
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-4">

@@ -89,7 +89,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
       editorProps: {
         attributes: {
           class:
-            'prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-none dark:prose-invert [&>*]:mt-5 [&>*:first-child]:mt-0',
+            'prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-hidden dark:prose-invert *:mt-5 [&>*:first-child]:mt-0',
         },
       },
     };
