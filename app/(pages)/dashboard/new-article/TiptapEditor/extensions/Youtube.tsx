@@ -71,7 +71,7 @@ export const Youtube = Node.create<YoutubeOptions>({
           allowfullscreen: this.options.allowFullscreen ? 'true' : undefined,
           autoplay: this.options.autoplay ? 'true' : undefined,
         },
-        HTMLAttributes
+        HTMLAttributes,
       ),
     ];
   },

@@ -1,6 +1,6 @@
-import { useEditor, type UseEditorOptions } from '@tiptap/react';
-import { Ref, useEffect, useImperativeHandle } from 'react';
-import { TiptapEditorRef } from '../components/Editor';
+import { type UseEditorOptions, useEditor } from '@tiptap/react';
+import { type Ref, useEffect, useImperativeHandle } from 'react';
+import type { TiptapEditorRef } from '../components/Editor';
 import useForceUpdate from './useForceUpdate';
 
 export type UseTiptapEditorOptions = UseEditorOptions & {
@@ -24,7 +24,7 @@ export default function useTiptapEditor({
     () => ({
       getInstance: () => editor,
     }),
-    [editor]
+    [editor],
   );
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function useTiptapEditor({
 
   useEffect(() => {
     if (!editor) return;
-    // @ts-ignore
+    // @ts-expect-error
     editor.setOptions({ editorProps: { placeholder } });
     forceUpdate();
   }, [editor, placeholder]);

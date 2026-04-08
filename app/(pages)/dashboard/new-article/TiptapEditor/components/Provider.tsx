@@ -1,15 +1,15 @@
-import CodeMirrorEditor from '@/app/(pages)/dashboard/new-article/SourceEditor/Editor';
-import { EditorContent, type Editor } from '@tiptap/react';
+import { type Editor, EditorContent } from '@tiptap/react';
 import clsx from 'clsx';
 import {
   createContext,
-  HTMLAttributes,
-  ReactNode,
-  RefObject,
+  type HTMLAttributes,
+  type ReactNode,
+  type RefObject,
   useContext,
   useRef,
   useState,
 } from 'react';
+import CodeMirrorEditor from '@/app/(pages)/dashboard/new-article/SourceEditor/Editor';
 import useTiptapEditor, {
   type UseTiptapEditorOptions,
 } from '../hooks/useTiptapEditor';
@@ -68,12 +68,12 @@ export const TiptapProvider = ({
     <div
       className={clsx(
         'flex flex-col rounded-md border text-sm',
-        isFullScreen && 'fixed inset-0 z-50'
+        isFullScreen && 'fixed inset-0 z-50',
       )}
     >
       {slotBefore}
       <div
-        className="relative flex max-h-[80vh] min-h-80 flex-1 cursor-text overflow-auto bg-background px-2 md:px-4"
+        className='relative flex max-h-[80vh] min-h-80 flex-1 cursor-text overflow-auto bg-background px-2 md:px-4'
         onMouseDown={focusEditorViaContainer}
       >
         {isSourceMode ? (
@@ -82,7 +82,7 @@ export const TiptapProvider = ({
           <EditorContent
             ref={contentElement}
             editor={editor}
-            className="relative mx-auto w-full max-w-180 flex-1"
+            className='relative mx-auto w-full max-w-180 flex-1'
           />
         )}
       </div>

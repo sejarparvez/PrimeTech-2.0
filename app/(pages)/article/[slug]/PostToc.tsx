@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 interface TocItem {
   id: string;
@@ -97,9 +98,9 @@ const PostToc = () => {
   if (!items.length) return null;
 
   return (
-    <div className="overflow-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-      <h2 className="text-sm font-bold uppercase">On this page</h2>
-      <ul className="mt-4 space-y-3.5 text-sm">
+    <div className='overflow-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]'>
+      <h2 className='text-sm font-bold uppercase'>On this page</h2>
+      <ul className='mt-4 space-y-3.5 text-sm'>
         {items.map((item) => (
           <li
             key={item.id}

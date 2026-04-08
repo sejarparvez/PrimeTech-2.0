@@ -1,5 +1,6 @@
 import { useEditorState } from '@tiptap/react';
-import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import type React from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTiptapContext } from './Provider';
 
@@ -60,7 +61,7 @@ const Resizer = () => {
 
   const startResizing = (
     event: React.PointerEvent<HTMLDivElement>,
-    direction: number
+    direction: number,
   ) => {
     event.preventDefault();
     const resizeInfo = resizeInfoRef.current;
@@ -109,7 +110,7 @@ const Resizer = () => {
     requestAnimationFrame(() =>
       editor?.commands.updateAttributes(nodeState!.nodeType, {
         width: Math.round((resizeInfo.currentWidth / maxWidth) * 100),
-      })
+      }),
     );
   };
 
@@ -147,10 +148,10 @@ const Resizer = () => {
   const renderResizerHandle = (
     cursor: string,
     direction: number,
-    position: React.CSSProperties
+    position: React.CSSProperties,
   ) => (
     <div
-      className="pointer-events-auto absolute aspect-square border-2 bg-primary transition-none"
+      className='pointer-events-auto absolute aspect-square border-2 bg-primary transition-none'
       style={{ cursor, ...position }}
       onPointerDown={(event) => startResizing(event, direction)}
     />
@@ -159,7 +160,7 @@ const Resizer = () => {
   return createPortal(
     <div
       ref={controlRef}
-      className="pointer-events-none absolute left-0 top-0 transition-none"
+      className='pointer-events-none absolute left-0 top-0 transition-none'
     >
       {renderResizerHandle('nw-resize', 0, { width: 12, left: -10, top: -10 })}
       {renderResizerHandle('sw-resize', 0, {
@@ -174,7 +175,7 @@ const Resizer = () => {
         bottom: -10,
       })}
     </div>,
-    contentElement.current
+    contentElement.current,
   );
 };
 

@@ -1,5 +1,5 @@
-import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { findChildren } from '@tiptap/core';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
 
 interface ImageDimensions {
   width: number;
@@ -18,15 +18,15 @@ export function ImagePlugin({ name }: { name: string }) {
             view.state.doc,
             (node) =>
               node.type.name === name &&
-              (!node.attrs.naturalWidth || !node.attrs.naturalHeight)
+              (!node.attrs.naturalWidth || !node.attrs.naturalHeight),
           );
 
           if (imageBlocks.length === 0) return;
 
           const results = await Promise.all(
             imageBlocks.flatMap(({ node }) =>
-              getDimensionsImage(node.attrs.src)
-            )
+              getDimensionsImage(node.attrs.src),
+            ),
           );
 
           const tr = view.state.tr;

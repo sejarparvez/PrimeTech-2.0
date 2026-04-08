@@ -14,7 +14,7 @@ const ClientSideToastContainer = () => {
   return (
     <>
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}

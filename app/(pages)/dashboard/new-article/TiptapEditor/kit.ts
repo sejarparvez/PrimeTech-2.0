@@ -27,7 +27,7 @@ const ExtensionKit = [
     includeChildren: true,
     showOnlyCurrent: true,
     placeholder: ({ editor, node }) => {
-      // @ts-ignore
+      // @ts-expect-error
       const placeholder = editor.options.editorProps['placeholder'];
       switch (node.type.name) {
         case ImageCaption.name:

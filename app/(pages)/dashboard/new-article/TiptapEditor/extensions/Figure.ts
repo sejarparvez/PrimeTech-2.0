@@ -1,6 +1,5 @@
-import { Editor } from '@tiptap/core';
-import { mergeAttributes, Node } from '@tiptap/core';
-import { NodeType } from '@tiptap/pm/model';
+import { type Editor, mergeAttributes, Node } from '@tiptap/core';
+import type { NodeType } from '@tiptap/pm/model';
 
 export const Figure = Node.create({
   name: 'figure',

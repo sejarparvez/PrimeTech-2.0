@@ -1,12 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import type { Editor } from '@tiptap/core';
 import type React from 'react';
 import { useCallback } from 'react';
@@ -22,6 +15,13 @@ import {
   TbTableRow,
   TbTrash,
 } from 'react-icons/tb';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu, type BubbleMenuProps } from '../BubbleMenu';
 import { useTiptapContext } from '../Provider';
@@ -40,8 +40,8 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="ghost" type="button" size="icon" onClick={onClick}>
-          <Icon className="h-4 w-4" />
+        <Button variant='ghost' type='button' size='icon' onClick={onClick}>
+          <Icon className='h-4 w-4' />
         </Button>
       </TooltipTrigger>
       <TooltipContent>
@@ -68,7 +68,7 @@ const TableMenu: React.FC = () => {
       const command = `add${type}${position}` as const;
       return () => editor.chain().focus()[command]().run();
     },
-    [editor]
+    [editor],
   );
 
   const deleteRowOrColumn = useCallback(
@@ -76,7 +76,7 @@ const TableMenu: React.FC = () => {
       const command = `delete${type}` as const;
       return () => editor.chain().focus()[command]().run();
     },
-    [editor]
+    [editor],
   );
 
   const toggleHeader = useCallback(
@@ -84,20 +84,20 @@ const TableMenu: React.FC = () => {
       const command = `toggleHeader${type}` as const;
       return () => editor.chain().focus()[command]().run();
     },
-    [editor]
+    [editor],
   );
 
   const mergeCells = useCallback(
     () => editor.chain().focus().mergeCells().run(),
-    [editor]
+    [editor],
   );
   const splitCell = useCallback(
     () => editor.chain().focus().splitCell().run(),
-    [editor]
+    [editor],
   );
   const deleteTable = useCallback(
     () => editor.chain().focus().deleteTable().run(),
-    [editor]
+    [editor],
   );
 
   const bubbleMenuProps: Partial<BubbleMenuProps> = {
@@ -115,62 +115,62 @@ const TableMenu: React.FC = () => {
 
   return (
     <BubbleMenu {...bubbleMenuProps}>
-      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+      <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
         <MenuButton
           icon={TbRowInsertTop}
-          tooltip="Add row above"
+          tooltip='Add row above'
           onClick={addRowOrColumn('Row', 'Before')}
         />
         <MenuButton
           icon={TbRowInsertBottom}
-          tooltip="Add row below"
+          tooltip='Add row below'
           onClick={addRowOrColumn('Row', 'After')}
         />
         <MenuButton
           icon={TbColumnInsertLeft}
-          tooltip="Add column before"
+          tooltip='Add column before'
           onClick={addRowOrColumn('Column', 'Before')}
         />
         <MenuButton
           icon={TbColumnInsertRight}
-          tooltip="Add column after"
+          tooltip='Add column after'
           onClick={addRowOrColumn('Column', 'After')}
         />
         <MenuButton
           icon={AiOutlineSplitCells}
-          tooltip="Split cell"
+          tooltip='Split cell'
           onClick={splitCell}
         />
         <MenuButton
           icon={AiOutlineMergeCells}
-          tooltip="Merge cells"
+          tooltip='Merge cells'
           onClick={mergeCells}
         />
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5 p-1.5">
+      <div className='flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5 p-1.5'>
         <MenuButton
           icon={TbTableRow}
-          tooltip="Toggle row header"
+          tooltip='Toggle row header'
           onClick={toggleHeader('Row')}
         />
         <MenuButton
           icon={TbTableColumn}
-          tooltip="Toggle column header"
+          tooltip='Toggle column header'
           onClick={toggleHeader('Column')}
         />
         <MenuButton
           icon={TbRowRemove}
-          tooltip="Delete row"
+          tooltip='Delete row'
           onClick={deleteRowOrColumn('Row')}
         />
         <MenuButton
           icon={TbColumnRemove}
-          tooltip="Delete column"
+          tooltip='Delete column'
           onClick={deleteRowOrColumn('Column')}
         />
         <MenuButton
           icon={TbTrash}
-          tooltip="Delete table"
+          tooltip='Delete table'
           onClick={deleteTable}
         />
       </div>

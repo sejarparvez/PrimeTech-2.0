@@ -1,6 +1,6 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import AdminDashboard from './Admin-Dashboard';
 
 export default function Dashboard() {
@@ -19,12 +19,12 @@ export default function Dashboard() {
     <main>
       {session?.user?.role === 'ADMIN' ? (
         // Admin-specific content
-        <div className="container md:px-4">
+        <div className='container md:px-4'>
           <AdminDashboard />
         </div>
       ) : (
         // Content for logged-in users who are not admins
-        <div className="container md:px-4">
+        <div className='container md:px-4'>
           <h1>User Dashboard</h1>
           <p>Welcome, {session?.user?.name}!</p>
         </div>

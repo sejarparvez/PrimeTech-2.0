@@ -32,7 +32,7 @@ export function DeleteArticleDialog({
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete the
             article:
-            <span className="font-semibold"> {articleTitle}</span>
+            <span className='font-semibold'> {articleTitle}</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

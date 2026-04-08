@@ -1,3 +1,6 @@
+import { useEditorState } from '@tiptap/react';
+import { memo, useCallback } from 'react';
+import { TbCheck, TbCopy, TbTrash } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -6,9 +9,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { memo, useCallback } from 'react';
-import { TbCheck, TbCopy, TbTrash } from 'react-icons/tb';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu } from '../BubbleMenu';
@@ -33,7 +33,7 @@ export const CodeBlockMenu = () => {
   const shouldShow = useCallback(
     ({ editor: editorInstance }: { editor: any }) =>
       editorInstance.isActive('codeBlock'),
-    []
+    [],
   );
 
   // Update the language attribute when a new language is selected.
@@ -41,7 +41,7 @@ export const CodeBlockMenu = () => {
     (value: string) => {
       editor.commands.updateAttributes('codeBlock', { language: value });
     },
-    [editor]
+    [editor],
   );
 
   // Copy the code content from the <pre> container.
@@ -66,7 +66,7 @@ export const CodeBlockMenu = () => {
   return (
     <BubbleMenu
       editor={editor}
-      pluginKey="code-block-bubble"
+      pluginKey='code-block-bubble'
       shouldShow={shouldShow}
       updateDelay={100}
       tippyOptions={{
@@ -77,18 +77,18 @@ export const CodeBlockMenu = () => {
       }}
     >
       <TooltipProvider>
-        <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+        <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
           <CodeDropdown value={language} onSelect={handleSelect} />
-          <Separator orientation="vertical" className="mx-1 h-5" />
+          <Separator orientation='vertical' className='mx-1 h-5' />
 
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="ghost"
-                type="button"
-                size="icon"
+                variant='ghost'
+                type='button'
+                size='icon'
                 onClick={handleCopy}
-                aria-label="Copy code"
+                aria-label='Copy code'
               >
                 {isCopied ? <TbCheck size={20} /> : <TbCopy size={20} />}
               </Button>
@@ -99,11 +99,11 @@ export const CodeBlockMenu = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="ghost"
-                type="button"
-                size="icon"
+                variant='ghost'
+                type='button'
+                size='icon'
                 onClick={handleDelete}
-                aria-label="Delete code"
+                aria-label='Delete code'
               >
                 <TbTrash size={20} />
               </Button>
@@ -118,6 +118,8 @@ export const CodeBlockMenu = () => {
 
 export default memo(CodeBlockMenu);
 
+import { useMemo, useState } from 'react';
+import { TbChevronDown } from 'react-icons/tb';
 import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
 import { Input } from '@/components/ui/input';
 import {
@@ -125,8 +127,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useMemo, useState } from 'react';
-import { TbChevronDown } from 'react-icons/tb';
 
 interface CodeDropdownProps {
   value: string;
@@ -145,7 +145,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
   const filterOptions = useMemo(() => {
     if (!search) return options;
     return options.filter((item) =>
-      item.label.toLowerCase().includes(search.toLowerCase())
+      item.label.toLowerCase().includes(search.toLowerCase()),
     );
   }, [options, search]);
 
@@ -155,8 +155,8 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="ghost"
-          className="flex min-w-24 items-center justify-between"
+          variant='ghost'
+          className='flex min-w-24 items-center justify-between'
         >
           <span>
             {selectedOption ? selectedOption.label : 'Select language'}
@@ -164,15 +164,15 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
           <TbChevronDown size={16} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-60 p-2">
+      <PopoverContent className='w-60 p-2'>
         <Input
-          className="mb-2 h-9 w-full"
-          placeholder="Search language..."
+          className='mb-2 h-9 w-full'
+          placeholder='Search language...'
           value={search}
           onChange={(e) => setSearch(e.target.value.trim())}
         />
         <div
-          className="flex flex-col gap-1 overflow-auto"
+          className='flex flex-col gap-1 overflow-auto'
           style={{
             maxHeight: `${
               ((contentElement.current as HTMLElement)?.clientHeight || 0) *
@@ -183,16 +183,16 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
           {filterOptions.map((item) => (
             <div
               key={item.value}
-              className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm leading-5 hover:bg-accent"
+              className='flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm leading-5 hover:bg-accent'
               onClick={() => {
                 onSelect(item.value);
                 setSearch('');
               }}
             >
               {item.value === value ? (
-                <TbCheck size={14} className="text-primary" />
+                <TbCheck size={14} className='text-primary' />
               ) : (
-                <span className="w-4" />
+                <span className='w-4' />
               )}
               <span>{item.label}</span>
             </div>

@@ -1,5 +1,5 @@
-import { Separator } from '@/components/ui/separator';
 import { useCallback } from 'react';
+import { Separator } from '@/components/ui/separator';
 import { isNodeSelected } from '../../utils/isNodeSelected';
 import isTextSelected from '../../utils/isTextSelected';
 import { BubbleMenu } from '../BubbleMenu';
@@ -38,13 +38,13 @@ export const TextMenu = ({ enable }: { enable: boolean }) => {
         appendTo: 'parent',
       }}
     >
-      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+      <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
         <HeadingDropdown />
-        <Separator orientation="vertical" className="mx-1 h-5" />
+        <Separator orientation='vertical' className='mx-1 h-5' />
         <BoldButton />
         <MoreMarkDropdown />
         <LinkButton />
-        <Separator orientation="vertical" className="mx-1 h-5" />
+        <Separator orientation='vertical' className='mx-1 h-5' />
         <AlignDropdown />
       </div>
     </BubbleMenu>

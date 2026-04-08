@@ -1,5 +1,5 @@
-import { Editor, mergeAttributes, Node } from '@tiptap/core';
-import { NodeType } from '@tiptap/pm/model';
+import { type Editor, mergeAttributes, Node } from '@tiptap/core';
+import type { NodeType } from '@tiptap/pm/model';
 import { TextSelection } from '@tiptap/pm/state';
 
 export const Figcaption = Node.create({
@@ -57,7 +57,7 @@ function handleSelectAll(editor: Editor, nodeType: NodeType) {
 function handleDeleteOrBackspace(
   editor: Editor,
   handle: 'Delete' | 'Backspace',
-  nodeType: NodeType
+  nodeType: NodeType,
 ) {
   const { selection } = editor.state;
   const { $from, empty } = selection;

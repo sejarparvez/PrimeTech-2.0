@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import React, { JSX, ReactNode } from 'react';
+import type React from 'react';
+import type { JSX, ReactNode } from 'react';
 
 interface HeadingWithAnchorProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
@@ -19,7 +20,7 @@ const HeadingWithAnchor: React.FC<HeadingWithAnchorProps> = ({
       return text
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-]/g, '');
+        .replace(/[^a-z0-9-]/g, '');
     }
     return 'heading';
   };

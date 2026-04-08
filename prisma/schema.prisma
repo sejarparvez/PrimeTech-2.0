@@ -1,87 +1,77 @@
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
 }
 
-model Account {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String    @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id])
+datasource db {
+  provider = "postgresql"
 }
 
 model User {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  name               String?
-  email              String?   @unique
-  password           String?
-  emailVerified      DateTime?
-  image              String?
-  imageId            String?
-  verificationCode   String?
-  status             String?
-  createdAt          DateTime   @default(now())
-  bio                String?
-  facebook           String?
-  twitter            String?
-  instagram          String?
-  linkedin           String?
-  github             String?
-  accounts           Account[]
-  sessions           Session[]
-  posts              Post[]
-  comments           Comment[]
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          String?
+  banned        Boolean?  @default(false)
+  banReason     String?
+  banExpires    DateTime?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
 }
 
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
 
-model Post {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  content       String
-  category      String
-  coverImage    String
-  tags          String[]
-  imageId       String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  authorId      String         @db.ObjectId
-  author        User           @relation(fields: [authorId], references: [id])
-  comments      Comment[]
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
 }
 
-model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId  String   @db.ObjectId
-  postId    String   @db.ObjectId
-  author    User     @relation(fields: [authorId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
-  likedBy   String[]
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }

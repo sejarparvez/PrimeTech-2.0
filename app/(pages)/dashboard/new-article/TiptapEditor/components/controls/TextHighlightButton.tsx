@@ -1,3 +1,8 @@
+import { useEditorState } from '@tiptap/react';
+import type React from 'react';
+import { type CSSProperties, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { BiSolidColorFill } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -10,20 +15,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import React, { CSSProperties, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { BiSolidColorFill } from 'react-icons/bi';
 import useMount from '../../hooks/useMount';
-import { useTiptapContext } from '../Provider';
 import ColorPicker from '../color-picker';
+import { useTiptapContext } from '../Provider';
 
 const TextHighlightButton: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const mounted = useMount();
   const { editor } = useTiptapContext();
   const [highlightColor, setHighlightColor] = useState<string | 'DEFAULT'>(
-    'DEFAULT'
+    'DEFAULT',
   );
   const state = useEditorState({
     editor,
@@ -48,7 +49,7 @@ const TextHighlightButton: React.FC = () => {
     mounted && buttonRef.current
       ? createPortal(
           <div style={highlightBarStyle as CSSProperties} />,
-          buttonRef.current
+          buttonRef.current,
         )
       : null;
 
@@ -64,17 +65,17 @@ const TextHighlightButton: React.FC = () => {
                 <PopoverTrigger asChild>
                   <Button
                     ref={buttonRef}
-                    variant="ghost"
-                    size="icon"
-                    type="button"
+                    variant='ghost'
+                    size='icon'
+                    type='button'
                     disabled={state.disabled}
-                    aria-label="Text color"
+                    aria-label='Text color'
                     style={{ position: 'relative' }}
                   >
                     <BiSolidColorFill size={20} />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-2">
+                <PopoverContent className='w-auto p-2'>
                   <ColorPicker
                     //  color={highlightColor}
                     color={state.color}

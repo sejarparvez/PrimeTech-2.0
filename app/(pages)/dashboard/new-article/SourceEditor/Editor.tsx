@@ -22,7 +22,7 @@ const SourceEditor = forwardRef<HTMLDivElement, SourceEditorProps>(
     useImperativeHandle(ref, () => editorRef.current!, [editorRef]);
 
     return <div ref={editorRef} />;
-  }
+  },
 );
 
 SourceEditor.displayName = 'SourceEditor';

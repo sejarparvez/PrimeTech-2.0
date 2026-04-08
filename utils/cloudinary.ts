@@ -31,7 +31,7 @@ function generateFilename(originalName: string): string {
  */
 export async function cloudinaryUploadImage(
   image: Blob,
-  folder: string
+  folder: string,
 ): Promise<{ secure_url: string; public_id: string }> {
   const originalName = (image as File).name;
   const uniqueFilename = generateFilename(originalName);
@@ -53,7 +53,7 @@ export async function cloudinaryUploadImage(
         } else {
           reject(new Error('Unknown error during Cloudinary upload.'));
         }
-      }
+      },
     );
 
     // Pipe the buffer as a readable stream into the upload stream
@@ -63,14 +63,14 @@ export async function cloudinaryUploadImage(
 
 // Utility function to delete an image from Cloudinary by its public ID
 export async function deleteImageFromCloudinary(
-  imageId: string
+  imageId: string,
 ): Promise<void> {
   try {
     // Call Cloudinary's API to delete the image by its public ID
     const result = await cloudinary.uploader.destroy(imageId);
     if (result.result === 'ok') {
       console.log(
-        `Image with ID ${imageId} successfully deleted from Cloudinary.`
+        `Image with ID ${imageId} successfully deleted from Cloudinary.`,
       );
     } else {
       console.log(`Failed to delete image with ID ${imageId}.`);

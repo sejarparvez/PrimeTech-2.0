@@ -1,4 +1,9 @@
 'use client';
+import { useEditorState } from '@tiptap/react';
+import { Palette } from 'lucide-react';
+import type React from 'react';
+import { type CSSProperties, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -11,10 +16,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { Palette } from 'lucide-react';
-import React, { CSSProperties, useRef } from 'react';
-import { createPortal } from 'react-dom';
 import useMount from '../../hooks/useMount';
 import ColorPicker from '../color-picker';
 import { useTiptapContext } from '../Provider';
@@ -58,17 +59,17 @@ const TextColorButton: React.FC = () => {
               <PopoverTrigger asChild>
                 <Button
                   ref={buttonRef}
-                  variant="ghost"
-                  size="icon"
-                  type="button"
+                  variant='ghost'
+                  size='icon'
+                  type='button'
                   disabled={state.disabled}
-                  aria-label="Text color"
+                  aria-label='Text color'
                   style={{ position: 'relative' }}
                 >
                   <Palette size={16} />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-2">
+              <PopoverContent className='w-auto p-2'>
                 <ColorPicker
                   color={state.color}
                   onChange={(color) =>

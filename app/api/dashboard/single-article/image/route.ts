@@ -33,7 +33,7 @@ export async function GET() {
     console.error('Error fetching images:', error);
     return NextResponse.json(
       { error: 'Failed to fetch images' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
-        }
+        },
       );
 
       uploadStream.end(buffer);
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
     console.error('Error uploading file:', error);
     return NextResponse.json(
       { error: 'Failed to upload file' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

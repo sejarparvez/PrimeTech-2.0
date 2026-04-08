@@ -1,5 +1,11 @@
 'use client';
 
+import type { Node } from '@tiptap/pm/model';
+import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
+import { useEditorState } from '@tiptap/react';
+import { useCallback, useRef, useState } from 'react';
+import { TbDownload, TbTextCaption, TbTrash } from 'react-icons/tb';
+import type { Instance } from 'tippy.js';
 import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -9,12 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import type { Node } from '@tiptap/pm/model';
-import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
-import { useEditorState } from '@tiptap/react';
-import { useCallback, useRef, useState } from 'react';
-import { TbDownload, TbTextCaption, TbTrash } from 'react-icons/tb';
-import type { Instance } from 'tippy.js';
 import { BubbleMenu } from '../../BubbleMenu';
 import { useTiptapContext } from '../../Provider';
 import AltTextEdit from './AltTextEdit';
@@ -80,7 +80,7 @@ export const ImageMenu = () => {
   const toggleEditAltText = () => {
     setIsEditText((prev) => !prev);
     requestAnimationFrame(() =>
-      tippyInstance.current?.popperInstance?.update()
+      tippyInstance.current?.popperInstance?.update(),
     );
   };
 
@@ -121,7 +121,7 @@ export const ImageMenu = () => {
   return (
     <BubbleMenu
       editor={editor}
-      pluginKey="image-bubble"
+      pluginKey='image-bubble'
       shouldShow={({ editor }) =>
         editor.isActive('imageFigure') || editor.isActive('image')
       }
@@ -149,14 +149,14 @@ export const ImageMenu = () => {
         />
       ) : (
         <TooltipProvider>
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+          <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   onClick={toggleEditAltText}
-                  type="button"
-                  size="sm"
-                  variant="ghost"
+                  type='button'
+                  size='sm'
+                  variant='ghost'
                 >
                   Alt Text
                 </Button>
@@ -168,8 +168,8 @@ export const ImageMenu = () => {
               <TooltipTrigger asChild>
                 <Button
                   onClick={toggleCaption}
-                  type="button"
-                  size="icon"
+                  type='button'
+                  size='icon'
                   variant={image?.hasCaption ? 'secondary' : 'ghost'}
                 >
                   <TbTextCaption size={20} />
@@ -178,7 +178,7 @@ export const ImageMenu = () => {
               <TooltipContent>Toggle caption</TooltipContent>
             </Tooltip>
 
-            <Separator orientation="vertical" className="mx-1 h-5" />
+            <Separator orientation='vertical' className='mx-1 h-5' />
 
             <Tooltip>
               <TooltipTrigger asChild>
@@ -187,14 +187,14 @@ export const ImageMenu = () => {
               <TooltipContent>Resize image</TooltipContent>
             </Tooltip>
 
-            <Separator orientation="vertical" className="mx-1 h-5" />
+            <Separator orientation='vertical' className='mx-1 h-5' />
 
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  type="button"
-                  size="icon"
-                  variant="ghost"
+                  type='button'
+                  size='icon'
+                  variant='ghost'
                   onClick={downloadImage}
                 >
                   <TbDownload size={20} />
@@ -206,9 +206,9 @@ export const ImageMenu = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  type="button"
-                  size="icon"
-                  variant="ghost"
+                  type='button'
+                  size='icon'
+                  variant='ghost'
                   onClick={removeImage}
                 >
                   <TbTrash size={20} />
@@ -226,7 +226,7 @@ export const ImageMenu = () => {
 export default ImageMenu;
 
 const getImageOrFigureNode = (
-  selection: Selection
+  selection: Selection,
 ): { node: Node | null; pos: number | null } => {
   let node: Node | null = null;
   let pos: number | null = null;

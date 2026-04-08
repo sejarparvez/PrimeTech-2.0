@@ -1,3 +1,5 @@
+import { useEditorState } from '@tiptap/react';
+import { Bold } from 'lucide-react';
 import { Button } from '@/components/ui/button'; // Adjust the path as needed
 import {
   Tooltip,
@@ -5,8 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { Bold } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const BoldButton = () => {
@@ -27,8 +27,8 @@ const BoldButton = () => {
             variant={state.active ? 'default' : 'ghost'}
             disabled={state.disabled}
             onClick={() => editor.chain().focus().toggleBold().run()}
-            type="button"
-            size="icon"
+            type='button'
+            size='icon'
           >
             <Bold size={20} />
           </Button>

@@ -18,13 +18,13 @@ const PostHeader = ({
     addSuffix: true,
   });
   return (
-    <div className="mx-auto max-w-5xl">
-      <h1 className="text-2xl font-bold leading-snug md:text-4xl md:leading-normal">
+    <div className='mx-auto max-w-5xl'>
+      <h1 className='text-2xl font-bold leading-snug md:text-4xl md:leading-normal'>
         {title}
       </h1>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
+      <div className='mt-3 flex flex-wrap items-center gap-2'>
         This Article Was Last Updated
-        <div className="flex items-center text-sm">
+        <div className='flex items-center text-sm'>
           <span>{formattedDate}</span>
         </div>
         By
@@ -36,7 +36,7 @@ const PostHeader = ({
         alt={title}
         width={1932}
         height={1087}
-        className="my-10 rounded-lg"
+        className='my-10 rounded-lg'
         priority
       />
     </div>

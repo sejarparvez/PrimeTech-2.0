@@ -24,7 +24,7 @@ export const NewArticleSchema = z.object({
     .trim()
     .regex(
       /^[a-zA-Z0-9\s]+$/,
-      'Name should not contain special characters like - _ +'
+      'Name should not contain special characters like - _ +',
     ),
   tags: z.array(z.string()),
   content: z.string().min(1, 'Content is required'),
@@ -41,7 +41,7 @@ export const EditArticleSchema = z.object({
     .trim()
     .regex(
       /^[a-zA-Z0-9\s]+$/,
-      'Name should not contain special characters like - _ +'
+      'Name should not contain special characters like - _ +',
     ),
   tags: z.array(z.string()),
   content: z.string().min(1, 'Content is required'),

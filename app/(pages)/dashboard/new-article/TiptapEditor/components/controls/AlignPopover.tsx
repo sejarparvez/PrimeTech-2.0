@@ -1,5 +1,7 @@
 'use client';
 
+import { useEditorState } from '@tiptap/react';
+import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -12,8 +14,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const AlignPopover = () => {
@@ -49,10 +49,10 @@ const AlignPopover = () => {
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
               <Button
-                variant="ghost"
-                size="icon"
+                variant='ghost'
+                size='icon'
                 disabled={isDisabled}
-                aria-label="Text alignment"
+                aria-label='Text alignment'
               >
                 <CurrentIcon />
               </Button>
@@ -61,19 +61,19 @@ const AlignPopover = () => {
           <TooltipContent>
             <p>Text alignment</p>
           </TooltipContent>
-          <PopoverContent className="w-auto p-2">
-            <div className="flex space-x-1">
+          <PopoverContent className='w-auto p-2'>
+            <div className='flex space-x-1'>
               {alignmentOptions.map((option) => (
                 <Button
                   key={option.name}
-                  variant="ghost"
-                  size="icon"
+                  variant='ghost'
+                  size='icon'
                   onClick={() =>
                     editor.chain().focus().setTextAlign(option.name).run()
                   }
                   className={current === option.name ? 'bg-muted' : ''}
                 >
-                  <option.icon className="h-4 w-4" />
+                  <option.icon className='h-4 w-4' />
                 </Button>
               ))}
             </div>

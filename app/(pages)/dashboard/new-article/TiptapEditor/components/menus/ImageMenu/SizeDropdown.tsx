@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { TbRuler } from 'react-icons/tb';
+import { Button } from '@/components/ui/button';
 
 interface SizeDropdownProps {
   value: number | null;
@@ -38,12 +38,12 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange }) => {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className='relative' ref={dropdownRef}>
       <Button
-        variant="ghost"
-        className="space-x-1.5"
-        size="sm"
-        type="button"
+        variant='ghost'
+        className='space-x-1.5'
+        size='sm'
+        type='button'
         onClick={() => setIsOpen(!isOpen)}
       >
         <TbRuler size={20} />
@@ -51,14 +51,14 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange }) => {
         <ChevronDown size={20} />
       </Button>
       {isOpen && (
-        <div className="absolute z-50 mt-1 w-40 rounded-md bg-popover shadow-lg">
-          <div className="py-1">
+        <div className='absolute z-50 mt-1 w-40 rounded-md bg-popover shadow-lg'>
+          <div className='py-1'>
             {options.map((option, index) => (
               <Button
-                variant="ghost"
+                variant='ghost'
                 key={index}
-                className="block w-full text-left"
-                type="button"
+                className='block w-full text-left'
+                type='button'
                 onClick={() => handleOptionClick(option)}
               >
                 {option ? `${option}% width` : 'Default'}

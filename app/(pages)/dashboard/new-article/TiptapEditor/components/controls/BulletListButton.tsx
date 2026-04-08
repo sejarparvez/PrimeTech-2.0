@@ -1,3 +1,5 @@
+import { useEditorState } from '@tiptap/react';
+import { TbList } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -5,8 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { TbList } from 'react-icons/tb';
 import { useTiptapContext } from '../Provider';
 
 const BulletListButton = () => {
@@ -29,8 +29,8 @@ const BulletListButton = () => {
             variant={state.active ? 'default' : 'ghost'}
             disabled={state.disabled}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            type="button"
-            size="icon"
+            type='button'
+            size='icon'
           >
             <TbList size={20} />
           </Button>

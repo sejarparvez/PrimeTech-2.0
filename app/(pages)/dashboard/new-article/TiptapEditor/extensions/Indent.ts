@@ -1,7 +1,7 @@
 import { type Dispatch, Extension, isNodeActive } from '@tiptap/core';
 import {
-  TextSelection,
   type EditorState,
+  TextSelection,
   type Transaction,
 } from '@tiptap/pm/state';
 
@@ -43,7 +43,7 @@ export const Indent = Extension.create({
             parseHTML: (element) => {
               const level = Number.parseInt(
                 element.getAttribute('data-indent') || '',
-                10
+                10,
               );
               return level && level > this.options.minLevel ? level : null;
             },
@@ -56,7 +56,7 @@ export const Indent = Extension.create({
     const setNodeIndentMarkup = (
       tr: Transaction,
       pos: number,
-      delta: number
+      delta: number,
     ) => {
       const node = tr.doc.nodeAt(pos) ?? null;
       if (node) {
@@ -142,7 +142,7 @@ export const Indent = Extension.create({
 
         const parentNode = $anchor.parent;
         const nodeTypeMatches = this.options.types.includes(
-          parentNode.type.name
+          parentNode.type.name,
         );
         const indentLevel = parentNode.attrs.indent || 0;
 

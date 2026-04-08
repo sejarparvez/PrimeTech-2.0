@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Script from './script';
-import {
+import type {
   CloudinaryInstance,
   UploadWidgetError,
   UploadWidgetInstance,
@@ -62,7 +62,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
   function createWidget() {
     return cloudinary.current?.createUploadWidget(
       uploadOptions,
-      function (error: UploadWidgetError, result: UploadWidgetResults) {
+      (error: UploadWidgetError, result: UploadWidgetResults) => {
         if (error && typeof onError === 'function') {
           onError(error, widget.current);
         }
@@ -70,7 +70,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
         if (result.event === 'success' && typeof onSuccess === 'function') {
           onSuccess(result, widget.current);
         }
-      }
+      },
     );
   }
 
@@ -91,7 +91,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
     <>
       {typeof children === 'function' && children({ cloudinary, widget, open })}
       <Script
-        src="https://upload-widget.cloudinary.com/global/all.js"
+        src='https://upload-widget.cloudinary.com/global/all.js'
         onLoad={handleOnLoad}
         onError={() => console.error(`Failed to load Cloudinary Upload Widget`)}
       />

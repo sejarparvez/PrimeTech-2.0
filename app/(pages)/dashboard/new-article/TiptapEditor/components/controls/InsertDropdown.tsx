@@ -1,5 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
+import { Code2, Plus, Quote, TableIcon, Youtube } from 'lucide-react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,9 +25,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import clsx from 'clsx';
-import { Code2, Plus, Quote, TableIcon, Youtube } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
 import { useTiptapContext } from '../Provider';
 
 const InsertDropdown = () => {
@@ -35,11 +35,11 @@ const InsertDropdown = () => {
 
   const insertCodeBlock = useCallback(
     () => editor.chain().focus().setCodeBlock().run(),
-    [editor]
+    [editor],
   );
   const insertBlockquote = useCallback(
     () => editor.chain().focus().setBlockquote().run(),
-    [editor]
+    [editor],
   );
 
   const openYoutubeDialog = useCallback(() => {
@@ -75,7 +75,7 @@ const InsertDropdown = () => {
       { text: 'Youtube', icon: Youtube, onClick: openYoutubeDialog },
       { text: 'Table', icon: TableIcon, onClick: openTableDialog },
     ],
-    [insertBlockquote, insertCodeBlock, openYoutubeDialog, openTableDialog]
+    [insertBlockquote, insertCodeBlock, openYoutubeDialog, openTableDialog],
   );
 
   return (
@@ -85,22 +85,22 @@ const InsertDropdown = () => {
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="ghost"
-                size="icon"
+                variant='ghost'
+                size='icon'
                 disabled={!editor.isEditable}
-                aria-label="Insert"
+                aria-label='Insert'
               >
-                <Plus className="h-4 w-4" />
+                <Plus className='h-4 w-4' />
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
           <TooltipContent>
             <p>Insert</p>
           </TooltipContent>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent align='end' className='w-56'>
             {menuItems.map((item) => (
               <DropdownMenuItem key={item.text} onSelect={item.onClick}>
-                <item.icon className="mr-2 h-4 w-4" />
+                <item.icon className='mr-2 h-4 w-4' />
                 <span>{item.text}</span>
               </DropdownMenuItem>
             ))}
@@ -109,26 +109,26 @@ const InsertDropdown = () => {
       </Tooltip>
 
       <Dialog open={youtubeDialogOpen} onOpenChange={setYoutubeDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className='sm:max-w-[425px]'>
           <DialogHeader>
             <DialogTitle>Embed YouTube Video</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="youtube-url" className="text-right">
+          <div className='grid gap-4 py-4'>
+            <div className='grid grid-cols-4 items-center gap-4'>
+              <Label htmlFor='youtube-url' className='text-right'>
                 URL
               </Label>
               <Input
-                id="youtube-url"
+                id='youtube-url'
                 value={youtubeUrl}
                 onChange={(e) => setYoutubeUrl(e.target.value)}
-                placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                className="col-span-3"
+                placeholder='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+                className='col-span-3'
               />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={insertYoutube}>
+            <Button type='submit' onClick={insertYoutube}>
               Embed
             </Button>
           </DialogFooter>
@@ -136,11 +136,11 @@ const InsertDropdown = () => {
       </Dialog>
 
       <Dialog open={tableDialogOpen} onOpenChange={setTableDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className='sm:max-w-[425px]'>
           <DialogHeader>
             <DialogTitle>Insert Table</DialogTitle>
           </DialogHeader>
-          <div className="py-4">
+          <div className='py-4'>
             <TableBuilder
               onCreate={({ rows, cols }) => {
                 editor
@@ -182,55 +182,55 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
   const isActiveCell = useCallback(
     (rowIndex: number, colIndex: number) =>
       rowIndex < gridSize.rows && colIndex < gridSize.cols,
-    [gridSize]
+    [gridSize],
   );
 
   const handleKeyDown = useCallback(
     (
       e: React.KeyboardEvent<HTMLDivElement>,
       rowIndex: number,
-      colIndex: number
+      colIndex: number,
     ) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 });
       }
     },
-    []
+    [],
   );
 
   const grid = useMemo(
     () =>
       Array.from({ length: ROWS }, (_, rowIndex) => (
-        <div key={`row-${rowIndex}`} className="flex gap-1">
+        <div key={`row-${rowIndex}`} className='flex gap-1'>
           {Array.from({ length: COLUMNS }, (_, colIndex) => (
             <div
               key={`col-${colIndex}`}
               className={clsx(
                 'h-4 w-4 border border-border bg-muted transition-all',
-                isActiveCell(rowIndex, colIndex) && 'border-primary bg-primary'
+                isActiveCell(rowIndex, colIndex) && 'border-primary bg-primary',
               )}
               onMouseEnter={() =>
                 setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 })
               }
               onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
               tabIndex={0}
-              role="button"
+              role='button'
               aria-label={`Select table size ${rowIndex + 1}x${colIndex + 1}`}
             />
           ))}
         </div>
       )),
-    [isActiveCell, handleKeyDown]
+    [isActiveCell, handleKeyDown],
   );
 
   return (
-    <div className="text-sm">
-      <div className="flex flex-col gap-2 p-2">{grid}</div>
-      <div className="mt-2 text-center">
+    <div className='text-sm'>
+      <div className='flex flex-col gap-2 p-2'>{grid}</div>
+      <div className='mt-2 text-center'>
         {gridSize.rows} x {gridSize.cols}
       </div>
-      <div className="mt-4 flex justify-end">
+      <div className='mt-4 flex justify-end'>
         <Button onClick={() => onCreate?.(gridSize)}>Insert Table</Button>
       </div>
     </div>

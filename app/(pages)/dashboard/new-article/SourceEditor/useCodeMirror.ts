@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { EditorState } from '@codemirror/state';
-import { EditorView } from 'codemirror';
 import { html } from '@codemirror/lang-html';
-import { theme } from './theme';
+import { EditorState } from '@codemirror/state';
 import { lineNumbers } from '@codemirror/view';
+import { EditorView } from 'codemirror';
+import { useEffect, useRef } from 'react';
+import { theme } from './theme';
 
 interface UseCodeMirrorProps {
   initialContent: string;

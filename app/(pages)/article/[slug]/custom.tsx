@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { Components } from 'rehype-react';
+import type { Components } from 'rehype-react';
 import CopyButton from './CopyButton';
 import HeadingWithAnchor from './HeadingWithAnchor';
 
@@ -18,7 +18,7 @@ export const components: Partial<Components> = {
       alt={alt || ''}
       width={props['data-width']}
       height={props['data-height']}
-      className="mx-auto rounded-lg"
+      className='mx-auto rounded-lg'
     />
   ),
   iframe: ({ ...props }) => (
@@ -26,14 +26,14 @@ export const components: Partial<Components> = {
       <iframe
         {...props}
         allowFullScreen={true}
-        className="mx-auto aspect-video h-full w-full rounded-lg"
+        className='mx-auto aspect-video h-full w-full rounded-lg'
       />
     </div>
   ),
   pre: ({ children, ...props }) => {
     const code = (children as any).props.children;
     return (
-      <div className="not-prose group relative overflow-hidden rounded-lg border border-[#d1d9e0] dark:border-[#3d444d]">
+      <div className='not-prose group relative overflow-hidden rounded-lg border border-[#d1d9e0] dark:border-[#3d444d]'>
         <CopyButton code={String(code)} />
         <pre {...(props as any)}>{children}</pre>
       </div>

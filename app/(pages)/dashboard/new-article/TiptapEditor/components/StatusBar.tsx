@@ -1,3 +1,6 @@
+import { useEditorState } from '@tiptap/react';
+import { Code, Maximize2, Minimize2 } from 'lucide-react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -5,9 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { Code, Maximize2, Minimize2 } from 'lucide-react';
-import React from 'react';
 import { useTiptapContext } from './Provider';
 
 const StatusBar: React.FC = () => {
@@ -28,18 +28,18 @@ const StatusBar: React.FC = () => {
   });
 
   return (
-    <div className="flex min-h-11 items-center rounded-b-md border-t bg-background">
-      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+    <div className='flex min-h-11 items-center rounded-b-md border-t bg-background'>
+      <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant={isSourceMode ? 'secondary' : 'ghost'}
-                size="icon"
-                type="button"
+                size='icon'
+                type='button'
                 onClick={toggleSourceMode}
               >
-                <Code className="h-4 w-4" />
+                <Code className='h-4 w-4' />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -53,14 +53,14 @@ const StatusBar: React.FC = () => {
             <TooltipTrigger asChild>
               <Button
                 variant={isFullScreen ? 'secondary' : 'ghost'}
-                size="icon"
-                type="button"
+                size='icon'
+                type='button'
                 onClick={toggleFullScreen}
               >
                 {isFullScreen ? (
-                  <Minimize2 className="h-4 w-4" />
+                  <Minimize2 className='h-4 w-4' />
                 ) : (
-                  <Maximize2 className="h-4 w-4" />
+                  <Maximize2 className='h-4 w-4' />
                 )}
               </Button>
             </TooltipTrigger>
@@ -71,7 +71,7 @@ const StatusBar: React.FC = () => {
         </TooltipProvider>
       </div>
 
-      <div className="ml-auto space-x-2 px-2 py-1">
+      <div className='ml-auto space-x-2 px-2 py-1'>
         <span>Words: {counter.words}</span>
         <span>Characters: {counter.characters}</span>
       </div>

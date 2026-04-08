@@ -1,6 +1,6 @@
-import Figcaption from '../Figcaption';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import Figcaption from '../Figcaption';
 import ImageFigure from './ImageFigure';
 
 export const ImageCaption = Figcaption.extend({

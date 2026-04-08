@@ -1,5 +1,5 @@
-import prettier from 'prettier/standalone';
 import parserHtml from 'prettier/plugins/html';
+import prettier from 'prettier/standalone';
 
 function removeHtmlEntities(html: string) {
   const textarea = document.createElement('textarea');

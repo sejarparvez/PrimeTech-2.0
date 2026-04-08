@@ -1,6 +1,6 @@
-import { Link as TiptapLink, LinkOptions } from '@tiptap/extension-link';
 import { getMarkRange } from '@tiptap/core';
-import { Plugin, Selection, TextSelection } from '@tiptap/pm/state';
+import { type LinkOptions, Link as TiptapLink } from '@tiptap/extension-link';
+import { Plugin, type Selection, TextSelection } from '@tiptap/pm/state';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -58,7 +58,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
                     .focus(tr.selection.anchor)
                     .insertLink({ text: '\u200B' })
                     .run();
-                // @ts-ignore
+                // @ts-expect-error
                 return chain().setLink({ href: '' }).run();
               })
               .setMeta('addToHistory', false)
@@ -90,7 +90,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
                   },
                 ],
               },
-              { updateSelection: false }
+              { updateSelection: false },
             )
             .setLink({ href })
             .run();
@@ -142,7 +142,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
             const $end = doc.resolve(range.to);
 
             const transaction = tr.setSelection(
-              new TextSelection($start, $end)
+              new TextSelection($start, $end),
             );
 
             view.dispatch(transaction);
@@ -155,7 +155,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
             transactions.some((transaction) => transaction.docChanged) &&
             !oldState.doc.eq(newState.doc);
           const skipTransaction = transactions.some((transaction) =>
-            transaction.getMeta('preventClearTempLink')
+            transaction.getMeta('preventClearTempLink'),
           );
 
           if (!hasDocChanges || skipTransaction) return;
@@ -164,7 +164,7 @@ export const Link = TiptapLink.extend<LinkOptions, LinkEditorStorage>({
 
           const range = getMarkRange(
             newState.selection.$anchor,
-            newState.schema.marks.link
+            newState.schema.marks.link,
           );
           if (!range) {
             return;
@@ -197,7 +197,7 @@ function clearTempLinks(tr: any, doc: any, selection: any) {
   } else {
     doc.nodesBetween(from, to, (node: any, pos: any) => {
       const linkMark = node.marks.find(
-        (mark: any) => mark.type.name === 'link' && !mark.attrs.href
+        (mark: any) => mark.type.name === 'link' && !mark.attrs.href,
       );
 
       if (linkMark) {

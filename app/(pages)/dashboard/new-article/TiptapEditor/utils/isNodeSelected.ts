@@ -1,8 +1,8 @@
-import { Editor, isNodeSelection } from '@tiptap/react';
+import { type Editor, isNodeSelection } from '@tiptap/react';
 
 import { CodeBlock } from '../extensions/CodeBlock';
-import Link from '../extensions/Link';
 import { ImageFigure } from '../extensions/ImageFigure';
+import Link from '../extensions/Link';
 
 export const isNodeSelected = (editor: Editor) => {
   const customNodes = [CodeBlock.name, ImageFigure.name, Link.name];

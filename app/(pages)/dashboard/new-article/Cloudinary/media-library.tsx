@@ -157,7 +157,7 @@ const MediaLibrary = ({
       {typeof children === 'function' && children(callbackOptions)}
       <div ref={widgetContainerRef}></div>
       <Script
-        src="https://media-library.cloudinary.com/global/all.js"
+        src='https://media-library.cloudinary.com/global/all.js'
         onLoad={handleOnLoad}
         onError={() => console.error(`Failed to load Cloudinary Upload Widget`)}
       />

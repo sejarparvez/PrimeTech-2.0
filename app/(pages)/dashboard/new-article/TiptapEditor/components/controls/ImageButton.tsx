@@ -1,5 +1,8 @@
 'use client';
 
+import { useEditorState } from '@tiptap/react';
+import { ImageIcon } from 'lucide-react';
+import { useState } from 'react';
 import MediaLibrary from '@/app/(pages)/dashboard/new-article/MediaLibrary';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,9 +17,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { ImageIcon } from 'lucide-react';
-import { useState } from 'react';
 import { useTiptapContext } from '../Provider';
 
 interface ImageData {
@@ -58,13 +58,13 @@ const ImageButton = () => {
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
               <Button
-                variant="ghost"
-                size="icon"
+                variant='ghost'
+                size='icon'
                 className={state.active ? 'bg-muted' : ''}
                 disabled={state.disabled}
               >
-                <ImageIcon className="h-4 w-4" />
-                <span className="sr-only">Insert image</span>
+                <ImageIcon className='h-4 w-4' />
+                <span className='sr-only'>Insert image</span>
               </Button>
             </DialogTrigger>
           </TooltipTrigger>
@@ -73,7 +73,7 @@ const ImageButton = () => {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent className="mx-auto flex h-[95vh] w-[90vw] max-w-5xl flex-col px-4 py-0 md:h-[90vh] md:w-[70vw]">
+      <DialogContent className='mx-auto flex h-[95vh] w-[90vw] max-w-5xl flex-col px-4 py-0 md:h-[90vh] md:w-[70vw]'>
         <DialogTitle hidden>Insert image</DialogTitle>
         <MediaLibrary onClose={() => setOpen(false)} onInsert={handleInsert} />
       </DialogContent>

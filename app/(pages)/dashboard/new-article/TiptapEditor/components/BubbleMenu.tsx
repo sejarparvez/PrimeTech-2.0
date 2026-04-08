@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import clsx from 'clsx';
-import { createPortal } from 'react-dom';
 import {
-  BubbleMenuPluginProps,
   BubbleMenuPlugin,
+  type BubbleMenuPluginProps,
 } from '@tiptap/extension-bubble-menu';
+import clsx from 'clsx';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -40,7 +41,7 @@ export const BubbleMenu = ({
 
     if (!menuEditor) {
       console.warn(
-        'BubbleMenu component is not rendered inside of an editor component or does not have editor prop.'
+        'BubbleMenu component is not rendered inside of an editor component or does not have editor prop.',
       );
       return;
     }
@@ -69,7 +70,7 @@ export const BubbleMenu = ({
     <div className={clsx('rounded bg-background shadow-sm', className)}>
       {children}
     </div>,
-    menuEl.current
+    menuEl.current,
   );
 
   return portal;

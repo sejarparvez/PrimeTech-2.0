@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 export type UploadWidgetInstance = any;
 export type CloudinaryInstance = any;
@@ -77,10 +77,10 @@ export type UploadWidgetError =
 
 export type UploadWidgetEventCallback = (
   results: UploadWidgetResults,
-  widget: UploadWidgetInstance
+  widget: UploadWidgetInstance,
 ) => void;
 
 export type UploadWidgetEventCallbackError = (
   error: UploadWidgetError,
-  widget: UploadWidgetInstance
+  widget: UploadWidgetInstance,
 ) => void;

@@ -1,17 +1,17 @@
 'use client';
-import { Content, type Editor } from '@tiptap/react';
+import type { Content, Editor } from '@tiptap/react';
 import { forwardRef, useCallback, useEffect } from 'react';
 
 import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
-import { type UseTiptapEditorOptions } from '../hooks/useTiptapEditor';
+import type { UseTiptapEditorOptions } from '../hooks/useTiptapEditor';
 import ExtensionKit from '../kit';
 import { cssVar } from '../utils/cssVar';
 import { throttle } from '../utils/throttle';
 import MenuBar from './MenuBar';
+import { CodeBlockMenu, ImageMenu, LinkMenu } from './menus';
 import TiptapProvider from './Provider';
 import Resizer from './Resizer';
 import StatusBar from './StatusBar';
-import { CodeBlockMenu, ImageMenu, LinkMenu } from './menus';
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;
 };
@@ -53,14 +53,14 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
       contentMaxHeight,
       onContentChange,
     },
-    ref
+    ref,
   ) => {
     const isEditable = !readonly && !disabled;
     const displayBubbleMenu = isEditable && hideBubbleMenu;
 
     const throttledUpdate = useCallback(
       throttle((value: Content) => onContentChange?.(value), 1500),
-      []
+      [],
     );
 
     const handleUpdate = useCallback(
@@ -73,7 +73,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
             : editor.getJSON();
         throttledUpdate(content);
       },
-      [throttledUpdate, output]
+      [throttledUpdate, output],
     );
 
     const editorOptions: UseTiptapEditorOptions = {
@@ -118,7 +118,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
         <Resizer />
       </TiptapProvider>
     );
-  }
+  },
 );
 
 TiptapEditor.displayName = 'TiptapEditor';

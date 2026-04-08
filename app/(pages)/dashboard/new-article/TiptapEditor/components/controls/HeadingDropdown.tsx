@@ -1,5 +1,8 @@
 'use client';
 
+import { useEditorState } from '@tiptap/react';
+import { ChevronDown } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -7,9 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useEditorState } from '@tiptap/react';
-import { ChevronDown } from 'lucide-react';
-import { useCallback, useMemo } from 'react';
 import { useTiptapContext } from '../Provider';
 
 const HEADING_LEVELS = [1, 2, 3, 4, 5, 6] as const;
@@ -26,7 +26,7 @@ const HeadingDropdown = () => {
       if (editor.isActive('paragraph')) return 'p' as Heading;
 
       const headingLevel = HEADING_LEVELS.find((level) =>
-        editor.isActive('heading', { level })
+        editor.isActive('heading', { level }),
       );
       if (headingLevel) return `h${headingLevel}` as Heading;
 
@@ -62,7 +62,7 @@ const HeadingDropdown = () => {
         class: 'text-md font-semibold',
       },
     ],
-    []
+    [],
   );
 
   const onSelect = useCallback(
@@ -77,7 +77,7 @@ const HeadingDropdown = () => {
         editor.chain().focus().setParagraph().run();
       }
     },
-    [editor]
+    [editor],
   );
 
   const currentLabel =
@@ -87,15 +87,15 @@ const HeadingDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
-          className="min-w-26 justify-between"
+          variant='ghost'
+          className='min-w-26 justify-between'
           disabled={!editor.isEditable || !current}
         >
-          <span className="truncate">{currentLabel}</span>
-          <ChevronDown className="ml-2 h-4 w-4 shrink-0" />
+          <span className='truncate'>{currentLabel}</span>
+          <ChevronDown className='ml-2 h-4 w-4 shrink-0' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align='start'>
         {options.map((item) => (
           <DropdownMenuItem
             key={item.value}

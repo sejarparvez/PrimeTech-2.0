@@ -1,3 +1,5 @@
+import { signOut } from 'next-auth/react';
+import { FaPowerOff } from 'react-icons/fa';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,8 +11,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { signOut } from 'next-auth/react';
-import { FaPowerOff } from 'react-icons/fa';
 import { Button } from '../ui/button';
 
 export default function Logout() {
@@ -20,8 +20,8 @@ export default function Logout() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
-          <span className="flex items-center gap-4">
+        <Button variant='destructive'>
+          <span className='flex items-center gap-4'>
             <FaPowerOff size={14} /> Log Out
           </span>
         </Button>

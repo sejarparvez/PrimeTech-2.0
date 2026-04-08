@@ -16,7 +16,7 @@ function useProgress(containerSelector: string) {
           if (!enable && entry.isIntersecting) setEnable(true);
         });
       },
-      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 }
+      { rootMargin: `0px 0px -${window.innerHeight - 64}px 0px`, threshold: 0 },
     );
 
     observer.observe(container);
@@ -63,7 +63,7 @@ const PostReadingProgress = () => {
 
   return enable ? (
     <div
-      className="fixed inset-x-0 top-16 z-50 h-1 bg-primary"
+      className='fixed inset-x-0 top-16 z-50 h-1 bg-primary'
       style={{ width: `${progress}%` }}
     />
   ) : null;

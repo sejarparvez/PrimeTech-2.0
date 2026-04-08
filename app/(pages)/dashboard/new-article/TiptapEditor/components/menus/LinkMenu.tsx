@@ -1,5 +1,6 @@
 import { useEditorState } from '@tiptap/react';
-import React, { memo, useCallback, useRef, useState } from 'react';
+import type React from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { BubbleMenu } from '../BubbleMenu';
 import { useTiptapContext } from '../Provider';
 
@@ -59,7 +60,7 @@ export const LinkMenu = () => {
   return (
     <BubbleMenu
       editor={editor}
-      pluginKey="link-menu"
+      pluginKey='link-menu'
       updateDelay={100}
       shouldShow={shouldShow}
       tippyOptions={{
@@ -86,13 +87,6 @@ export const LinkMenu = () => {
 
 export default memo(LinkMenu);
 
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import {
   TbCheck,
   TbCopy,
@@ -100,6 +94,13 @@ import {
   TbExternalLink,
   TbLinkOff,
 } from 'react-icons/tb';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 
 interface LinkViewProps {
@@ -118,14 +119,14 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5">
+      <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
         {onEdit && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="ghost"
-                type="button"
-                size="icon"
+                variant='ghost'
+                type='button'
+                size='icon'
                 onClick={onEdit}
               >
                 <TbEdit size={20} />
@@ -138,9 +139,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="ghost"
-              type="button"
-              size="icon"
+              variant='ghost'
+              type='button'
+              size='icon'
               onClick={handleOpenNewTab}
             >
               <TbExternalLink size={20} />
@@ -152,9 +153,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="ghost"
-              type="button"
-              size="icon"
+              variant='ghost'
+              type='button'
+              size='icon'
               onClick={() => copy(url)}
             >
               {isCopied ? <TbCheck size={20} /> : <TbCopy size={20} />}
@@ -167,9 +168,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="ghost"
-                type="button"
-                size="icon"
+                variant='ghost'
+                type='button'
+                size='icon'
                 onClick={onRemove}
               >
                 <TbLinkOff size={20} />
@@ -183,9 +184,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
   );
 };
 
+import { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useEffect } from 'react';
 
 interface LinkEditProps {
   initialUrl?: string;
@@ -221,14 +222,14 @@ const LinkEdit = ({
   }, [text, url]);
 
   return (
-    <form className="w-80 space-y-2 rounded border p-4" onSubmit={onSubmit}>
+    <form className='w-80 space-y-2 rounded border p-4' onSubmit={onSubmit}>
       <div>
         <Label>URL</Label>
         <Input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="Paste link"
-          type="url"
+          placeholder='Paste link'
+          type='url'
           required
           autoFocus
         />
@@ -238,15 +239,15 @@ const LinkEdit = ({
         <Input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Enter link text"
+          placeholder='Enter link text'
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-end gap-2">
-        <Button variant="secondary" onClick={onCancel}>
+      <div className='mt-3 flex items-center justify-end gap-2'>
+        <Button variant='secondary' onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" disabled={!canSubmit}>
+        <Button type='submit' disabled={!canSubmit}>
           Apply
         </Button>
       </div>

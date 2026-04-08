@@ -8,8 +8,8 @@ import {
   PieChart,
   UserRoundSearch,
 } from 'lucide-react';
-import * as React from 'react';
-
+import { useSession } from 'next-auth/react';
+import type * as React from 'react';
 import { NavMain } from '@/components/layout/admin/nav-main';
 import { NavProjects } from '@/components/layout/admin/nav-projects';
 import { NavUser } from '@/components/layout/admin/nav-user';
@@ -21,7 +21,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
-import { useSession } from 'next-auth/react';
 
 export function DashboardSidebar({
   ...props
@@ -138,7 +137,7 @@ export function DashboardSidebar({
     session?.user?.role === 'ADMIN' ? adminProjects : userProjects;
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
         <TeamSwitcher />
       </SidebarHeader>

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { Session } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
+import type { Session } from 'next-auth';
+import type { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
@@ -43,7 +43,7 @@ export const authOptions = {
         if (user.password) {
           const passwordMatch = await bcrypt.compareSync(
             credentials.password,
-            user.password
+            user.password,
           );
 
           if (!passwordMatch) {
