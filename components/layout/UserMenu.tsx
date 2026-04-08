@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -13,13 +12,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
-import Logout from '../common/Logout';
+import { useSession } from '@/lib/auth-client';
+import { SignOut } from './logout';
 
 export function UserMenu() {
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
-  if (status === 'loading') {
+  if (isPending) {
     return <Skeleton className='h-10 w-10 rounded-full' />;
   }
 
@@ -61,7 +61,7 @@ export function UserMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <Logout />
+        <SignOut />
       </DropdownMenuContent>
     </DropdownMenu>
   );

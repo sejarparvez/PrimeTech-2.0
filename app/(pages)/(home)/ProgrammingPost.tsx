@@ -1,10 +1,15 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-import { MessageCircle, MoveUpRight } from 'lucide-react';
+import {
+  AlertCircle,
+  MessageCircle,
+  MoveUpRight,
+  RefreshCw,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { FC } from 'react';
+import { type FC, useState } from 'react';
 import { useRecentPosts } from '@/app/services/article';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -17,6 +22,12 @@ type Variant = 'featured' | 'horizontal';
 
 const ProgrammingPost: FC = () => {
   const { data, isLoading, isError, refetch } = useRecentPosts();
+  const [isRefetching, setIsRefetching] = useState(false);
+  const handleRetry = async () => {
+    setIsRefetching(true);
+    await refetch();
+    setIsRefetching(false);
+  };
 
   if (isLoading) {
     return (
@@ -28,11 +39,35 @@ const ProgrammingPost: FC = () => {
 
   if (isError) {
     return (
-      <main className='flex min-h-screen items-center justify-center'>
-        <div className='text-center'>
-          <p className='mb-4'>Failed to load posts. Please try again.</p>
-          <Button onClick={() => refetch()}>Retry</Button>
+      <main className='flex min-h-[60vh] flex-col items-center justify-center p-6 text-center'>
+        <div className='bg-destructive/10 mb-4 flex h-20 w-20 items-center justify-center rounded-full'>
+          <AlertCircle className='text-destructive h-10 w-10' />
         </div>
+
+        <h2 className='mb-2 text-2xl font-bold tracking-tight'>
+          Couldn't load the guide
+        </h2>
+
+        <p className='text-muted-foreground mb-8 max-w-100'>
+          We ran into a technical hiccup while fetching the latest programming
+          posts. Please check your connection and try again.
+        </p>
+
+        <Button
+          onClick={handleRetry}
+          disabled={isRefetching}
+          size='lg'
+          className='min-w-35'
+        >
+          {isRefetching ? (
+            <>
+              <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
+              Retrying...
+            </>
+          ) : (
+            'Try Again'
+          )}
+        </Button>
       </main>
     );
   }

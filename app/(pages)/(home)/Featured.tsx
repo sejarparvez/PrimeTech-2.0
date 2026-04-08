@@ -29,7 +29,8 @@ export default function Featured() {
         <div>
           <h2 className='text-xl font-semibold'>Failed to load articles</h2>
           <p className='text-muted-foreground'>
-            We couldn't reach the soul of Bangladesh right now.
+            We couldn't fetch the featured stories at the moment. Please check
+            your connection or try again later.
           </p>
         </div>
         <Button onClick={() => refetch()} variant='outline'>

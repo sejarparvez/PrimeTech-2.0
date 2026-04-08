@@ -1,11 +1,11 @@
-import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '../provider/QueryProvider';
-import Provider from '../provider/SessionProvider';
+
 import { ThemeProvider } from '../provider/ThemeProvider';
-import ClientSideToastContainer from '../provider/ToastProvider';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -26,10 +26,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             enableSystem
             disableTransitionOnChange
           >
-            <Provider>
-              {children}
-              <ClientSideToastContainer />
-            </Provider>
+            {children}
+
             <Toaster richColors />
           </ThemeProvider>
         </QueryProvider>

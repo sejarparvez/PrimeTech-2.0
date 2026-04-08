@@ -5,7 +5,9 @@ export async function GET() {
   try {
     const lastUpdatedPost = await prisma.post.findMany({
       where: {
-        category: 'Featured',
+        category: {
+          name: 'Featured',
+        },
       },
       select: {
         id: true,
@@ -50,8 +52,6 @@ export async function GET() {
         headers: { 'Content-Type': 'text/plain' },
       });
     }
-
-    console.error('Error fetching last updated post:', error);
 
     return new NextResponse('Internal Server Error', {
       status: 500,
