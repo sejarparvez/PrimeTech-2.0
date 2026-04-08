@@ -1,4 +1,8 @@
 'use client';
+import { Button } from '@/components/ui/button';
+import { Field, FieldError } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Briefcase, Send } from 'lucide-react';
@@ -12,16 +16,6 @@ import {
   FaTwitter,
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
 import 'react-toastify/dist/ReactToastify.css';
 import { z } from 'zod';
 
@@ -30,11 +24,14 @@ const FormSchema = z.object({
 });
 
 export default function Footer() {
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      email: '',
-    },
+    defaultValues: { email: '' },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -44,20 +41,20 @@ export default function Footer() {
         email: data.email,
       });
       toast.dismiss();
-
       if (response.status === 200) {
-        toast.dismiss();
         toast.success('Successfully subscribed!');
-        form.reset();
+        reset();
       } else if (response.status === 409) {
         toast.dismiss();
         toast.info('Email already in use');
       }
+      // biome-ignore lint/suspicious/noExplicitAny: this is fine
     } catch (error: any) {
       toast.dismiss();
       toast.error(`${error.response.data.message}`);
     }
   }
+
   return (
     <footer className='mt-20 bg-linear-to-tl from-primary/10 via-primary/5 to-background px-4 pb-8 pt-16 sm:px-6 lg:px-8'>
       <div className='container mx-auto'>
@@ -194,36 +191,31 @@ export default function Footer() {
             Join our newsletter for the latest design trends and exclusive
             offers.
           </p>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className='mx-auto max-w-md'
-            >
-              <div className='mx-auto flex w-full justify-center gap-4'>
-                <FormField
-                  control={form.control}
-                  name='email'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          placeholder='Email Address'
-                          aria-label='Email for newsletter'
-                          className='border-primary/20 bg-background/50 pr-10 backdrop-blur-xs focus:border-primary md:min-w-80'
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+          <form onSubmit={handleSubmit(onSubmit)} className='mx-auto max-w-md'>
+            <div className='flex w-full justify-center gap-4'>
+              <Field>
+                <Input
+                  id='email'
+                  placeholder='Email Address'
+                  aria-label='Email for newsletter'
+                  aria-invalid={!!errors.email}
+                  className='border-primary/20 bg-background/50 pr-10 backdrop-blur-xs focus:border-primary md:min-w-80'
+                  {...register('email')}
                 />
-                <Button type='submit' size='icon'>
-                  <Send className='h-4 w-4' />
-                  <span className='sr-only'>Subscribe</span>
-                </Button>
-              </div>
-            </form>
-          </Form>
+                <FieldError
+                  errors={
+                    errors.email
+                      ? [{ message: errors.email.message ?? 'Invalid email' }]
+                      : []
+                  }
+                />
+              </Field>
+              <Button type='submit' size='icon'>
+                <Send className='h-4 w-4' />
+                <span className='sr-only'>Subscribe</span>
+              </Button>
+            </div>
+          </form>
         </div>
 
         <Separator className='my-8 bg-primary/20' />
