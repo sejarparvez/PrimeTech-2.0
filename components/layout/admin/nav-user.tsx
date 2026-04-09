@@ -1,9 +1,5 @@
 'use client';
 
-import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import Logout from '@/components/common/Logout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -20,10 +16,19 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useSession } from '@/lib/auth-client';
+import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
+import Link from 'next/link';
+import { SignOut } from '../logout';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { data: session } = useSession();
+  const { data: session, isPending } = useSession();
+
+  if (isPending) {
+    return <Skeleton className='h-10 w-10 rounded-full' />;
+  }
 
   return (
     <SidebarMenu>
@@ -93,7 +98,7 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
 
-            <Logout />
+            <SignOut />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

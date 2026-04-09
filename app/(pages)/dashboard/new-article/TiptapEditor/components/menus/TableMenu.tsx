@@ -1,20 +1,5 @@
 'use client';
 
-import type { Editor } from '@tiptap/core';
-import type React from 'react';
-import { useCallback } from 'react';
-import { AiOutlineMergeCells, AiOutlineSplitCells } from 'react-icons/ai';
-import {
-  TbColumnInsertLeft,
-  TbColumnInsertRight,
-  TbColumnRemove,
-  TbRowInsertBottom,
-  TbRowInsertTop,
-  TbRowRemove,
-  TbTableColumn,
-  TbTableRow,
-  TbTrash,
-} from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -22,6 +7,22 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import type { Editor } from '@tiptap/core';
+import {
+  BetweenHorizontalEnd,
+  BetweenHorizontalStart,
+  BetweenVerticalEnd,
+  BetweenVerticalStart,
+  Columns2,
+  Rows2,
+  TableCellsMerge,
+  TableCellsSplit,
+  Trash2,
+  X,
+  XSquare,
+} from 'lucide-react';
+import type React from 'react';
+import { useCallback } from 'react';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu, type BubbleMenuProps } from '../BubbleMenu';
 import { useTiptapContext } from '../Provider';
@@ -117,59 +118,59 @@ const TableMenu: React.FC = () => {
     <BubbleMenu {...bubbleMenuProps}>
       <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>
         <MenuButton
-          icon={TbRowInsertTop}
+          icon={BetweenHorizontalStart}
           tooltip='Add row above'
           onClick={addRowOrColumn('Row', 'Before')}
         />
         <MenuButton
-          icon={TbRowInsertBottom}
+          icon={BetweenHorizontalEnd}
           tooltip='Add row below'
           onClick={addRowOrColumn('Row', 'After')}
         />
         <MenuButton
-          icon={TbColumnInsertLeft}
+          icon={BetweenVerticalStart}
           tooltip='Add column before'
           onClick={addRowOrColumn('Column', 'Before')}
         />
         <MenuButton
-          icon={TbColumnInsertRight}
+          icon={BetweenVerticalEnd}
           tooltip='Add column after'
           onClick={addRowOrColumn('Column', 'After')}
         />
         <MenuButton
-          icon={AiOutlineSplitCells}
+          icon={TableCellsSplit}
           tooltip='Split cell'
           onClick={splitCell}
         />
         <MenuButton
-          icon={AiOutlineMergeCells}
+          icon={TableCellsMerge}
           tooltip='Merge cells'
           onClick={mergeCells}
         />
       </div>
       <div className='flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5 p-1.5'>
         <MenuButton
-          icon={TbTableRow}
+          icon={Rows2}
           tooltip='Toggle row header'
           onClick={toggleHeader('Row')}
         />
         <MenuButton
-          icon={TbTableColumn}
+          icon={Columns2}
           tooltip='Toggle column header'
           onClick={toggleHeader('Column')}
         />
         <MenuButton
-          icon={TbRowRemove}
+          icon={X}
           tooltip='Delete row'
           onClick={deleteRowOrColumn('Row')}
         />
         <MenuButton
-          icon={TbColumnRemove}
+          icon={XSquare}
           tooltip='Delete column'
           onClick={deleteRowOrColumn('Column')}
         />
         <MenuButton
-          icon={TbTrash}
+          icon={Trash2}
           tooltip='Delete table'
           onClick={deleteTable}
         />

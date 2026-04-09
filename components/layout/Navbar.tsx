@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60'>
-      <div className='container mx-auto px-4 md:px-0 flex h-16 items-center'>
+      <div className='container mx-auto flex h-16 items-center px-4'>
         <Sheet>
           <SheetTrigger asChild>
             <Button

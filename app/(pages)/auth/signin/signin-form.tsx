@@ -1,14 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, Info } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -22,6 +13,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { signIn } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff, Info } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 // Login schema
 const loginSchema = z.object({
@@ -103,7 +103,7 @@ export function LoginForm({
         description: 'Redirecting you to your Profile...',
       });
 
-      router.push('/dashboard/my-account');
+      router.push('/dashboard');
     } catch (_err) {
       toast.error('Unexpected error', {
         description: 'An unexpected error occurred. Please try again.',
@@ -119,7 +119,7 @@ export function LoginForm({
     try {
       await signIn.social({
         provider: provider,
-        callbackURL: '/dashboard/my-account',
+        callbackURL: '/dashboard',
         errorCallbackURL: '/auth/error',
       });
 

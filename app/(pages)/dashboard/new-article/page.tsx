@@ -1,18 +1,4 @@
 'use client';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { ChevronLeft, Upload, X } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import type React from 'react';
-import { useRef, useState } from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
-import { CgAsterisk } from 'react-icons/cg';
-import { toast } from 'react-toastify';
-import type * as z from 'zod';
-import { articleCategories } from '@/app/constants/articleCategory';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,13 +9,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -40,94 +26,93 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import { articleCategories } from '@/constants/articleCategory';
+import { useSession } from '@/lib/auth-client';
+import { NewArticleSchema, type NewArticleSchemaType } from '@/lib/Schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { ChevronLeft, Upload, X } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import type React from 'react';
+import { useRef, useState } from 'react';
 import {
-  NewArticleSchema,
-  type NewArticleSchemaType,
-} from '../../../../lib/Schemas';
+  Controller,
+  FormProvider,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
+import { toast } from 'sonner';
+import type * as z from 'zod';
 import TiptapEditor, {
   type TiptapEditorRef,
 } from './TiptapEditor/components/Editor';
 
 export default function NewDesign() {
-  const { status } = useSession();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
 
-  // Handle loading and unauthenticated states
-  if (status === 'loading') return <ArticleSkeleton />;
-  if (status === 'unauthenticated') {
+  if (isPending) return <ArticleSkeleton />;
+  if (!session) {
     router.push('/login');
     return null;
   }
 
   return (
-    <>
-      <div className='md:mx-2'>
-        <NewArticleForm />
-      </div>
-    </>
+    <div className='md:mx-2'>
+      <NewArticleForm />
+    </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// ArticleSkeleton
+// ---------------------------------------------------------------------------
 
 function ArticleSkeleton() {
   return (
     <div className='min-h-screen p-4 md:p-6'>
-      {/* Header */}
       <div className='mb-8 flex items-center justify-between'>
         <div className='flex items-center gap-2'>
-          <Skeleton className='h-6 w-6' /> {/* Back button */}
-          <Skeleton className='h-8 w-32' /> {/* Title */}
+          <Skeleton className='h-6 w-6' />
+          <Skeleton className='h-8 w-32' />
         </div>
         <div className='flex items-center gap-2'>
-          <Skeleton className='h-9 w-24' /> {/* Discard button */}
-          <Skeleton className='h-9 w-28' /> {/* Save button */}
+          <Skeleton className='h-9 w-24' />
+          <Skeleton className='h-9 w-28' />
         </div>
       </div>
-
       <div className='grid grid-cols-1 gap-6 md:grid-cols-[1fr_300px]'>
         <div className='space-y-6'>
-          {/* Article Title */}
           <div className='space-y-2'>
-            <Skeleton className='h-5 w-24' /> {/* Label */}
-            <Skeleton className='h-10 w-full' /> {/* Input */}
+            <Skeleton className='h-5 w-24' />
+            <Skeleton className='h-10 w-full' />
           </div>
-
-          {/* Editor Toolbar */}
           <Skeleton className='h-10 w-full' />
-
-          {/* Content Area */}
           <div className='space-y-4'>
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-[90%]' />
             <Skeleton className='h-4 w-[95%]' />
             <Skeleton className='h-4 w-[85%]' />
           </div>
-
-          {/* Word Count */}
           <Skeleton className='mt-4 h-4 w-40' />
         </div>
-
-        {/* Sidebar */}
         <div className='space-y-6'>
-          {/* Cover Image Section */}
           <div className='space-y-2'>
-            <Skeleton className='h-5 w-28' /> {/* Label */}
-            <Skeleton className='h-[200px] w-full rounded-lg' />{' '}
-            {/* Image placeholder */}
-            <Skeleton className='h-4 w-48' /> {/* Help text */}
+            <Skeleton className='h-5 w-28' />
+            <Skeleton className='h-50 w-full rounded-lg' />
+            <Skeleton className='h-4 w-48' />
           </div>
-
-          {/* Category Section */}
           <div className='space-y-2'>
-            <Skeleton className='h-5 w-32' /> {/* Label */}
-            <Skeleton className='h-10 w-full' /> {/* Select */}
+            <Skeleton className='h-5 w-32' />
+            <Skeleton className='h-10 w-full' />
           </div>
-
-          {/* Tags Section */}
           <div className='space-y-2'>
-            <Skeleton className='h-5 w-16' /> {/* Label */}
+            <Skeleton className='h-5 w-16' />
             <div className='flex gap-2'>
-              <Skeleton className='h-10 flex-1' /> {/* Input */}
-              <Skeleton className='h-10 w-16' /> {/* Add button */}
+              <Skeleton className='h-10 flex-1' />
+              <Skeleton className='h-10 w-16' />
             </div>
           </div>
         </div>
@@ -136,30 +121,36 @@ function ArticleSkeleton() {
   );
 }
 
+// ---------------------------------------------------------------------------
+// NewArticleForm
+// ---------------------------------------------------------------------------
+
 function NewArticleForm() {
   const editorRef = useRef<TiptapEditorRef>(null);
   const [image, setImage] = useState<File | null>(null);
-  const [warning, setWarning] = useState<string>('');
+  const [imageWarning, setImageWarning] = useState('');
 
-  const form = useForm<z.infer<typeof NewArticleSchema>>({
+  const methods = useForm<z.infer<typeof NewArticleSchema>>({
     resolver: zodResolver(NewArticleSchema),
-    defaultValues: {
-      title: '',
-      content: '',
-      category: '',
-      tags: [],
-    },
+    defaultValues: { title: '', content: '', category: '', tags: [] },
   });
 
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = methods;
+
   const resetForm = () => {
-    form.reset({ title: '', content: '', category: '', tags: [] });
+    reset({ title: '', content: '', category: '', tags: [] });
     setImage(null);
-    setWarning('');
+    setImageWarning('');
   };
 
   async function onSubmit(data: NewArticleSchemaType) {
     if (!image) {
-      setWarning('Please upload an image.');
+      setImageWarning('Please upload an image.');
       return;
     }
 
@@ -174,9 +165,7 @@ function NewArticleForm() {
       const response = await axios.post(
         '/api/dashboard/single-article',
         formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        },
+        { headers: { 'Content-Type': 'multipart/form-data' } },
       );
       toast.dismiss();
       if (response.status === 201) {
@@ -192,8 +181,9 @@ function NewArticleForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+        {/* Header */}
         <div className='flex flex-wrap items-center gap-4'>
           <Link href='/dashboard/'>
             <Button
@@ -215,57 +205,77 @@ function NewArticleForm() {
           </div>
         </div>
 
+        {/* Body */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-12'>
+          {/* Main column */}
           <div className='space-y-6 md:col-span-2 lg:col-span-8'>
-            <FormField
-              control={form.control}
+            {/* Title */}
+            <Controller
+              control={control}
               name='title'
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Article Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Enter post title...' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <Field>
+                  <FieldLabel htmlFor='article-title'>Article Title</FieldLabel>
+                  <Input
+                    id='article-title'
+                    placeholder='Enter post title...'
+                    {...field}
+                  />
+                  {errors.title && (
+                    <FieldError>{errors.title.message}</FieldError>
+                  )}
+                </Field>
               )}
             />
-            <FormField
-              control={form.control}
+
+            {/* Content */}
+            <Controller
+              control={control}
               name='content'
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Article Content</FormLabel>
-                  <FormControl>
-                    <TiptapEditor
-                      ref={editorRef}
-                      ssr
-                      output='html'
-                      placeholder={{
-                        paragraph: 'Type your content here...',
-                        imageCaption: 'Type caption for image (optional)',
-                      }}
-                      contentMinHeight={400}
-                      contentMaxHeight={640}
-                      onContentChange={field.onChange}
-                      initialContent={field.value}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <Field>
+                  <FieldLabel htmlFor='article-content'>
+                    Article Content
+                  </FieldLabel>
+                  <TiptapEditor
+                    ref={editorRef}
+                    ssr
+                    output='html'
+                    placeholder={{
+                      paragraph: 'Type your content here...',
+                      imageCaption: 'Type caption for image (optional)',
+                    }}
+                    contentMinHeight={400}
+                    contentMaxHeight={640}
+                    onContentChange={field.onChange}
+                    initialContent={field.value}
+                  />
+                  {errors.content && (
+                    <FieldError>{errors.content.message}</FieldError>
+                  )}
+                </Field>
               )}
             />
           </div>
 
+          {/* Sidebar */}
           <div className='space-y-6 lg:col-span-4'>
-            <ArticleImage image={image} setImage={setImage} error={warning} />
+            <ArticleImage
+              image={image}
+              setImage={setImage}
+              error={imageWarning}
+            />
             <NewArticleCategoryAndTags />
           </div>
         </div>
       </form>
-    </Form>
+    </FormProvider>
   );
 }
+
+// ---------------------------------------------------------------------------
+// ArticleImage
+// ---------------------------------------------------------------------------
 
 interface ArticleImageProps {
   image: File | null;
@@ -280,18 +290,14 @@ function ArticleImage({ image, setImage, error }: ArticleImageProps) {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
-        setImageError(
-          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
-        );
-        toast.error(
-          `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`,
-        );
-      } else {
-        setImage(file);
-        setImageError(null);
-      }
+    if (!file) return;
+    if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
+      const msg = `Image size exceeds the maximum limit of ${MAX_IMAGE_SIZE_KB} KB`;
+      setImageError(msg);
+      toast.error(msg);
+    } else {
+      setImage(file);
+      setImageError(null);
     }
   };
 
@@ -300,30 +306,35 @@ function ArticleImage({ image, setImage, error }: ArticleImageProps) {
     setImageError(null);
   };
 
+  const errorMessage = imageError || error;
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className='flex items-center gap-1'>
           Cover Image
-          <CgAsterisk className='h-3 w-3 text-destructive' aria-hidden='true' />
+          <span className='text-destructive text-xs' aria-hidden='true'>
+            *
+          </span>
         </CardTitle>
         <CardDescription>
           Upload an image. Maximum file size is {MAX_IMAGE_SIZE_KB} KB.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className='grid gap-4'>
+        <Field>
           {image ? (
             <div className='relative h-48 w-full max-w-sm overflow-hidden rounded-md'>
               <Image
                 src={URL.createObjectURL(image)}
-                alt='Product image'
+                alt='Cover image preview'
                 fill
                 className='object-cover'
               />
               <Button
                 variant='destructive'
                 size='icon'
+                type='button'
                 className='absolute right-2 top-2'
                 onClick={removeImage}
               >
@@ -354,47 +365,40 @@ function ArticleImage({ image, setImage, error }: ArticleImageProps) {
               </Label>
             </div>
           )}
-          {(imageError || error) && (
-            <p className='text-sm text-destructive' role='alert'>
-              {imageError || error}
-            </p>
-          )}
-        </div>
+          {errorMessage && <FieldError>{errorMessage}</FieldError>}
+        </Field>
       </CardContent>
     </Card>
   );
 }
 
-const RequiredLabel: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => (
-  <FormLabel className='flex items-center gap-1'>
-    {children}
-    <CgAsterisk className='h-3 w-3 text-destructive' aria-hidden='true' />
-  </FormLabel>
-);
+// ---------------------------------------------------------------------------
+// NewArticleCategoryAndTags
+// ---------------------------------------------------------------------------
 
 const NewArticleCategoryAndTags: React.FC = () => {
-  const { control, setValue, watch } = useFormContext<NewArticleSchemaType>();
-  const tags = watch('tags') || [];
+  const {
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<NewArticleSchemaType>();
 
+  const tags = watch('tags') ?? [];
   const [input, setInput] = useState('');
 
   const addTag = (tag: string) => {
-    const trimmedTag = tag.trim(); // Trim whitespace from the input
-    if (trimmedTag && !tags.includes(trimmedTag)) {
-      const currentTags = watch('tags') || [];
-      setValue('tags', [...currentTags, trimmedTag]); // Set the new tags array directly
-      setInput(''); // Clear the input field after adding the tag
-    } else if (!trimmedTag) {
-      console.warn('Cannot add an empty tag.'); // Optional: Add a warning for empty tags
+    const trimmed = tag.trim();
+    if (trimmed && !tags.includes(trimmed)) {
+      setValue('tags', [...tags, trimmed]);
+      setInput('');
     }
   };
 
   const removeTag = (indexToRemove: number) => {
     setValue(
       'tags',
-      tags.filter((_, index) => index !== indexToRemove),
+      tags.filter((_, i) => i !== indexToRemove),
     );
   };
 
@@ -413,20 +417,21 @@ const NewArticleCategoryAndTags: React.FC = () => {
         <CardTitle>Article Category and Tags</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className='grid gap-6'>
-          <div className='grid gap-4'>
-            <FormField
+        <FieldSet>
+          <FieldGroup>
+            {/* Category */}
+            <Controller
               control={control}
               name='category'
               render={({ field }) => (
-                <FormItem>
-                  <RequiredLabel>Article Category</RequiredLabel>
+                <Field>
+                  <FieldLabel htmlFor='article-category'>
+                    Article Category
+                  </FieldLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select Category' />
-                      </SelectTrigger>
-                    </FormControl>
+                    <SelectTrigger id='article-category'>
+                      <SelectValue placeholder='Select Category' />
+                    </SelectTrigger>
                     <SelectContent>
                       {articleCategories.map((category) => (
                         <SelectItem key={category.value} value={category.value}>
@@ -435,56 +440,68 @@ const NewArticleCategoryAndTags: React.FC = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
-                </FormItem>
+                  {errors.category && (
+                    <FieldError>{errors.category.message}</FieldError>
+                  )}
+                </Field>
               )}
             />
-          </div>
-          <div>
-            <FormLabel>Tags</FormLabel>
-            <div className='mb-2 flex flex-wrap gap-2'>
-              {tags
-                .filter((tag) => tag.trim() !== '') // Filter out empty string tags
-                .map((tag: string, index: number) => (
-                  <Badge
-                    key={index}
-                    variant='secondary'
-                    className='px-2 py-1 text-sm'
-                  >
-                    {tag}
-                    <Button
-                      variant='ghost'
-                      size='sm'
-                      type='button'
-                      className='ml-1 h-auto p-0'
-                      onClick={() => removeTag(index)}
-                    >
-                      <X className='h-3 w-3' />
-                      <span className='sr-only'>Remove {tag} tag</span>
-                    </Button>
-                  </Badge>
-                ))}
-            </div>
 
-            <div className='flex gap-2'>
-              <Input
-                type='text'
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder='Add a tag...'
-                className='grow'
-              />
-              <Button
-                variant='outline'
-                type='button'
-                onClick={() => addTag(input)}
-              >
-                Add
-              </Button>
-            </div>
-          </div>
-        </div>
+            {/* Tags */}
+            <Field>
+              <FieldLabel htmlFor='tag-input'>Tags</FieldLabel>
+              <FieldDescription>
+                Press Enter or click Add to insert a tag. Backspace removes the
+                last one.
+              </FieldDescription>
+              {tags.filter((t) => t.trim()).length > 0 && (
+                <div className='mb-2 flex flex-wrap gap-2'>
+                  {tags
+                    .filter((tag) => tag.trim() !== '')
+                    .map((tag, index) => (
+                      <Badge
+                        // biome-ignore lint/suspicious/noArrayIndexKey: stable tag list
+                        key={index}
+                        variant='secondary'
+                        className='px-2 py-1 text-sm'
+                      >
+                        {tag}
+                        <Button
+                          variant='ghost'
+                          size='sm'
+                          type='button'
+                          className='ml-1 h-auto p-0'
+                          onClick={() => removeTag(index)}
+                        >
+                          <X className='h-3 w-3' />
+                          <span className='sr-only'>Remove {tag} tag</span>
+                        </Button>
+                      </Badge>
+                    ))}
+                </div>
+              )}
+              <div className='flex gap-2'>
+                <Input
+                  id='tag-input'
+                  type='text'
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder='Add a tag...'
+                  className='grow'
+                />
+                <Button
+                  variant='outline'
+                  type='button'
+                  onClick={() => addTag(input)}
+                >
+                  Add
+                </Button>
+              </div>
+              {errors.tags && <FieldError>{errors.tags.message}</FieldError>}
+            </Field>
+          </FieldGroup>
+        </FieldSet>
       </CardContent>
     </Card>
   );

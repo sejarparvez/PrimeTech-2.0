@@ -1,8 +1,8 @@
-import type React from 'react';
-import { useState } from 'react';
-import { TbCheck, TbX } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Check, X } from 'lucide-react';
+import type React from 'react';
+import { useState } from 'react';
 
 interface AltTextEditProps {
   initialText?: string;
@@ -29,10 +29,10 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
       />
 
       <Button variant='ghost' size='icon' type='button' onClick={onSubmit}>
-        <TbCheck size={20} />
+        <Check size={20} />
       </Button>
       <Button variant='ghost' size='icon' type='button' onClick={onCancel}>
-        <TbX size={20} />
+        <X size={20} />
       </Button>
     </div>
   );

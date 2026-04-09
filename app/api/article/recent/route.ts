@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-
-const prisma = new PrismaClient();
 
 export async function GET() {
   try {
@@ -37,7 +35,7 @@ export async function GET() {
     }
 
     return new NextResponse(JSON.stringify(response), { status: 200 });
-  } catch (error) {
+  } catch (_error) {
     return new NextResponse(
       JSON.stringify({ error: 'Internal Server Error' }),
       { status: 500 },

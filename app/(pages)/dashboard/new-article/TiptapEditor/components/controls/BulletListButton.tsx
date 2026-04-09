@@ -1,5 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { TbList } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { List } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const BulletListButton = () => {
@@ -32,7 +32,7 @@ const BulletListButton = () => {
             type='button'
             size='icon'
           >
-            <TbList size={20} />
+            <List size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Bullet List (Ctrl+Shift+8)</TooltipContent>

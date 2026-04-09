@@ -1,6 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { memo, useCallback } from 'react';
-import { TbCheck, TbCopy, TbTrash } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -9,6 +6,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { Check, Copy, Trash2 } from 'lucide-react';
+import { memo, useCallback } from 'react';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu } from '../BubbleMenu';
@@ -90,7 +90,7 @@ export const CodeBlockMenu = () => {
                 onClick={handleCopy}
                 aria-label='Copy code'
               >
-                {isCopied ? <TbCheck size={20} /> : <TbCopy size={20} />}
+                {isCopied ? <Check size={20} /> : <Copy size={20} />}
               </Button>
             </TooltipTrigger>
             <TooltipContent>Copy code</TooltipContent>
@@ -105,7 +105,7 @@ export const CodeBlockMenu = () => {
                 onClick={handleDelete}
                 aria-label='Delete code'
               >
-                <TbTrash size={20} />
+                <Trash2 size={20} />
               </Button>
             </TooltipTrigger>
             <TooltipContent>Delete code</TooltipContent>
@@ -118,8 +118,6 @@ export const CodeBlockMenu = () => {
 
 export default memo(CodeBlockMenu);
 
-import { useMemo, useState } from 'react';
-import { TbChevronDown } from 'react-icons/tb';
 import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
 import { Input } from '@/components/ui/input';
 import {
@@ -127,6 +125,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { ChevronDown } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 interface CodeDropdownProps {
   value: string;
@@ -161,7 +161,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
           <span>
             {selectedOption ? selectedOption.label : 'Select language'}
           </span>
-          <TbChevronDown size={16} />
+          <ChevronDown size={16} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-60 p-2'>
@@ -190,7 +190,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
               }}
             >
               {item.value === value ? (
-                <TbCheck size={14} className='text-primary' />
+                <Check size={14} className='text-primary' />
               ) : (
                 <span className='w-4' />
               )}

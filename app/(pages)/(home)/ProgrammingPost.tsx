@@ -1,5 +1,10 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useRecentPosts } from '@/services/article';
 import { formatDistanceToNow } from 'date-fns';
 import {
   AlertCircle,
@@ -10,19 +15,36 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
-import { useRecentPosts } from '@/app/services/article';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { articleInterFace } from '../../../utils/interface';
 import { createSlug } from '../../../utils/slug';
 
 type Variant = 'featured' | 'horizontal';
 
+// Describes where each post slot lives in the grid
+interface LayoutSlot {
+  variant: Variant;
+  dataIndex: number;
+}
+
+const LAYOUT_SLOTS: LayoutSlot[] = [
+  { variant: 'horizontal', dataIndex: 0 },
+  { variant: 'horizontal', dataIndex: 1 },
+  { variant: 'featured', dataIndex: 2 },
+  { variant: 'horizontal', dataIndex: 3 },
+  { variant: 'horizontal', dataIndex: 4 },
+  { variant: 'featured', dataIndex: 5 },
+  { variant: 'horizontal', dataIndex: 6 },
+  { variant: 'horizontal', dataIndex: 7 },
+  { variant: 'featured', dataIndex: 8 },
+];
+
+// Minimum posts to attempt rendering the full grid at all
+const MIN_POSTS = 3;
+
 const ProgrammingPost: FC = () => {
   const { data, isLoading, isError, refetch } = useRecentPosts();
   const [isRefetching, setIsRefetching] = useState(false);
+
   const handleRetry = async () => {
     setIsRefetching(true);
     await refetch();
@@ -43,16 +65,13 @@ const ProgrammingPost: FC = () => {
         <div className='bg-destructive/10 mb-4 flex h-20 w-20 items-center justify-center rounded-full'>
           <AlertCircle className='text-destructive h-10 w-10' />
         </div>
-
         <h2 className='mb-2 text-2xl font-bold tracking-tight'>
           Couldn't load the guide
         </h2>
-
         <p className='text-muted-foreground mb-8 max-w-100'>
           We ran into a technical hiccup while fetching the latest programming
           posts. Please check your connection and try again.
         </p>
-
         <Button
           onClick={handleRetry}
           disabled={isRefetching}
@@ -72,6 +91,29 @@ const ProgrammingPost: FC = () => {
     );
   }
 
+  // Safely cap to whatever the API returned (up to 9)
+  const posts = data?.slice(0, 9) ?? [];
+
+  // Not enough posts to form a meaningful grid — show empty state
+  if (posts.length < MIN_POSTS) {
+    return (
+      <main className='flex min-h-[40vh] flex-col items-center justify-center p-6 text-center'>
+        <p className='text-muted-foreground text-lg'>
+          No programming posts available yet. Check back soon.
+        </p>
+      </main>
+    );
+  }
+
+  // Only render slots for which we actually have data
+  const activeSlots = LAYOUT_SLOTS.filter(
+    ({ dataIndex }) => dataIndex < posts.length,
+  );
+
+  // Partition into two rows (first 5 slots → row 1, remainder → row 2)
+  const row1 = activeSlots.filter(({ dataIndex }) => dataIndex < 5);
+  const row2 = activeSlots.filter(({ dataIndex }) => dataIndex >= 5);
+
   return (
     <section className='container pb-10 pt-10 md:pb-20 md:pt-16'>
       <div className='mb-10 flex flex-col items-center gap-4 md:mb-16 md:flex-row md:gap-20'>
@@ -86,41 +128,98 @@ const ProgrammingPost: FC = () => {
           <MoveUpRight className='h-5 w-5 md:h-6 md:w-6' />
         </Button>
       </div>
-      {/* First Row */}
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8'>
-        <div className='grid grid-cols-1 gap-4 md:col-span-4 md:grid md:gap-4'>
-          {data[0] && <PostCard post={data[0]} variant='horizontal' />}
-          {data[1] && <PostCard post={data[1]} variant='horizontal' />}
-        </div>
 
-        <div className='md:col-span-4'>
-          {data[2] && <PostCard post={data[2]} variant='featured' />}
-        </div>
+      {/* Row 1 */}
+      <GridRow slots={row1} posts={posts} />
 
-        <div className='grid grid-cols-1 gap-4 md:col-span-4 md:gap-4'>
-          {data[3] && <PostCard post={data[3]} variant='horizontal' />}
-          {data[4] && <PostCard post={data[4]} variant='horizontal' />}
+      {/* Row 2 */}
+      {row2.length > 0 && (
+        <div className='mt-4'>
+          <GridRow slots={row2} posts={posts} />
         </div>
-      </div>
-
-      {/* Second Row */}
-      <div className='mt-4 grid grid-cols-1 gap-8 md:grid-cols-12'>
-        <div className='md:col-span-4'>
-          {data[5] && <PostCard post={data[5]} variant='featured' />}
-        </div>
-
-        <div className='grid grid-cols-1 gap-4 md:col-span-4 md:gap-4'>
-          {data[6] && <PostCard post={data[6]} variant='horizontal' />}
-          {data[7] && <PostCard post={data[7]} variant='horizontal' />}
-        </div>
-
-        <div className='md:col-span-4'>
-          {data[8] && <PostCard post={data[8]} variant='featured' />}
-        </div>
-      </div>
+      )}
     </section>
   );
 };
+
+// ---------------------------------------------------------------------------
+// GridRow — renders one row of up to 5 slots in a 12-column grid
+// ---------------------------------------------------------------------------
+
+interface GridRowProps {
+  slots: LayoutSlot[];
+  posts: articleInterFace[];
+}
+
+const GridRow: FC<GridRowProps> = ({ slots, posts }) => {
+  // Group consecutive horizontal slots into pairs so they share a column
+  const columns = groupIntoColumns(slots);
+
+  return (
+    <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8'>
+      {columns.map((col, colIdx) => {
+        if (col.length === 1 && col[0].variant === 'featured') {
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
+            <div key={colIdx} className='md:col-span-4'>
+              <PostCard post={posts[col[0].dataIndex]} variant='featured' />
+            </div>
+          );
+        }
+
+        // One or two horizontal cards stacked in the same column
+        return (
+          <div
+            // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
+            key={colIdx}
+            className='grid grid-cols-1 gap-4 md:col-span-4 md:gap-4'
+          >
+            {col.map((slot) => (
+              <PostCard
+                key={slot.dataIndex}
+                post={posts[slot.dataIndex]}
+                variant='horizontal'
+              />
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+/**
+ * Groups slots so that consecutive horizontal slots share a column group,
+ * and featured slots each get their own column group.
+ */
+function groupIntoColumns(slots: LayoutSlot[]): LayoutSlot[][] {
+  const columns: LayoutSlot[][] = [];
+  let i = 0;
+
+  while (i < slots.length) {
+    const slot = slots[i];
+
+    if (slot.variant === 'featured') {
+      columns.push([slot]);
+      i++;
+    } else {
+      // Grab up to 2 consecutive horizontal slots
+      const pair: LayoutSlot[] = [slot];
+      if (i + 1 < slots.length && slots[i + 1].variant === 'horizontal') {
+        pair.push(slots[i + 1]);
+        i++;
+      }
+      columns.push(pair);
+      i++;
+    }
+  }
+
+  return columns;
+}
+
+// ---------------------------------------------------------------------------
+// PostCard
+// ---------------------------------------------------------------------------
 
 interface PostCardProps {
   post: articleInterFace;
@@ -145,7 +244,9 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
       <div className='absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent' />
       <div className='relative flex h-full flex-col justify-end p-6 text-white'>
         <h3
-          className={`mb-2 font-bold ${variant === 'featured' ? 'text-xl md:text-4xl' : 'text-xl'}`}
+          className={`mb-2 font-bold ${
+            variant === 'featured' ? 'text-xl md:text-4xl' : 'text-xl'
+          }`}
         >
           {post.title}
         </h3>
@@ -175,6 +276,10 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
     </Card>
   </Link>
 );
+
+// ---------------------------------------------------------------------------
+// SkeletonFeaturedPosts
+// ---------------------------------------------------------------------------
 
 const SkeletonFeaturedPosts: FC = () => (
   <section className='container mx-auto px-4 py-16 md:py-24'>

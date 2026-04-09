@@ -1,15 +1,15 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useFeaturedArticles } from '@/services/article';
 import { formatDistanceToNow } from 'date-fns';
 import { FileQuestion, MessageCircle, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { useFeaturedArticles } from '@/app/services/article';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { articleInterFace } from '../../../utils/interface';
 import { createSlug } from '../../../utils/slug';
 
@@ -22,7 +22,7 @@ export default function Featured() {
 
   if (isError) {
     return (
-      <section className='container flex min-h-100 flex-col items-center justify-center space-y-4 text-center'>
+      <section className='container mx-auto px-4 md:px-0 flex min-h-100 flex-col items-center justify-center space-y-4 text-center'>
         <div className='rounded-full bg-destructive/10 p-4'>
           <FileQuestion className='h-8 w-8 text-destructive' />
         </div>
@@ -43,7 +43,7 @@ export default function Featured() {
   // Handle Empty Data
   if (!data || data.length === 0) {
     return (
-      <section className='container py-12'>
+      <section className='container mx-auto px-4 md:px-0 py-12'>
         <Card className='flex flex-col items-center justify-center border-dashed p-12 text-center'>
           <TrendingUp className='mb-4 h-12 w-12 text-muted-foreground/40' />
           <h2 className='text-2xl font-bold tracking-tight'>
@@ -168,7 +168,7 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => {
 };
 
 const SkeletonFeaturedPosts = () => (
-  <section className='container pt-4'>
+  <section className='container mx-auto px-4 md:px-0 pt-4'>
     <div className='grid grid-cols-1 gap-8 md:grid-cols-12'>
       <div className='md:col-span-8'>
         <Skeleton className='h-87.5 w-full rounded-xl md:h-136' />

@@ -1,5 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { TbArrowForwardUp } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { CornerUpRight } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const RedoButton = () => {
@@ -30,7 +30,7 @@ const RedoButton = () => {
             type='button'
             size='icon'
           >
-            <TbArrowForwardUp size={20} />
+            <CornerUpRight size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Redo (Ctrl+Y)</TooltipContent>

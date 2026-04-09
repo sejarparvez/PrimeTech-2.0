@@ -1,8 +1,8 @@
 'use client';
 
-import type React from 'react';
-import { LuCheck } from 'react-icons/lu';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Check } from 'lucide-react';
+import type React from 'react';
 import { cn } from '../../../../../lib/utils';
 
 interface MediaGalleryProps {
@@ -42,7 +42,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
                 )}
               >
                 {selected?.id === image.id && (
-                  <LuCheck aria-hidden='true' className='w-4.5 h-4.5' />
+                  <Check aria-hidden='true' className='w-4.5 h-4.5' />
                 )}
               </div>
             )}

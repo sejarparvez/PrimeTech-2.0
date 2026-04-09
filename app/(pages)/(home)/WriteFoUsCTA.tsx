@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 export default function WriteForUsCTA() {
   return (
-    <div className='container mt-10 md:mt-16'>
+    <div className='container px-4 md:px-0 mx-auto mt-10 md:mt-16'>
       <Card className='bg-primary text-primary-foreground'>
         <CardContent className='mx-auto flex w-fit flex-col items-center justify-center gap-5 p-4 text-center'>
           <h1 className='text-3xl font-extrabold md:text-4xl'>

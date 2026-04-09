@@ -1,73 +1,55 @@
 'use client';
 
-import { ChevronRight, type LucideIcon } from 'lucide-react';
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
 import {
   SidebarGroup,
-  SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import type { Icon } from '@tabler/icons-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+// Define the structure for Nav Item, matching what is passed from AppSidebar
+// Note: We don't need 'role' here, as the filtering is already done in the parent.
+// But we should ensure the 'icon' type matches the definition used in 'AppSidebar'.
+interface NavItem {
+  title: string;
+  url: string;
+  // Use React.ElementType which is often a safer type for components passed as props
+  icon?: Icon | React.ElementType;
+}
 
 export function NavMain({
   items,
 }: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
+  // Use the defined NavItem interface
+  items: NavItem[];
 }) {
+  const pathname = usePathname();
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Admin Menu</SidebarGroupLabel>
-      <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className='group/collapsible'
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+      <SidebarGroupContent className='flex flex-col gap-2'>
+        <SidebarMenu>
+          {/* Ensure 'items' is used */}
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <Link href={item.url}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  data-state={pathname === item.url ? 'active' : 'inactive'}
+                  className='data-[state=active]:bg-primary data-[state=active]:text-primary-foreground'
+                >
+                  {/* Render the icon component if it exists */}
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                 </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
+              </Link>
             </SidebarMenuItem>
-          </Collapsible>
-        ))}
-      </SidebarMenu>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
     </SidebarGroup>
   );
 }

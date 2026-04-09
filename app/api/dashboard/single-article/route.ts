@@ -1,10 +1,10 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import { Prisma } from '../../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import {
   cloudinaryUploadImage,
   deleteImageFromCloudinary,
-} from '../../../../utils/cloudinary';
+} from '@/utils/cloudinary';
+import { getToken } from 'next-auth/jwt';
+import { type NextRequest, NextResponse } from 'next/server';
 
 const secret = process.env.NEXTAUTH_SECRET;
 
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       imageUrl = await cloudinaryUploadImage(imageFile, 'Article/');
     }
 
-    const newPost = await Prisma.post.create({
+    const newPost = await prisma.post.create({
       data: {
         title,
         coverImage: imageUrl.secure_url,
@@ -104,7 +104,7 @@ export async function PUT(req: NextRequest) {
     }
 
     // Update the post in the database
-    const updatedPost = await Prisma.post.update({
+    const updatedPost = await prisma.post.update({
       where: {
         id,
       },
@@ -125,6 +125,6 @@ export async function PUT(req: NextRequest) {
     console.log(error);
     return new NextResponse('Internal server error', { status: 500 });
   } finally {
-    await Prisma.$disconnect();
+    await prisma.$disconnect();
   }
 }

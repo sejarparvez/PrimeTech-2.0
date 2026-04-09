@@ -1,11 +1,5 @@
 'use client';
 
-import type { Node } from '@tiptap/pm/model';
-import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
-import { useEditorState } from '@tiptap/react';
-import { useCallback, useRef, useState } from 'react';
-import { TbDownload, TbTextCaption, TbTrash } from 'react-icons/tb';
-import type { Instance } from 'tippy.js';
 import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -15,6 +9,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import type { Node } from '@tiptap/pm/model';
+import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
+import { useEditorState } from '@tiptap/react';
+import { Captions, Download, Trash2 } from 'lucide-react';
+import { useCallback, useRef, useState } from 'react';
+import type { Instance } from 'tippy.js';
 import { BubbleMenu } from '../../BubbleMenu';
 import { useTiptapContext } from '../../Provider';
 import AltTextEdit from './AltTextEdit';
@@ -172,7 +172,7 @@ export const ImageMenu = () => {
                   size='icon'
                   variant={image?.hasCaption ? 'secondary' : 'ghost'}
                 >
-                  <TbTextCaption size={20} />
+                  <Captions size={20} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Toggle caption</TooltipContent>
@@ -197,7 +197,7 @@ export const ImageMenu = () => {
                   variant='ghost'
                   onClick={downloadImage}
                 >
-                  <TbDownload size={20} />
+                  <Download size={20} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Download image</TooltipContent>
@@ -211,7 +211,7 @@ export const ImageMenu = () => {
                   variant='ghost'
                   onClick={removeImage}
                 >
-                  <TbTrash size={20} />
+                  <Trash2 size={20} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Remove image</TooltipContent>

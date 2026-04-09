@@ -87,13 +87,6 @@ export const LinkMenu = () => {
 
 export default memo(LinkMenu);
 
-import {
-  TbCheck,
-  TbCopy,
-  TbEdit,
-  TbExternalLink,
-  TbLinkOff,
-} from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -101,6 +94,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { Check, Copy, ExternalLink, Link, Pencil } from 'lucide-react';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 
 interface LinkViewProps {
@@ -129,7 +123,7 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
                 size='icon'
                 onClick={onEdit}
               >
-                <TbEdit size={20} />
+                <Pencil size={20} />
               </Button>
             </TooltipTrigger>
             <TooltipContent>Edit link</TooltipContent>
@@ -144,7 +138,7 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
               size='icon'
               onClick={handleOpenNewTab}
             >
-              <TbExternalLink size={20} />
+              <ExternalLink size={20} />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Open in new tab</TooltipContent>
@@ -158,7 +152,7 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
               size='icon'
               onClick={() => copy(url)}
             >
-              {isCopied ? <TbCheck size={20} /> : <TbCopy size={20} />}
+              {isCopied ? <Check size={20} /> : <Copy size={20} />}
             </Button>
           </TooltipTrigger>
           <TooltipContent>{isCopied ? 'Copied' : 'Copy link'}</TooltipContent>
@@ -173,7 +167,7 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
                 size='icon'
                 onClick={onRemove}
               >
-                <TbLinkOff size={20} />
+                <Link size={20} />
               </Button>
             </TooltipTrigger>
             <TooltipContent>Unlink</TooltipContent>
@@ -184,9 +178,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
   );
 };
 
-import { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useEffect } from 'react';
 
 interface LinkEditProps {
   initialUrl?: string;

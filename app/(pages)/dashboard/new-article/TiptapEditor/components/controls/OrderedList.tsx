@@ -1,5 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { TbListNumbers } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { ListOrdered } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const OrderedListButton = () => {
@@ -32,7 +32,7 @@ const OrderedListButton = () => {
             type='button'
             size='icon'
           >
-            <TbListNumbers size={20} />
+            <ListOrdered size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Ordered List (Ctrl+Shift+7)</TooltipContent>

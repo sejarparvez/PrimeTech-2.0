@@ -1,5 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { TbLink } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { Link } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const LinkButton = () => {
@@ -30,7 +30,7 @@ const LinkButton = () => {
             type='button'
             size='icon'
           >
-            <TbLink size={20} />
+            <Link size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Link (Ctrl+K)</TooltipContent>

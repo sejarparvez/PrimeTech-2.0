@@ -1,17 +1,20 @@
 'use client';
+import { useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import AdminDashboard from './Admin-Dashboard';
 
 export default function Dashboard() {
-  const { status, data: session } = useSession();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
 
   // Handle loading and unauthenticated states
-  if (status === 'loading') return <p>Loading...</p>;
-  if (status === 'unauthenticated') {
-    router.push('/sign-in'); // Redirect to the sign-in page if not authenticated
-    return null;
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    router.push('/auth/signin');
+    return null; // Prevent rendering until redirect
   }
 
   // Conditional rendering based on user role

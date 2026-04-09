@@ -1,10 +1,9 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, Ruler } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { TbRuler } from 'react-icons/tb';
-import { Button } from '@/components/ui/button';
 
 interface SizeDropdownProps {
   value: number | null;
@@ -46,7 +45,7 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange }) => {
         type='button'
         onClick={() => setIsOpen(!isOpen)}
       >
-        <TbRuler size={20} />
+        <Ruler size={20} />
         <span>{value ? `${value}%` : 'Default'}</span>
         <ChevronDown size={20} />
       </Button>

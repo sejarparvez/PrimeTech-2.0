@@ -38,7 +38,7 @@ function useToc(options: UseTocOptions) {
       const items = Array.from(headings).map((heading) => ({
         id: heading.id,
         text: heading.textContent || '',
-        level: parseInt(heading.tagName[1]),
+        level: parseInt(heading.tagName[1], 10),
         node: heading,
       }));
 

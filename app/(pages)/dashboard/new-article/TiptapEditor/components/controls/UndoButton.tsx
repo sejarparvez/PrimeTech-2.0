@@ -1,5 +1,3 @@
-import { useEditorState } from '@tiptap/react';
-import { TbArrowBackUp } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useEditorState } from '@tiptap/react';
+import { CornerUpLeft } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const UndoButton = () => {
@@ -30,7 +30,7 @@ const UndoButton = () => {
             type='button'
             size='icon'
           >
-            <TbArrowBackUp size={20} />
+            <CornerUpLeft size={20} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Undo (Ctrl+Z)</TooltipContent>

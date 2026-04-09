@@ -1,13 +1,13 @@
 'use client';
 
-import { AlertCircle, Loader2, Upload } from 'lucide-react';
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { AlertCircle, Loader2, Upload } from 'lucide-react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import MediaGallery from './MediaGallery';
 
 interface MediaLibraryProps {
@@ -71,8 +71,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         body: formData,
       });
       return await response.json();
-    } catch (error) {
-      console.error('Upload error:', error);
+    } catch (_error) {
       toast.error('There was an error uploading your image. Please try again.');
     }
   };
@@ -126,8 +125,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         const response = await fetch('/api/dashboard/single-article/image');
         const data = await response.json();
         setImages(data);
-      } catch (error) {
-        console.error('Error fetching images:', error);
+      } catch (_error) {
         toast.error('Failed to load images. Please try again.');
       } finally {
         setLoading(false);
@@ -135,7 +133,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     };
 
     fetchImages();
-  }, [toast]);
+  }, []);
 
   return (
     <ScrollArea>

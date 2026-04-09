@@ -1,22 +1,23 @@
-import { type ReactNode, Suspense } from 'react';
-import BreadCrumb from '@/components/layout/admin/BreadCrumb';
-import { DashboardSidebar } from '@/components/layout/admin/DashboardSidebar';
 import Footer from '@/components/layout/Footer';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import Navbar from '@/components/layout/Navbar';
+import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
+import BreadCrumbComponent from '@/components/layout/sidebar/breadcrumb-component';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <div>
-      <SidebarProvider>
-        <Suspense fallback={<p>Loading...</p>}>
-          <DashboardSidebar />
-        </Suspense>
-        <main className='w-full'>
-          <BreadCrumb />
-          <div className='container md:px-4'>{children}</div>
-          <Footer />
-        </main>
-      </SidebarProvider>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <Navbar />
+        <BreadCrumbComponent />
+        <div className='min-h-[80vh]'>{children}</div>
+        <Footer />
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

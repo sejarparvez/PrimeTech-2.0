@@ -1,5 +1,10 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useDeleteArticle } from '@/services/article';
 import type {
   QueryObserverResult,
   RefetchOptions,
@@ -11,11 +16,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDeleteArticle } from '@/app/services/article';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { articleInterFace } from '../../../../utils/interface';
 import { createSlug } from '../../../../utils/slug';
 import { DeleteArticleDialog } from './DeleteArticleDialog';
