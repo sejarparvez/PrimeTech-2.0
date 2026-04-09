@@ -23,7 +23,7 @@ model User {
 
   sessions      Session[]
   accounts      Account[]
-  posts         Post[]
+  Articles         Article[]
   comments      Comment[]
   likes         Like[]
   subscribers   Subscriber[]
@@ -81,7 +81,7 @@ model Verification {
   @@map("verification")
 }
 
-model Post {
+model Article {
   id          String      @id @default(cuid())
   title       String
   slug        String      @unique
@@ -89,6 +89,7 @@ model Post {
   excerpt     String?
   coverImage  String
   imageId     String?
+  isFeatured  Boolean       @default(false)
   status      PostStatus  @default(DRAFT)
   tags        String[]
   views       Int         @default(0)
@@ -116,7 +117,7 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  posts       Post[]
+  articles       Article[]
 
   @@map("category")
 }
@@ -130,7 +131,7 @@ model Comment {
   authorId  String
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   postId    String
-  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  article      Article      @relation(fields: [postId], references: [id], onDelete: Cascade)
   likes     Like[]
 
   @@index([authorId])
@@ -145,7 +146,7 @@ model Like {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId    String?
-  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  article      Article?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   commentId String?
   comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 

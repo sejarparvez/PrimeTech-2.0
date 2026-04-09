@@ -1,5 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
+import { Code2, Plus, Quote, TableIcon } from 'lucide-react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,9 +25,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import clsx from 'clsx';
-import { Code2, Plus, Quote, TableIcon } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
 import { useTiptapContext } from '../Provider';
 
 const Youtube = ({ className }: { className?: string }) => (

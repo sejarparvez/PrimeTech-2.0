@@ -1,12 +1,10 @@
-import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { QueryProvider } from '../provider/QueryProvider';
-
-import { ThemeProvider } from '../provider/ThemeProvider';
-
+import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { QueryProvider } from '../provider/QueryProvider';
+import { ThemeProvider } from '../provider/ThemeProvider';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

@@ -1,46 +1,58 @@
+import { type NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const response = await prisma.post.findMany({
-      take: 9,
-      select: {
-        id: true,
-        title: true,
-        category: true,
-        coverImage: true,
-        updatedAt: true,
-        author: {
-          select: {
-            name: true,
-            image: true,
-          },
+    const { searchParams } = new URL(request.url);
+
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
+    const skip = (page - 1) * limit;
+
+    const category = searchParams.get('category');
+    // New param: featured
+    const featured = searchParams.get('featured') === 'true';
+
+    const whereClause = {
+      status: 'PUBLISHED' as const,
+      ...(category && { category: { slug: category.toLowerCase() } }),
+      ...(featured && { isFeatured: true }), // Only filter if featured=true is passed
+    };
+
+    const [totalArticles, articles] = await Promise.all([
+      prisma.article.count({ where: whereClause }),
+      prisma.article.findMany({
+        where: whereClause,
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          coverImage: true,
+          isFeatured: true,
+          updatedAt: true,
+          author: { select: { name: true, image: true } },
+          _count: { select: { comments: true } },
         },
-        _count: {
-          select: {
-            comments: true,
-          },
-        },
-      },
-      orderBy: {
-        updatedAt: 'desc',
+        orderBy: { updatedAt: 'desc' },
+        take: limit,
+        skip: skip,
+      }),
+    ]);
+
+    return NextResponse.json({
+      data: articles,
+      meta: {
+        total: totalArticles,
+        page,
+        limit,
+        totalPages: Math.ceil(totalArticles / limit),
+        hasMore: page < Math.ceil(totalArticles / limit),
       },
     });
-
-    if (response.length === 0) {
-      return new NextResponse(JSON.stringify({ error: 'No posts found' }), {
-        status: 404,
-      });
-    }
-
-    return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (_error) {
-    return new NextResponse(
-      JSON.stringify({ error: 'Internal Server Error' }),
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

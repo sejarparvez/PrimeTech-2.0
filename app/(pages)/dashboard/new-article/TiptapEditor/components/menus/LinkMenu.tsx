@@ -87,6 +87,7 @@ export const LinkMenu = () => {
 
 export default memo(LinkMenu);
 
+import { Check, Copy, ExternalLink, Link, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -94,7 +95,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Check, Copy, ExternalLink, Link, Pencil } from 'lucide-react';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 
 interface LinkViewProps {
@@ -178,9 +178,9 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
   );
 };
 
+import { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useEffect } from 'react';
 
 interface LinkEditProps {
   initialUrl?: string;

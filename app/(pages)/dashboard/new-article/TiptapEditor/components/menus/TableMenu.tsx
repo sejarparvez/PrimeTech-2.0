@@ -1,12 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import type { Editor } from '@tiptap/core';
 import {
   BetweenHorizontalEnd,
@@ -23,6 +16,13 @@ import {
 } from 'lucide-react';
 import type React from 'react';
 import { useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu, type BubbleMenuProps } from '../BubbleMenu';
 import { useTiptapContext } from '../Provider';

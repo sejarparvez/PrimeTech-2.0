@@ -1,3 +1,5 @@
+import { useEditorState } from '@tiptap/react';
+import { CornerUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -5,8 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { CornerUpRight } from 'lucide-react';
 import { useTiptapContext } from '../Provider';
 
 const RedoButton = () => {

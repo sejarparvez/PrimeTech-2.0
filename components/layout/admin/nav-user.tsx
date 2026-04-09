@@ -1,5 +1,7 @@
 'use client';
 
+import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
+import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -18,8 +20,6 @@ import {
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSession } from '@/lib/auth-client';
-import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
-import Link from 'next/link';
 import { SignOut } from '../logout';
 
 export function NavUser() {

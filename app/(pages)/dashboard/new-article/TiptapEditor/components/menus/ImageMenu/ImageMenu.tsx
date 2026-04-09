@@ -1,5 +1,11 @@
 'use client';
 
+import type { Node } from '@tiptap/pm/model';
+import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
+import { useEditorState } from '@tiptap/react';
+import { Captions, Download, Trash2 } from 'lucide-react';
+import { useCallback, useRef, useState } from 'react';
+import type { Instance } from 'tippy.js';
 import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -9,12 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import type { Node } from '@tiptap/pm/model';
-import { NodeSelection, type Selection, TextSelection } from '@tiptap/pm/state';
-import { useEditorState } from '@tiptap/react';
-import { Captions, Download, Trash2 } from 'lucide-react';
-import { useCallback, useRef, useState } from 'react';
-import type { Instance } from 'tippy.js';
 import { BubbleMenu } from '../../BubbleMenu';
 import { useTiptapContext } from '../../Provider';
 import AltTextEdit from './AltTextEdit';

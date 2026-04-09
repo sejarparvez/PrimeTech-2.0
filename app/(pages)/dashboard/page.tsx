@@ -1,6 +1,6 @@
 'use client';
-import { useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { useSession } from '@/lib/auth-client';
 import AdminDashboard from './Admin-Dashboard';
 
 export default function Dashboard() {

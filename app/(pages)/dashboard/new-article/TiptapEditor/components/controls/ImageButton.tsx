@@ -1,5 +1,8 @@
 'use client';
 
+import { useEditorState } from '@tiptap/react';
+import { ImageIcon } from 'lucide-react';
+import { useState } from 'react';
 import MediaLibrary from '@/app/(pages)/dashboard/new-article/MediaLibrary';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,9 +17,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { ImageIcon } from 'lucide-react';
-import { useState } from 'react';
 import { useTiptapContext } from '../Provider';
 
 interface ImageData {

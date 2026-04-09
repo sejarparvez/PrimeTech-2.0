@@ -1,10 +1,10 @@
+import { type NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 import { prisma } from '@/lib/prisma';
 import {
   cloudinaryUploadImage,
   deleteImageFromCloudinary,
 } from '@/utils/cloudinary';
-import { getToken } from 'next-auth/jwt';
-import { type NextRequest, NextResponse } from 'next/server';
 
 const secret = process.env.NEXTAUTH_SECRET;
 

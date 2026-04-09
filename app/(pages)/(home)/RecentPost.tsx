@@ -1,36 +1,35 @@
 'use client';
 
+import { formatDistanceToNow } from 'date-fns';
+import { AlertCircle, MessageCircle, MoveUpRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useRecentPosts } from '@/services/article';
-import { formatDistanceToNow } from 'date-fns';
-import {
-  AlertCircle,
-  Calendar,
-  MessageCircle,
-  MoveUpRight,
-  RefreshCw,
-} from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-import type { articleInterFace } from '../../../utils/interface';
-import { createSlug } from '../../../utils/slug';
+import { useArticles } from '@/services/article';
 
-const SKELETON_COUNT = 6;
+const LIMIT = 6;
 
 export default function RecentPostsList() {
-  const { data, isLoading, isError, refetch } = useRecentPosts();
-  const [isRefetching, setIsRefetching] = useState(false);
+  const [page, setPage] = useState(1);
 
-  const handleRetry = async () => {
-    setIsRefetching(true);
-    await refetch();
-    setIsRefetching(false);
-  };
+  // Use our new paginated hook
+  const {
+    data: response,
+    isLoading,
+    isError,
+    refetch,
+    isPlaceholderData,
+  } = useArticles({
+    limit: LIMIT,
+    page: page,
+  });
+
+  const handleRetry = () => refetch();
 
   if (isError) {
     return (
@@ -42,114 +41,118 @@ export default function RecentPostsList() {
           <h2 className='mb-2 text-2xl font-bold tracking-tight'>
             Couldn't load articles
           </h2>
-          <p className='text-muted-foreground mb-8 max-w-sm'>
-            We ran into a hiccup fetching the latest articles. Please check your
-            connection and try again.
-          </p>
-          <Button
-            onClick={handleRetry}
-            disabled={isRefetching}
-            size='lg'
-            className='min-w-35'
-          >
-            {isRefetching ? (
-              <>
-                <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
-                Retrying...
-              </>
-            ) : (
-              'Try Again'
-            )}
+          <Button onClick={handleRetry} variant='outline' className='mt-4'>
+            Try Again
           </Button>
         </div>
       </section>
     );
   }
 
-  const posts = data ?? [];
+  // Extract articles from the paginated response
+  const articles = response?.data ?? [];
+  const meta = response?.meta;
 
   return (
     <section className='container px-4 md:px-0 mx-auto mt-10 md:mt-16'>
-      <div className='mb-10 flex flex-col items-center gap-2 md:mb-16 md:flex-row md:gap-20'>
-        <h1 className='text-center text-3xl font-extrabold italic md:text-7xl'>
-          Latest Article
-        </h1>
-        <Button
-          variant='outline'
-          className='flex w-full items-center justify-center space-x-4 px-8 py-4 md:w-auto md:space-x-10 md:px-20 md:py-6'
-        >
-          <p className='text-base md:text-lg'>View All</p>
-          <MoveUpRight className='h-5 w-5 md:h-6 md:w-6' />
-        </Button>
+      <div className='mb-10 flex flex-col items-center justify-between gap-4 md:mb-16 md:flex-row'>
+        <div className='space-y-1 text-center md:text-left'>
+          <h2 className='text-3xl font-extrabold italic md:text-6xl tracking-tight'>
+            Latest Articles
+          </h2>
+          <p className='text-muted-foreground'>
+            Discover our most recent stories and guides.
+          </p>
+        </div>
+
+        <Link href='/articles'>
+          <Button variant='outline' size='lg' className='group'>
+            View All
+            <MoveUpRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1' />
+          </Button>
+        </Link>
       </div>
 
       <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
         {isLoading ? (
-          Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-            <PostSkeleton key={index} />
-          ))
-        ) : posts.length > 0 ? (
-          posts.map((post: articleInterFace) => (
-            <PostCard key={post.id} data={post} />
-          ))
+          Array.from({ length: LIMIT }).map((_, i) => <PostSkeleton key={i} />)
+        ) : articles.length > 0 ? (
+          articles.map((post) => <PostCard key={post.id} data={post} />)
         ) : (
-          <p className='text-muted-foreground col-span-full text-center'>
-            No articles available yet. Check back soon.
-          </p>
+          <div className='col-span-full py-20 text-center border-2 border-dashed rounded-2xl'>
+            <p className='text-muted-foreground'>No articles available yet.</p>
+          </div>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {meta && meta.totalPages > 1 && (
+        <div className='mt-12 flex items-center justify-center gap-4'>
+          <Button
+            variant='ghost'
+            disabled={page === 1 || isPlaceholderData}
+            onClick={() => setPage((old) => Math.max(old - 1, 1))}
+          >
+            Previous
+          </Button>
+          <span className='text-sm font-medium'>
+            Page {meta.page} of {meta.totalPages}
+          </span>
+          <Button
+            variant='ghost'
+            disabled={!meta.hasMore || isPlaceholderData}
+            onClick={() => setPage((old) => old + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
 
 // ---------------------------------------------------------------------------
-// PostCard
+// PostCard (Updated for new Schema)
 // ---------------------------------------------------------------------------
 
-export function PostCard({ data }: { data: articleInterFace }) {
+export function PostCard({ data }: { data: any }) {
+  // Use the slug directly from the database
+  const href = `/article/${data.slug}`;
+
   return (
-    <Link
-      href={createSlug({ id: data.id, name: data.title })}
-      className='group block'
-    >
-      <Card className='h-full overflow-hidden shadow-md transition-shadow hover:shadow-lg'>
-        <div className='relative h-48 sm:h-64'>
+    <Link href={href} className='group block h-full'>
+      <Card className='h-full overflow-hidden border-none bg-background shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1'>
+        <div className='relative h-52 sm:h-64'>
           <Image
-            src={data.coverImage || '/default-image.jpg'}
+            src={data.coverImage || '/placeholder.jpg'}
             alt={data.title}
             fill
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-            className='object-cover transition-transform duration-300 group-hover:scale-105'
+            className='object-cover transition-transform duration-500 group-hover:scale-105'
           />
           {data.category && (
-            <Badge className='absolute left-4 top-4 z-10'>
-              {data.category}
+            <Badge className='absolute left-4 top-4 z-10 bg-white/90 text-black backdrop-blur-md hover:bg-white'>
+              {data.category.name}
             </Badge>
           )}
         </div>
 
-        <div className='p-4 sm:p-6'>
-          <h2 className='mb-2 line-clamp-2 text-xl font-bold transition-colors group-hover:text-primary sm:text-2xl'>
-            {data.title}
-          </h2>
+        <div className='flex flex-col justify-between p-5 sm:p-6'>
+          <div>
+            <h3 className='mb-3 line-clamp-2 text-xl font-bold leading-tight transition-colors group-hover:text-primary sm:text-2xl'>
+              {data.title}
+            </h3>
+          </div>
 
-          <div className='flex items-center justify-between text-xs sm:text-sm'>
-            <div className='flex items-center space-x-2 sm:space-x-4'>
-              <Avatar>
-                <AvatarImage src={data.author?.image} alt={data.author?.name} />
-                <AvatarFallback>
-                  {data.author?.name?.charAt(0) ?? 'A'}
-                </AvatarFallback>
+          <div className='mt-4 flex items-center justify-between border-t pt-4'>
+            <div className='flex items-center space-x-3'>
+              <Avatar className='h-8 w-8'>
+                <AvatarImage src={data.author?.image} />
+                <AvatarFallback>{data.author?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
-
               <div>
-                <p className='font-semibold'>{data.author?.name ?? 'Author'}</p>
-                <time
-                  className='flex items-center text-muted-foreground'
-                  dateTime={data.updatedAt}
-                >
-                  <Calendar className='mr-1 h-3 w-3' />
+                <p className='text-xs font-bold'>{data.author?.name}</p>
+                <time className='text-[10px] text-muted-foreground uppercase tracking-widest'>
                   {formatDistanceToNow(new Date(data.updatedAt), {
                     addSuffix: true,
                   })}
@@ -158,8 +161,10 @@ export function PostCard({ data }: { data: articleInterFace }) {
             </div>
 
             <div className='flex items-center text-muted-foreground'>
-              <MessageCircle className='mr-1 h-4 w-4' />
-              <span>{data._count?.comments ?? 0}</span>
+              <MessageCircle className='mr-1.5 h-4 w-4' />
+              <span className='text-xs font-medium'>
+                {data._count?.comments ?? 0}
+              </span>
             </div>
           </div>
         </div>
@@ -167,6 +172,8 @@ export function PostCard({ data }: { data: articleInterFace }) {
     </Link>
   );
 }
+
+// ... Keep PostSkeleton as is
 
 // ---------------------------------------------------------------------------
 // PostSkeleton

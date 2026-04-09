@@ -1,3 +1,6 @@
+import { useEditorState } from '@tiptap/react';
+import { Check, Copy, Trash2 } from 'lucide-react';
+import { memo, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -6,9 +9,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { Check, Copy, Trash2 } from 'lucide-react';
-import { memo, useCallback } from 'react';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import { getNodeContainer } from '../../utils/getNodeContainer';
 import { BubbleMenu } from '../BubbleMenu';
@@ -118,6 +118,8 @@ export const CodeBlockMenu = () => {
 
 export default memo(CodeBlockMenu);
 
+import { ChevronDown } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
 import { Input } from '@/components/ui/input';
 import {
@@ -125,8 +127,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ChevronDown } from 'lucide-react';
-import { useMemo, useState } from 'react';
 
 interface CodeDropdownProps {
   value: string;

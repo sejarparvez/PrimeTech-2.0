@@ -1,10 +1,10 @@
+import { headers } from 'next/headers';
+import { type NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/auth-utils';
 import { prisma } from '@/lib/prisma';
 import { slugifyText } from '@/utils/slug';
-import { headers } from 'next/headers';
-import { type NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 
 const CreateCategorySchema = z.object({
   name: z

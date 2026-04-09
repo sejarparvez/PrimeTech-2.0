@@ -1,5 +1,8 @@
 'use client';
 
+import type { Icon } from '@tabler/icons-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -7,9 +10,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import type { Icon } from '@tabler/icons-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 // Define the structure for Nav Item, matching what is passed from AppSidebar
 // Note: We don't need 'role' here, as the filtering is already done in the parent.

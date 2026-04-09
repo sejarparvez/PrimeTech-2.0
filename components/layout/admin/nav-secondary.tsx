@@ -1,5 +1,9 @@
 'use client';
 
+import type { Icon } from '@tabler/icons-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type * as React from 'react';
 import { Badge } from '@/components/ui/badge'; // Import Badge component
 import {
   SidebarGroup,
@@ -8,10 +12,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import type { Icon } from '@tabler/icons-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import type * as React from 'react';
 
 // Define the structure for Nav Item, consistent with NavMain
 interface NavItem {

@@ -1,5 +1,7 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import React from 'react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,8 +11,6 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { usePathname } from 'next/navigation';
-import React from 'react';
 
 export default function BreadCrumb() {
   const pathname = usePathname();

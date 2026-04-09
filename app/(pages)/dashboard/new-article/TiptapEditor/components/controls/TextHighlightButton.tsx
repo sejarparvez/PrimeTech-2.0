@@ -1,3 +1,8 @@
+import { useEditorState } from '@tiptap/react';
+import { PaintBucket } from 'lucide-react';
+import type React from 'react';
+import { type CSSProperties, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -10,11 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { useEditorState } from '@tiptap/react';
-import { PaintBucket } from 'lucide-react';
-import type React from 'react';
-import { type CSSProperties, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import useMount from '../../hooks/useMount';
 import ColorPicker from '../color-picker';
 import { useTiptapContext } from '../Provider';

@@ -1,16 +1,6 @@
 'use client';
 
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { useSession } from '@/lib/auth-client';
-import {
   IconArrowDownCircle,
   IconArrowUpCircle,
   IconCash,
@@ -24,6 +14,16 @@ import {
   IconUsersPlus,
 } from '@tabler/icons-react';
 import { Dices, HeadphonesIcon } from 'lucide-react';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { useSession } from '@/lib/auth-client';
 import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
 

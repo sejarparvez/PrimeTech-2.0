@@ -1,10 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useRecentPosts } from '@/services/article';
 import { formatDistanceToNow } from 'date-fns';
 import {
   AlertCircle,
@@ -15,8 +10,11 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
-import type { articleInterFace } from '../../../utils/interface';
-import { createSlug } from '../../../utils/slug';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useArticles } from '@/services/article';
 
 type Variant = 'featured' | 'horizontal';
 
@@ -25,7 +23,6 @@ interface LayoutSlot {
   dataIndex: number;
 }
 
-// Grid shape: featured(0), horizontal(1-4), featured(5)
 const LAYOUT_SLOTS: LayoutSlot[] = [
   { variant: 'featured', dataIndex: 0 },
   { variant: 'horizontal', dataIndex: 1 },
@@ -38,7 +35,18 @@ const LAYOUT_SLOTS: LayoutSlot[] = [
 const MIN_POSTS = 1;
 
 export default function ComputingPost() {
-  const { isLoading, data, isError, refetch } = useRecentPosts();
+  // 1. Update to use the paginated response
+  const {
+    data: response,
+    isLoading,
+    isError,
+    refetch,
+  } = useArticles({
+    limit: 6,
+    // Add category filter if you have a specific 'computing' or 'laptops' category
+    // category: 'computing'
+  });
+
   const [isRefetching, setIsRefetching] = useState(false);
 
   const handleRetry = async () => {
@@ -51,6 +59,9 @@ export default function ComputingPost() {
     return <SkeletonComputingPost />;
   }
 
+  // 2. Safely access the data array from our new API structure
+  const posts = response?.data || [];
+
   if (isError) {
     return (
       <main className='flex min-h-[60vh] flex-col items-center justify-center p-6 text-center'>
@@ -60,21 +71,9 @@ export default function ComputingPost() {
         <h2 className='mb-2 text-2xl font-bold tracking-tight'>
           Couldn't load posts
         </h2>
-        <p className='text-muted-foreground mb-8 max-w-sm'>
-          We ran into a hiccup fetching the latest laptops & computers posts.
-          Please check your connection and try again.
-        </p>
-        <Button
-          onClick={handleRetry}
-          disabled={isRefetching}
-          size='lg'
-          className='min-w-35'
-        >
+        <Button onClick={handleRetry} disabled={isRefetching} size='lg'>
           {isRefetching ? (
-            <>
-              <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
-              Retrying...
-            </>
+            <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
           ) : (
             'Try Again'
           )}
@@ -83,13 +82,11 @@ export default function ComputingPost() {
     );
   }
 
-  const posts = data?.slice(0, 6) ?? [];
-
   if (posts.length < MIN_POSTS) {
     return (
       <main className='flex min-h-[40vh] flex-col items-center justify-center p-6 text-center'>
         <p className='text-muted-foreground text-lg'>
-          No posts available yet. Check back soon.
+          No computing posts available yet.
         </p>
       </main>
     );
@@ -100,21 +97,24 @@ export default function ComputingPost() {
   );
 
   return (
-    <div className='container'>
+    <div className='container py-10'>
       <div className='mb-16 flex flex-col items-start gap-6 md:flex-row md:items-center md:gap-20'>
         <h1 className='text-center text-4xl font-extrabold italic md:text-7xl'>
           Laptops & Computers
         </h1>
-        <Button
-          variant='outline'
-          className='flex w-full items-center justify-center space-x-4 px-8 py-4 md:w-auto md:space-x-10 md:px-20 md:py-6'
-        >
-          <p className='text-base md:text-lg'>View All</p>
-          <MoveUpRight className='h-5 w-5 md:h-6 md:w-6' />
-        </Button>
+        <Link href='/category/computing'>
+          <Button
+            variant='outline'
+            className='flex w-full items-center space-x-4 px-8 py-6 md:w-auto md:px-20'
+          >
+            <p className='text-base md:text-lg'>View All</p>
+            <MoveUpRight className='h-5 w-5' />
+          </Button>
+        </Link>
       </div>
 
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-5'>
+      {/* Grid structure: 4 columns, 5 rows on desktop */}
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-[1000px]'>
         {activeSlots.map(({ variant, dataIndex }) => (
           <div
             key={dataIndex}
@@ -133,57 +133,55 @@ export default function ComputingPost() {
 }
 
 // ---------------------------------------------------------------------------
-// PostCard
+// PostCard (Refactored for Article Model)
 // ---------------------------------------------------------------------------
 
-interface PostCardProps {
-  post: articleInterFace;
-  variant: Variant;
-}
-
-const PostCard: FC<PostCardProps> = ({ post, variant }) => (
-  <Link href={`${createSlug({ id: post.id, name: post.title })}`}>
-    <Card
-      className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg ${
-        variant === 'horizontal' ? 'flex h-72 md:h-full' : 'h-72'
-      }`}
-    >
+const PostCard: FC<{ post: any; variant: Variant }> = ({ post, variant }) => (
+  <Link href={`/article/${post.slug}`} className='block h-full'>
+    <Card className='group relative h-full overflow-hidden border-none shadow-md transition-all duration-500 hover:shadow-2xl'>
       <Image
-        src={post.coverImage || '/default-image.jpg'}
-        alt={`Cover image for ${post.title}`}
-        width={variant === 'horizontal' ? 300 : 800}
-        height={variant === 'horizontal' ? 256 : 528}
-        className='absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
+        src={post.coverImage || '/placeholder.jpg'}
+        alt={post.title}
+        fill
+        className='absolute inset-0 object-cover transition-transform duration-700 group-hover:scale-110'
         priority={variant === 'featured'}
       />
-      <div className='absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent' />
+      {/* Dynamic gradient overlay */}
+      <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent' />
+
       <div className='relative flex h-full flex-col justify-end p-6 text-white'>
         <h3
-          className={`mb-2 font-bold ${
-            variant === 'featured' ? 'text-xl md:text-2xl' : 'text-xl'
+          className={`font-bold leading-tight group-hover:text-primary-foreground/90 transition-colors ${
+            variant === 'featured'
+              ? 'text-2xl md:text-3xl mb-4'
+              : 'text-xl mb-2 line-clamp-2'
           }`}
         >
           {post.title}
         </h3>
-        {variant === 'horizontal' && post.author && (
-          <div className='flex items-center justify-between'>
+
+        {/* Show Author/Meta info on all variants for consistency, or keep your variant logic */}
+        {post.author && (
+          <div className='flex items-center justify-between border-t border-white/10 pt-4'>
             <div className='flex items-center space-x-2'>
-              <Avatar className='h-8 w-8 border-2 border-white'>
+              <Avatar className='h-7 w-7 border border-white/20'>
                 <AvatarImage src={post.author.image} />
-                <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback className='text-black text-[10px]'>
+                  {post.author.name.charAt(0)}
+                </AvatarFallback>
               </Avatar>
               <div>
-                <p className='text-sm font-medium'>{post.author.name}</p>
-                <p className='text-xs text-gray-300'>
+                <p className='text-xs font-semibold'>{post.author.name}</p>
+                <p className='text-[10px] text-white/50'>
                   {formatDistanceToNow(new Date(post.updatedAt), {
                     addSuffix: true,
                   })}
                 </p>
               </div>
             </div>
-            <div className='flex items-center space-x-2'>
-              <MessageCircle className='h-4 w-4' />
-              <span className='text-xs'>{post._count.comments}</span>
+            <div className='flex items-center space-x-1 text-white/80'>
+              <MessageCircle className='h-3 w-3' />
+              <span className='text-[10px]'>{post._count?.comments || 0}</span>
             </div>
           </div>
         )}
@@ -193,28 +191,29 @@ const PostCard: FC<PostCardProps> = ({ post, variant }) => (
 );
 
 // ---------------------------------------------------------------------------
-// SkeletonComputingPost
+// Skeleton (Aligned with the 5-row grid)
 // ---------------------------------------------------------------------------
 
 const SkeletonComputingPost: FC = () => (
-  <div className='container'>
-    <div className='grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-5'>
+  <div className='container py-10'>
+    <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-[1000px]'>
       <div className='md:col-span-2 md:row-span-2'>
-        <Card className='relative h-72 overflow-hidden'>
-          <Skeleton className='absolute inset-0 h-full w-full' />
-        </Card>
+        <Skeleton className='h-full w-full rounded-xl' />
       </div>
-      {[0, 1, 2, 3].map((i) => (
-        <div key={i} className='md:row-span-3'>
-          <Card className='relative h-72 overflow-hidden md:h-full'>
-            <Skeleton className='absolute inset-0 h-full w-full' />
-          </Card>
-        </div>
-      ))}
+      <div className='md:row-span-3'>
+        <Skeleton className='h-full w-full rounded-xl' />
+      </div>
+      <div className='md:row-span-3'>
+        <Skeleton className='h-full w-full rounded-xl' />
+      </div>
+      <div className='md:row-span-3'>
+        <Skeleton className='h-full w-full rounded-xl' />
+      </div>
+      <div className='md:row-span-3'>
+        <Skeleton className='h-full w-full rounded-xl' />
+      </div>
       <div className='md:col-span-2 md:row-span-2'>
-        <Card className='relative h-72 overflow-hidden'>
-          <Skeleton className='absolute inset-0 h-full w-full' />
-        </Card>
+        <Skeleton className='h-full w-full rounded-xl' />
       </div>
     </div>
   </div>

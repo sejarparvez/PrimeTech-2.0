@@ -1,5 +1,29 @@
 'use client';
 
+import {
+  BookOpen,
+  ExternalLink,
+  Hash,
+  Layers,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+} from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,22 +42,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useCategories } from '@/services/categories';
-import {
-  BookOpen,
-  ExternalLink,
-  Hash,
-  Layers,
-  MoreHorizontal,
-  Pencil,
-  Plus,
-  Search,
-  Trash2,
-} from 'lucide-react';
-import Link from 'next/link';
+import { useCategories, useDeleteCategory } from '@/services/categories';
 
 export default function CategoryManagementPage() {
-  const { isPending, data: categories, isError } = useCategories();
+  const { data: categories, isPending, isError } = useCategories();
+  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+
+  // State to track which category is being deleted
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filtering logic
+  const filteredCategories = categories?.filter(
+    (cat) =>
+      cat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      cat.slug.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   if (isPending) return <CategoryGridSkeleton />;
 
@@ -52,6 +76,15 @@ export default function CategoryManagementPage() {
       </div>
     );
   }
+
+  const handleDelete = () => {
+    if (deleteId) {
+      deleteCategory(deleteId, {
+        onSuccess: () => setDeleteId(null),
+        onError: () => setDeleteId(null),
+      });
+    }
+  };
 
   return (
     <div className='space-y-8 p-4 md:p-8 max-w-7xl mx-auto'>
@@ -81,19 +114,20 @@ export default function CategoryManagementPage() {
         <Input
           placeholder='Search by name or slug...'
           className='pl-10 h-11 bg-background shadow-sm'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
       {/* Responsive Grid */}
-      {categories?.length === 0 ? (
-        <div className='text-center py-20 border-2 border-dashed rounded-xl'>
-          <p className='text-muted-foreground'>
-            No categories found. Start by creating one!
-          </p>
+      {filteredCategories?.length === 0 ? (
+        <div className='text-center py-20 border-2 border-dashed rounded-xl bg-muted/10'>
+          <Layers className='h-10 w-10 text-muted-foreground mx-auto mb-4' />
+          <p className='text-muted-foreground'>No categories found.</p>
         </div>
       ) : (
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-          {categories?.map((category) => (
+          {filteredCategories?.map((category) => (
             <Card
               key={category.id}
               className='group relative flex flex-col justify-between hover:shadow-md transition-all duration-200 border-muted-foreground/10'
@@ -126,10 +160,17 @@ export default function CategoryManagementPage() {
                         <ExternalLink className='mr-2 h-4 w-4' /> Preview Public
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Pencil className='mr-2 h-4 w-4' /> Edit Details
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className='text-destructive focus:bg-destructive/10 focus:text-destructive'>
+                      <Link
+                        href={`/dashboard/admin/content/categories/edit/${category.id}`}
+                      >
+                        <DropdownMenuItem>
+                          <Pencil className='mr-2 h-4 w-4' /> Edit Details
+                        </DropdownMenuItem>
+                      </Link>
+                      <DropdownMenuItem
+                        className='text-destructive focus:bg-destructive/10 focus:text-destructive'
+                        onClick={() => setDeleteId(category.id)}
+                      >
                         <Trash2 className='mr-2 h-4 w-4' /> Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -139,8 +180,7 @@ export default function CategoryManagementPage() {
 
               <CardContent className='p-5 pt-2'>
                 <p className='text-sm text-muted-foreground line-clamp-3 min-h-15'>
-                  {category.description ||
-                    'No description provided for this category.'}
+                  {category.description || 'No description provided.'}
                 </p>
               </CardContent>
 
@@ -160,11 +200,39 @@ export default function CategoryManagementPage() {
           ))}
         </div>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        open={deleteId !== null}
+        onOpenChange={(open) => !open && setDeleteId(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the category. This action cannot be
+              undone and may affect associated articles.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDelete();
+              }}
+              disabled={isDeleting}
+              className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
+            >
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
 
-// --- Responsive Skeleton ---
 function CategoryGridSkeleton() {
   return (
     <div className='space-y-8 p-4 md:p-8 max-w-7xl mx-auto'>
@@ -177,8 +245,8 @@ function CategoryGridSkeleton() {
       </div>
       <Skeleton className='h-11 w-full max-w-md' />
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Skeleton key={i} className='h-55 w-full rounded-xl' />
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <Skeleton key={i} className='h-50 w-full rounded-xl' />
         ))}
       </div>
     </div>

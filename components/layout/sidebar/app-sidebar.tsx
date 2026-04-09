@@ -1,17 +1,6 @@
 'use client';
 
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useSession } from '@/lib/auth-client';
-import {
   BarChart3,
   BookOpen,
   Compass,
@@ -22,6 +11,17 @@ import {
   Settings,
   Users,
 } from 'lucide-react';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useSession } from '@/lib/auth-client';
 import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
 
