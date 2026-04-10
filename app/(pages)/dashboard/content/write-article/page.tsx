@@ -2,7 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { ChevronLeft, RefreshCw, Upload, X } from 'lucide-react';
+import {
+  CheckCircle,
+  ChevronLeft,
+  Loader2,
+  RefreshCw,
+  Upload,
+  X,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,6 +22,7 @@ import {
 } from 'react-hook-form';
 import slugify from 'slugify';
 import { toast } from 'sonner';
+import { useDebounce } from 'use-debounce';
 import type * as z from 'zod';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -30,9 +38,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Switch } from '@/components/ui/switch'; // Ensure you have this shadcn component
+import { Switch } from '@/components/ui/switch';
 import { useSession } from '@/lib/auth-client';
 import { NewArticleSchema, type NewArticleSchemaType } from '@/lib/Schemas';
+import { useSlugCheck } from '@/services/article';
 import { useCategories } from '@/services/categories';
 import TiptapEditor, {
   type TiptapEditorRef,
@@ -67,7 +76,6 @@ function NewArticleForm() {
   const [image, setImage] = useState<File | null>(null);
   const [isSlugCustomized, setIsSlugCustomized] = useState(false);
 
-  // Fetch dynamic categories from your TanStack Query hook
   const { data: categories, isLoading: categoriesLoading } = useCategories();
 
   const methods = useForm<z.infer<typeof NewArticleSchema>>({
@@ -91,8 +99,12 @@ function NewArticleForm() {
     formState: { errors },
   } = methods;
   const currentTitle = watch('title');
+  const currentSlug = watch('slug');
+  const [debouncedSlug] = useDebounce(currentSlug, 500);
 
-  // Auto-generate slug from title
+  const { data: slugCheckData, isFetching: isCheckingSlug } =
+    useSlugCheck(debouncedSlug);
+
   useEffect(() => {
     if (!isSlugCustomized && currentTitle) {
       setValue('slug', slugifyText(currentTitle), { shouldValidate: true });
@@ -225,6 +237,22 @@ function NewArticleForm() {
                       </Button>
                     )}
                   </div>
+                  {isSlugCustomized && currentSlug && (
+                    <div className='mt-1.5 flex items-center gap-1.5 text-xs'>
+                      {isCheckingSlug ? (
+                        <span className='flex items-center gap-1 text-muted-foreground'>
+                          <Loader2 className='h-3 w-3 animate-spin' />{' '}
+                          Checking...
+                        </span>
+                      ) : slugCheckData?.available ? (
+                        <span className='flex items-center gap-1 text-green-600'>
+                          <CheckCircle className='h-3 w-3' /> URL is available
+                        </span>
+                      ) : (
+                        <FieldError>URL is already taken</FieldError>
+                      )}
+                    </div>
+                  )}
                   {errors.slug && (
                     <FieldError>{errors.slug.message}</FieldError>
                   )}

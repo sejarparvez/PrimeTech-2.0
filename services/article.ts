@@ -215,3 +215,22 @@ export function useAdminDeleteArticle() {
     },
   });
 }
+
+/**
+ * Hook to check if a slug is available
+ */
+export function useSlugCheck(slug: string, excludeId?: string) {
+  return useQuery({
+    queryKey: ['slug-check', slug, excludeId],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      params.append('slug', slug);
+      if (excludeId) params.append('excludeId', excludeId);
+      const { data } = await axios.get(
+        `/api/article/check-slug?${params.toString()}`,
+      );
+      return data;
+    },
+    enabled: !!slug && slug.length >= 3,
+  });
+}

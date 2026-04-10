@@ -2,7 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { ChevronLeft, RefreshCw, Upload, X } from 'lucide-react';
+import {
+  CheckCircle,
+  ChevronLeft,
+  Loader2,
+  RefreshCw,
+  Upload,
+  X,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,6 +22,7 @@ import {
 } from 'react-hook-form';
 import slugify from 'slugify';
 import { toast } from 'sonner';
+import { useDebounce } from 'use-debounce';
 import type * as z from 'zod';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -33,7 +41,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
 import { useSession } from '@/lib/auth-client';
 import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
-import { useSingleArticle } from '@/services/article';
+import { useSingleArticle, useSlugCheck } from '@/services/article';
 import { useCategories } from '@/services/categories';
 import TiptapEditor, {
   type TiptapEditorRef,
@@ -113,6 +121,13 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
     formState: { errors, isDirty },
   } = methods;
   const currentTitle = watch('title');
+  const currentSlug = watch('slug');
+  const [debouncedSlug] = useDebounce(currentSlug, 500);
+
+  const { data: slugCheckData, isFetching: isCheckingSlug } = useSlugCheck(
+    debouncedSlug,
+    article?.id,
+  );
 
   useEffect(() => {
     if (article && categories && !formInitialized) {
@@ -328,6 +343,22 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
                       </Button>
                     )}
                   </div>
+                  {isSlugCustomized && currentSlug && (
+                    <div className='mt-1.5 flex items-center gap-1.5 text-xs'>
+                      {isCheckingSlug ? (
+                        <span className='flex items-center gap-1 text-muted-foreground'>
+                          <Loader2 className='h-3 w-3 animate-spin' />{' '}
+                          Checking...
+                        </span>
+                      ) : slugCheckData?.available ? (
+                        <span className='flex items-center gap-1 text-green-600'>
+                          <CheckCircle className='h-3 w-3' /> URL is available
+                        </span>
+                      ) : (
+                        <FieldError>URL is already taken</FieldError>
+                      )}
+                    </div>
+                  )}
                   {errors.slug && (
                     <FieldError>{errors.slug.message}</FieldError>
                   )}
