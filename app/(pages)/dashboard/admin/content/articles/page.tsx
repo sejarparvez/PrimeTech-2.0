@@ -284,7 +284,7 @@ export default function ArticlesManagementPage() {
                             <Eye className='mr-2 h-4 w-4' /> Preview
                           </DropdownMenuItem>
                           <Link
-                            href={`/dashboard/content/edit-article/${article.id}`}
+                            href={`/dashboard/content/edit-article/${article.slug}`}
                           >
                             <DropdownMenuItem>
                               <Pencil className='mr-2 h-4 w-4' /> Edit
