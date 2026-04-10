@@ -2,7 +2,6 @@ import { type Editor, EditorContent } from '@tiptap/react';
 import clsx from 'clsx';
 import {
   createContext,
-  type HTMLAttributes,
   type ReactNode,
   type RefObject,
   useContext,
@@ -32,14 +31,12 @@ type TiptapProviderProps = {
   slotBefore?: ReactNode;
   slotAfter?: ReactNode;
   editorOptions: UseTiptapEditorOptions;
-  editorProps?: HTMLAttributes<HTMLDivElement>;
   children?: ReactNode;
 };
 
 export const TiptapProvider = ({
   children,
   editorOptions,
-  editorProps,
   slotBefore,
   slotAfter,
 }: TiptapProviderProps) => {

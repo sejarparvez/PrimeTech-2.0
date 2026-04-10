@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 
-export type UploadWidgetInstance = any;
-export type CloudinaryInstance = any;
+export type UploadWidgetInstance = unknown;
+export type CloudinaryInstance = unknown;
 
 export interface UploadWidgetProps {
   children?: (options: UploadWidgetPropsChildren) => JSX.Element;
@@ -10,7 +10,7 @@ export interface UploadWidgetProps {
 }
 
 export interface UploadWidgetPropsChildren {
-  cloudinary?: any;
+  cloudinary?: CloudinaryInstance;
   widget?: UploadWidgetInstance;
   open: () => void;
 }

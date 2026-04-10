@@ -12,8 +12,7 @@ interface UseCodeMirrorProps {
 
 export function useCodeMirror({
   initialContent,
-  onChange,
-}: UseCodeMirrorProps) {
+}: Pick<UseCodeMirrorProps, 'initialContent'>) {
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

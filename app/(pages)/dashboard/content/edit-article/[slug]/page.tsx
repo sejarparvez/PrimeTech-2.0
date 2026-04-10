@@ -59,7 +59,6 @@ export default function EditArticlePage({ params }: EditArticlePageProps) {
   const { data: session, isPending } = useSession();
   const router = useRouter();
   const [articleSlug, setArticleSlug] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     params.then((p) => {

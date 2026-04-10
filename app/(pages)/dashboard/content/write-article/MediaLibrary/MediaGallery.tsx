@@ -1,14 +1,24 @@
 'use client';
 
 import { Check } from 'lucide-react';
+import Image from 'next/image';
 import type React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '../../../../../../lib/utils';
 
+interface CloudinaryAsset {
+  id: string;
+  url: string;
+  display_name: string;
+  format: string;
+  width: number;
+  height: number;
+}
+
 interface MediaGalleryProps {
-  data: any[];
-  selected: any | null;
-  onSelect: (image: any) => void;
+  data: CloudinaryAsset[];
+  selected: CloudinaryAsset | null;
+  onSelect: (image: CloudinaryAsset) => void;
 }
 
 const MediaGallery: React.FC<MediaGalleryProps> = ({
@@ -20,10 +30,11 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
     <ScrollArea className='h-full w-full'>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 p-6'>
         {data.map((image, index) => (
-          <div
+          <button
+            type='button'
             key={image.id || index}
             className={cn(
-              'relative flex cursor-pointer flex-col rounded-md border border-input transition-all',
+              'relative flex cursor-pointer flex-col rounded-md border border-input transition-all text-left',
               {
                 'ring-2 ring-ring ring-offset-2': selected?.id === image?.id,
                 'pointer-events-none opacity-20': !image?.id,
@@ -48,10 +59,12 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
             )}
 
             <div className='flex h-40 w-full justify-center bg-[repeating-conic-gradient(hsl(var(--muted))_0%_25%,transparent_0%_50%)_50%/20px_20px]'>
-              <img
+              <Image
                 src={image.url || '/placeholder.svg'}
                 alt={image.display_name}
                 className='max-h-full object-contain'
+                width={200}
+                height={160}
               />
             </div>
 
@@ -67,7 +80,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
                 </span>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </ScrollArea>

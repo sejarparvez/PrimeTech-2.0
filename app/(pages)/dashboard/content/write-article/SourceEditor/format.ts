@@ -1,5 +1,6 @@
 import parserHtml from 'prettier/plugins/html';
 import prettier from 'prettier/standalone';
+import { toast } from 'sonner';
 
 function removeHtmlEntities(html: string) {
   const textarea = document.createElement('textarea');
@@ -20,8 +21,8 @@ export const formatHtml = async (content: string) => {
       useTabs: false,
       tabWidth: 2,
     });
-  } catch (error) {
-    console.error('Format failed:', error);
+  } catch {
+    toast.error('Failed to format HTML');
     return content;
   }
 };

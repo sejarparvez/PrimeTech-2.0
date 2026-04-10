@@ -1,10 +1,13 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: this is fine */
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import type {
+  CloudinaryInstance,
   MediaLibraryInsertResults,
   MediaLibraryOptions,
   MediaLibraryProps,
   MediaLibraryPropsOptions,
+  UploadWidgetInstance,
 } from './media-library.type';
 import Script from './script';
 
@@ -18,18 +21,17 @@ const MediaLibrary = ({
   onOpen,
   options = {},
 }: MediaLibraryProps) => {
-  const cloudinary: any = useRef(null);
-  const widget: any = useRef(null);
-  const widgetContainerRef: any = useRef(null);
+  const cloudinary = useRef<CloudinaryInstance>(null);
+  const widget = useRef<UploadWidgetInstance>(null);
+  const widgetContainerRef = useRef<HTMLDivElement>(null);
 
-  const [isScriptLoading, setIsScriptLoading] = useState(true);
+  const [, setIsScriptLoading] = useState(true);
 
   useEffect(() => {
     function destroy() {
       const iframe = document.querySelector("iframe[src*='cloudinary']");
-      if (iframe && iframe.parentNode) {
+      if (iframe?.parentNode) {
         document.body.removeChild(iframe.parentNode);
-        console.log('Media Library widget destroyed successfully.');
       }
     }
 
@@ -160,7 +162,7 @@ const MediaLibrary = ({
       <Script
         src='https://media-library.cloudinary.com/global/all.js'
         onLoad={handleOnLoad}
-        onError={() => console.error(`Failed to load Cloudinary Upload Widget`)}
+        onError={() => toast.error('Failed to load Cloudinary Media Library')}
       />
     </>
   );

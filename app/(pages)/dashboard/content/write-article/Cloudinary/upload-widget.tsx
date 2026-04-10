@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { toast } from 'sonner';
 import Script from './script';
 import type {
   CloudinaryInstance,
@@ -12,7 +14,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
   const cloudinary = useRef<CloudinaryInstance>(null);
   const widget = useRef<UploadWidgetInstance>(null);
 
-  const [isScriptLoading, setIsScriptLoading] = useState(true);
+  const [, setIsScriptLoading] = useState(true);
 
   const uploadOptions = {
     cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -93,7 +95,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
       <Script
         src='https://upload-widget.cloudinary.com/global/all.js'
         onLoad={handleOnLoad}
-        onError={() => console.error(`Failed to load Cloudinary Upload Widget`)}
+        onError={() => toast.error('Failed to load Cloudinary Upload Widget')}
       />
     </>
   );
