@@ -24,6 +24,50 @@ export interface ArticleResponse {
   };
 }
 
+export interface AdminArticleType {
+  id: string;
+  title: string;
+  slug: string;
+  coverImage: string;
+  isFeatured: boolean;
+  status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+  views: number;
+  updatedAt: string;
+  author: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  _count: {
+    comments: number;
+    likes: number;
+  };
+}
+
+export interface FetchAdminArticlesParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+  category?: string;
+}
+
+export interface AdminArticleResponse {
+  data: AdminArticleType[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasMore: boolean;
+  };
+}
+
 // Helper to extract error messages
 const getErrorMessage = (error: unknown) => {
   if (error instanceof AxiosError) {
@@ -105,7 +149,61 @@ export function useDeleteArticle() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const { data } = await axios.delete(`/api/admin/articles/${id}`);
+      const { data } = await axios.delete(`/api/admin/articles??id=${id}`);
+      return data;
+    },
+    onSuccess: () => {
+      toast.success('Article deleted successfully!');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ARTICLES] });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+}
+
+/**
+ * Hook to fetch all articles for admin (including drafts and archived)
+ */
+export function useAdminArticles({
+  page = 1,
+  limit = 10,
+  search = '',
+  status,
+  category,
+}: FetchAdminArticlesParams = {}) {
+  return useQuery<AdminArticleResponse>({
+    queryKey: [
+      QUERY_KEYS.ARTICLES,
+      'admin',
+      { page, limit, search, status, category },
+    ],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      params.append('page', String(page));
+      params.append('limit', String(limit));
+      if (search) params.append('search', search);
+      if (status) params.append('status', status);
+      if (category) params.append('category', category);
+
+      const { data } = await axios.get(
+        `/api/admin/articles?${params.toString()}`,
+      );
+      return data;
+    },
+    placeholderData: (previousData) => previousData,
+  });
+}
+
+/**
+ * Hook to delete an article as admin
+ */
+export function useAdminDeleteArticle() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axios.delete(`/api/admin/articles?id=${id}`);
       return data;
     },
     onSuccess: () => {
