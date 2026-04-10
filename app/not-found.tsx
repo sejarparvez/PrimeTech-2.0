@@ -26,6 +26,8 @@ export default function NotFound() {
                   className='h-5 w-5'
                   viewBox='0 0 20 20'
                   fill='currentColor'
+                  role='img'
+                  aria-label='Return home'
                 >
                   <path
                     fillRule='evenodd'

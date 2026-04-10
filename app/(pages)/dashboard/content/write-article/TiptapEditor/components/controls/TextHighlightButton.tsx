@@ -23,7 +23,7 @@ const TextHighlightButton: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const mounted = useMount();
   const { editor } = useTiptapContext();
-  const [highlightColor, setHighlightColor] = useState<string | 'DEFAULT'>(
+  const [_highlightColor, _setHighlightColor] = useState<string | 'DEFAULT'>(
     'DEFAULT',
   );
   const state = useEditorState({

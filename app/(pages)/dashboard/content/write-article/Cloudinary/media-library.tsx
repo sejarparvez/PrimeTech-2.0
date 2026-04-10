@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/noNonNullAssertion: this is fine */
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import type {
@@ -48,6 +47,7 @@ const MediaLibrary = ({
     // Store the Cloudinary window instance to a ref when the page renders
 
     if (!cloudinary.current && typeof window) {
+      // biome-ignore lint/suspicious/noExplicitAny: this is fine
       cloudinary.current = (window as any).cloudinary;
     }
 
@@ -100,7 +100,9 @@ const MediaLibrary = ({
 
   function createWidget() {
     const mediaLibraryOptions: MediaLibraryOptions = {
+      // biome-ignore lint/style/noNonNullAssertion: this is fine
       cloud_name: CLOUDINARY_CLOUD_NAME!,
+      // biome-ignore lint/style/noNonNullAssertion: this is fine
       api_key: CLOUDINARY_API_KEY!,
       asset: asset,
       button_caption: buttonCaption,

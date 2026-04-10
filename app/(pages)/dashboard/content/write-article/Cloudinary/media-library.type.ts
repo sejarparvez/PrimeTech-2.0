@@ -2,6 +2,12 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 
 import type { JSX } from 'react';
+import type {
+  CloudinaryInstance,
+  UploadWidgetInstance,
+} from './upload-widget.type';
+
+export type { CloudinaryInstance, UploadWidgetInstance };
 
 export interface MediaLibraryOptions {
   // Authentication

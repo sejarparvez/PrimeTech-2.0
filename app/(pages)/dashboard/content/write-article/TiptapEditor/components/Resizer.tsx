@@ -107,16 +107,20 @@ const Resizer = () => {
     document.removeEventListener('pointerup', stopResizing);
 
     setIsResizing(false);
-    requestAnimationFrame(() =>
-      editor?.commands.updateAttributes(nodeState!.nodeType, {
-        width: Math.round((resizeInfo.currentWidth / maxWidth) * 100),
-      }),
-    );
+    requestAnimationFrame(() => {
+      if (nodeState?.nodeType) {
+        editor?.commands.updateAttributes(nodeState.nodeType, {
+          width: Math.round((resizeInfo.currentWidth / maxWidth) * 100),
+        });
+      }
+    });
   };
 
   const updateControlPosition = useCallback(() => {
-    const node = nodeState!.node;
-    const control = controlRef.current!;
+    const node = nodeState?.node;
+    const control = controlRef.current;
+
+    if (!node || !control) return;
 
     const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = node;
     requestAnimationFrame(() => {

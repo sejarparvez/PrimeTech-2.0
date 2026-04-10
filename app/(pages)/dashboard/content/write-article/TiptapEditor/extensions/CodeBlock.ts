@@ -1,5 +1,8 @@
 import { findChildren } from '@tiptap/core';
-import { CodeBlockLowlight as TiptapCodeBlockLowlight } from '@tiptap/extension-code-block-lowlight';
+import {
+  type CodeBlockLowlightOptions,
+  CodeBlockLowlight as TiptapCodeBlockLowlight,
+} from '@tiptap/extension-code-block-lowlight';
 import type { Node as ProsemirrorNode } from '@tiptap/pm/model';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
@@ -22,10 +25,17 @@ lowlight.register('plaintext', plaintext);
 
 export const CodeBlock = TiptapCodeBlockLowlight.extend({
   addOptions() {
+    const parent = this.parent?.();
     return {
-      ...this.parent?.(),
       defaultLanguage: CODE_BLOCK_LANGUAGUE_SYNTAX_DEFAULT,
-    };
+      lowlight: parent?.lowlight,
+      languageClassPrefix: parent?.languageClassPrefix,
+      exitOnTripleEnter: parent?.exitOnTripleEnter,
+      exitOnArrowDown: parent?.exitOnArrowDown,
+      enableTabIndentation: parent?.enableTabIndentation,
+      tabSize: parent?.tabSize,
+      HTMLAttributes: parent?.HTMLAttributes ?? {},
+    } as CodeBlockLowlightOptions;
   },
 
   addInputRules() {
@@ -85,9 +95,11 @@ export function LowlightPlugin({
   defaultLanguage,
 }: {
   name: string;
+  // biome-ignore lint/suspicious/noExplicitAny: lowlight types are complex
   lowlight: any;
   defaultLanguage: string | null | undefined;
 }) {
+  // biome-ignore lint/suspicious/noExplicitAny: Plugin type is complex
   const lowlightPlugin: Plugin<any> = new Plugin({
     key: LowlightPluginKey,
 
@@ -221,6 +233,7 @@ export function LowlightPlugin({
 }
 
 function parseNodes(
+  // biome-ignore lint/suspicious/noExplicitAny: lowlight AST structure is complex
   nodes: any[],
   className: string[] = [],
 ): { text: string; classes: string[] }[] {
@@ -241,6 +254,7 @@ function parseNodes(
   });
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: lowlight result type is complex
 function getHighlightNodes(result: any) {
   return result.value || result.children || [];
 }
@@ -257,6 +271,7 @@ function getDecorations({
 }: {
   doc: ProsemirrorNode;
   name: string;
+  // biome-ignore lint/suspicious/noExplicitAny: lowlight types are complex
   lowlight: any;
   defaultLanguage: string | null | undefined;
 }) {

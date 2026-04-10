@@ -52,10 +52,10 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange }) => {
       {isOpen && (
         <div className='absolute z-50 mt-1 w-40 rounded-md bg-popover shadow-lg'>
           <div className='py-1'>
-            {options.map((option, index) => (
+            {options.map((option) => (
               <Button
                 variant='ghost'
-                key={index}
+                key={option ?? 'default'}
                 className='block w-full text-left'
                 type='button'
                 onClick={() => handleOptionClick(option)}

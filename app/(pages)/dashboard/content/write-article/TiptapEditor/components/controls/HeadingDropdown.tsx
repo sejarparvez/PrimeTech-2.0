@@ -71,7 +71,7 @@ const HeadingDropdown = () => {
         editor
           .chain()
           .focus()
-          .setHeading({ level: +value[1] as any })
+          .setHeading({ level: +value[1] as 1 | 2 | 3 | 4 | 5 | 6 })
           .run();
       } else {
         editor.chain().focus().setParagraph().run();

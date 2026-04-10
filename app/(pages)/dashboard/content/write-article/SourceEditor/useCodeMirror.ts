@@ -12,8 +12,11 @@ interface UseCodeMirrorProps {
 
 export function useCodeMirror({
   initialContent,
-}: Pick<UseCodeMirrorProps, 'initialContent'>) {
+  onChange,
+}: UseCodeMirrorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -24,7 +27,11 @@ export function useCodeMirror({
         lineNumbers(),
         html(),
         theme,
-        EditorState.readOnly.of(true),
+        EditorView.updateListener.of((update) => {
+          if (update.docChanged) {
+            onChangeRef.current?.(update.state.doc.toString());
+          }
+        }),
         EditorView.lineWrapping,
       ],
     });

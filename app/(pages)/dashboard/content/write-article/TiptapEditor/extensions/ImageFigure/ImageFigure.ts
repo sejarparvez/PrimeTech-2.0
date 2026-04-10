@@ -1,6 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
 import { NodeSelection, Plugin } from '@tiptap/pm/state';
-// @ts-expect-error : This import is no longer needed and caused the error.
 
 import Figure from '../Figure';
 import Image from '../Image/Image';

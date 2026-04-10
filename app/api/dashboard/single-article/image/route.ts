@@ -17,20 +17,30 @@ export async function GET() {
       .sort_by('created_at', 'desc')
       .execute();
 
-    const map = resources.map((item: any) => ({
-      id: item.public_id,
-      url: item.secure_url,
-      created_at: item.created_at,
-      bytes: item.bytes,
-      format: item.format,
-      display_name: item.display_name || item.public_id,
-      width: item.width,
-      height: item.height,
-    }));
+    const map = resources.map(
+      (item: {
+        public_id: string;
+        secure_url: string;
+        created_at: string;
+        bytes: number;
+        format: string;
+        display_name?: string;
+        width: number;
+        height: number;
+      }) => ({
+        id: item.public_id,
+        url: item.secure_url,
+        created_at: item.created_at,
+        bytes: item.bytes,
+        format: item.format,
+        display_name: item.display_name || item.public_id,
+        width: item.width,
+        height: item.height,
+      }),
+    );
 
     return NextResponse.json(map);
-  } catch (error) {
-    console.error('Error fetching images:', error);
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch images' },
       { status: 500 },
@@ -50,6 +60,7 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    // biome-ignore lint/suspicious/noExplicitAny: cloudinary result type
     const result: any = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -78,8 +89,7 @@ export async function POST(req: Request) {
         height: result.height,
       });
     }
-  } catch (error) {
-    console.error('Error uploading file:', error);
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to upload file' },
       { status: 500 },

@@ -6,6 +6,7 @@ export interface YoutubeOptions {
   nocookie?: boolean;
   controls?: boolean;
   HTMLAttributes: {
+    // biome-ignore lint/suspicious/noExplicitAny: external type
     [key: string]: any;
   };
 }
@@ -43,7 +44,8 @@ export const Youtube = Node.create<YoutubeOptions>({
       },
       width: {
         default: null,
-        parseHTML: (element) => Number.parseInt(element.style.width) || null,
+        parseHTML: (element) =>
+          Number.parseInt(element.style.width, 10) || null,
         renderHTML: (attrs) => {
           if (!attrs.width) return {};
           return { style: `width: ${attrs.width}%` };
@@ -155,7 +157,7 @@ export function getEmbedYoutubeUrl({
   const videoIdRegex = /(?:v=|shorts\/)([-\w]+)/gm;
   const matches = videoIdRegex.exec(url);
 
-  if (!matches || !matches[1]) {
+  if (!matches?.[1]) {
     return null;
   }
 

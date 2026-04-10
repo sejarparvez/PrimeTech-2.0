@@ -99,6 +99,7 @@ export async function PUT(req: NextRequest) {
         { status: 400 },
       );
 
+    // biome-ignore lint/suspicious/noExplicitAny: prisma update type
     const updateData: any = {
       title,
       slug,

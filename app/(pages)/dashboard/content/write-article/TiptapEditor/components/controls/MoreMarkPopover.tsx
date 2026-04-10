@@ -1,4 +1,8 @@
-import { useEditorState } from '@tiptap/react';
+import {
+  type ChainedCommands,
+  type Editor,
+  useEditorState,
+} from '@tiptap/react';
 import {
   Code,
   Italic,
@@ -131,7 +135,7 @@ const ToggleButton = ({
   icon: React.ElementType;
   command: ToggleCommand;
   shortcut: string;
-  action: (editor: any) => any;
+  action: (editor: Editor) => ChainedCommands;
 }) => {
   const { editor } = useTiptapContext();
 
@@ -143,7 +147,12 @@ const ToggleButton = ({
     selector: (ctx) => ({
       active: ctx.editor.isActive(command),
       // Cast the chain object to any so that dynamic indexing is allowed.
-      disabled: !(ctx.editor.can().chain().focus() as any)[methodName]?.(),
+      disabled: !(
+        ctx.editor.can().chain().focus() as unknown as Record<
+          string,
+          () => boolean
+        >
+      )[methodName]?.(),
     }),
   });
 

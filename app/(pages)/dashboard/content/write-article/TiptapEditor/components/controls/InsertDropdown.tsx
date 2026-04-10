@@ -33,7 +33,10 @@ const Youtube = ({ className }: { className?: string }) => (
     viewBox='0 0 24 24'
     fill='currentColor'
     className={className}
+    role='img'
+    aria-label='YouTube'
   >
+    <title>YouTube</title>
     <path d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' />
   </svg>
 );
@@ -198,7 +201,7 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
 
   const handleKeyDown = useCallback(
     (
-      e: React.KeyboardEvent<HTMLDivElement>,
+      e: React.KeyboardEvent<HTMLButtonElement>,
       rowIndex: number,
       colIndex: number,
     ) => {
@@ -212,26 +215,32 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
 
   const grid = useMemo(
     () =>
-      Array.from({ length: ROWS }, (_, rowIndex) => (
-        <div key={`row-${rowIndex}`} className='flex gap-1'>
-          {Array.from({ length: COLUMNS }, (_, colIndex) => (
-            <div
-              key={`col-${colIndex}`}
-              className={clsx(
-                'h-4 w-4 border border-border bg-muted transition-all',
-                isActiveCell(rowIndex, colIndex) && 'border-primary bg-primary',
-              )}
-              onMouseEnter={() =>
-                setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 })
-              }
-              onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
-              tabIndex={0}
-              role='button'
-              aria-label={`Select table size ${rowIndex + 1}x${colIndex + 1}`}
-            />
-          ))}
-        </div>
-      )),
+      Array.from({ length: ROWS }, (_, rowIndex) => {
+        const rowId = `r${rowIndex}`;
+        return (
+          <div key={rowId} className='flex gap-1'>
+            {Array.from({ length: COLUMNS }, (_, colIndex) => {
+              const cellId = `${rowId}-c${colIndex}`;
+              return (
+                <button
+                  key={cellId}
+                  className={clsx(
+                    'h-4 w-4 border border-border bg-muted transition-all',
+                    isActiveCell(rowIndex, colIndex) &&
+                      'border-primary bg-primary',
+                  )}
+                  onMouseEnter={() =>
+                    setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 })
+                  }
+                  onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
+                  type='button'
+                  aria-label={`Select table size ${rowIndex + 1}x${colIndex + 1}`}
+                />
+              );
+            })}
+          </div>
+        );
+      }),
     [isActiveCell, handleKeyDown],
   );
 

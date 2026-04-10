@@ -168,7 +168,7 @@ export function DashboardSidebar({
 
   // Since NavSecondary is usually standard help/support, we might just pass it.
   // But if it also needs filtering:
-  const filteredNavSecondary = data.navSecondary.filter((item) => {
+  const _filteredNavSecondary = data.navSecondary.filter((item) => {
     if (isPending || !userRole) return false;
     if (item.role) {
       return item.role.includes(userRole as 'ADMIN' | 'USER');

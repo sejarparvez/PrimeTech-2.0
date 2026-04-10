@@ -145,11 +145,11 @@ const GridRow: FC<GridRowProps> = ({ slots, posts }) => {
 
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8'>
-      {columns.map((col, colIdx) => {
+      {columns.map((col) => {
         const isFeaturedCol = col.length === 1 && col[0].variant === 'featured';
         return (
           <div
-            key={colIdx}
+            key={`col-${col.map((s) => s.dataIndex).join('-')}`}
             className={`grid grid-cols-1 gap-4 md:col-span-4 ${!isFeaturedCol ? 'md:gap-8' : ''}`}
           >
             {col.map((slot) => (

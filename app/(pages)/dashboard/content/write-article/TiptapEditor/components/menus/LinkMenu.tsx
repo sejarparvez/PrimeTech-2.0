@@ -1,4 +1,4 @@
-import { useEditorState } from '@tiptap/react';
+import { type Editor, useEditorState } from '@tiptap/react';
 import type React from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 import { BubbleMenu } from '../BubbleMenu';
@@ -12,7 +12,10 @@ export const LinkMenu = () => {
   const link = useEditorState({
     editor,
     selector: (context) => {
-      mode.current = context.editor.storage.link.mode;
+      const linkStorage = context.editor.storage as unknown as {
+        link?: { mode: number };
+      };
+      mode.current = linkStorage.link?.mode ?? 0;
 
       if (!context.editor.isActive('link')) return null;
       const {
@@ -25,21 +28,27 @@ export const LinkMenu = () => {
     },
   });
 
-  const shouldShow = useCallback(({ editor, from, to }: any) => {
-    setIsEditing(mode.current == -1);
-    return editor.isActive('link') && (mode.current == -1 || from !== to);
-  }, []);
+  const shouldShow = useCallback(
+    ({ editor, from, to }: { editor: Editor; from: number; to: number }) => {
+      setIsEditing(mode.current === -1);
+      return editor.isActive('link') && (mode.current === -1 || from !== to);
+    },
+    [],
+  );
 
-  const applyLink = useCallback((url: string, text?: string) => {
-    editor
-      .chain()
-      .confirmEditLink({
-        href: url,
-        text: text || url,
-      })
-      .run();
-    setIsEditing(false);
-  }, []);
+  const applyLink = useCallback(
+    (url: string, text?: string) => {
+      editor
+        .chain()
+        .confirmEditLink({
+          href: url,
+          text: text || url,
+        })
+        .run();
+      setIsEditing(false);
+    },
+    [editor.chain],
+  );
 
   const removeLink = useCallback(() => {
     editor.chain().focus().unsetLink().run();
@@ -50,7 +59,7 @@ export const LinkMenu = () => {
   }, []);
 
   const cancelEdit = useCallback(() => {
-    if (mode.current == -1) {
+    if (mode.current === -1) {
       editor.commands.confirmEditLink();
     } else {
       setIsEditing(false);
@@ -63,10 +72,9 @@ export const LinkMenu = () => {
       pluginKey='link-menu'
       updateDelay={100}
       shouldShow={shouldShow}
+      appendTo={() => contentElement.current as HTMLElement}
       tippyOptions={{
         placement: 'bottom-start',
-        duration: 100,
-        appendTo: () => contentElement.current!,
         onHidden: () => setIsEditing(false),
       }}
     >
@@ -204,8 +212,8 @@ const LinkEdit = ({
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (canSubmit) {
-      onApply(url!, text);
+    if (canSubmit && url) {
+      onApply(url, text);
     }
   };
 
@@ -213,7 +221,7 @@ const LinkEdit = ({
     if (!isCreate) {
       setCanSubmit((url && url !== initialUrl) || text !== initialText);
     }
-  }, [text, url]);
+  }, [text, url, initialUrl, isCreate, initialText]);
 
   return (
     <form className='w-80 space-y-2 rounded border p-4' onSubmit={onSubmit}>

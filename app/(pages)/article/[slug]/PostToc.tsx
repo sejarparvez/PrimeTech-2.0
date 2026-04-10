@@ -63,10 +63,14 @@ function useToc(options: UseTocOptions) {
       });
     }, observerOptions);
 
-    elements.forEach((element) => observer.observe(element));
+    elements.forEach((element) => {
+      observer.observe(element);
+    });
 
     return () => {
-      elements.forEach((element) => observer.unobserve(element));
+      elements.forEach((element) => {
+        observer.unobserve(element);
+      });
     };
   }, [items, observerOptions]);
 

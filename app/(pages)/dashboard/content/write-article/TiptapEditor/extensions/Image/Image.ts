@@ -32,7 +32,8 @@ export const Image = TiptapImage.extend({
       },
       width: {
         default: null,
-        parseHTML: (element) => Number.parseInt(element.style.width) || null,
+        parseHTML: (element) =>
+          Number.parseInt(element.style.width, 10) || null,
         renderHTML: (attrs) => {
           if (!attrs.width) return {};
           return { style: `width: ${attrs.width}%` };
@@ -66,13 +67,29 @@ export const Image = TiptapImage.extend({
     return {
       ...this.parent?.(),
       insertImage:
-        ({ width, height, ...options }) =>
+        ({
+          width,
+          height,
+          ...options
+        }: {
+          width?: number;
+          height?: number;
+          [key: string]: unknown;
+        }) =>
         ({ commands }) => {
-          return commands.setImage({
+          return (
+            commands as unknown as {
+              setImage: (options: {
+                naturalWidth?: number;
+                naturalHeight?: number;
+                [key: string]: unknown;
+              }) => boolean;
+            }
+          ).setImage({
             ...options,
             naturalWidth: width,
             naturalHeight: height,
-          } as any);
+          });
         },
     };
   },

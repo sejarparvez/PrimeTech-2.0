@@ -1,3 +1,4 @@
+/* biome-ignore-all lint/suspicious/noArrayIndexKey: skeleton loaders use static iterated elements */
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HomeSkeleton() {

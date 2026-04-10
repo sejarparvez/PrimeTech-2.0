@@ -1,3 +1,4 @@
+import type { Editor } from '@tiptap/react';
 import { useCallback } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { isNodeSelected } from '../../utils/isNodeSelected';
@@ -7,23 +8,27 @@ import AlignDropdown from '../controls/AlignPopover';
 import BoldButton from '../controls/BoldButton';
 import HeadingDropdown from '../controls/HeadingDropdown';
 import LinkButton from '../controls/LinkButton';
+
 import MoreMarkDropdown from '../controls/MoreMarkPopover';
 import { useTiptapContext } from '../Provider';
 
 export const TextMenu = ({ enable }: { enable: boolean }) => {
   const { editor } = useTiptapContext();
 
-  const shouldShow = useCallback(({ view, editor }: any) => {
-    if (!view || editor.view.dragging) {
-      return false;
-    }
+  const shouldShow = useCallback(
+    ({ view, editor: shouldShowEditor }: { view: unknown; editor: Editor }) => {
+      if (!view || shouldShowEditor.view.dragging) {
+        return false;
+      }
 
-    if (isNodeSelected(editor)) {
-      return false;
-    }
+      if (isNodeSelected(shouldShowEditor)) {
+        return false;
+      }
 
-    return isTextSelected(editor);
-  }, []);
+      return isTextSelected(shouldShowEditor);
+    },
+    [],
+  );
 
   if (!enable) return null;
 
@@ -32,10 +37,9 @@ export const TextMenu = ({ enable }: { enable: boolean }) => {
       editor={editor}
       pluginKey={'text-bubble'}
       shouldShow={shouldShow}
+      appendTo={() => document.body}
       tippyOptions={{
         placement: 'top-start',
-        maxWidth: 'auto',
-        appendTo: 'parent',
       }}
     >
       <div className='flex flex-wrap items-center gap-x-1 gap-y-1.5 p-1.5'>

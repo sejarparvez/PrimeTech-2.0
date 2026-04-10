@@ -1,4 +1,4 @@
-import { useEditorState } from '@tiptap/react';
+import { type Editor, useEditorState } from '@tiptap/react';
 import { Check, Copy, Trash2 } from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
@@ -31,7 +31,7 @@ export const CodeBlockMenu = () => {
 
   // Show the bubble menu only when the code block is active.
   const shouldShow = useCallback(
-    ({ editor: editorInstance }: { editor: any }) =>
+    ({ editor: editorInstance }: { editor: Editor }) =>
       editorInstance.isActive('codeBlock'),
     [],
   );
@@ -69,11 +69,10 @@ export const CodeBlockMenu = () => {
       pluginKey='code-block-bubble'
       shouldShow={shouldShow}
       updateDelay={100}
+      appendTo={() => contentElement.current as HTMLElement}
+      getReferenceClientRect={getReferenceClientRect}
       tippyOptions={{
         placement: 'top',
-        maxWidth: 'auto',
-        appendTo: () => contentElement.current!,
-        getReferenceClientRect,
       }}
     >
       <TooltipProvider>
@@ -181,8 +180,9 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
           }}
         >
           {filterOptions.map((item) => (
-            <div
+            <button
               key={item.value}
+              type='button'
               className='flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm leading-5 hover:bg-accent'
               onClick={() => {
                 onSelect(item.value);
@@ -195,7 +195,7 @@ const CodeDropdown = ({ value, onSelect }: CodeDropdownProps) => {
                 <span className='w-4' />
               )}
               <span>{item.label}</span>
-            </div>
+            </button>
           ))}
         </div>
       </PopoverContent>

@@ -108,6 +108,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     const uploadPromises = validFiles.map(uploadImage);
     const uploadImages = await Promise.all(uploadPromises);
 
+    // biome-ignore lint/suspicious/useIterableCallbackReturn: this is fine
     loadedPreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
     setPreviews([]);
     setImages((prev) => [...uploadImages.filter(Boolean), ...prev]);

@@ -93,7 +93,7 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
   const [isSlugCustomized, setIsSlugCustomized] = useState(false);
   const [editorReady, setEditorReady] = useState(false);
   const [isFeatured, setIsFeatured] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [_selectedCategory, setSelectedCategory] = useState<string>('');
   const [formInitialized, setFormInitialized] = useState(false);
 
   const { data: categories, isLoading: categoriesLoading } = useCategories();
@@ -455,7 +455,7 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
 }
 
 function TagInputSection() {
-  const { control, setValue, watch } = useFormContext<EditArticleSchemaType>();
+  const { setValue, watch } = useFormContext<EditArticleSchemaType>();
   const [input, setInput] = useState('');
   const tags = watch('tags') || [];
 
@@ -493,9 +493,12 @@ function TagInputSection() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === 'Enter' && (e.preventDefault(), addTag())
-            }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addTag();
+              }
+            }}
             placeholder='Press enter to add...'
           />
           <Button type='button' variant='outline' onClick={addTag}>

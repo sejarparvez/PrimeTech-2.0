@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { toast } from 'sonner';
 import Script from './script';
@@ -28,6 +28,7 @@ const UploadWidget = ({ children, onSuccess, onError }: UploadWidgetProps) => {
     // Store the Cloudinary window instance to a ref when the page renders
 
     if (!cloudinary.current && typeof window) {
+      // biome-ignore lint/suspicious/noExplicitAny: this is fine
       cloudinary.current = (window as any).cloudinary;
     }
 

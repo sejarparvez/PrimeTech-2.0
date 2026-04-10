@@ -19,7 +19,9 @@ const SourceEditor = forwardRef<HTMLDivElement, SourceEditorProps>(
       formatHtml(initialContent).then(setFormattedContent);
     }, [initialContent]);
 
-    useImperativeHandle(ref, () => editorRef.current!, [editorRef]);
+    useImperativeHandle(ref, () => editorRef.current as HTMLDivElement, [
+      editorRef,
+    ]);
 
     return <div ref={editorRef} />;
   },

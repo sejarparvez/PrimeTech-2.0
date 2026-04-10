@@ -106,11 +106,10 @@ const TableMenu: React.FC = () => {
     pluginKey: 'table-bubble',
     shouldShow,
     updateDelay: 100,
+    appendTo: () => contentElement.current as HTMLElement,
+    getReferenceClientRect,
     tippyOptions: {
       placement: 'top',
-      maxWidth: 'auto',
-      appendTo: () => contentElement.current!,
-      getReferenceClientRect,
     },
   };
 

@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '../../../../../../lib/utils';
 
 interface CloudinaryAsset {
-  id: string;
+  id?: string;
   url: string;
   display_name: string;
   format: string;

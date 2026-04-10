@@ -1,7 +1,9 @@
 import type { JSX } from 'react';
 
-export type UploadWidgetInstance = unknown;
-export type CloudinaryInstance = unknown;
+// biome-ignore lint/suspicious/noExplicitAny: cloudinary widget types
+export type UploadWidgetInstance = any;
+// biome-ignore lint/suspicious/noExplicitAny: cloudinary instance types
+export type CloudinaryInstance = any;
 
 export interface UploadWidgetProps {
   children?: (options: UploadWidgetPropsChildren) => JSX.Element;

@@ -54,7 +54,7 @@ export const ImageMenu = () => {
     return node?.getBoundingClientRect() || new DOMRect(-1000, -1000, 0, 0);
   }, [editor]);
 
-  const updateImageAttr = (name: string, value: any) => {
+  const updateImageAttr = (name: string, value: string | number | null) => {
     const {
       state: { selection },
     } = editor;
@@ -89,13 +89,18 @@ export const ImageMenu = () => {
     toggleEditAltText();
   };
 
-  const setSize = (value: number | null) => updateImageAttr('width', value);
+  const setSize = (value: number | null) => {
+    if (value === null) {
+      updateImageAttr('width', null);
+    } else {
+      updateImageAttr('width', value);
+    }
+  };
 
   const removeImage = () => editor.chain().focus().removeImage().run();
 
   const downloadImage = useCallback(async () => {
-    if (!image?.src)
-      return console.error('No image source available for download.');
+    if (!image?.src) return;
 
     try {
       const res = await fetch(image.src);
@@ -111,8 +116,8 @@ export const ImageMenu = () => {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error downloading image:', error);
+    } catch (_error) {
+      // Silent fail - download didn't work
     }
   }, [image]);
 
@@ -126,17 +131,16 @@ export const ImageMenu = () => {
         editor.isActive('imageFigure') || editor.isActive('image')
       }
       updateDelay={100}
+      appendTo={() => contentElement.current as HTMLElement}
+      getReferenceClientRect={getReferenceClientRect}
       tippyOptions={{
-        maxWidth: 'auto',
-        offset: [0, 15],
-        appendTo: () => contentElement.current!,
-        getReferenceClientRect,
-        onShow: (instance) => {
-          tippyInstance.current = instance;
+        onShow: (instance: unknown) => {
+          tippyInstance.current = instance as typeof tippyInstance.current;
         },
         onDestroy: () => (tippyInstance.current = null),
         onHidden: () => setIsEditText(false),
       }}
+      offset={[0, 15]}
     >
       {isEditText ? (
         <AltTextEdit

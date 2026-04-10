@@ -1,11 +1,11 @@
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: never[]) => void>(
   func: T,
   wait: number,
-): (...args: Parameters<T>) => void {
+): T {
   let timeout: ReturnType<typeof setTimeout> | null = null;
   let lastArgs: Parameters<T> | null = null;
 
-  return (...args: Parameters<T>) => {
+  return ((...args: Parameters<T>) => {
     if (!timeout) {
       func(...args);
       timeout = setTimeout(() => {
@@ -18,5 +18,5 @@ export function throttle<T extends (...args: any[]) => any>(
     } else {
       lastArgs = args;
     }
-  };
+  }) as T;
 }

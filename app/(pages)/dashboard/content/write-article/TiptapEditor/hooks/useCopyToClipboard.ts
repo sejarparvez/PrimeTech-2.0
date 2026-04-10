@@ -11,8 +11,7 @@ export default function useCopyToClipboard() {
       await navigator.clipboard.writeText(value);
       setIsCopied(true);
       timeoutId.current = setTimeout(() => setIsCopied(false), 2500);
-    } catch (error) {
-      console.log(error);
+    } catch (_error) {
       setIsCopied(false);
       if (timeoutId.current) {
         clearTimeout(timeoutId.current);
