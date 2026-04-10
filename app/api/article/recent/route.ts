@@ -29,6 +29,12 @@ export async function GET(request: NextRequest) {
           slug: true,
           coverImage: true,
           isFeatured: true,
+          category: {
+            select: {
+              name: true,
+              slug: true,
+            },
+          },
           updatedAt: true,
           author: { select: { name: true, image: true } },
           _count: { select: { comments: true } },

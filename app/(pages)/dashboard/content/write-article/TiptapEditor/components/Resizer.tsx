@@ -141,9 +141,12 @@ const Resizer = () => {
     resizeInfo.ratio = width / height;
 
     updateControlPosition();
-  }, [nodeState]);
+  }, [nodeState, updateControlPosition]);
 
-  if (!nodeState || !contentElement.current) return;
+  if (!nodeState) return null;
+
+  const portalTarget = contentElement.current;
+  if (!portalTarget) return null;
 
   const renderResizerHandle = (
     cursor: string,
@@ -175,7 +178,7 @@ const Resizer = () => {
         bottom: -10,
       })}
     </div>,
-    contentElement.current,
+    portalTarget,
   );
 };
 

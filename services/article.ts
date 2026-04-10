@@ -64,14 +64,14 @@ export function useArticles({
 /**
  * Hook to fetch a single article by its ID or Slug
  */
-export function useSingleArticle(idOrSlug: string) {
+export function useSingleArticle(Slug: string) {
   return useQuery({
-    queryKey: [QUERY_KEYS.ARTICLES, idOrSlug],
+    queryKey: [QUERY_KEYS.ARTICLES, Slug],
     queryFn: async () => {
-      const { data } = await axios.get(`/api/articles/${idOrSlug}`);
+      const { data } = await axios.get(`/api/article/single-article/${Slug}`);
       return data;
     },
-    enabled: !!idOrSlug,
+    enabled: !!Slug,
   });
 }
 

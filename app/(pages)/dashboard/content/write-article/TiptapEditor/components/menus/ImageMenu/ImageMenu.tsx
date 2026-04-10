@@ -6,7 +6,7 @@ import { useEditorState } from '@tiptap/react';
 import { Captions, Download, Trash2 } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 import type { Instance } from 'tippy.js';
-import { getNodeContainer } from '@/app/(pages)/dashboard/new-article/TiptapEditor/utils/getNodeContainer';
+import { getNodeContainer } from '@/app/(pages)/dashboard/content/write-article/TiptapEditor/utils/getNodeContainer';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {

@@ -11,13 +11,17 @@ import { Underline } from '@tiptap/extension-underline';
 import { StarterKit } from '@tiptap/starter-kit';
 import { CodeBlock } from './extensions/CodeBlock';
 import { Image } from './extensions/Image';
-import { ImageCaption, ImageFigure } from './extensions/ImageFigure';
+import { ImageFigure } from './extensions/ImageFigure';
 import Link from './extensions/Link';
 import { Selection } from './extensions/Selection';
 import { Table } from './extensions/Table';
 import { Youtube } from './extensions/Youtube';
 
-const ExtensionKit = [
+type ExtensionKitOptions = {
+  placeholder?: string;
+};
+
+const ExtensionKit = (options: ExtensionKitOptions = {}) => [
   StarterKit.configure({
     horizontalRule: false,
     hardBreak: false,
@@ -26,16 +30,7 @@ const ExtensionKit = [
   Placeholder.configure({
     includeChildren: true,
     showOnlyCurrent: true,
-    placeholder: ({ editor, node }) => {
-      // @ts-expect-error
-      const placeholder = editor.options.editorProps['placeholder'];
-      switch (node.type.name) {
-        case ImageCaption.name:
-          return placeholder?.imageCaption;
-        default:
-          return placeholder?.paragraph;
-      }
-    },
+    placeholder: options.placeholder || 'Type your content here...',
   }),
   Selection,
   CharacterCount,

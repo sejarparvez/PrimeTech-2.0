@@ -3,7 +3,7 @@
 import { useEditorState } from '@tiptap/react';
 import { ImageIcon } from 'lucide-react';
 import { useState } from 'react';
-import MediaLibrary from '@/app/(pages)/dashboard/new-article/MediaLibrary';
+import MediaLibrary from '@/app/(pages)/dashboard/content/write-article/MediaLibrary';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

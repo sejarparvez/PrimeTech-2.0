@@ -1,17 +1,16 @@
 'use client';
 
-import { Check, Copy, Instagram, QrCode } from 'lucide-react';
+import {
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandWhatsapp,
+  IconBrandX,
+} from '@tabler/icons-react';
+import { Check, Copy, EllipsisVertical, QrCode } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import type React from 'react';
 import { useState } from 'react';
-import type { IconType } from 'react-icons';
-import {
-  TbBrandFacebook,
-  TbBrandLinkedin,
-  TbBrandWhatsapp,
-  TbBrandX,
-  TbDotsCircleHorizontal,
-} from 'react-icons/tb';
 import {
   EmailIcon,
   EmailShareButton,
@@ -92,15 +91,12 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
     icon: Icon,
     onClick,
   }: {
-    icon: IconType;
+    icon: React.ElementType;
     onClick: () => void;
   }) => (
-    <button
-      onClick={onClick}
-      className='rounded-full border border-neutral-300 p-2 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'
-    >
+    <Button variant='outline' size='lg' onClick={onClick}>
       <Icon size={24} />
-    </button>
+    </Button>
   );
 
   const ShareButton = ({ children }: { children: React.ReactNode }) => (
@@ -113,7 +109,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
     <div className='order-3 flex justify-center lg:order-1 lg:justify-end'>
       <div className='sticky top-24 flex gap-4 lg:h-[calc(100vh-120px)] lg:flex-col'>
         <IconButton
-          icon={TbBrandFacebook}
+          icon={IconBrandFacebook}
           onClick={() =>
             window.open(
               `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postlink)}`,
@@ -122,7 +118,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
           }
         />
         <IconButton
-          icon={TbBrandLinkedin}
+          icon={IconBrandLinkedin}
           onClick={() =>
             window.open(
               `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postlink)}`,
@@ -131,7 +127,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
           }
         />
         <IconButton
-          icon={TbBrandX}
+          icon={IconBrandX}
           onClick={() =>
             window.open(
               `https://twitter.com/intent/tweet?url=${encodeURIComponent(postlink)}&text=${encodeURIComponent(title)}`,
@@ -140,7 +136,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
           }
         />
         <IconButton
-          icon={TbBrandWhatsapp}
+          icon={IconBrandWhatsapp}
           onClick={() =>
             window.open(
               `https://wa.me/?text=${encodeURIComponent(title + ' ' + postlink)}`,
@@ -150,7 +146,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
         />
         <Dialog>
           <DialogTrigger asChild>
-            <IconButton icon={TbDotsCircleHorizontal} onClick={() => {}} />
+            <IconButton icon={EllipsisVertical} onClick={() => {}} />
           </DialogTrigger>
           <DialogContent className='sm:max-w-md'>
             <DialogHeader>
@@ -231,7 +227,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
                       className='h-full w-full rounded-full p-0'
                       onClick={handleInstagramShare}
                     >
-                      <Instagram size={24} />
+                      <IconBrandInstagram size={24} />
                     </Button>
                   </ShareButton>
                 </div>
@@ -241,7 +237,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
                   <Textarea
                     value={postlink}
                     readOnly
-                    className='min-h-[80px] resize-none'
+                    className='min-h-20 resize-none'
                   />
                   <Button onClick={handleCopy} className='w-full'>
                     {copied ? (

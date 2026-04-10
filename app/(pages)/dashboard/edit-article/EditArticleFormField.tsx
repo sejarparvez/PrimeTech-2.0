@@ -35,7 +35,7 @@ import {
 } from '../../../../lib/Schemas';
 import TiptapEditor, {
   type TiptapEditorRef,
-} from '../new-article/TiptapEditor/components/Editor';
+} from '../content/write-article/TiptapEditor/components/Editor';
 import EditArtilceImage from './EditArticleImage';
 
 export default function EditArticleForm({ id }: { id: string }) {

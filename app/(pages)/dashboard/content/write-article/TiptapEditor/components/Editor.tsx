@@ -2,7 +2,7 @@
 import type { Content, Editor } from '@tiptap/react';
 import { forwardRef, useCallback, useEffect } from 'react';
 
-import TableMenu from '@/app/(pages)/dashboard/new-article/TiptapEditor/components/menus/TableMenu';
+import TableMenu from '@/app/(pages)/dashboard/content/write-article/TiptapEditor/components/menus/TableMenu';
 import type { UseTiptapEditorOptions } from '../hooks/useTiptapEditor';
 import ExtensionKit from '../kit';
 import { cssVar } from '../utils/cssVar';
@@ -10,7 +10,8 @@ import { throttle } from '../utils/throttle';
 import MenuBar from './MenuBar';
 import { CodeBlockMenu, ImageMenu, LinkMenu } from './menus';
 import TiptapProvider from './Provider';
-import Resizer from './Resizer';
+// Resizer temporarily disabled - causes click issues
+// import Resizer from './Resizer';
 import StatusBar from './StatusBar';
 export type TiptapEditorRef = {
   getInstance: () => Editor | null;
@@ -78,8 +79,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
 
     const editorOptions: UseTiptapEditorOptions = {
       ref,
-      placeholder,
-      extensions: ExtensionKit,
+      extensions: ExtensionKit({ placeholder: placeholder?.paragraph }),
       content: initialContent,
       editable: isEditable,
       immediatelyRender: !ssr,
@@ -89,7 +89,8 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
       editorProps: {
         attributes: {
           class:
-            'prose relative w-full flex-1 whitespace-pre-wrap py-7 outline-hidden dark:prose-invert *:mt-5 [&>*:first-child]:mt-0',
+            'prose prose-neutral relative w-full h-full min-h-0 grow whitespace-pre-wrap py-7 outline-hidden dark:prose-invert [&>p]:mt-5',
+          style: 'min-height: 100%; height: 100%;',
         },
       },
     };
@@ -115,7 +116,6 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
         slotAfter={!hideStatusBar && <StatusBar />}
       >
         {menus}
-        <Resizer />
       </TiptapProvider>
     );
   },

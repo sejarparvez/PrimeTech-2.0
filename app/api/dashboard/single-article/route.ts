@@ -1,130 +1,135 @@
+import { headers } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import {
   cloudinaryUploadImage,
   deleteImageFromCloudinary,
 } from '@/utils/cloudinary';
 
-const secret = process.env.NEXTAUTH_SECRET;
-
-// Helper function to extract string value from formData
-function getStringValue(formData: FormData, key: string): string {
-  const value = formData.get(key);
-  return typeof value === 'string' ? value : '';
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const token = await getToken({ req, secret });
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-    if (!token) {
-      return new NextResponse('User not logged in', { status: 401 });
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const data = await req.formData();
 
+    // 1. Extract and Parse Data
     const title = data.get('title') as string;
-    const cover = data.get('image') as File;
-    const categories = data.get('category') as string;
+    const slug = data.get('slug') as string;
     const content = data.get('content') as string;
-    const tags =
-      data
-        .get('tags')
-        ?.toString()
-        .split(',')
-        .map((tag) => tag.trim()) || [];
+    const categoryId = data.get('category') as string; // This is the ID from the frontend select
+    const isFeatured = data.get('isFeatured') === 'true';
 
-    if (!title || !cover || !categories || !content) {
-      return new NextResponse('Missing title, file, categories, or content', {
-        status: 400,
-      });
+    // Parse tags (they were sent as JSON.stringify in the frontend)
+    const rawTags = data.get('tags') as string;
+    const tags = rawTags ? JSON.parse(rawTags) : [];
+
+    const imageFile = data.get('image') as File;
+
+    // 2. Validation
+    if (!title || !slug || !categoryId || !content || !imageFile) {
+      return NextResponse.json(
+        { error: 'Missing required fields or image' },
+        { status: 400 },
+      );
     }
 
-    // Handle image file if present
-    const imageFile = data.get('image') as Blob;
+    // 3. Upload to Cloudinary
     let imageUrl = { secure_url: '', public_id: '' };
+    imageUrl = await cloudinaryUploadImage(imageFile, 'Article/');
 
-    if (imageFile) {
-      // Upload the image to Cloudinary and get the URL
-      imageUrl = await cloudinaryUploadImage(imageFile, 'Article/');
-    }
-
-    const newPost = await prisma.post.create({
+    // 4. Create in Prisma
+    const newPost = await prisma.article.create({
       data: {
         title,
+        slug,
+        content,
+        isFeatured,
+        tags,
         coverImage: imageUrl.secure_url,
         imageId: imageUrl.public_id,
-        category: categories,
-        content,
-        tags,
-        author: { connect: { id: token.sub } },
+        // Connect the relations correctly
+        author: { connect: { id: session.user.id } },
+        category: { connect: { id: categoryId } },
       },
     });
 
-    return new NextResponse(JSON.stringify(newPost), {
-      status: 201,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
+    return NextResponse.json(newPost, { status: 201 });
+  } catch (_error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 },
+    );
   }
 }
 
 export async function PUT(req: NextRequest) {
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-    if (!token) {
-      return new NextResponse('User not logged in', { status: 401 });
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const formData = await req.formData();
 
-    const id = getStringValue(formData, 'id');
-    const title = getStringValue(formData, 'title');
-    const content = getStringValue(formData, 'content');
-    const category = getStringValue(formData, 'category');
-    const imageId = getStringValue(formData, 'deletedImage');
-    const image = formData.get('image') as Blob;
-    const tags = getStringValue(formData, 'tags')
-      .split(',')
-      .map((tag) => tag.trim());
+    const id = formData.get('id') as string;
+    const title = formData.get('title') as string;
+    const slug = formData.get('slug') as string;
+    const content = formData.get('content') as string;
+    const categoryId = formData.get('category') as string;
+    const isFeatured = formData.get('isFeatured') === 'true';
+    const oldImageId = formData.get('deletedImage') as string;
+    const imageFile = formData.get('image') as File | null;
 
-    let imageUrl = { secure_url: '', public_id: '' };
-    if (image) {
-      // Upload the image to Cloudinary
-      imageUrl = await cloudinaryUploadImage(image, 'Article/');
+    const rawTags = formData.get('tags') as string;
+    const tags = rawTags ? JSON.parse(rawTags) : [];
 
-      // Delete the old image if needed
-      if (imageId) {
-        await deleteImageFromCloudinary(imageId);
+    if (!id)
+      return NextResponse.json(
+        { error: 'Article ID required' },
+        { status: 400 },
+      );
+
+    const updateData: any = {
+      title,
+      slug,
+      content,
+      isFeatured,
+      tags,
+      category: { connect: { id: categoryId } },
+    };
+
+    // Handle Image Update
+    if (imageFile && imageFile.size > 0) {
+      const imageUrl = await cloudinaryUploadImage(imageFile, 'Article/');
+      updateData.coverImage = imageUrl.secure_url;
+      updateData.imageId = imageUrl.public_id;
+
+      // Cleanup old image from Cloudinary
+      if (oldImageId) {
+        await deleteImageFromCloudinary(oldImageId);
       }
     }
 
-    // Update the post in the database
-    const updatedPost = await prisma.post.update({
-      where: {
-        id,
-      },
-      data: {
-        title,
-        content,
-        category,
-        tags,
-        ...(image && {
-          coverImage: imageUrl.secure_url,
-          imageId: imageUrl.public_id,
-        }),
-      },
+    const updatedPost = await prisma.article.update({
+      where: { id },
+      data: updateData,
     });
 
-    return new NextResponse(JSON.stringify(updatedPost), { status: 200 });
-  } catch (error) {
-    console.log(error);
-    return new NextResponse('Internal server error', { status: 500 });
-  } finally {
-    await prisma.$disconnect();
+    return NextResponse.json(updatedPost, { status: 200 });
+  } catch (_error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 },
+    );
   }
 }

@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useArticles } from '@/services/article';
+import type { ArticleListType } from '@/types/article';
 
 type Variant = 'featured' | 'horizontal';
 
@@ -97,7 +98,7 @@ export default function ComputingPost() {
   );
 
   return (
-    <div className='container py-10'>
+    <div className='container py-10 px-4 mx-auto'>
       <div className='mb-16 flex flex-col items-start gap-6 md:flex-row md:items-center md:gap-20'>
         <h1 className='text-center text-4xl font-extrabold italic md:text-7xl'>
           Laptops & Computers
@@ -114,7 +115,7 @@ export default function ComputingPost() {
       </div>
 
       {/* Grid structure: 4 columns, 5 rows on desktop */}
-      <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-[1000px]'>
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-250'>
         {activeSlots.map(({ variant, dataIndex }) => (
           <div
             key={dataIndex}
@@ -136,7 +137,10 @@ export default function ComputingPost() {
 // PostCard (Refactored for Article Model)
 // ---------------------------------------------------------------------------
 
-const PostCard: FC<{ post: any; variant: Variant }> = ({ post, variant }) => (
+const PostCard: FC<{ post: ArticleListType; variant: Variant }> = ({
+  post,
+  variant,
+}) => (
   <Link href={`/article/${post.slug}`} className='block h-full'>
     <Card className='group relative h-full overflow-hidden border-none shadow-md transition-all duration-500 hover:shadow-2xl'>
       <Image
@@ -147,7 +151,7 @@ const PostCard: FC<{ post: any; variant: Variant }> = ({ post, variant }) => (
         priority={variant === 'featured'}
       />
       {/* Dynamic gradient overlay */}
-      <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent' />
+      <div className='absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent' />
 
       <div className='relative flex h-full flex-col justify-end p-6 text-white'>
         <h3
@@ -196,7 +200,7 @@ const PostCard: FC<{ post: any; variant: Variant }> = ({ post, variant }) => (
 
 const SkeletonComputingPost: FC = () => (
   <div className='container py-10'>
-    <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-[1000px]'>
+    <div className='grid grid-cols-1 gap-6 md:grid-cols-4 md:grid-rows-5 md:h-250'>
       <div className='md:col-span-2 md:row-span-2'>
         <Skeleton className='h-full w-full rounded-xl' />
       </div>

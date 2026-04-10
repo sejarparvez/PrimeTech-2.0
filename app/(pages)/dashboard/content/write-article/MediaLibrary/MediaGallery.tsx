@@ -3,7 +3,7 @@
 import { Check } from 'lucide-react';
 import type React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '../../../../../lib/utils';
+import { cn } from '../../../../../../lib/utils';
 
 interface MediaGalleryProps {
   data: any[];

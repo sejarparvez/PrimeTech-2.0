@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSinglePost } from '@/services/article';
+import { useSingleArticle } from '@/services/article';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostReadingProgress from './PostReadingProgress';
@@ -13,18 +13,15 @@ import PostSharing from './PostSharing';
 import PostToc from './PostToc';
 import TiptapRenderer from './TiptapRenderer';
 
-export default function SingleDesign({ postlink }: { postlink: string }) {
+export default function SingleArticle({ slug }: { slug: string }) {
   const [retryCount, setRetryCount] = useState(0);
 
-  const id = postlink.split('_')[1];
-
-  const { isLoading, data, isError, refetch } = useSinglePost({ id });
+  const { isLoading, data, isError, refetch } = useSingleArticle(slug);
 
   const handleRetry = () => {
     setRetryCount((prev) => prev + 1);
     refetch();
   };
-  const postLink = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${postlink}`;
 
   if (isError) {
     return (
@@ -54,7 +51,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
   }
 
   return (
-    <article className='container flex flex-col items-center py-6 md:py-10'>
+    <article className='container px-4 mx-auto flex flex-col items-center py-6 md:py-10'>
       <PostReadingProgress />
       <PostHeader
         title={data.title}
@@ -64,7 +61,7 @@ export default function SingleDesign({ postlink }: { postlink: string }) {
       />
       <div className='mx-auto mt-8 w-full'>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12'>
-          <PostSharing postlink={postLink} title={data.title} />
+          <PostSharing postlink={slug} title={data.title} />
 
           <main className='order-2 lg:col-span-8'>
             <PostContent>
@@ -97,6 +94,7 @@ function SinglePostSkeleton() {
         <div className='mt-6 space-y-3'>
           {[...Array(5)].map((_, i) => (
             <Skeleton
+              // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
               key={i}
               className='h-4 w-full rounded-lg last:w-4/5'
               style={{ animationDelay: `${i * 0.1}s` }}

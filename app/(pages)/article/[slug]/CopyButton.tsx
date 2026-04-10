@@ -1,7 +1,7 @@
 'use client';
 
+import { Check, Clipboard } from 'lucide-react';
 import { useState } from 'react';
-import { LuCheck, LuClipboard } from 'react-icons/lu';
 
 const CopyButton = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false);
@@ -21,7 +21,7 @@ const CopyButton = ({ code }: { code: string }) => {
       onClick={copyToClipboard}
       className='invisible absolute right-2 top-2 z-20 bg-transparent p-2 group-hover:visible'
     >
-      {copied ? <LuCheck size={18} /> : <LuClipboard size={18} />}
+      {copied ? <Check size={18} /> : <Clipboard size={18} />}
     </button>
   );
 };

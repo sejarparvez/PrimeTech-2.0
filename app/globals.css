@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -126,4 +128,111 @@
   html {
     @apply font-sans;
     }
+}
+
+:where(
+    .ProseMirror > p.is-editor-empty:first-child,
+    figcaption.is-empty
+  )::before {
+  @apply pointer-events-none float-left h-0 w-full text-muted-foreground content-[attr(data-placeholder)];
+}
+
+.ProseMirror .selectedCell:after {
+  @apply pointer-events-none absolute inset-0 z-2 bg-primary content-[''];
+}
+.ProseMirror iframe,
+.ProseMirror video {
+  @apply mx-auto block h-auto max-w-full cursor-default;
+}
+.ProseMirror iframe {
+  @apply pointer-events-none relative mx-auto my-0 aspect-video w-full;
+}
+.ProseMirror figure {
+  @apply cursor-default select-none;
+}
+.ProseMirror figcaption {
+  @apply text-center text-sm text-muted-foreground;
+}
+.ProseMirror pre {
+  @apply whitespace-pre! border dark:bg-gray-900;
+}
+.ProseMirror .tableWrapper {
+  @apply overflow-auto;
+}
+.ProseMirror table {
+  @apply mx-auto table-fixed border-collapse overflow-hidden border text-sm;
+}
+.ProseMirror table th,
+.ProseMirror table td {
+  @apply relative border px-3 py-2 text-left align-top;
+}
+.ProseMirror table th {
+  @apply bg-muted;
+}
+.ProseMirror table .column-resize-handle {
+  @apply pointer-events-none absolute -bottom-0.5 -right-0.5 top-0 z-10 w-1 bg-primary;
+}
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type {
+  @apply text-[#ff7b72];
+}
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  @apply text-[#d2a8ff];
+}
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-id,
+.hljs-variable.language_ {
+  @apply text-[#79c0ff];
+}
+.hljs-meta .hljs-string,
+.hljs-regexp,
+.hljs-string {
+  @apply text-[#a5d6ff];
+}
+.hljs-built_in,
+.hljs-symbol,
+.hljs-params {
+  @apply text-[#ffa657];
+}
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+  @apply text-[#8b949e];
+}
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  @apply text-[#7ee787];
+}
+.hljs-addition {
+  @apply bg-[#1b4721] text-[#3fb950];
+}
+.hljs-deletion {
+  @apply bg-[#78191b] text-[#f85149];
+}
+.hljs-changed {
+  @apply text-[#ffa657];
+}
+.hljs-section {
+  @apply font-bold text-[#79c0ff];
+}
+.hljs-emphasis {
+  @apply italic;
+}
+.hljs-strong {
+  @apply font-bold;
 }

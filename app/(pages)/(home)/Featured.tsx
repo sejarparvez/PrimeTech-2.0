@@ -71,7 +71,7 @@ export default function Featured() {
   const [mainPost, ...secondaryPosts] = articles;
 
   return (
-    <section className='container pt-4'>
+    <section className='container pt-4 mx-auto px-4'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8'>
         <div className='md:col-span-8'>
           <PostCard post={mainPost} variant='featured' />

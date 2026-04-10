@@ -13,8 +13,18 @@ export default function ThemeSwitch() {
     setMounted(true);
   }, []);
 
+  // IMPORTANT: The placeholder must match the final structure as closely as possible.
+  // We remove 'disabled' because the server sees it as null, but the client sees it as true.
   if (!mounted) {
-    return <Button variant='ghost' size='icon' disabled className='h-9 w-9' />;
+    return (
+      <Button
+        variant='secondary' // Match the variant used below
+        size='icon'
+        className='h-9 w-9'
+      >
+        <div className='h-[1.2rem] w-[1.2rem]' />
+      </Button>
+    );
   }
 
   const toggleTheme = () => {

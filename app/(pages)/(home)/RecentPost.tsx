@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useArticles } from '@/services/article';
+import type { ArticleListType } from '@/types/article';
 
 const LIMIT = 6;
 
@@ -54,7 +55,7 @@ export default function RecentPostsList() {
   const meta = response?.meta;
 
   return (
-    <section className='container px-4 md:px-0 mx-auto mt-10 md:mt-16'>
+    <section className='container px-4 mx-auto mt-10 md:mt-16'>
       <div className='mb-10 flex flex-col items-center justify-between gap-4 md:mb-16 md:flex-row'>
         <div className='space-y-1 text-center md:text-left'>
           <h2 className='text-3xl font-extrabold italic md:text-6xl tracking-tight'>
@@ -75,6 +76,7 @@ export default function RecentPostsList() {
 
       <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
         {isLoading ? (
+          // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
           Array.from({ length: LIMIT }).map((_, i) => <PostSkeleton key={i} />)
         ) : articles.length > 0 ? (
           articles.map((post) => <PostCard key={post.id} data={post} />)
@@ -115,13 +117,13 @@ export default function RecentPostsList() {
 // PostCard (Updated for new Schema)
 // ---------------------------------------------------------------------------
 
-export function PostCard({ data }: { data: any }) {
+export function PostCard({ data }: { data: ArticleListType }) {
   // Use the slug directly from the database
   const href = `/article/${data.slug}`;
 
   return (
     <Link href={href} className='group block h-full'>
-      <Card className='h-full overflow-hidden border-none bg-background shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1'>
+      <Card className='h-full overflow-hidden p-0 border-none bg-background shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1'>
         <div className='relative h-52 sm:h-64'>
           <Image
             src={data.coverImage || '/placeholder.jpg'}

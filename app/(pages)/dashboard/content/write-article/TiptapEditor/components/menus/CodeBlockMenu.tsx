@@ -120,7 +120,7 @@ export default memo(CodeBlockMenu);
 
 import { ChevronDown } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/new-article/TiptapEditor/constants/code-languages';
+import { CODE_BLOCK_LANGUAGUES } from '@/app/(pages)/dashboard/content/write-article/TiptapEditor/constants/code-languages';
 import { Input } from '@/components/ui/input';
 import {
   Popover,

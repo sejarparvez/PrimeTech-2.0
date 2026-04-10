@@ -14,20 +14,6 @@ export const slugifyText = (text: string) => {
 /**
  * Creates a slug using article id and name.
  */
-export const createSlug = ({
-  id,
-  name,
-}: {
-  id: string;
-  name: string;
-}): string => {
-  if (!id || !name) {
-    throw new Error("Both 'id' and 'name' are required to create a slug.");
-  }
-
-  const nameSlug = slugifyText(name);
-  return `/article/${nameSlug}_${id}`;
-};
 
 /**
  * Converts a slug into a human-readable format.
