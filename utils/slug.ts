@@ -38,8 +38,7 @@ export function RemoveHtmlTags(str: string): string {
   try {
     const document = parseDocument(str); // Parse the HTML string
     return DomUtils.getText(document).trim(); // Extract and trim text content
-  } catch (error) {
-    console.error('Error parsing string in RemoveHtmlTags:', error);
+  } catch (_error) {
     return ''; // Return empty string in case of error
   }
 }
