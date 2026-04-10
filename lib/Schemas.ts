@@ -20,7 +20,7 @@ export const NewArticleSchema = z.object({
   tags: z.array(z.string()),
   content: z.string().min(1, 'Content is required'),
   category: z.string().min(1, 'Category is required'),
-  isFeatured: z.boolean().default(false),
+  isFeatured: z.boolean(),
 });
 
 export type NewArticleSchemaType = z.infer<typeof NewArticleSchema>;

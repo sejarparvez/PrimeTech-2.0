@@ -147,7 +147,7 @@ function NewArticleForm() {
         toast.success('Article published successfully');
         resetForm();
       }
-    } catch (err) {
+    } catch (_err) {
       toast.dismiss();
       toast.error('Failed to save article');
     }
@@ -359,7 +359,7 @@ function NewArticleForm() {
 // ---------------------------------------------------------------------------
 
 function TagInputSection() {
-  const { control, setValue, watch } = useFormContext<NewArticleSchemaType>();
+  const { setValue, watch } = useFormContext<NewArticleSchemaType>();
   const [input, setInput] = useState('');
   const tags = watch('tags') || [];
 
@@ -379,6 +379,7 @@ function TagInputSection() {
       <CardContent>
         <div className='flex flex-wrap gap-2 mb-3'>
           {tags.map((tag, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
             <Badge key={i} variant='secondary'>
               {tag}
               <X
@@ -397,9 +398,12 @@ function TagInputSection() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === 'Enter' && (e.preventDefault(), addTag())
-            }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addTag();
+              }
+            }}
             placeholder='Press enter to add...'
           />
           <Button type='button' variant='outline' onClick={addTag}>
@@ -416,7 +420,7 @@ function ArticleImage({
   setImage,
 }: {
   image: File | null;
-  setImage: any;
+  setImage: React.Dispatch<React.SetStateAction<File | null>>;
 }) {
   return (
     <Card>

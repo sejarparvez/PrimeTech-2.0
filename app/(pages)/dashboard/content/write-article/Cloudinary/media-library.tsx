@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: this is fine */
 import { useEffect, useRef, useState } from 'react';
 import type {
   MediaLibraryInsertResults,

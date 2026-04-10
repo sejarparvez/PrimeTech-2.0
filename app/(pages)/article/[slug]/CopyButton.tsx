@@ -12,12 +12,14 @@ const CopyButton = ({ code }: { code: string }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
+      // biome-ignore lint/suspicious/noConsole: this is fine
       console.error('Failed to copy:', error);
     }
   };
 
   return (
     <button
+      type='button'
       onClick={copyToClipboard}
       className='invisible absolute right-2 top-2 z-20 bg-transparent p-2 group-hover:visible'
     >
