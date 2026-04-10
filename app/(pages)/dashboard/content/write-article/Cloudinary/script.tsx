@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import { useEffect } from 'react';
 
 interface LoadScriptProps {
@@ -27,7 +28,7 @@ const Script = ({ src, onError, onLoad }: LoadScriptProps) => {
     };
   }, [src, onLoad, onError]);
 
-  return <></>;
+  return null;
 };
 
 export default Script;

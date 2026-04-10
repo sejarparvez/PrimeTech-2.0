@@ -83,7 +83,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
           }
         });
       };
-      img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+      img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
     }
   };
 
@@ -139,7 +139,7 @@ const PostSharing: React.FC<PostSharingProps> = ({ postlink, title }) => {
           icon={IconBrandWhatsapp}
           onClick={() =>
             window.open(
-              `https://wa.me/?text=${encodeURIComponent(title + ' ' + postlink)}`,
+              `https://wa.me/?text=${encodeURIComponent(`${title} ${postlink}`)}`,
               '_blank',
             )
           }

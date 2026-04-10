@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import * as prod from 'react/jsx-runtime';
 import rehypeParse from 'rehype-parse';
 import rehypeReact, { type Components } from 'rehype-react';

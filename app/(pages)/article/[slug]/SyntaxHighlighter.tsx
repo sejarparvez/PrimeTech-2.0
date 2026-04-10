@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 'use client';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import type { JSX } from 'react';
@@ -14,6 +15,7 @@ const SyntaxHighlighter = (props: SyntaxHighlighterProps) => {
   const [nodes, setNodes] = useState<any>(null);
 
   useLayoutEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: this is fine
     highlight(props.content!, props.language!).then(setNodes);
   }, [props.language, props.content]);
 

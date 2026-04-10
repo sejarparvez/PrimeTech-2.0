@@ -14,6 +14,8 @@
       "!.next",
       "!dist",
       "!build",
+      "!public",
+      "!prisma.config.ts",
       "!app/globals.css"
     ]
   },

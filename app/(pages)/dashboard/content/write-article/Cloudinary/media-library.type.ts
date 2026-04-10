@@ -1,4 +1,5 @@
 // Via https://cloudinary.com/documentation/media_library_widget
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 
 import type { JSX } from 'react';
 

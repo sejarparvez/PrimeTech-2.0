@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { QueryProvider } from '../provider/QueryProvider';
+import { TanstackProvider } from '../provider/QueryProvider';
 import { ThemeProvider } from '../provider/ThemeProvider';
 import './globals.css';
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={inter.className}>
-        <QueryProvider>
+        <TanstackProvider>
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
             <Toaster richColors />
           </ThemeProvider>
-        </QueryProvider>
+        </TanstackProvider>
       </body>
     </html>
   );

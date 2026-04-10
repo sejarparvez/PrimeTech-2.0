@@ -17,7 +17,7 @@ export default function SingleArticle({ slug }: { slug: string }) {
   const [retryCount, setRetryCount] = useState(0);
 
   const { isLoading, data, isError, refetch } = useSingleArticle(slug);
-
+  const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
   const handleRetry = () => {
     setRetryCount((prev) => prev + 1);
     refetch();
@@ -61,7 +61,10 @@ export default function SingleArticle({ slug }: { slug: string }) {
       />
       <div className='mx-auto mt-8 w-full'>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12'>
-          <PostSharing postlink={slug} title={data.title} />
+          <PostSharing
+            postlink={`${siteurl}/article/${data.slug}`}
+            title={data.title}
+          />
 
           <main className='order-2 lg:col-span-8'>
             <PostContent>

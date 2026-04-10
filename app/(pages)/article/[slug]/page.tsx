@@ -27,7 +27,7 @@ async function fetchArticleData(slug: string) {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  _parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const slug = (await params).slug;
   const data = await fetchArticleData(slug);

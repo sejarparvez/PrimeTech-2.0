@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import type { Components } from 'rehype-react';
