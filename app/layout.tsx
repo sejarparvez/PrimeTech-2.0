@@ -1,8 +1,9 @@
+import { Toaster } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
 import { TanstackProvider } from '../provider/QueryProvider';
 import { ThemeProvider } from '../provider/ThemeProvider';
 import './globals.css';
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
             <Toaster richColors />
           </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </TanstackProvider>
       </body>
     </html>

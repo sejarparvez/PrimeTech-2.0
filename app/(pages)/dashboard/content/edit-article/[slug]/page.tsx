@@ -1,5 +1,25 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
+import { useSession } from '@/lib/auth-client';
+import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
+import { useSingleArticle, useSlugCheck } from '@/services/article';
+import { useCategories } from '@/services/categories';
+import TiptapEditor, { type TiptapEditorRef } from '@/tiptap-editor';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import {
@@ -24,28 +44,6 @@ import slugify from 'slugify';
 import { toast } from 'sonner';
 import { useDebounce } from 'use-debounce';
 import type * as z from 'zod';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field, FieldError, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Switch } from '@/components/ui/switch';
-import { useSession } from '@/lib/auth-client';
-import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
-import { useSingleArticle, useSlugCheck } from '@/services/article';
-import { useCategories } from '@/services/categories';
-import TiptapEditor, {
-  type TiptapEditorRef,
-} from '../../write-article/TiptapEditor/components/Editor';
 
 const slugifyText = (text: string) => {
   return slugify(text, { lower: true, strict: true });
@@ -145,13 +143,6 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
         setValue('content', article.content || '');
         setValue('category', categoryId);
         setValue('tags', tags);
-
-        if (editorRef.current) {
-          const editor = editorRef.current.getInstance();
-          if (editor) {
-            editor.commands.setContent(article.content || '');
-          }
-        }
         setEditorReady(true);
       }, 50);
     }
@@ -188,13 +179,6 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
       setIsSlugCustomized(false);
       setIsFeatured(article.isFeatured || false);
       setSelectedCategory(article.category?.id || '');
-
-      if (editorRef.current) {
-        const editor = editorRef.current.getInstance();
-        if (editor) {
-          editor.commands.setContent(article.content || '');
-        }
-      }
     }
   };
 
@@ -371,10 +355,19 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
               render={({ field }) => (
                 <Field>
                   <FieldLabel>Content</FieldLabel>
+
                   <TiptapEditor
                     ref={editorRef}
-                    onContentChange={field.onChange}
-                    initialContent={field.value}
+                    output='html'
+                    content={article?.content || field.value}
+                    minHeight={320}
+                    maxHeight={640}
+                    maxWidth={700}
+                    onChange={field.onChange}
+                    placeholder={{
+                      paragraph: 'Type your content here...',
+                      imageCaption: 'Type caption for image (optional)',
+                    }}
                   />
                   {errors.content && (
                     <FieldError>{errors.content.message}</FieldError>
