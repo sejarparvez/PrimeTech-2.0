@@ -3,15 +3,15 @@ import TiptapDragHandle from '@tiptap/extension-drag-handle-react';
 import type { Node as TiptapNode } from '@tiptap/pm/model';
 import { useTiptap } from '@tiptap/react';
 import { useCallback, useMemo, useState } from 'react';
-import { getSelectedDOM, moveNode } from '../helpers/tiptap';
-import MenuButton from './menu-button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown';
+} from '@/components/ui/dropdown-menu';
+import { getSelectedDOM, moveNode } from '../helpers/tiptap';
+import MenuButton from './menu-button';
 
 export const DragHandle = () => {
   const { editor } = useTiptap();

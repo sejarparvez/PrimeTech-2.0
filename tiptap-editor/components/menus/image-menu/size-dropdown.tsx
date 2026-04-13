@@ -1,5 +1,5 @@
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { MenuButton } from '../../menu-button';
-import { DropdownMenuItem } from '../../ui/dropdown';
 
 interface SizeDropdownProps {
   value: number;

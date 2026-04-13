@@ -1,10 +1,10 @@
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import {
   HEADING_LEVELS,
   type HeadingType,
   useHeading,
 } from '../../hooks/use-heading';
 import { MenuButton } from '../menu-button';
-import { DropdownMenuItem } from '../ui/dropdown';
 
 const HeadingDropdown = () => {
   const { currentType, canToggle, toggleHeading } = useHeading();

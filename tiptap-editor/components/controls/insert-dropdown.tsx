@@ -1,7 +1,6 @@
 import { useEditorState, useTiptap } from '@tiptap/react';
-
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { MenuButton } from '../menu-button';
-import { DropdownMenuItem } from '../ui/dropdown';
 
 const InsertDropdown = () => {
   const { editor } = useTiptap();

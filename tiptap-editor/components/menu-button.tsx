@@ -1,16 +1,16 @@
 import React, { type CSSProperties, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { getShortcutKey } from '../helpers/utils';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from './ui/dropdown';
 import Icon, { type IconProps } from './ui/icon';
 import Tooltip from './ui/tooltip';
 
