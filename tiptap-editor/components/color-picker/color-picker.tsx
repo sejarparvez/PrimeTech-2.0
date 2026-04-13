@@ -2,9 +2,9 @@ import { PopoverClose } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Icon from '../ui/icon';
-import Input from '../ui/input';
-import Label from '../ui/label';
 import { COLORS, MORE_COLORS } from './color';
 import ColorButton from './color-button';
 
@@ -41,7 +41,7 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   const renderColorList = (colors: string[], label: string) => (
     <div>
-      <Label as='span'>{label}</Label>
+      <Label>{label}</Label>
       <div className='rte-color__list'>
         {colors.map((item) => (
           <ColorButton

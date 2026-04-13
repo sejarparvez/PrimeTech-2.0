@@ -1,8 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
-
+import { Input } from '@/components/ui/input';
 import { MenuButton } from '../../menu-button';
-import Input from '../../ui/input';
 
 interface AltTextEditProps {
   initialText?: string;

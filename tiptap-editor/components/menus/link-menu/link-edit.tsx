@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import Input from '../../ui/input';
-import Label from '../../ui/label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface LinkEditProps {
   initialUrl?: string;
@@ -36,7 +36,7 @@ const LinkEdit = ({
 
   return (
     <div className='rte-link__form'>
-      <Label className='rte-link__label'>URL</Label>
+      <Label>URL</Label>
       <Input
         value={url}
         onChange={(e) => setUrl(e.target.value)}
