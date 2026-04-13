@@ -1,9 +1,7 @@
-import React from "react";
+import { useEditorState, useTiptap } from '@tiptap/react';
 
-import { useEditorState, useTiptap } from "@tiptap/react";
-
-import { MenuButton } from "./menu-button";
-import { Toolbar } from "./ui/toolbar";
+import { MenuButton } from './menu-button';
+import { Toolbar } from './ui/toolbar';
 
 export const StatusBar = () => {
   const { editor } = useTiptap();
@@ -21,27 +19,27 @@ export const StatusBar = () => {
   });
 
   return (
-    <div className="rte-status-bar">
+    <div className='rte-status-bar'>
       <Toolbar dense>
         <MenuButton
-          icon="SourceCode"
-          text="Source Code"
+          icon='SourceCode'
+          text='Source Code'
           active={sourceView}
           onMouseDown={(e) => e.preventDefault()}
           onClick={editor.commands.toggleSourceView}
         />
         <MenuButton
-          icon="Maximize"
-          text="Fullscreen"
+          icon='Maximize'
+          text='Fullscreen'
           active={fullScreen}
           onMouseDown={(e) => e.preventDefault()}
           onClick={editor.commands.toggleFullScreen}
         />
       </Toolbar>
 
-      <div className="rte-counter">
-        <span className="rte-word-count">Words: {counter.words}</span>
-        <span className="rte-charater">Characters: {counter.characters}</span>
+      <div className='rte-counter'>
+        <span className='rte-word-count'>Words: {counter.words}</span>
+        <span className='rte-charater'>Characters: {counter.characters}</span>
       </div>
     </div>
   );

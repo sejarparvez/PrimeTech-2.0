@@ -1,21 +1,20 @@
-import React, { CSSProperties, useMemo } from "react";
-
-import Button, { type ButtonProps } from "./ui/button";
+import React, { type CSSProperties, useMemo } from 'react';
+import { cn, getShortcutKey } from '../helpers/utils';
+import Button, { type ButtonProps } from './ui/button';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-} from "./ui/dropdown";
-import Icon, { type IconProps } from "./ui/icon";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import Tooltip from "./ui/tooltip";
-import { cn, getShortcutKey } from "../helpers/utils";
+  DropdownMenuTrigger,
+} from './ui/dropdown';
+import Icon, { type IconProps } from './ui/icon';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import Tooltip from './ui/tooltip';
 
 interface MenuButtonProps
-  extends Omit<ButtonProps, "ref" | "type" | "iconOnly"> {
-  icon?: IconProps["name"];
-  type?: "button" | "dropdown" | "popover";
-  buttonType?: ButtonProps["type"];
+  extends Omit<ButtonProps, 'ref' | 'type' | 'iconOnly'> {
+  icon?: IconProps['name'];
+  type?: 'button' | 'dropdown' | 'popover';
+  buttonType?: ButtonProps['type'];
   text?: string;
   active?: boolean;
   shortcuts?: string[];
@@ -52,22 +51,22 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     ref,
   ) => {
     const hasArrowIcon =
-      !hideArrow && (type === "dropdown" || type === "popover");
+      !hideArrow && (type === 'dropdown' || type === 'popover');
     const hasIconOnly = hideText && !hasArrowIcon;
 
     const tooltipContent = useMemo(() => {
       if (!tooltip) return null;
 
-      const title = typeof tooltip === "string" ? tooltip : text;
+      const title = typeof tooltip === 'string' ? tooltip : text;
       const shortcut = shortcuts
-        ? `${shortcuts.map(getShortcutKey).join(" + ")})`
-        : "";
+        ? `${shortcuts.map(getShortcutKey).join(' + ')})`
+        : '';
 
       return title ? `${title} ${shortcut}` : null;
     }, [tooltip, text, shortcuts]);
 
     const renderIcon = useMemo(
-      () => (icon ? <Icon name={icon} className="rte-button-icon" /> : null),
+      () => (icon ? <Icon name={icon} className='rte-button-icon' /> : null),
       [icon],
     );
 
@@ -75,21 +74,21 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       <Button
         ref={ref}
         type={buttonType}
-        variant={"ghost"}
-        className={cn("rte-menu__button", buttonClass)}
+        variant={'ghost'}
+        className={cn('rte-menu__button', buttonClass)}
         style={buttonStyle}
         iconOnly={hasIconOnly}
         slotBefore={!hasIconOnly && renderIcon}
         slotAfter={
           hasArrowIcon && (
-            <span className="rte-icon-arrow">
-              <Icon name="ChevronDown" size={14} />
+            <span className='rte-icon-arrow'>
+              <Icon name='ChevronDown' size={14} />
             </span>
           )
         }
         onFocusCapture={(e) => e.stopPropagation()}
         data-active={active || undefined}
-        aria-label={typeof tooltip === "string" ? tooltip : text}
+        aria-label={typeof tooltip === 'string' ? tooltip : text}
         disabled={disabled}
         {...props}
       >
@@ -108,7 +107,7 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       renderButton
     );
 
-    if (type === "dropdown") {
+    if (type === 'dropdown') {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>{renderContent}</DropdownMenuTrigger>
@@ -124,7 +123,7 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       );
     }
 
-    if (type === "popover") {
+    if (type === 'popover') {
       return (
         <Popover>
           <PopoverTrigger asChild>{renderContent}</PopoverTrigger>
@@ -145,6 +144,6 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   },
 );
 
-MenuButton.displayName = "MenuButton";
+MenuButton.displayName = 'MenuButton';
 
 export default MenuButton;

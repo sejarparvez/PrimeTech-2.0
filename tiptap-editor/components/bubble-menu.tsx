@@ -1,24 +1,23 @@
-import React, { useEffect, useState, useCallback } from "react";
-
-import { createPortal } from "react-dom";
-
 import {
-  useFloating,
-  flip,
-  shift,
-  offset,
-  limitShift,
   autoUpdate,
-  type Placement,
-  type Strategy,
+  flip,
+  limitShift,
   type Middleware,
-} from "@floating-ui/react-dom";
-import { useTiptap, type Editor } from "@tiptap/react";
+  offset,
+  type Placement,
+  shift,
+  type Strategy,
+  useFloating,
+} from '@floating-ui/react-dom';
+import { type Editor, useTiptap } from '@tiptap/react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import { getSelectionBoundingRect, isValidSelection } from "../helpers/tiptap";
-import { cn } from "../helpers/utils";
+import { getSelectionBoundingRect, isValidSelection } from '../helpers/tiptap';
+import { cn } from '../helpers/utils';
 
-interface BubbleMenuProps extends React.ComponentProps<"div"> {
+interface BubbleMenuProps extends React.ComponentProps<'div'> {
   zIndex?: number;
   placement?: Placement;
   strategy?: Strategy;
@@ -37,8 +36,8 @@ const DEFAULT_MIDDLEWARE: Middleware[] = [
 
 export const BubbleMenu = ({
   zIndex = 50,
-  placement = "top",
-  strategy = "absolute",
+  placement = 'top',
+  strategy = 'absolute',
   middleware = DEFAULT_MIDDLEWARE,
   className,
   shouldShow,
@@ -71,7 +70,7 @@ export const BubbleMenu = ({
     if (!editor) return;
 
     const shouldShowResult =
-      typeof shouldShow === "boolean" ? shouldShow : isValidSelection(editor);
+      typeof shouldShow === 'boolean' ? shouldShow : isValidSelection(editor);
 
     if (shouldShowResult) {
       refs.setReference({
@@ -97,10 +96,10 @@ export const BubbleMenu = ({
     };
 
     const editorDOM = editor.view.dom;
-    editorDOM.addEventListener("blur", handleBlur);
+    editorDOM.addEventListener('blur', handleBlur);
 
     return () => {
-      editorDOM.removeEventListener("blur", handleBlur);
+      editorDOM.removeEventListener('blur', handleBlur);
     };
   }, [editor, isOpen, handleOpenChange, refs.floating]);
 
@@ -112,19 +111,19 @@ export const BubbleMenu = ({
     };
 
     const editorDOM = editor.view.dom;
-    editorDOM.addEventListener("dragstart", handleDragStart);
+    editorDOM.addEventListener('dragstart', handleDragStart);
 
     return () => {
-      editorDOM.removeEventListener("dragstart", handleDragStart);
+      editorDOM.removeEventListener('dragstart', handleDragStart);
     };
   }, [editor, isOpen, handleOpenChange]);
 
   useEffect(() => {
     if (!editor || !isOpen) return;
 
-    editor.on("selectionUpdate", updateMenu);
+    editor.on('selectionUpdate', updateMenu);
     return () => {
-      editor.off("selectionUpdate", updateMenu);
+      editor.off('selectionUpdate', updateMenu);
     };
   }, [editor, isOpen, updateMenu]);
 
@@ -142,7 +141,7 @@ export const BubbleMenu = ({
   return createPortal(
     <div
       ref={refs.setFloating}
-      className={cn("rte-bubble-menu", className)}
+      className={cn('rte-bubble-menu', className)}
       style={{
         ...floatingStyles,
         zIndex,

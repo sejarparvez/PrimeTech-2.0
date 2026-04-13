@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import { PopoverClose } from '@radix-ui/react-popover';
+import { useMemo, useState } from 'react';
 
-import { PopoverClose } from "@radix-ui/react-popover";
-
-import { cn } from "../helpers/utils";
+import { cn } from '../helpers/utils';
 
 const COLUMNS = 7;
 const ROWS = 5;
@@ -22,13 +21,13 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
   const grid = useMemo(
     () =>
       Array.from({ length: ROWS }, (_, rowIndex) => (
-        <div key={`row-${rowIndex}`} className="rte-tb__row">
+        <div key={`row-${rowIndex}`} className='rte-tb__row'>
           {Array.from({ length: COLUMNS }, (_, colIndex) => (
             <div
               key={`col-${colIndex}`}
               className={cn(
-                "rte-tb__cell",
-                isActiveCell(rowIndex, colIndex) && "rte-tb__cell--active"
+                'rte-tb__cell',
+                isActiveCell(rowIndex, colIndex) && 'rte-tb__cell--active',
               )}
               onMouseMove={() =>
                 setGridSize({ cols: colIndex + 1, rows: rowIndex + 1 })
@@ -38,15 +37,15 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
           ))}
         </div>
       )),
-    [gridSize]
+    [gridSize],
   );
 
   return (
-    <div className="rte-tb__builder">
+    <div className='rte-tb__builder'>
       <PopoverClose asChild>
-        <div className="rte-tb__grid">{grid}</div>
+        <div className='rte-tb__grid'>{grid}</div>
       </PopoverClose>
-      <div style={{ textAlign: "center", marginBlock: 3 }}>
+      <div style={{ textAlign: 'center', marginBlock: 3 }}>
         {gridSize.rows} x {gridSize.cols}
       </div>
     </div>
