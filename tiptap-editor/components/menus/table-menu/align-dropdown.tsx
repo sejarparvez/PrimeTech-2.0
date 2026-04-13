@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
+import { PopoverClose } from '@/components/ui/popover';
 import type { CellAlign } from '../../../hooks/use-table';
 import { MenuButton } from '../../menu-button';
 import Icon from '../../ui/icon';
-import { PopoverClose } from '../../ui/popover';
 
 interface AlignmentDropdownProps {
   toggleCellAlign: (align: CellAlign) => void;

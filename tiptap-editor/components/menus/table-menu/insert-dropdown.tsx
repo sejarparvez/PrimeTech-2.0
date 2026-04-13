@@ -1,5 +1,5 @@
+import { PopoverClose } from '@/components/ui/popover';
 import { MenuButton } from '../../menu-button';
-import { PopoverClose } from '../../ui/popover';
 import { Toolbar } from '../../ui/toolbar';
 
 interface InsertDropdownProps {

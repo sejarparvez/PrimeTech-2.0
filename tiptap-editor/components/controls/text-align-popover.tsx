@@ -1,5 +1,5 @@
 import { useEditorState, useTiptap } from '@tiptap/react';
-
+import { PopoverClose } from '@/components/ui/popover';
 import {
   canSetTextAlign,
   isTextAlignActive,
@@ -7,7 +7,6 @@ import {
 } from '../../hooks/use-text-align';
 import { MenuButton } from '../menu-button';
 import type { IconProps } from '../ui/icon';
-import { PopoverClose } from '../ui/popover';
 import { Toolbar } from '../ui/toolbar';
 import AlignCenterButton from './align-center-button';
 import AlignJustifyButton from './align-justify-button';

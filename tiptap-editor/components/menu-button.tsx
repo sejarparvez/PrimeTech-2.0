@@ -1,5 +1,10 @@
 import React, { type CSSProperties, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { getShortcutKey } from '../helpers/utils';
 import {
   DropdownMenu,
@@ -7,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown';
 import Icon, { type IconProps } from './ui/icon';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import Tooltip from './ui/tooltip';
 
 type ShadcnButtonProps = React.ComponentPropsWithoutRef<typeof Button>;

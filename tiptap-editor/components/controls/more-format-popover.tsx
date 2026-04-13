@@ -1,12 +1,11 @@
 import { useTiptapState } from '@tiptap/react';
-
+import { PopoverClose } from '@/components/ui/popover';
 import {
   canToggleMark,
   isMarkActive,
   type MarkType,
 } from '../../hooks/use-mark';
 import { MenuButton } from '../menu-button';
-import { PopoverClose } from '../ui/popover';
 import { Toolbar } from '../ui/toolbar';
 import CodeButton from './code-button';
 import StrikeButton from './strike-button';

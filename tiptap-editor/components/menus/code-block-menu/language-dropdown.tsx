@@ -1,10 +1,9 @@
 import { useTiptap } from '@tiptap/react';
 import type React from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
-
+import { PopoverClose } from '@/components/ui/popover';
 import { MenuButton } from '../../menu-button';
 import Icon from '../../ui/icon';
-import { PopoverClose } from '../../ui/popover';
 import SearchInput from '../../ui/search-input';
 
 interface LanguageOption {
