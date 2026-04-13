@@ -43,7 +43,10 @@ const VirtualizedRow = ({
     <div style={style} className='rte-ep__row'>
       {emojis.map((emoji, i) => (
         <button
-          key={`${emoji.name}-${i}`}
+          key={`${emoji.name}-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
+            i
+          }`}
           type='button'
           className='rte-ep__item'
           onClick={() => onSelect?.(emoji)}

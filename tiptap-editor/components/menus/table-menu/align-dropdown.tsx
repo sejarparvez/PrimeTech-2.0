@@ -35,7 +35,7 @@ export const AlignmentDropdown = ({
           <PopoverClose asChild key={`h-${alignment.value}`}>
             <Button
               variant='ghost'
-              iconOnly={true}
+              size='icon'
               onClick={() => toggleCellAlign(alignment.value)}
             >
               <Icon name={alignment.icon} size={20} />

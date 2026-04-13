@@ -90,7 +90,7 @@ const ColorPicker = (props: ColorPickerProps) => {
             <div className='rte-cp-custom__preview'>
               <ColorButton color={color} tooltip={false} />
               <Input
-                value={color!}
+                value={color}
                 style={{ textTransform: 'uppercase' }}
                 onChange={(e) => handleColorChange(e.target.value)}
                 autoFocus
@@ -102,7 +102,7 @@ const ColorPicker = (props: ColorPickerProps) => {
 
       <PopoverClose asChild>
         <div className='rte-cp__actions'>
-          <Button variant='secondary' iconOnly onClick={props.onReset}>
+          <Button variant='secondary' size='icon' onClick={props.onReset}>
             <Icon name='PaletteOff' />
           </Button>
           <Button style={{ width: '100%' }} onClick={handleApply}>

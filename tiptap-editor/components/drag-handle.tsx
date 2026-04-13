@@ -39,6 +39,7 @@ export const DragHandle = () => {
     };
   }, [editor]);
 
+  // biome-ignore lint/suspicious/noExplicitAny: this is fine
   const handleNodeChange = useCallback((data: any) => {
     if (data.node) setNode(data.node);
     setNodePos(data.pos);
@@ -124,7 +125,7 @@ export const DragHandle = () => {
   const handleCut = useCallback(async () => {
     const success = await handleCopy();
     if (success) handleDelete();
-  }, [editor, node, nodePos]);
+  }, [handleCopy, handleDelete]);
 
   if (!editor) return null;
 

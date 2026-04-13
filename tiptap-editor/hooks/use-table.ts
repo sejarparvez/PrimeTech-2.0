@@ -34,7 +34,7 @@ export type TableAction =
 
 // Utility functions
 export function canInsertTable(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.can().insertTable();
 }
 
@@ -47,7 +47,7 @@ export function canExecuteTableAction(
   editor: Editor | null,
   action: TableAction,
 ): boolean {
-  if (!editor || !editor.isEditable || !isTableActive(editor)) return false;
+  if (!editor?.isEditable || !isTableActive(editor)) return false;
 
   switch (action) {
     case 'addRowBefore':
@@ -81,7 +81,7 @@ export function insertTable(
   editor: Editor | null,
   options: TableInsertOptions,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canInsertTable(editor)) return false;
 
   return editor
@@ -99,7 +99,7 @@ export function executeTableAction(
   editor: Editor | null,
   action: TableAction,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canExecuteTableAction(editor, action)) return false;
 
   const chain = editor.chain().focus();

@@ -1,12 +1,23 @@
 import Link from 'next/link';
 import type React from 'react';
-import type { JSX, ReactNode } from 'react';
+import type { JSX, ReactElement, ReactNode } from 'react';
+import { slugifyUnicode } from '@/utils/slug'; // update path to match your utils file
 
 interface HeadingWithAnchorProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
   id?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
+
+const extractText = (node: ReactNode): string => {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join('');
+  if (node !== null && typeof node === 'object' && 'props' in node) {
+    const el = node as ReactElement<{ children?: ReactNode }>;
+    return extractText(el.props.children);
+  }
+  return '';
+};
 
 const HeadingWithAnchor: React.FC<HeadingWithAnchorProps> = ({
   level,
@@ -14,18 +25,7 @@ const HeadingWithAnchor: React.FC<HeadingWithAnchorProps> = ({
   children,
 }) => {
   const HeadingTag: keyof JSX.IntrinsicElements = `h${level}`;
-
-  const generateId = (text: ReactNode): string => {
-    if (typeof text === 'string') {
-      return text
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '');
-    }
-    return 'heading';
-  };
-
-  const headingId = id || generateId(children);
+  const headingId = id || slugifyUnicode(extractText(children));
 
   return (
     <HeadingTag id={headingId}>

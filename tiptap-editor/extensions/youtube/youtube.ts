@@ -17,7 +17,8 @@ export const Youtube = TiptapYoutube.extend({
       ...this.parent?.(),
       width: {
         default: null,
-        parseHTML: (element) => Number.parseInt(element.style.width) || null,
+        parseHTML: (element) =>
+          Number.parseInt(element.style.width, 10) || null,
         renderHTML: (attrs) =>
           attrs.width ? { style: `width: ${attrs.width}%` } : {},
       },

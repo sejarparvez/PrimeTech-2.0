@@ -9,7 +9,7 @@ export function canUndoRedo(
   editor: Editor | null,
   action: UndoRedoAction,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
 
   return editor.can()[action]();
 }
@@ -18,7 +18,7 @@ export function executeUndoRedo(
   editor: Editor | null,
   action: UndoRedoAction,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canUndoRedo(editor, action)) return false;
 
   return editor.chain().focus()[action]().run();

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: this is fine */
 import { Annotation, Compartment } from '@codemirror/state';
 import { EditorView as CodeMirror } from '@codemirror/view';
 import { createDocument, Extension, getHTMLFromFragment } from '@tiptap/core';
@@ -8,6 +9,7 @@ import { setup } from './codemirror/setup';
 import { theme } from './codemirror/theme';
 import { prettify } from './prettify';
 
+// biome-ignore lint/complexity/noBannedTypes: this is fine
 export type SourceViewOptions = {};
 
 export interface SourceViewStorage {
@@ -65,6 +67,7 @@ export const SourceView = Extension.create<
   function show(view: EditorView) {
     requestAnimationFrame(() => {
       element.style.display = '';
+
       view.dom.parentElement!.style.display = 'none';
       cm.focus();
     });

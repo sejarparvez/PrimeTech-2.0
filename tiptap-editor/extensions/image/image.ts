@@ -28,7 +28,8 @@ export const Image = TiptapImage.extend({
       },
       width: {
         default: null,
-        parseHTML: (element) => Number.parseInt(element.style.width) || null,
+        parseHTML: (element) =>
+          Number.parseInt(element.style.width, 10) || null,
         renderHTML: (attrs) =>
           attrs.width ? { style: `width: ${attrs.width}%` } : {},
       },
@@ -51,7 +52,7 @@ export const Image = TiptapImage.extend({
         key: new PluginKey('imageDrag'),
         props: {
           handleDOMEvents: {
-            dragstart: (view, event) => {
+            dragstart: (_view, event) => {
               if ((event.target as HTMLElement).tagName === 'IMG') {
                 event.preventDefault();
                 return true;

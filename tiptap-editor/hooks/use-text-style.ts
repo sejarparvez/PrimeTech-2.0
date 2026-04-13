@@ -14,7 +14,7 @@ export function canSetTextStyle(
   editor: Editor | null,
   property: TextStyleProperty,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
 
   const testValues: Record<TextStyleProperty, string> = {
     color: 'currentColor',
@@ -56,7 +56,7 @@ export function setTextStyle(
   editor: Editor | null,
   attributes: TextStyleAttributes,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.chain().focus().setMark('textStyle', attributes).run();
 }
 
@@ -64,7 +64,7 @@ export function unsetTextStyle(
   editor: Editor | null,
   property: TextStyleProperty,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
 
   return editor
     .chain()

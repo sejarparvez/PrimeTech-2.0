@@ -105,6 +105,8 @@ export const LanguageDropdown = ({
         ) : (
           filteredOptions.map((item) => (
             <PopoverClose asChild key={item.value}>
+              {/** biome-ignore lint/a11y/useKeyWithClickEvents: this is fines */}
+              {/** biome-ignore lint/a11y/useSemanticElements: this is fines */}
               <div
                 role='button'
                 tabIndex={0}

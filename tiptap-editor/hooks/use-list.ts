@@ -6,7 +6,7 @@ export type ListType = 'bulletList' | 'orderedList';
 
 // Utility functions
 export function canToggleList(editor: Editor | null, type: ListType): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
 
   switch (type) {
     case 'bulletList':
@@ -24,7 +24,7 @@ export function isListActive(editor: Editor | null, type: ListType): boolean {
 }
 
 export function toggleList(editor: Editor | null, type: ListType): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canToggleList(editor, type)) return false;
 
   const chain = editor.chain().focus();

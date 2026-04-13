@@ -65,7 +65,7 @@ export const ImageCaption = Figcaption.extend({
       // Plugin to sync caption text to image attrs
       new Plugin({
         key: new PluginKey('imageCaptionSync'),
-        appendTransaction: (transactions, oldState, newState) => {
+        appendTransaction: (transactions, _oldState, newState) => {
           const docChanged = transactions.some((tr) => tr.docChanged);
           if (!docChanged) return null;
 

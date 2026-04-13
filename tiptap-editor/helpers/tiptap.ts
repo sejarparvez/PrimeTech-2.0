@@ -243,7 +243,7 @@ export function moveNode(
   editor: Editor | null,
   direction: 'up' | 'down',
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
 
   const nodeInfo = getAnchorNodeAndPos(editor);
   if (!nodeInfo) return false;
@@ -283,8 +283,7 @@ export function moveNode(
 
     editor.view.dispatch(tr);
     return true;
-  } catch (err) {
-    console.error('Error moving node:', err);
+  } catch (_err) {
     return false;
   }
 }

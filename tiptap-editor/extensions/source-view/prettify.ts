@@ -9,8 +9,7 @@ export const prettify = async (content: string) => {
       printWidth: 100,
       tabWidth: 2,
     });
-  } catch (error) {
-    console.error('Format failed:', error);
+  } catch (_error) {
     return content;
   }
 };

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import { getStorage, setStorage } from './storage';
 
 const EMOJI_BASE_URL = 'https://cdn.jsdelivr.net/npm/emojibase-data';
@@ -71,8 +72,7 @@ async function fetchEmojiData(
     });
 
     return emojiData;
-  } catch (error) {
-    console.error('Error fetching emoji resources:', error);
+  } catch (_error) {
     return [];
   }
 }

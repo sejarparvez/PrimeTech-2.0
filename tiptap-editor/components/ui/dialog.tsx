@@ -16,11 +16,15 @@ const Dialog = ({ children, open, onOpenChange }: DialogProps) => {
   if (!open) return;
 
   return createPortal(
+    // biome-ignore lint/a11y/useKeyWithClickEvents: this is fine
     <div role='dialog' className='rte-dialog' onClick={onDismiss}>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: this is fine */}
+      {/** biome-ignore lint/a11y/useKeyWithClickEvents: this is fine */}
       <div className='rte-dialog__content' onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>,
+    // biome-ignore lint/style/noNonNullAssertion: this is fine
     document.querySelector('body')!,
   );
 };

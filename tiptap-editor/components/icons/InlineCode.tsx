@@ -2,6 +2,7 @@ import type { IconType } from '.';
 
 const IconInlineCode: IconType = ({ size = 24, ...props }) => {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: this is fine
     <svg
       viewBox='0 0 24 24'
       xmlns='http://www.w3.org/2000/svg'

@@ -9,7 +9,7 @@ export function canSetTextAlign(
   editor: Editor | null,
   alignment: TextAlignType,
 ) {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (editor.isActive('table')) return false;
   return editor.can().setTextAlign(alignment);
 }
@@ -23,7 +23,7 @@ export function isTextAlignActive(
 }
 
 export function setTextAlign(editor: Editor | null, alignment: TextAlignType) {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canSetTextAlign(editor, alignment)) return false;
   return editor.chain().focus().setTextAlign(alignment).run();
 }

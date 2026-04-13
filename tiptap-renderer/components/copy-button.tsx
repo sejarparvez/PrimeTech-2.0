@@ -1,7 +1,8 @@
 'use client';
 
-import { Check, Clipboard } from 'lucide-react';
 import { useState } from 'react';
+import { LuCheck, LuClipboard } from 'react-icons/lu';
+import { Button } from '@/components/ui/button';
 
 const CopyButton = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false);
@@ -11,20 +12,17 @@ const CopyButton = ({ code }: { code: string }) => {
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: this is fine
-      console.error('Failed to copy:', error);
-    }
+    } catch (_error) {}
   };
 
   return (
-    <button
-      type='button'
+    <Button
+      variant='outline'
       onClick={copyToClipboard}
-      className='invisible absolute right-2 top-2 z-20 bg-transparent p-2 group-hover:visible'
+      className='absolute top-2 right-2  p-2 z-20 invisible group-hover:visible'
     >
-      {copied ? <Check size={18} /> : <Clipboard size={18} />}
-    </button>
+      {copied ? <LuCheck size={18} /> : <LuClipboard size={18} />}
+    </Button>
   );
 };
 

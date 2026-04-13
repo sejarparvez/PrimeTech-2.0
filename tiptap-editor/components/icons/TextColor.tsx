@@ -1,7 +1,8 @@
 import type { IconType } from '.';
 
-const IconTextColor: IconType = ({ size = 24, ...props }) => {
+const IconTextColor: IconType = ({ size = 24 }) => {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: this is fine
     <svg
       viewBox='0 0 24 24'
       fill='currentColor'

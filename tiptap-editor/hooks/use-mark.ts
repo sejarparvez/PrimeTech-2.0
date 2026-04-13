@@ -13,17 +13,17 @@ export type MarkType =
 
 // Utility functions
 export function canToggleMark(editor: Editor | null, type: MarkType): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.can().toggleMark(type);
 }
 
 export function isMarkActive(editor: Editor | null, type: MarkType): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.isActive(type);
 }
 
 export function toggleMark(editor: Editor | null, type: MarkType): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canToggleMark(editor, type)) return false;
 
   return editor.chain().focus().toggleMark(type).run();

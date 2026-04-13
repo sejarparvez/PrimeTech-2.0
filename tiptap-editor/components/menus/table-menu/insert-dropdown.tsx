@@ -28,14 +28,12 @@ export const InsertDropdown = ({
             icon='RowInsertTop'
             hideText={false}
             tooltip={false}
-            block={true}
             text='Insert row above'
             onClick={addRowBefore}
           />
           <MenuButton
             icon='RowInsertBottom'
             hideText={false}
-            block={true}
             tooltip={false}
             text='Insert row below'
             onClick={addRowAfter}
@@ -43,7 +41,6 @@ export const InsertDropdown = ({
           <MenuButton
             icon='ColInsertLeft'
             hideText={false}
-            block={true}
             tooltip={false}
             text='Insert column before'
             onClick={addColumnBefore}
@@ -51,7 +48,6 @@ export const InsertDropdown = ({
           <MenuButton
             icon='ColInsertRight'
             hideText={false}
-            block={true}
             tooltip={false}
             text='Insert column after'
             onClick={addColumnAfter}

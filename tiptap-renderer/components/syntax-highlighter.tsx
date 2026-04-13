@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 'use client';
+
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import type { JSX } from 'react';
 import { useLayoutEffect, useState } from 'react';
@@ -11,29 +12,27 @@ interface SyntaxHighlighterProps {
   language?: string;
 }
 
-const SyntaxHighlighter = (props: SyntaxHighlighterProps) => {
-  const [nodes, setNodes] = useState<any>(null);
+const SyntaxHighlighter = ({ content, language }: SyntaxHighlighterProps) => {
+  const [nodes, setNodes] = useState<JSX.Element | null>(null);
 
   useLayoutEffect(() => {
-    // biome-ignore lint/style/noNonNullAssertion: this is fine
-    highlight(props.content!, props.language!).then(setNodes);
-  }, [props.language, props.content]);
+    if (!content || !language) return;
+    highlight(content, language).then(setNodes);
+  }, [content, language]);
 
-  if (!nodes) return <code {...props}>{props.content}</code>;
-
+  if (!nodes) return <code>{content}</code>;
   return nodes;
 };
 
 export default SyntaxHighlighter;
 
-async function highlight(code: string, lang: string) {
+async function highlight(code: string, lang: string): Promise<JSX.Element> {
   const out = await codeToHast(code, {
     lang,
     themes: {
       light: 'github-light-default',
       dark: 'one-dark-pro',
     },
-    //  structure: "inline",
   });
 
   return toJsxRuntime(out as any, {

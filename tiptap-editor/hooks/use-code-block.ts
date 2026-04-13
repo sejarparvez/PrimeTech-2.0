@@ -5,12 +5,12 @@ import { getClosestDOM } from '../helpers/tiptap';
 
 // Utility functions
 export function canToggleCodeBlock(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.can().toggleCodeBlock();
 }
 
 export function isCodeBlockActive(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.isActive('codeBlock');
 }
 
@@ -20,7 +20,7 @@ export function getCodeBlockLanguage(editor: Editor | null): string | null {
 }
 
 export function toggleCodeBlock(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canToggleCodeBlock(editor)) return false;
 
   const chain = editor.chain().focus();

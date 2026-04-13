@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSingleArticle } from '@/services/article';
+import TiptapRenderer from '@/tiptap-renderer/tiptap-renderer';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostReadingProgress from './PostReadingProgress';
 import PostSharing from './PostSharing';
 import PostToc from './PostToc';
-import TiptapRenderer from './TiptapRenderer';
 
 export default function SingleArticle({ slug }: { slug: string }) {
   const [retryCount, setRetryCount] = useState(0);

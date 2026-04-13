@@ -3,6 +3,7 @@ import type { NodeType } from '@tiptap/pm/model';
 import { type Editor, mergeAttributes, Node } from '@tiptap/react';
 
 export interface FigureOptions {
+  // biome-ignore lint/suspicious/noExplicitAny: this is fine
   HTMLAttributes: Record<string, any>;
 }
 

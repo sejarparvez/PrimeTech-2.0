@@ -19,7 +19,7 @@ export type ImageInsertOptions = ImageAttributes & {};
 
 // Utility functions
 export function canInsertImage(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.can().setImage({ src: '' });
 }
 
@@ -64,7 +64,7 @@ export function insertImage(
   editor: Editor | null,
   options: ImageInsertOptions,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!canInsertImage(editor)) return false;
 
   return editor.chain().focus().insertImage(options).run();
@@ -74,20 +74,20 @@ export function updateImageAttributes(
   editor: Editor | null,
   attributes: Partial<ImageAttributes>,
 ): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!isImageActive(editor)) return false;
 
   return editor.chain().focus().updateAttributes('image', attributes).run();
 }
 
 export function removeImage(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!isImageActive(editor)) return false;
   return editor.chain().focus().removeImage().run();
 }
 
 export function toggleImageCaption(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   if (!isImageActive(editor)) return false;
 
   const hasCaption = editor.isActive('imageFigure');
@@ -101,7 +101,6 @@ export function toggleImageCaption(editor: Editor | null): boolean {
 
 export function downloadImage(src: string, filename?: string): void {
   if (!src) {
-    console.error('No image source available for download.');
     return;
   }
 
@@ -122,6 +121,7 @@ export function downloadImage(src: string, filename?: string): void {
       URL.revokeObjectURL(url);
     })
     .catch((error) => {
+      // biome-ignore lint/suspicious/noConsole: this is fine
       console.error('Error downloading image:', error);
     });
 }

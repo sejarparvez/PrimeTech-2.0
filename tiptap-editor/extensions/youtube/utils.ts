@@ -86,7 +86,7 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   const videoIdRegex = /(?:(v|list)=|shorts\/)([-\w]+)/gm;
   const matches = videoIdRegex.exec(url);
 
-  if (!matches || !matches[2]) {
+  if (!matches?.[2]) {
     return null;
   }
 

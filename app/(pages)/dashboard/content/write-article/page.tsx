@@ -45,7 +45,7 @@ import { useSlugCheck } from '@/services/article';
 import { useCategories } from '@/services/categories';
 import TiptapEditor, {
   type TiptapEditorRef,
-} from './TiptapEditor/components/Editor';
+} from '@/tiptap-editor/components/editor';
 
 /**
  * Slug Utility
@@ -269,8 +269,9 @@ function NewArticleForm() {
                   <FieldLabel>Content</FieldLabel>
                   <TiptapEditor
                     ref={editorRef}
-                    onContentChange={field.onChange}
-                    initialContent={field.value}
+                    onChange={field.onChange}
+                    content={field.value}
+                    output='html'
                   />
                   {errors.content && (
                     <FieldError>{errors.content.message}</FieldError>

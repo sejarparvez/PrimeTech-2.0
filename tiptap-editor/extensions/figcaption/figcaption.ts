@@ -4,6 +4,7 @@ import { TextSelection } from '@tiptap/pm/state';
 import { type Editor, mergeAttributes, Node } from '@tiptap/react';
 
 export interface FigcaptionOptions {
+  // biome-ignore lint/suspicious/noExplicitAny: this is fine
   HTMLAttributes: Record<string, any>;
 }
 

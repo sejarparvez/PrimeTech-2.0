@@ -5,7 +5,7 @@ import {
   type BundledLanguage,
   createHighlighter,
   type Highlighter,
-} from '@/lib/lowlight';
+} from '@/tiptap-editor/lib/lowlight';
 
 let highlighter: Highlighter | undefined;
 let highlighterPromise: Promise<void> | undefined;

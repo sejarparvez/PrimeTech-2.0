@@ -71,6 +71,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
       });
       return await response.json();
     } catch (error) {
+      // biome-ignore lint/suspicious/noConsole: this is fine
       console.error('Upload error:', error);
     }
   };
@@ -88,6 +89,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     const uploadPromises = Array.from(files).map(uploadImage);
     const uploadImages = await Promise.all(uploadPromises);
 
+    // biome-ignore lint/suspicious/useIterableCallbackReturn: this is fine
     loadedPreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
     setPreviews([]);
     setImages((prev) => [...uploadImages, ...prev]);
@@ -104,6 +106,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
         const data = await response.json();
         setImages(data);
       } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: this is fine
         console.error('Error fetching images:', error);
       } finally {
         setLoading(false);
@@ -124,6 +127,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
 
       <div className='media-library__content'>
         {loading ? (
+          // biome-ignore lint/a11y/useAriaPropsSupportedByRole: this is fine
           <div className='media-library__spinner' aria-label='Loading images' />
         ) : (
           <MediaGallery

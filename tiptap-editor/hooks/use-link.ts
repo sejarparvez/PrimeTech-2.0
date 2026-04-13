@@ -20,12 +20,12 @@ export interface LinkState {
 }
 
 export function canSetLink(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.can().setMark('link');
 }
 
 export function isLinkActive(editor: Editor | null): boolean {
-  if (!editor || !editor.isEditable) return false;
+  if (!editor?.isEditable) return false;
   return editor.storage.link.menuState !== 'hidden';
 }
 

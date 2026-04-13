@@ -50,7 +50,7 @@ export const Resizer = ({
   });
 
   const targetElement = useMemo(() => {
-    if (!editorState || !editorState.element) return null;
+    if (!editorState?.element) return null;
 
     const selector = selectorMap[editorState.type as keyof typeof selectorMap];
 
@@ -77,6 +77,7 @@ export const Resizer = ({
     maxWidth: getContentWidth(editor.view.dom),
     onResizeEnd: (size: number) => {
       if (!editor || !editorState) return;
+      // biome-ignore lint/style/noNonNullAssertion: this is fine
       editor.commands.updateAttributes(editorState.type!, { width: size });
     },
   });
@@ -88,6 +89,7 @@ export const Resizer = ({
     const side: 'left' | 'right' = cursor.includes('w') ? 'left' : 'right';
 
     return (
+      // biome-ignore lint/a11y/noStaticElementInteractions: this is fine
       <div
         className='rte-resizer__control'
         style={{ position: 'absolute', cursor, ...styles }}

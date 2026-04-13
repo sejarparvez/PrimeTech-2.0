@@ -7,13 +7,22 @@ import slugify from 'slugify';
 export const slugifyText = (text: string) => {
   return slugify(text, {
     lower: true,
-    strict: true, // Removes special characters
+    strict: true,
   });
 };
 
 /**
- * Creates a slug using article id and name.
+ * Generates a unicode-safe slug, preserving non-Latin scripts like Bangla.
  */
+export const slugifyUnicode = (text: string): string => {
+  return text
+    .trim()
+    .normalize('NFC')
+    .replace(/\s+/g, '-')
+    .replace(/[^\p{L}\p{N}-]/gu, '')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+};
 
 /**
  * Converts a slug into a human-readable format.
@@ -28,17 +37,13 @@ export const SlugToText = (slug: string): string => {
 
 /**
  * Removes HTML tags from a string using htmlparser2.
- *
- * @param str - The string to sanitize.
- * @returns A string with all HTML tags removed.
  */
 export function RemoveHtmlTags(str: string): string {
-  if (typeof str !== 'string' || !str.trim()) return ''; // Handle invalid or empty strings
-
+  if (typeof str !== 'string' || !str.trim()) return '';
   try {
-    const document = parseDocument(str); // Parse the HTML string
-    return DomUtils.getText(document).trim(); // Extract and trim text content
+    const document = parseDocument(str);
+    return DomUtils.getText(document).trim();
   } catch (_error) {
-    return ''; // Return empty string in case of error
+    return '';
   }
 }

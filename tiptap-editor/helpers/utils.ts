@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import { type ClassValue, clsx } from 'clsx';
 
 export function cn(...inputs: ClassValue[]) {

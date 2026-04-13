@@ -65,7 +65,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps2>(
         const content = getEditorContent(editor, output);
         onChange(content);
       }, delay),
-      [onChange, output, delay],
+      [],
     );
 
     const extensions = useMemo(

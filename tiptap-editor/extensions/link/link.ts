@@ -69,7 +69,7 @@ export const Link = TiptapLink.extend({
       ...(this.parent?.() || []),
       new Plugin({
         props: {
-          handleClick: (view, pos, event) => {
+          handleClick: (view, _pos, event) => {
             // Only handle left clicks in editable mode
             if (event.button !== 0 || !view.editable) {
               return false;

@@ -26,14 +26,12 @@ export const DeleteDropdown = ({
             icon='RowRemove'
             hideText={false}
             tooltip={false}
-            block={true}
             text='Delete row'
             onClick={deleteRow}
           />
           <MenuButton
             icon='ColRemove'
             hideText={false}
-            block={true}
             tooltip={false}
             text='Delete column'
             onClick={deleteColumn}
@@ -41,7 +39,6 @@ export const DeleteDropdown = ({
           <MenuButton
             icon='TableMinus'
             hideText={false}
-            block={true}
             tooltip={false}
             text='Delete table'
             onClick={deleteTable}

@@ -20,8 +20,9 @@ const SizeDropdown = ({ value, onChange }: SizeDropdownProps) => {
     >
       {options.map((option, index) => (
         <DropdownMenuItem
+          // biome-ignore lint/suspicious/noArrayIndexKey: this is fine
           key={index}
-          data-active={option == value || undefined}
+          data-active={option === value || undefined}
           onSelect={() => onChange(option)}
         >
           {option ? `${option}% width` : 'Default'}

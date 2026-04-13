@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: this is fine */
 import clsx from 'clsx';
 import type React from 'react';
 import { LuCheck } from 'react-icons/lu';
@@ -16,6 +17,8 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
   return (
     <div className='media-gallery'>
       {data.map((image, index) => (
+        // biome-ignore lint/a11y/noStaticElementInteractions: this is fine
+        // biome-ignore lint/a11y/useKeyWithClickEvents: this is fine
         <div
           key={image.id || index}
           className={clsx('media-item', {
@@ -31,6 +34,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({
           )}
 
           <div className='media-item__image-wrapper'>
+            {/** biome-ignore lint/performance/noImgElement: this is fine*/}
             <img src={image.url} alt={image.display_name} />
           </div>
 

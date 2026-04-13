@@ -70,7 +70,7 @@ export function useResizable(
 
       onResizeStart?.();
     },
-    [element, rect, onResizeStart],
+    [rect, onResizeStart],
   );
 
   const stopResize = useCallback(() => {
@@ -117,7 +117,7 @@ export function useResizable(
 
       onResize?.(newWidth, newHeight);
     },
-    [element, rect, resizeParams, minWidth, maxWidth, aspectRatio],
+    [element, rect, resizeParams, minWidth, maxWidth, aspectRatio, onResize],
   );
 
   // Mouse event handling

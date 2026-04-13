@@ -2,6 +2,7 @@ import plaintext from 'highlight.js/lib/languages/plaintext';
 import xml from 'highlight.js/lib/languages/xml';
 import { createLowlight, type LanguageFn } from 'lowlight';
 
+// biome-ignore lint/suspicious/noExplicitAny: this is fine
 export const loader: Record<string, () => Promise<any>> = {
   bash: () => import('highlight.js/lib/languages/bash'),
   c: () => import('highlight.js/lib/languages/c'),
@@ -121,8 +122,7 @@ export class LowlightService {
       const { default: language } = await loader[syntax]();
       this.lowlight.register(syntax, language);
       return true;
-    } catch (err) {
-      console.error(`Failed to load ${syntax}`, err);
+    } catch (_err) {
       return false;
     }
   }

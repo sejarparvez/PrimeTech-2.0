@@ -35,7 +35,7 @@ export const Indent = Extension.create({
             renderHTML: (attributes) => {
               if (
                 !attributes.indent ||
-                attributes.indent == this.options.minLevel
+                attributes.indent === this.options.minLevel
               )
                 return {};
               return { 'data-indent': attributes.indent };

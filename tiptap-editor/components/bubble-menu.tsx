@@ -82,7 +82,14 @@ export const BubbleMenu = ({
     if (shouldShowResult !== isOpen) {
       handleOpenChange(shouldShowResult);
     }
-  }, [editor, shouldShow, isOpen, getReferenceClientRect, handleOpenChange]);
+  }, [
+    editor,
+    shouldShow,
+    isOpen,
+    getReferenceClientRect,
+    handleOpenChange,
+    refs.setReference,
+  ]);
 
   useEffect(() => {
     if (!editor || !isOpen) return;

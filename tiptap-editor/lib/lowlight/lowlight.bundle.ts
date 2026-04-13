@@ -66,15 +66,12 @@ export const createHighlighter = async ({
 
     const loader = bundledLanguages[language];
     if (!loader) {
-      console.warn(`Language ${language} not found in bundle`);
       return;
     }
     try {
       const { default: lang } = await loader();
       lowlight.register(language, lang);
-    } catch (err) {
-      console.error(`Failed to load language: ${language}`, err);
-    }
+    } catch (_err) {}
   };
 
   // Pre-load langs
