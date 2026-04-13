@@ -1,10 +1,9 @@
-import React, { useMemo } from "react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import type React from 'react';
+import { useMemo } from 'react';
+import { createPortal } from 'react-dom';
 
-import { createPortal } from "react-dom";
-
-import { type Editor, useEditorState, useTiptap } from "@tiptap/react";
-
-import { useResizable } from "../hooks/use-resizable";
+import { useResizable } from '../hooks/use-resizable';
 
 interface ResizeProps {
   nodeTypes?: string[];
@@ -24,13 +23,13 @@ const getContentWidth = (el: Element) => {
 };
 
 const selectorMap = {
-  image: "img",
-  imageFigure: "img",
-  youtube: "iframe",
+  image: 'img',
+  imageFigure: 'img',
+  youtube: 'iframe',
 } as const;
 
 export const Resizer = ({
-  nodeTypes = ["image", "imageFigure", "youtube"],
+  nodeTypes = ['image', 'imageFigure', 'youtube'],
 }: ResizeProps) => {
   const { editor } = useTiptap();
 
@@ -83,15 +82,15 @@ export const Resizer = ({
   });
 
   const renderHandle = (
-    cursor: "nw-resize" | "sw-resize" | "ne-resize" | "se-resize",
+    cursor: 'nw-resize' | 'sw-resize' | 'ne-resize' | 'se-resize',
     styles: React.CSSProperties,
   ) => {
-    const side: "left" | "right" = cursor.includes("w") ? "left" : "right";
+    const side: 'left' | 'right' = cursor.includes('w') ? 'left' : 'right';
 
     return (
       <div
-        className="rte-resizer__control"
-        style={{ position: "absolute", cursor, ...styles }}
+        className='rte-resizer__control'
+        style={{ position: 'absolute', cursor, ...styles }}
         onMouseDown={(e) => {
           e.preventDefault();
           startResize(side, e.clientX);
@@ -106,35 +105,35 @@ export const Resizer = ({
 
   return createPortal(
     <div
-      className="rte-resizer"
+      className='rte-resizer'
       style={{
-        position: "absolute",
+        position: 'absolute',
         width: rect?.width,
         height: rect?.height,
         transform: `translate(${rect?.left}px, ${rect?.top || 0}px)`,
-        pointerEvents: "none",
+        pointerEvents: 'none',
       }}
     >
-      <div style={{ pointerEvents: "auto" }}>
-        {renderHandle("nw-resize", {
+      <div style={{ pointerEvents: 'auto' }}>
+        {renderHandle('nw-resize', {
           left: -10,
           top: -10,
           width: 12,
           height: 12,
         })}
-        {renderHandle("sw-resize", {
+        {renderHandle('sw-resize', {
           left: -10,
           bottom: -10,
           width: 12,
           height: 12,
         })}
-        {renderHandle("ne-resize", {
+        {renderHandle('ne-resize', {
           right: -10,
           top: -10,
           width: 12,
           height: 12,
         })}
-        {renderHandle("se-resize", {
+        {renderHandle('se-resize', {
           right: -10,
           bottom: -10,
           width: 12,

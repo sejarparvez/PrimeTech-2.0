@@ -1,13 +1,11 @@
-import { Paragraph, ImageRun, AlignmentType, type IImageOptions } from "docx";
-
-import { fetchImageInfo, twipToPixel } from "../utils";
-
-import type { DocxExporter } from "../exporter";
-import type { TiptapNode } from "../types";
+import { AlignmentType, type IImageOptions, ImageRun, Paragraph } from 'docx';
+import type { DocxExporter } from '../exporter';
+import type { TiptapNode } from '../types';
+import { fetchImageInfo, twipToPixel } from '../utils';
 
 export async function processImage(
   node: TiptapNode,
-  exporter: DocxExporter
+  exporter: DocxExporter,
 ): Promise<Paragraph> {
   const { src, alt, caption, width: widthPercent } = node.attrs || {};
   const { data, type, dimensions } = await fetchImageInfo(src);
@@ -17,7 +15,7 @@ export async function processImage(
     ? Math.round((availableWidth * widthPercent) / 100)
     : Math.min(availableWidth, dimensions.width);
   const targetHeight = Math.round(
-    targetWidth * (dimensions.height / dimensions.width)
+    targetWidth * (dimensions.height / dimensions.width),
   );
 
   const imageConfig: IImageOptions = {
@@ -34,10 +32,10 @@ export async function processImage(
         description: alt,
       },
     }),
-    ...(type === "svg" && {
+    ...(type === 'svg' && {
       fallback: {
-        data: "",
-        type: "jpg",
+        data: '',
+        type: 'jpg',
       },
     }),
   };

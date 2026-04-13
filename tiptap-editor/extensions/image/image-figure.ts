@@ -1,16 +1,16 @@
 /** @jsxImportSource @tiptap/core */
-import { NodeSelection } from "@tiptap/pm/state";
+import { NodeSelection } from '@tiptap/pm/state';
 import {
   type CommandProps,
-  type JSONContent,
   findParentNode,
-} from "@tiptap/react";
+  type JSONContent,
+} from '@tiptap/react';
 
-import Figure from "../figure";
-import Image from "./image";
-import ImageCaption from "./image-caption";
+import Figure from '../figure';
+import Image from './image';
+import ImageCaption from './image-caption';
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     imageFigure: {
       insertImage: (options: {
@@ -29,8 +29,8 @@ declare module "@tiptap/core" {
 
 export const ImageFigure = Figure.extend(() => {
   return {
-    name: "imageFigure",
-    content: "image imageCaption",
+    name: 'imageFigure',
+    content: 'image imageCaption',
     atom: true,
     defining: true,
 
@@ -61,7 +61,7 @@ export const ImageFigure = Figure.extend(() => {
             if (caption) {
               content.push({
                 type: ImageCaption.name,
-                content: [{ type: "text", text: caption }],
+                content: [{ type: 'text', text: caption }],
               });
               return chain().insertContent({ type: this.name, content }).run();
             }
@@ -84,7 +84,7 @@ export const ImageFigure = Figure.extend(() => {
             const imagePos = selection.from;
             const range = { from: imagePos, to: imagePos + node.nodeSize };
             const content: JSONContent[] = [
-              { type: Image.name, attrs: { ...node.attrs, caption: "" } },
+              { type: Image.name, attrs: { ...node.attrs, caption: '' } },
               { type: ImageCaption.name, content: undefined },
             ];
             // Insert the new figure replacing the image
@@ -98,7 +98,7 @@ export const ImageFigure = Figure.extend(() => {
           ({ state, commands }) => {
             // Find parent figure node from selection
             const figure = findParentNode(
-              (node) => node.type.name === this.name
+              (node) => node.type.name === this.name,
             )(state.selection);
             if (!figure) return false;
 

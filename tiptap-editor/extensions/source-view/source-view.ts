@@ -1,20 +1,20 @@
-import { Annotation, Compartment } from "@codemirror/state";
-import { EditorView as CodeMirror } from "@codemirror/view";
-import { createDocument, Extension, getHTMLFromFragment } from "@tiptap/core";
-import { EditorState } from "@tiptap/pm/state";
-import { EditorView } from "@tiptap/pm/view";
+import { Annotation, Compartment } from '@codemirror/state';
+import { EditorView as CodeMirror } from '@codemirror/view';
+import { createDocument, Extension, getHTMLFromFragment } from '@tiptap/core';
+import type { EditorState } from '@tiptap/pm/state';
+import type { EditorView } from '@tiptap/pm/view';
 
-import { setup } from "./codemirror/setup";
-import { theme } from "./codemirror/theme";
-import { prettify } from "./prettify";
+import { setup } from './codemirror/setup';
+import { theme } from './codemirror/theme';
+import { prettify } from './prettify';
 
-export interface SourceViewOptions {}
+export type SourceViewOptions = {};
 
 export interface SourceViewStorage {
   enabled: boolean;
 }
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     sourceView: {
       toggleSourceView: () => ReturnType;
@@ -64,33 +64,33 @@ export const SourceView = Extension.create<
 
   function show(view: EditorView) {
     requestAnimationFrame(() => {
-      element.style.display = "";
-      view.dom.parentElement!.style.display = "none";
+      element.style.display = '';
+      view.dom.parentElement!.style.display = 'none';
       cm.focus();
     });
   }
 
   function hide(view: EditorView) {
     requestAnimationFrame(() => {
-      element.style.display = "none";
-      view.dom.parentElement!.style.display = "";
+      element.style.display = 'none';
+      view.dom.parentElement!.style.display = '';
       view.focus();
     });
   }
 
   return {
-    name: "sourceView",
+    name: 'sourceView',
 
     addStorage() {
       return { enabled: false };
     },
 
     onCreate({ editor }) {
-      if (typeof window === "undefined" || !this.editor.view) return;
+      if (typeof window === 'undefined' || !this.editor.view) return;
 
-      element = document.createElement("div");
-      element.className = "rte-source__content";
-      element.style.display = "none";
+      element = document.createElement('div');
+      element.className = 'rte-source__content';
+      element.style.display = 'none';
 
       cm = new CodeMirror({
         parent: element,
@@ -109,7 +109,7 @@ export const SourceView = Extension.create<
         ],
       });
 
-      editor.view.dom.parentElement?.insertAdjacentElement("afterend", element);
+      editor.view.dom.parentElement?.insertAdjacentElement('afterend', element);
     },
 
     onDestroy() {

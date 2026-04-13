@@ -1,8 +1,7 @@
-import { Node } from "@tiptap/pm/model";
-import { NodeSelection, TextSelection } from "@tiptap/pm/state";
-import { isNodeSelection, isTextSelection, posToDOMRect } from "@tiptap/react";
-
-import type { Content, DOMNode, Editor } from "@tiptap/react";
+import type { Node } from '@tiptap/pm/model';
+import { NodeSelection, TextSelection } from '@tiptap/pm/state';
+import type { Content, DOMNode, Editor } from '@tiptap/react';
+import { isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/react';
 
 /**
  * Checks if the current selection in the editor is valid
@@ -165,8 +164,8 @@ export function loadInitialContent(
 
   return editor
     .chain()
-    .setMeta("addToHistory", false)
-    .setMeta("preventUpdate", true)
+    .setMeta('addToHistory', false)
+    .setMeta('preventUpdate', true)
     .insertContentAt({ from: 0, to: doc.content.size }, content, {
       updateSelection: false,
     })
@@ -179,24 +178,24 @@ export function loadInitialContent(
  * @param format - Format to return content in ("html" or "json")
  * @returns Editor content in the specified format
  */
-export function getEditorContent(editor: Editor | null, format: "html"): string;
+export function getEditorContent(editor: Editor | null, format: 'html'): string;
 export function getEditorContent(
   editor: Editor | null,
-  format: "json",
+  format: 'json',
 ): Exclude<Content, string>;
 
 export function getEditorContent(
   editor: Editor | null,
-  format?: "html" | "json",
+  format?: 'html' | 'json',
 ): Content;
 export function getEditorContent(
   editor: Editor | null,
-  format: "html" | "json" = "html",
+  format: 'html' | 'json' = 'html',
 ): Content {
   if (!editor) return null;
 
-  if (format === "html") {
-    return editor.isEmpty ? "" : editor.getHTML();
+  if (format === 'html') {
+    return editor.isEmpty ? '' : editor.getHTML();
   }
 
   return editor.getJSON();
@@ -242,7 +241,7 @@ export function getAnchorNodeAndPos(
  */
 export function moveNode(
   editor: Editor | null,
-  direction: "up" | "down",
+  direction: 'up' | 'down',
 ): boolean {
   if (!editor || !editor.isEditable) return false;
 
@@ -260,7 +259,7 @@ export function moveNode(
       return false;
     }
 
-    if (direction === "up" && index > 0) {
+    if (direction === 'up' && index > 0) {
       const prevNode = parent.child(index - 1);
       const prevSize = prevNode.nodeSize;
 
@@ -269,7 +268,7 @@ export function moveNode(
       const insertPos = pos - prevSize;
       tr.insert(insertPos, movedNode);
       tr.setSelection(TextSelection.near(tr.doc.resolve(insertPos)));
-    } else if (direction === "down" && index < parent.childCount - 1) {
+    } else if (direction === 'down' && index < parent.childCount - 1) {
       const nextNode = parent.child(index + 1);
       const nextSize = nextNode.nodeSize;
 
@@ -285,7 +284,7 @@ export function moveNode(
     editor.view.dispatch(tr);
     return true;
   } catch (err) {
-    console.error("Error moving node:", err);
+    console.error('Error moving node:', err);
     return false;
   }
 }

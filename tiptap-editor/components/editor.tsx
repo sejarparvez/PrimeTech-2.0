@@ -1,28 +1,26 @@
-import React, {
-  useEffect,
-  useCallback,
-  useImperativeHandle,
-  forwardRef,
-  useMemo,
-} from 'react';
-
 import {
-  useEditor,
+  type Content,
+  type Editor,
   TiptapContent,
   Tiptap as TiptapProvider,
-  type Editor,
-  type Content,
   type UseEditorOptions,
+  useEditor,
 } from '@tiptap/react';
-
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+} from 'react';
+import { createExtensions } from '../extensions';
+import { getEditorContent } from '../helpers/tiptap';
+import { cssVar, throttle } from '../helpers/utils';
 import DragHandle from './drag-handle';
 import MenuBar from './menu-bar';
 import Menus from './menus';
 import Resizer from './resizer';
 import StatusBar from './status-bar';
-import { createExtensions } from '../extensions';
-import { getEditorContent } from '../helpers/tiptap';
-import { cssVar, throttle } from '../helpers/utils';
 
 import '../styles/index.scss';
 

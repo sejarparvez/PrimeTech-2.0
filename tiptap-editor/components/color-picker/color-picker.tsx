@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-
-import { PopoverClose } from "@radix-ui/react-popover";
-import { HexColorPicker } from "react-colorful";
-
-import { MORE_COLORS, COLORS } from "./color";
-import ColorButton from "./color-button";
-import Button from "../ui/button";
-import Icon from "../ui/icon";
-import Input from "../ui/input";
-import Label from "../ui/label";
+import { PopoverClose } from '@radix-ui/react-popover';
+import { useState } from 'react';
+import { HexColorPicker } from 'react-colorful';
+import { Button } from '@/components/ui/button';
+import Icon from '../ui/icon';
+import Input from '../ui/input';
+import Label from '../ui/label';
+import { COLORS, MORE_COLORS } from './color';
+import ColorButton from './color-button';
 
 interface ColorPickerProps {
   color: string;
@@ -17,11 +15,11 @@ interface ColorPickerProps {
 }
 
 const ColorPicker = (props: ColorPickerProps) => {
-  const [activeTab, setActiveTab] = useState<"swatches" | "custom">("swatches");
+  const [activeTab, setActiveTab] = useState<'swatches' | 'custom'>('swatches');
   const [color, setColor] = useState(props.color);
 
   const normalizeColor = (color: string): string => {
-    const normalized = color.startsWith("#") ? color : `#${color}`;
+    const normalized = color.startsWith('#') ? color : `#${color}`;
     return normalized.length === 4
       ? `${normalized}${normalized.slice(1)}`
       : normalized;
@@ -43,8 +41,8 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   const renderColorList = (colors: string[], label: string) => (
     <div>
-      <Label as="span">{label}</Label>
-      <div className="rte-color__list">
+      <Label as='span'>{label}</Label>
+      <div className='rte-color__list'>
         {colors.map((item) => (
           <ColorButton
             key={item}
@@ -58,14 +56,14 @@ const ColorPicker = (props: ColorPickerProps) => {
   );
 
   return (
-    <div className="rte-cp">
-      <div className="rte-cp__tabs">
-        {["swatches", "custom"].map((tab) => (
+    <div className='rte-cp'>
+      <div className='rte-cp__tabs'>
+        {['swatches', 'custom'].map((tab) => (
           <Button
             key={tab}
-            variant="ghost"
+            variant='ghost'
             data-active={activeTab === tab || undefined}
-            onClick={() => setActiveTab(tab as "swatches" | "custom")}
+            onClick={() => setActiveTab(tab as 'swatches' | 'custom')}
             className={`rte-cp__tab`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -73,27 +71,27 @@ const ColorPicker = (props: ColorPickerProps) => {
         ))}
       </div>
 
-      <div className="rte-cp__main">
-        {activeTab === "swatches" && (
-          <div className="rte-cp-swatches">
-            {renderColorList(COLORS, "Default Colors")}
-            {renderColorList(MORE_COLORS, "More Colors")}
+      <div className='rte-cp__main'>
+        {activeTab === 'swatches' && (
+          <div className='rte-cp-swatches'>
+            {renderColorList(COLORS, 'Default Colors')}
+            {renderColorList(MORE_COLORS, 'More Colors')}
           </div>
         )}
 
-        {activeTab === "custom" && (
-          <div className="rte-cp-custom">
+        {activeTab === 'custom' && (
+          <div className='rte-cp-custom'>
             <HexColorPicker
-              className="rte-cp-custom__picker"
-              style={{ width: "100%" }}
+              className='rte-cp-custom__picker'
+              style={{ width: '100%' }}
               color={color}
               onChange={handleColorChange}
             />
-            <div className="rte-cp-custom__preview">
+            <div className='rte-cp-custom__preview'>
               <ColorButton color={color} tooltip={false} />
               <Input
                 value={color!}
-                style={{ textTransform: "uppercase" }}
+                style={{ textTransform: 'uppercase' }}
                 onChange={(e) => handleColorChange(e.target.value)}
                 autoFocus
               />
@@ -103,11 +101,11 @@ const ColorPicker = (props: ColorPickerProps) => {
       </div>
 
       <PopoverClose asChild>
-        <div className="rte-cp__actions">
-          <Button variant="secondary" iconOnly onClick={props.onReset}>
-            <Icon name="PaletteOff" />
+        <div className='rte-cp__actions'>
+          <Button variant='secondary' iconOnly onClick={props.onReset}>
+            <Icon name='PaletteOff' />
           </Button>
-          <Button style={{ width: "100%" }} onClick={handleApply}>
+          <Button style={{ width: '100%' }} onClick={handleApply}>
             Apply
           </Button>
         </div>

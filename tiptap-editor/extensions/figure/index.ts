@@ -1,2 +1,2 @@
-export * from "./figure";
-export { default } from "./figure";
+export * from './figure';
+export { default } from './figure';

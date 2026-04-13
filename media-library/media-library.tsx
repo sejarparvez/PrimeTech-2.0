@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import Button from '@/tiptap-editor/components/ui/button';
+import { Button } from '@/components/ui/button';
 
 import MediaGallery from './media-gallery';
 

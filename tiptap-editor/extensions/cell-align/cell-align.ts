@@ -1,4 +1,4 @@
-import { Extension } from "@tiptap/react";
+import { Extension } from '@tiptap/react';
 
 export interface CellAlignOptions {
   /**
@@ -22,17 +22,17 @@ export interface CellAlignOptions {
 }
 
 type CellAlign =
-  | "top"
-  | "top-left"
-  | "top-right"
-  | "middle"
-  | "middle-left"
-  | "middle-right"
-  | "bottom"
-  | "bottom-left"
-  | "bottom-right";
+  | 'top'
+  | 'top-left'
+  | 'top-right'
+  | 'middle'
+  | 'middle-left'
+  | 'middle-right'
+  | 'bottom'
+  | 'bottom-left'
+  | 'bottom-right';
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     cellAlign: {
       /**
@@ -61,23 +61,23 @@ declare module "@tiptap/core" {
  * Specifically designed for table cells and headers with combined vertical and horizontal alignment.
  */
 export const CellAlign = Extension.create<CellAlignOptions>({
-  name: "cellAlign",
+  name: 'cellAlign',
 
   addOptions() {
     return {
-      types: ["tableCell", "tableHeader"],
+      types: ['tableCell', 'tableHeader'],
       alignments: [
-        "top",
-        "top-left",
-        "top-right",
-        "middle",
-        "middle-left",
-        "middle-right",
-        "bottom",
-        "bottom-left",
-        "bottom-right",
+        'top',
+        'top-left',
+        'top-right',
+        'middle',
+        'middle-left',
+        'middle-right',
+        'bottom',
+        'bottom-left',
+        'bottom-right',
       ],
-      defaultAlignment: "top-left",
+      defaultAlignment: 'top-left',
     };
   },
 
@@ -89,18 +89,18 @@ export const CellAlign = Extension.create<CellAlignOptions>({
           cellAlign: {
             default: this.options.defaultAlignment,
             parseHTML: (element) => {
-              const verticalAlign = element.style.verticalAlign || "top";
-              const textAlign = element.style.textAlign || "left";
+              const verticalAlign = element.style.verticalAlign || 'top';
+              const textAlign = element.style.textAlign || 'left';
 
-              let cellAlign = "";
+              let cellAlign = '';
 
-              if (["top", "middle", "bottom"].includes(verticalAlign)) {
+              if (['top', 'middle', 'bottom'].includes(verticalAlign)) {
                 cellAlign += verticalAlign;
               } else {
-                cellAlign = "top";
+                cellAlign = 'top';
               }
 
-              if (["left", "right"].includes(textAlign)) {
+              if (['left', 'right'].includes(textAlign)) {
                 cellAlign += `-${textAlign}`;
               } else {
                 // center or other values means no suffix (just vertical)
@@ -118,7 +118,7 @@ export const CellAlign = Extension.create<CellAlignOptions>({
                 return {};
               }
 
-              const [vertical, horizontal] = attributes.cellAlign.split("-");
+              const [vertical, horizontal] = attributes.cellAlign.split('-');
 
               const styles = [];
               if (vertical) {
@@ -129,7 +129,7 @@ export const CellAlign = Extension.create<CellAlignOptions>({
                 styles.push(`text-align: ${horizontal}`);
               }
 
-              return styles.length > 0 ? { style: styles.join("; ") } : {};
+              return styles.length > 0 ? { style: styles.join('; ') } : {};
             },
           },
         },
@@ -146,7 +146,7 @@ export const CellAlign = Extension.create<CellAlignOptions>({
             return false;
           }
 
-          const isInTable = editor.isActive("table");
+          const isInTable = editor.isActive('table');
           if (!isInTable) {
             return false;
           }
@@ -159,13 +159,13 @@ export const CellAlign = Extension.create<CellAlignOptions>({
       unsetCellAlign:
         () =>
         ({ commands, editor }) => {
-          const isInTable = editor.isActive("table");
+          const isInTable = editor.isActive('table');
           if (!isInTable) {
             return false;
           }
 
           return this.options.types
-            .map((type) => commands.resetAttributes(type, "cellAlign"))
+            .map((type) => commands.resetAttributes(type, 'cellAlign'))
             .some((response) => response);
         },
 
@@ -176,7 +176,7 @@ export const CellAlign = Extension.create<CellAlignOptions>({
             return false;
           }
 
-          const isInTable = editor.isActive("table");
+          const isInTable = editor.isActive('table');
           if (!isInTable) {
             return false;
           }

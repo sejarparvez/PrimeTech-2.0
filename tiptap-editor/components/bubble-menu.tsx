@@ -5,8 +5,8 @@ import {
   type Middleware,
   offset,
   type Placement,
-  shift,
   type Strategy,
+  shift,
   useFloating,
 } from '@floating-ui/react-dom';
 import { type Editor, useTiptap } from '@tiptap/react';

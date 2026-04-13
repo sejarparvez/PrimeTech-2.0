@@ -1,27 +1,27 @@
-import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import {
-  history,
   defaultKeymap,
+  history,
   historyKeymap,
   indentWithTab,
-} from "@codemirror/commands";
-import { html } from "@codemirror/lang-html";
+} from '@codemirror/commands';
+import { html } from '@codemirror/lang-html';
 import {
-  foldGutter,
-  indentOnInput,
   bracketMatching,
+  foldGutter,
   foldKeymap,
-} from "@codemirror/language";
-import { searchKeymap } from "@codemirror/search";
+  indentOnInput,
+} from '@codemirror/language';
+import { searchKeymap } from '@codemirror/search';
 import {
-  EditorView,
   drawSelection,
+  EditorView,
   highlightActiveLine,
   highlightActiveLineGutter,
   highlightSpecialChars,
   keymap,
   lineNumbers,
-} from "@codemirror/view";
+} from '@codemirror/view';
 
 export const setup = [
   html(),
@@ -33,8 +33,8 @@ export const setup = [
   history(),
   foldGutter({
     markerDOM: (open) => {
-      const el = document.createElement("span");
-      el.textContent = open ? "▾" : "▸";
+      const el = document.createElement('span');
+      el.textContent = open ? '▾' : '▸';
       return el;
     },
   }),

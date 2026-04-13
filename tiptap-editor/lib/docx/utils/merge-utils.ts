@@ -7,7 +7,7 @@
  * isObject(null) // false
  */
 export function isObject(value: any): value is object {
-  if (typeof value !== "object" || value === null) return false;
+  if (typeof value !== 'object' || value === null) return false;
   const proto = Object.getPrototypeOf(value);
   return proto === null || proto === Object.prototype;
 }
@@ -21,7 +21,7 @@ export function isObject(value: any): value is object {
  */
 export function keyBy<T extends Record<string, any>, K extends keyof T>(
   arr: T[],
-  key: K
+  key: K,
 ): Record<string, T> {
   return arr.reduce(
     (acc, item) => {
@@ -31,7 +31,7 @@ export function keyBy<T extends Record<string, any>, K extends keyof T>(
       }
       return acc;
     },
-    {} as Record<string, T>
+    {} as Record<string, T>,
   );
 }
 
@@ -48,7 +48,7 @@ export function keyBy<T extends Record<string, any>, K extends keyof T>(
 export function deepMerge<T extends Record<string, any>>(
   target: T,
   source: T | undefined,
-  options?: { mergeArray?: (target: any[], source: any[]) => any[] }
+  options?: { mergeArray?: (target: any[], source: any[]) => any[] },
 ): T {
   if (!isObject(source)) return target;
 
@@ -60,7 +60,7 @@ export function deepMerge<T extends Record<string, any>>(
 
     if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
       const merged =
-        typeof options?.mergeArray === "function"
+        typeof options?.mergeArray === 'function'
           ? options.mergeArray(targetValue, sourceValue)
           : [...targetValue, ...sourceValue];
       result[key] = merged as T[keyof T];

@@ -1,6 +1,4 @@
-import React from "react";
-
-import Tooltip from "../ui/tooltip";
+import Tooltip from '../ui/tooltip';
 
 interface ColorButtonProps {
   color: string;
@@ -17,10 +15,10 @@ const ColorButton = ({
 }: ColorButtonProps) => {
   const content = (
     <button
-      type="button"
+      type='button'
       tabIndex={-1}
-      data-active={active ? "true" : undefined}
-      className="rte-color__btn"
+      data-active={active ? 'true' : undefined}
+      className='rte-color__btn'
       style={{ background: color }}
       onClick={() => onClick?.(color)}
     />

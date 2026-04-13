@@ -4,18 +4,18 @@
 function rgbToHex(rgbString: string): string {
   const values = rgbString.match(/\d+/g);
   if (!values || values.length !== 3) {
-    throw new Error("Invalid RGB string format");
+    throw new Error('Invalid RGB string format');
   }
 
   const toHex = (n: string) => {
     const num = parseInt(n, 10);
     if (num < 0 || num > 255) {
-      throw new Error("RGB values must be between 0 and 255");
+      throw new Error('RGB values must be between 0 and 255');
     }
-    return num.toString(16).padStart(2, "0");
+    return num.toString(16).padStart(2, '0');
   };
 
-  return `#${values.map(toHex).join("")}`;
+  return `#${values.map(toHex).join('')}`;
 }
 
 /**
@@ -27,7 +27,7 @@ function rgbToHex(rgbString: string): string {
 function extractColor(color: string | undefined) {
   if (!color) return undefined;
 
-  if (color.startsWith("#")) {
+  if (color.startsWith('#')) {
     const hex = color.slice(1);
 
     // Full hex (#RRGGBB)
@@ -38,14 +38,14 @@ function extractColor(color: string | undefined) {
     // Short hex (#RGB)
     if (/^[0-9A-Fa-f]{3}$/.test(hex)) {
       return hex
-        .split("")
+        .split('')
         .map((c) => c + c)
-        .join("")
+        .join('')
         .toUpperCase();
     }
   }
 
-  if (color.startsWith("rgb")) {
+  if (color.startsWith('rgb')) {
     return rgbToHex(color).slice(1).toUpperCase();
   }
 
@@ -58,7 +58,7 @@ function extractColor(color: string | undefined) {
  * Defaults to undefined for invalid input.
  */
 export function normalizeDocxColor(
-  color: string | undefined
+  color: string | undefined,
 ): string | undefined {
   try {
     return extractColor(color)?.toUpperCase();

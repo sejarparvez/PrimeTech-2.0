@@ -1,37 +1,37 @@
 /** @jsxImportSource @tiptap/core */
-import { NodeType } from "@tiptap/pm/model";
-import { TextSelection } from "@tiptap/pm/state";
-import { mergeAttributes, Node, type Editor } from "@tiptap/react";
+import type { NodeType } from '@tiptap/pm/model';
+import { TextSelection } from '@tiptap/pm/state';
+import { type Editor, mergeAttributes, Node } from '@tiptap/react';
 
 export interface FigcaptionOptions {
   HTMLAttributes: Record<string, any>;
 }
 
 export const Figcaption = Node.create<FigcaptionOptions>({
-  name: "figcaption",
-  group: "block",
+  name: 'figcaption',
+  group: 'block',
   inline: false,
-  content: "inline*",
+  content: 'inline*',
 
   addOptions() {
     return { HTMLAttributes: {} };
   },
 
   parseHTML() {
-    return [{ tag: "figcaption" }];
+    return [{ tag: 'figcaption' }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["figcaption", mergeAttributes(HTMLAttributes), 0];
+    return ['figcaption', mergeAttributes(HTMLAttributes), 0];
   },
 
   addKeyboardShortcuts() {
     return {
-      "Mod-a": ({ editor }) => handleSelectAll(editor, this.type),
+      'Mod-a': ({ editor }) => handleSelectAll(editor, this.type),
       Backspace: ({ editor }) =>
-        handleDeleteOrBackspace(editor, "Backspace", this.type),
+        handleDeleteOrBackspace(editor, 'Backspace', this.type),
       Delete: ({ editor }) =>
-        handleDeleteOrBackspace(editor, "Delete", this.type),
+        handleDeleteOrBackspace(editor, 'Delete', this.type),
     };
   },
 });
@@ -58,8 +58,8 @@ function handleSelectAll(editor: Editor, nodeType: NodeType) {
 
 function handleDeleteOrBackspace(
   editor: Editor,
-  handle: "Delete" | "Backspace",
-  nodeType: NodeType
+  handle: 'Delete' | 'Backspace',
+  nodeType: NodeType,
 ) {
   const { selection } = editor.state;
   const { $from, empty } = selection;
@@ -72,10 +72,10 @@ function handleDeleteOrBackspace(
 
   // if the cursor is at the end of a node and `Delete` pressed
   // or the cursor is at the start of a node and `Backspace` pressed
-  if (handle === "Delete") {
+  if (handle === 'Delete') {
     const isAtEnd = empty && $from.parentOffset === $from.parent.nodeSize - 2;
     return isAtEnd;
-  } else if (handle === "Backspace") {
+  } else if (handle === 'Backspace') {
     const isAtStart = empty && $from.parentOffset === 0;
     return isAtStart;
   }

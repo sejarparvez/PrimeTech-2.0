@@ -1,17 +1,15 @@
-import {
+import type { JSONContent } from '@tiptap/react';
+import type {
+  INumberingOptions,
+  IPageMarginAttributes,
+  IPageSizeAttributes,
+  IRunPropertiesOptions,
+  ISectionOptions,
+  IStylesOptions,
   Paragraph,
   Table,
-  IRunPropertiesOptions,
-  IStylesOptions,
-  INumberingOptions,
-  IPageSizeAttributes,
-  IPageMarginAttributes,
-  ISectionOptions,
-} from "docx";
-
-import { DocxExporter } from "./exporter";
-
-import type { JSONContent } from "@tiptap/react";
+} from 'docx';
+import type { DocxExporter } from './exporter';
 
 export interface TiptapMark {
   type: string;
@@ -29,7 +27,7 @@ export interface TiptapNode extends JSONContent {
 
 export type NodeTransformer = (
   node: TiptapNode,
-  exporter: DocxExporter
+  exporter: DocxExporter,
 ) => Promise<Paragraph[] | Paragraph | Table> | Paragraph[] | Paragraph | Table;
 
 export type NodeMapping = {
@@ -38,24 +36,24 @@ export type NodeMapping = {
 
 export type MarkTransformer = (
   mark: TiptapMark,
-  exporter: DocxExporter
+  exporter: DocxExporter,
 ) => IRunPropertiesOptions;
 
 export type MarkMapping = {
   [markType: string]: MarkTransformer;
 };
 
-export type ExportFormat = "buffer" | "string" | "base64" | "blob" | "stream";
+export type ExportFormat = 'buffer' | 'string' | 'base64' | 'blob' | 'stream';
 
 export interface ExportConfig {
   styles?: IStylesOptions;
   useDefaultStyles?: boolean;
-  numbering?: INumberingOptions["config"];
+  numbering?: INumberingOptions['config'];
   useDefaultNumbering?: boolean;
   pageSize?: IPageSizeAttributes;
   pageMargin?: IPageMarginAttributes;
-  headers?: ISectionOptions["headers"];
-  footers?: ISectionOptions["footers"];
+  headers?: ISectionOptions['headers'];
+  footers?: ISectionOptions['footers'];
 }
 
 export interface ExporterOptions {

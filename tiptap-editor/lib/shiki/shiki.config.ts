@@ -1,145 +1,145 @@
-export const defaultLanguage = "text";
+export const defaultLanguage = 'text';
 
 export const supportedLanguages = {
   text: {
-    name: "Plain Text",
-    aliases: ["text", "txt", "plain"],
+    name: 'Plain Text',
+    aliases: ['text', 'txt', 'plain'],
   },
 
   javascript: {
-    name: "JavaScript",
-    aliases: ["javascript", "js", "cjs", "mjs"],
+    name: 'JavaScript',
+    aliases: ['javascript', 'js', 'cjs', 'mjs'],
   },
   typescript: {
-    name: "TypeScript",
-    aliases: ["typescript", "ts", "cts", "mts"],
+    name: 'TypeScript',
+    aliases: ['typescript', 'ts', 'cts', 'mts'],
   },
   jsx: {
-    name: "JSX",
-    aliases: ["jsx", "javascriptreact"],
+    name: 'JSX',
+    aliases: ['jsx', 'javascriptreact'],
   },
   tsx: {
-    name: "TSX",
-    aliases: ["tsx", "typescriptreact"],
+    name: 'TSX',
+    aliases: ['tsx', 'typescriptreact'],
   },
 
   vue: {
-    name: "Vue",
-    aliases: ["vue"],
+    name: 'Vue',
+    aliases: ['vue'],
   },
   svelte: {
-    name: "Svelte",
-    aliases: ["svelte"],
+    name: 'Svelte',
+    aliases: ['svelte'],
   },
   astro: {
-    name: "Astro",
-    aliases: ["astro"],
+    name: 'Astro',
+    aliases: ['astro'],
   },
-  "angular-html": {
-    name: "Angular HTML",
-    aliases: ["angular-html"],
+  'angular-html': {
+    name: 'Angular HTML',
+    aliases: ['angular-html'],
   },
-  "angular-ts": {
-    name: "Angular TypeScript",
-    aliases: ["angular-ts"],
+  'angular-ts': {
+    name: 'Angular TypeScript',
+    aliases: ['angular-ts'],
   },
 
   python: {
-    name: "Python",
-    aliases: ["python", "py"],
+    name: 'Python',
+    aliases: ['python', 'py'],
   },
   java: {
-    name: "Java",
-    aliases: ["java"],
+    name: 'Java',
+    aliases: ['java'],
   },
   go: {
-    name: "Go",
-    aliases: ["go"],
+    name: 'Go',
+    aliases: ['go'],
   },
   rust: {
-    name: "Rust",
-    aliases: ["rust", "rs"],
+    name: 'Rust',
+    aliases: ['rust', 'rs'],
   },
   php: {
-    name: "PHP",
-    aliases: ["php"],
+    name: 'PHP',
+    aliases: ['php'],
   },
   ruby: {
-    name: "Ruby",
-    aliases: ["ruby", "rb"],
+    name: 'Ruby',
+    aliases: ['ruby', 'rb'],
   },
   kotlin: {
-    name: "Kotlin",
-    aliases: ["kotlin", "kt", "kts"],
+    name: 'Kotlin',
+    aliases: ['kotlin', 'kt', 'kts'],
   },
 
   c: {
-    name: "C",
-    aliases: ["c"],
+    name: 'C',
+    aliases: ['c'],
   },
   cpp: {
-    name: "C++",
-    aliases: ["cpp", "c++"],
+    name: 'C++',
+    aliases: ['cpp', 'c++'],
   },
   csharp: {
-    name: "C#",
-    aliases: ["csharp", "c#", "cs"],
+    name: 'C#',
+    aliases: ['csharp', 'c#', 'cs'],
   },
   swift: {
-    name: "Swift",
-    aliases: ["swift"],
+    name: 'Swift',
+    aliases: ['swift'],
   },
-  "objective-c": {
-    name: "Objective-C",
-    aliases: ["objective-c", "objc"],
+  'objective-c': {
+    name: 'Objective-C',
+    aliases: ['objective-c', 'objc'],
   },
 
   html: {
-    name: "HTML",
-    aliases: ["html"],
+    name: 'HTML',
+    aliases: ['html'],
   },
   css: {
-    name: "CSS",
-    aliases: ["css"],
+    name: 'CSS',
+    aliases: ['css'],
   },
   scss: {
-    name: "SCSS",
-    aliases: ["scss"],
+    name: 'SCSS',
+    aliases: ['scss'],
   },
 
   json: {
-    name: "JSON",
-    aliases: ["json"],
+    name: 'JSON',
+    aliases: ['json'],
   },
   yaml: {
-    name: "YAML",
-    aliases: ["yaml", "yml"],
+    name: 'YAML',
+    aliases: ['yaml', 'yml'],
   },
 
   markdown: {
-    name: "Markdown",
-    aliases: ["markdown", "md"],
+    name: 'Markdown',
+    aliases: ['markdown', 'md'],
   },
 
   shellscript: {
-    name: "Shell",
-    aliases: ["shellscript", "bash", "sh", "shell", "zsh"],
+    name: 'Shell',
+    aliases: ['shellscript', 'bash', 'sh', 'shell', 'zsh'],
   },
   dockerfile: {
-    name: "Dockerfile",
-    aliases: ["dockerfile", "docker"],
+    name: 'Dockerfile',
+    aliases: ['dockerfile', 'docker'],
   },
   makefile: {
-    name: "Makefile",
-    aliases: ["makefile", "make"],
+    name: 'Makefile',
+    aliases: ['makefile', 'make'],
   },
 
   sql: {
-    name: "SQL",
-    aliases: ["sql"],
+    name: 'SQL',
+    aliases: ['sql'],
   },
   graphql: {
-    name: "GraphQL",
-    aliases: ["graphql", "gql"],
+    name: 'GraphQL',
+    aliases: ['graphql', 'gql'],
   },
 };

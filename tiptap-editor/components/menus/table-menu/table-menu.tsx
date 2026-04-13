@@ -1,11 +1,9 @@
-import React from "react";
-
-import AlignmentDropdown from "./align-dropdown";
-import { DeleteDropdown } from "./delete-dropdown";
-import { InsertDropdown } from "./insert-dropdown";
-import { useTable } from "../../../hooks/use-table";
-import { MenuButton } from "../../menu-button";
-import { Toolbar, ToolbarDivider } from "../../ui/toolbar";
+import { useTable } from '../../../hooks/use-table';
+import { MenuButton } from '../../menu-button';
+import { Toolbar, ToolbarDivider } from '../../ui/toolbar';
+import AlignmentDropdown from './align-dropdown';
+import { DeleteDropdown } from './delete-dropdown';
+import { InsertDropdown } from './insert-dropdown';
 
 export const TableMenu = () => {
   const {
@@ -26,20 +24,20 @@ export const TableMenu = () => {
   return (
     <Toolbar>
       <MenuButton
-        icon="RowHeader"
-        tooltip="Toggle row header"
+        icon='RowHeader'
+        tooltip='Toggle row header'
         onClick={toggleHeaderRow}
       />
       <MenuButton
-        icon="ColHeader"
-        tooltip="Toggle column header"
+        icon='ColHeader'
+        tooltip='Toggle column header'
         onClick={toggleHeaderColumn}
       />
 
       <ToolbarDivider />
 
-      <MenuButton icon="SplitCell" tooltip="Split cell" onClick={splitCell} />
-      <MenuButton icon="MergeCell" tooltip="Merge cells" onClick={mergeCells} />
+      <MenuButton icon='SplitCell' tooltip='Split cell' onClick={splitCell} />
+      <MenuButton icon='MergeCell' tooltip='Merge cells' onClick={mergeCells} />
 
       <ToolbarDivider />
 

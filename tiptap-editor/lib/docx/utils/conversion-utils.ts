@@ -1,4 +1,4 @@
-import type { PositiveUniversalMeasure } from "docx";
+import type { PositiveUniversalMeasure } from 'docx';
 
 export const lineHeightToDocx = (lh: number) => Math.round(lh * 240);
 
@@ -15,24 +15,24 @@ export const centimetersToTwip = (cm: number) => Math.round((cm / 2.54) * 1440);
 export const millimetersToTwip = (mm: number) => Math.round((mm / 25.4) * 1440);
 
 export const unitToTwip = (
-  input: number | PositiveUniversalMeasure
+  input: number | PositiveUniversalMeasure,
 ): number => {
-  if (typeof input === "number") return input;
+  if (typeof input === 'number') return input;
 
   const unit = input.slice(-2);
   const value = parseFloat(input);
 
   switch (unit) {
-    case "mm":
+    case 'mm':
       return millimetersToTwip(value);
-    case "cm":
+    case 'cm':
       return centimetersToTwip(value);
-    case "in":
+    case 'in':
       return inchesToTwip(value);
-    case "pt":
+    case 'pt':
       return pointsToTwip(value);
-    case "pc":
-    case "pi":
+    case 'pc':
+    case 'pi':
       return picasToTwip(value);
     default:
       return centimetersToTwip(value);

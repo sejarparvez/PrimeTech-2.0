@@ -1,7 +1,7 @@
-import { AlignmentType, IStylesOptions, ShadingType } from "docx";
+import { AlignmentType, type IStylesOptions, ShadingType } from 'docx';
 
-import { COLORS, FONT_SIZES, FONTS, LINE_HEIGHTS } from "./constants";
-import { deepMerge, mergeArrayByKey } from "./utils";
+import { COLORS, FONT_SIZES, FONTS, LINE_HEIGHTS } from './constants';
+import { deepMerge, mergeArrayByKey } from './utils';
 
 /**
  * Default paragraph styles for DOCX documents
@@ -13,8 +13,8 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Base Styles
     // ========================================
     {
-      id: "Normal",
-      name: "Normal",
+      id: 'Normal',
+      name: 'Normal',
       run: {
         font: FONTS.body,
         size: FONT_SIZES.normal,
@@ -28,9 +28,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "NoSpacing",
-      name: "No Spacing",
-      basedOn: "Normal",
+      id: 'NoSpacing',
+      name: 'No Spacing',
+      basedOn: 'Normal',
       quickFormat: true,
       paragraph: {
         spacing: {
@@ -45,10 +45,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Headings - Unified font family
     // ========================================
     {
-      id: "Heading1",
-      name: "Heading 1",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading1',
+      name: 'Heading 1',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -65,10 +65,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Heading2",
-      name: "Heading 2",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading2',
+      name: 'Heading 2',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -85,10 +85,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Heading3",
-      name: "Heading 3",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading3',
+      name: 'Heading 3',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -105,10 +105,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Heading4",
-      name: "Heading 4",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading4',
+      name: 'Heading 4',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -125,10 +125,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Heading5",
-      name: "Heading 5",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading5',
+      name: 'Heading 5',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -145,10 +145,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Heading6",
-      name: "Heading 6",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Heading6',
+      name: 'Heading 6',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -169,10 +169,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Title & Subtitle
     // ========================================
     {
-      id: "Title",
-      name: "Title",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Title',
+      name: 'Title',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.heading,
@@ -190,10 +190,10 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Subtitle",
-      name: "Subtitle",
-      basedOn: "Normal",
-      next: "Normal",
+      id: 'Subtitle',
+      name: 'Subtitle',
+      basedOn: 'Normal',
+      next: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -214,9 +214,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Lists
     // ========================================
     {
-      id: "ListParagraph",
-      name: "List Paragraph",
-      basedOn: "Normal",
+      id: 'ListParagraph',
+      name: 'List Paragraph',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -235,9 +235,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Quotes
     // ========================================
     {
-      id: "Quote",
-      name: "Quote",
-      basedOn: "Normal",
+      id: 'Quote',
+      name: 'Quote',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -254,9 +254,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "IntenseQuote",
-      name: "Intense Quote",
-      basedOn: "Normal",
+      id: 'IntenseQuote',
+      name: 'Intense Quote',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -274,13 +274,13 @@ export const DEFAULT_STYLES: IStylesOptions = {
         border: {
           top: {
             color: COLORS.quote.border,
-            style: "single",
+            style: 'single',
             size: 6,
             space: 1,
           },
           bottom: {
             color: COLORS.quote.border,
-            style: "single",
+            style: 'single',
             size: 6,
             space: 1,
           },
@@ -288,9 +288,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Blockquote",
-      name: "Block Quote",
-      basedOn: "Normal",
+      id: 'Blockquote',
+      name: 'Block Quote',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -310,7 +310,7 @@ export const DEFAULT_STYLES: IStylesOptions = {
           left: {
             color: COLORS.quote.border,
             space: 4,
-            style: "single",
+            style: 'single',
             size: 16,
           },
         },
@@ -321,9 +321,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Caption
     // ========================================
     {
-      id: "Caption",
-      name: "Caption",
-      basedOn: "Normal",
+      id: 'Caption',
+      name: 'Caption',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.body,
@@ -345,9 +345,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
     // Code Block
     // ========================================
     {
-      id: "CodeBlock",
-      name: "CodeBlock",
-      basedOn: "Normal",
+      id: 'CodeBlock',
+      name: 'CodeBlock',
+      basedOn: 'Normal',
       quickFormat: true,
       run: {
         font: FONTS.code,
@@ -368,9 +368,9 @@ export const DEFAULT_STYLES: IStylesOptions = {
   // ========================================
   characterStyles: [
     {
-      id: "Code",
-      name: "Code Character",
-      basedOn: "DefaultParagraphFont",
+      id: 'Code',
+      name: 'Code Character',
+      basedOn: 'DefaultParagraphFont',
       run: {
         font: FONTS.code,
         size: FONT_SIZES.code,
@@ -382,12 +382,12 @@ export const DEFAULT_STYLES: IStylesOptions = {
       },
     },
     {
-      id: "Hyperlink",
-      name: "Hyperlink Character",
-      basedOn: "DefaultParagraphFont",
+      id: 'Hyperlink',
+      name: 'Hyperlink Character',
+      basedOn: 'DefaultParagraphFont',
       run: {
         color: COLORS.link,
-        underline: { type: "single" },
+        underline: { type: 'single' },
       },
     },
   ],
@@ -402,13 +402,13 @@ export const DEFAULT_STYLES: IStylesOptions = {
  */
 export function processStyles(
   customStyles: IStylesOptions = {},
-  useDefaults: boolean = true
+  useDefaults: boolean = true,
 ): IStylesOptions {
   if (!useDefaults) {
     return customStyles;
   }
 
   return deepMerge(DEFAULT_STYLES, customStyles, {
-    mergeArray: mergeArrayByKey("id"),
+    mergeArray: mergeArrayByKey('id'),
   });
 }

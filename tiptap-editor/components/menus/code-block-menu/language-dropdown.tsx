@@ -1,11 +1,11 @@
-import React, { useMemo, useState, useCallback, memo } from "react";
+import { useTiptap } from '@tiptap/react';
+import type React from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
-import { useTiptap } from "@tiptap/react";
-
-import { MenuButton } from "../../menu-button";
-import Icon from "../../ui/icon";
-import { PopoverClose } from "../../ui/popover";
-import SearchInput from "../../ui/search-input";
+import { MenuButton } from '../../menu-button';
+import Icon from '../../ui/icon';
+import { PopoverClose } from '../../ui/popover';
+import SearchInput from '../../ui/search-input';
 
 interface LanguageOption {
   label: string;
@@ -23,11 +23,11 @@ export const LanguageDropdown = ({
   onSelect,
 }: LanguageDropdownProps) => {
   const { editor } = useTiptap();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const options: LanguageOption[] = useMemo(() => {
     const extension = editor.extensionManager.extensions.find(
-      (ext) => ext.name === "codeBlock",
+      (ext) => ext.name === 'codeBlock',
     );
     return extension?.options?.supportedLanguages ?? [];
   }, [editor]);
@@ -47,7 +47,7 @@ export const LanguageDropdown = ({
   }, [options, search]);
 
   const currentLanguage = useMemo(
-    () => options.find((item) => item.value === value)?.label || "Auto",
+    () => options.find((item) => item.value === value)?.label || 'Auto',
     [options, value],
   );
 
@@ -70,26 +70,26 @@ export const LanguageDropdown = ({
   const handleSelect = useCallback(
     (selectedValue: string) => {
       onSelect(selectedValue);
-      setSearch("");
+      setSearch('');
     },
     [onSelect],
   );
 
   return (
     <MenuButton
-      type="popover"
+      type='popover'
       text={currentLanguage}
       hideText={false}
-      buttonStyle={{ minWidth: "8.5rem" }}
-      dropdownClass="rte-code-dropdown"
+      buttonStyle={{ minWidth: '8.5rem' }}
+      dropdownClass='rte-code-dropdown'
       dropdownStyle={{
-        minWidth: "12rem",
+        minWidth: '12rem',
         maxHeight: `${maxHeight}px`,
       }}
     >
       <SearchInput
-        className="code-search"
-        placeholder="Search languages..."
+        className='code-search'
+        placeholder='Search languages...'
         value={search}
         onChange={handleSearchChange}
         showSearchIcon={false}
@@ -100,24 +100,24 @@ export const LanguageDropdown = ({
         value={search}
         onChange={handleSearchChange}
       /> */}
-      <div className="code-list" style={{ overflowY: "auto" }}>
+      <div className='code-list' style={{ overflowY: 'auto' }}>
         {filteredOptions.length === 0 ? (
           <div>No languages found</div>
         ) : (
           filteredOptions.map((item) => (
             <PopoverClose asChild key={item.value}>
               <div
-                role="button"
+                role='button'
                 tabIndex={0}
-                className="code-item"
+                className='code-item'
                 onClick={() => handleSelect(item.value)}
               >
                 <span>{item.label}</span>
 
                 {item.value === value && (
                   <Icon
-                    name="Check"
-                    className="code-item__indicator"
+                    name='Check'
+                    className='code-item__indicator'
                     size={14}
                     strokeWidth={2.5}
                   />

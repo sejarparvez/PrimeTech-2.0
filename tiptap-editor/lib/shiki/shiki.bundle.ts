@@ -156,6 +156,7 @@ const {
   createHighlighter,
 );
 
+export type { BundledLanguage, BundledTheme, Highlighter };
 export {
   bundledLanguages,
   bundledThemes,
@@ -168,4 +169,3 @@ export {
   getLastGrammarState,
   getSingletonHighlighter,
 };
-export type { BundledLanguage, BundledTheme, Highlighter };

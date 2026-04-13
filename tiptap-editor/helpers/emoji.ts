@@ -1,9 +1,9 @@
-import { getStorage, setStorage } from "./storage";
+import { getStorage, setStorage } from './storage';
 
-const EMOJI_BASE_URL = "https://cdn.jsdelivr.net/npm/emojibase-data";
-const EMOJI_DEFAULT_VERSION = "latest";
-const EMOJI_DEFAULT_LOCALE = "en";
-const EMOJI_CACHE_KEY = "emojis";
+const EMOJI_BASE_URL = 'https://cdn.jsdelivr.net/npm/emojibase-data';
+const EMOJI_DEFAULT_VERSION = 'latest';
+const EMOJI_DEFAULT_LOCALE = 'en';
+const EMOJI_CACHE_KEY = 'emojis';
 
 export type EmojiItem = {
   name: string;
@@ -21,7 +21,7 @@ type EmojiCache = {
 
 export async function getEmojiData(
   version: string = EMOJI_DEFAULT_VERSION,
-  locale: string = EMOJI_DEFAULT_LOCALE
+  locale: string = EMOJI_DEFAULT_LOCALE,
 ): Promise<EmojiItem[]> {
   const cached = getStorage<EmojiCache>(localStorage, EMOJI_CACHE_KEY);
 
@@ -34,7 +34,7 @@ export async function getEmojiData(
 
 async function fetchEmojiData(
   version: string,
-  locale: string
+  locale: string,
 ): Promise<EmojiItem[]> {
   const baseUrl = `${EMOJI_BASE_URL}@${version}/${locale}`;
 
@@ -45,15 +45,15 @@ async function fetchEmojiData(
     ]);
 
     const groupMap = new Map(
-      messages.groups.map((g: any) => [g.order, g.message])
+      messages.groups.map((g: any) => [g.order, g.message]),
     );
 
     const emojiData: EmojiItem[] = data
       .filter(({ label, group }: any) => {
         return !(
           group === 2 ||
-          label.startsWith("regional") ||
-          label.startsWith("flag:")
+          label.startsWith('regional') ||
+          label.startsWith('flag:')
         );
       })
       .map((emoji: any) => ({
@@ -72,7 +72,7 @@ async function fetchEmojiData(
 
     return emojiData;
   } catch (error) {
-    console.error("Error fetching emoji resources:", error);
+    console.error('Error fetching emoji resources:', error);
     return [];
   }
 }

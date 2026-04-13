@@ -1,15 +1,15 @@
 /** @jsxImportSource @tiptap/core */
-import { NodeType } from "@tiptap/pm/model";
-import { mergeAttributes, Node, type Editor } from "@tiptap/react";
+import type { NodeType } from '@tiptap/pm/model';
+import { type Editor, mergeAttributes, Node } from '@tiptap/react';
 
 export interface FigureOptions {
   HTMLAttributes: Record<string, any>;
 }
 
 export const Figure = Node.create<FigureOptions>({
-  name: "figure",
-  group: "block",
-  content: "block+",
+  name: 'figure',
+  group: 'block',
+  content: 'block+',
   selectable: true,
   draggable: false,
 
@@ -20,11 +20,11 @@ export const Figure = Node.create<FigureOptions>({
   },
 
   parseHTML() {
-    return [{ tag: "figure" }];
+    return [{ tag: 'figure' }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["figure", mergeAttributes(HTMLAttributes), 0];
+    return ['figure', mergeAttributes(HTMLAttributes), 0];
   },
 
   addKeyboardShortcuts() {
@@ -47,7 +47,7 @@ const handleEnter = (editor: Editor, nodeType: NodeType) => {
     return editor
       .chain()
       .focus(pos)
-      .insertContentAt(pos, { type: "paragraph" })
+      .insertContentAt(pos, { type: 'paragraph' })
       .run();
   }
 

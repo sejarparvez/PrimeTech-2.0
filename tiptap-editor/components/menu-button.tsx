@@ -1,6 +1,6 @@
 import React, { type CSSProperties, useMemo } from 'react';
-import { cn, getShortcutKey } from '../helpers/utils';
-import Button, { type ButtonProps } from './ui/button';
+import { Button } from '@/components/ui/button';
+import { getShortcutKey } from '../helpers/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +10,12 @@ import Icon, { type IconProps } from './ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import Tooltip from './ui/tooltip';
 
-interface MenuButtonProps
-  extends Omit<ButtonProps, 'ref' | 'type' | 'iconOnly'> {
+type ShadcnButtonProps = React.ComponentPropsWithoutRef<typeof Button>;
+
+interface MenuButtonProps extends Omit<ShadcnButtonProps, 'ref' | 'type'> {
   icon?: IconProps['name'];
   type?: 'button' | 'dropdown' | 'popover';
-  buttonType?: ButtonProps['type'];
+  buttonType?: ShadcnButtonProps['type'];
   text?: string;
   active?: boolean;
   shortcuts?: string[];
@@ -37,7 +38,7 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       className,
       children,
       type,
-      buttonType,
+      buttonType = 'button',
       hideText = true,
       hideArrow = false,
       tooltip = true,
@@ -56,12 +57,10 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
 
     const tooltipContent = useMemo(() => {
       if (!tooltip) return null;
-
       const title = typeof tooltip === 'string' ? tooltip : text;
       const shortcut = shortcuts
         ? `${shortcuts.map(getShortcutKey).join(' + ')})`
         : '';
-
       return title ? `${title} ${shortcut}` : null;
     }, [tooltip, text, shortcuts]);
 
@@ -74,35 +73,33 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       <Button
         ref={ref}
         type={buttonType}
-        variant={'ghost'}
-        className={cn('rte-menu__button', buttonClass)}
+        variant={active ? 'default' : 'ghost'}
+        size={hasIconOnly ? 'icon' : 'default'}
         style={buttonStyle}
-        iconOnly={hasIconOnly}
-        slotBefore={!hasIconOnly && renderIcon}
-        slotAfter={
-          hasArrowIcon && (
-            <span className='rte-icon-arrow'>
-              <Icon name='ChevronDown' size={14} />
-            </span>
-          )
-        }
         onFocusCapture={(e) => e.stopPropagation()}
         data-active={active || undefined}
         aria-label={typeof tooltip === 'string' ? tooltip : text}
         disabled={disabled}
         {...props}
       >
-        {hasIconOnly ? renderIcon : !hideText && text}
+        {!hasIconOnly && renderIcon}
+
+        {hasIconOnly ? (
+          renderIcon
+        ) : !hideText && text ? (
+          <span className='rte-button__text'>{text}</span>
+        ) : null}
+
+        {hasArrowIcon && (
+          <span className='rte-icon-arrow'>
+            <Icon name='ChevronDown' size={14} />
+          </span>
+        )}
       </Button>
     );
 
     const renderContent = tooltipContent ? (
-      <Tooltip
-        content={tooltipContent}
-        // options={{ collisionBoundary: editor?.view.dom.parentElement }}
-      >
-        {renderButton}
-      </Tooltip>
+      <Tooltip content={tooltipContent}>{renderButton}</Tooltip>
     ) : (
       renderButton
     );
@@ -145,5 +142,4 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
 );
 
 MenuButton.displayName = 'MenuButton';
-
 export default MenuButton;

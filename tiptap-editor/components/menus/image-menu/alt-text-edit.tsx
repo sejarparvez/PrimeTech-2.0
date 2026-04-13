@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import type React from 'react';
+import { useState } from 'react';
 
-import { MenuButton } from "../../menu-button";
-import Input from "../../ui/input";
+import { MenuButton } from '../../menu-button';
+import Input from '../../ui/input';
 
 interface AltTextEditProps {
   initialText?: string;
@@ -10,7 +11,7 @@ interface AltTextEditProps {
 }
 
 const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
-  const [text, setText] = useState(initialText || "");
+  const [text, setText] = useState(initialText || '');
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -18,15 +19,15 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
   };
 
   return (
-    <form className="rte-text-alternative__form" onSubmit={onSubmit}>
+    <form className='rte-text-alternative__form' onSubmit={onSubmit}>
       <Input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Text alternative"
+        placeholder='Text alternative'
         autoFocus
       />
-      <MenuButton buttonType="submit" icon={"Check"} tooltip={false} />
-      <MenuButton icon={"Close"} tooltip={false} onClick={onCancel} />
+      <MenuButton buttonType='submit' icon={'Check'} tooltip={false} />
+      <MenuButton icon={'Close'} tooltip={false} onClick={onCancel} />
     </form>
   );
 };

@@ -1,18 +1,16 @@
 import {
   Document,
-  Packer,
-  Paragraph,
-  Table,
-  TextRun,
   ExternalHyperlink,
-  IRunOptions,
-} from "docx";
+  type IRunOptions,
+  Packer,
+  type Paragraph,
+  type Table,
+  TextRun,
+} from 'docx';
 
-import { PAGE_MARGIN, PAGE_SIZE } from "./constants";
-import { processNumbering } from "./numbering";
-import { processStyles } from "./styles";
-import { unitToTwip } from "./utils";
-
+import { PAGE_MARGIN, PAGE_SIZE } from './constants';
+import { processNumbering } from './numbering';
+import { processStyles } from './styles';
 import type {
   ExportConfig,
   ExporterOptions,
@@ -20,8 +18,8 @@ import type {
   MarkMapping,
   NodeMapping,
   TiptapNode,
-} from "./types";
-
+} from './types';
+import { unitToTwip } from './utils';
 
 const PACKER_MAP = {
   string: Packer.toString,
@@ -32,13 +30,13 @@ const PACKER_MAP = {
 } as const;
 
 export class DocxExporter {
-  private pageSize: ExportConfig["pageSize"];
-  private pageMargin: ExportConfig["pageMargin"];
+  private pageSize: ExportConfig['pageSize'];
+  private pageMargin: ExportConfig['pageMargin'];
 
   constructor(
     protected readonly nodeMapping: NodeMapping,
     protected readonly markMapping: MarkMapping,
-    protected readonly options: ExporterOptions = {}
+    protected readonly options: ExporterOptions = {},
   ) {}
 
   public get availableWidth() {
@@ -50,14 +48,14 @@ export class DocxExporter {
 
   public transformInline(
     nodes: TiptapNode[] = [],
-    runOptions?: IRunOptions
+    runOptions?: IRunOptions,
   ): Array<TextRun | ExternalHyperlink> {
     const process = (child: TiptapNode) => {
       const properties = {};
       let link: string | null = null;
 
       for (const mark of child.marks || []) {
-        if (mark.type === "link") {
+        if (mark.type === 'link') {
           link = mark.attrs?.href;
         }
         const markProps = this.markMapping[mark.type]?.(mark, this);
@@ -67,7 +65,7 @@ export class DocxExporter {
       const textRun = new TextRun({
         ...properties,
         ...runOptions,
-        text: child.text || "",
+        text: child.text || '',
       });
 
       return link
@@ -79,29 +77,29 @@ export class DocxExporter {
   }
 
   public async transformBlock(
-    node: TiptapNode
+    node: TiptapNode,
   ): Promise<Paragraph | Table | Paragraph[]> {
     const mapper = this.nodeMapping[node.type!];
     return mapper?.(node, this);
   }
 
   protected async transformContent(
-    parent: TiptapNode
+    parent: TiptapNode,
   ): Promise<Array<Paragraph | Table>> {
     const transformPromises = (parent.content || []).map((child) =>
-      this.transformBlock(child)
+      this.transformBlock(child),
     );
 
     const results = await Promise.all(transformPromises);
 
     return results.flatMap((item) =>
-      item ? (Array.isArray(item) ? item : [item]) : []
+      item ? (Array.isArray(item) ? item : [item]) : [],
     );
   }
 
   protected async createDocument(
     content: TiptapNode,
-    config: ExportConfig = {}
+    config: ExportConfig = {},
   ): Promise<Document> {
     const {
       styles = {},
@@ -139,8 +137,8 @@ export class DocxExporter {
 
   async export(
     doc: TiptapNode,
-    format: ExportFormat = "blob",
-    config: ExportConfig = {}
+    format: ExportFormat = 'blob',
+    config: ExportConfig = {},
   ) {
     const document = await this.createDocument(doc, config);
     const packer = PACKER_MAP[format];

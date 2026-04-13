@@ -1,6 +1,5 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
 export interface TableInsertOptions {
@@ -10,28 +9,28 @@ export interface TableInsertOptions {
 }
 
 export type CellAlign =
-  | "top"
-  | "top-left"
-  | "top-right"
-  | "middle"
-  | "middle-left"
-  | "middle-right"
-  | "bottom"
-  | "bottom-left"
-  | "bottom-right";
+  | 'top'
+  | 'top-left'
+  | 'top-right'
+  | 'middle'
+  | 'middle-left'
+  | 'middle-right'
+  | 'bottom'
+  | 'bottom-left'
+  | 'bottom-right';
 
 export type TableAction =
-  | "addRowBefore"
-  | "addRowAfter"
-  | "addColumnBefore"
-  | "addColumnAfter"
-  | "deleteRow"
-  | "deleteColumn"
-  | "toggleHeaderRow"
-  | "toggleHeaderColumn"
-  | "mergeCells"
-  | "splitCell"
-  | "deleteTable";
+  | 'addRowBefore'
+  | 'addRowAfter'
+  | 'addColumnBefore'
+  | 'addColumnAfter'
+  | 'deleteRow'
+  | 'deleteColumn'
+  | 'toggleHeaderRow'
+  | 'toggleHeaderColumn'
+  | 'mergeCells'
+  | 'splitCell'
+  | 'deleteTable';
 
 // Utility functions
 export function canInsertTable(editor: Editor | null): boolean {
@@ -41,7 +40,7 @@ export function canInsertTable(editor: Editor | null): boolean {
 
 export function isTableActive(editor: Editor | null): boolean {
   if (!editor) return false;
-  return editor.isActive("table");
+  return editor.isActive('table');
 }
 
 export function canExecuteTableAction(
@@ -51,27 +50,27 @@ export function canExecuteTableAction(
   if (!editor || !editor.isEditable || !isTableActive(editor)) return false;
 
   switch (action) {
-    case "addRowBefore":
+    case 'addRowBefore':
       return editor.can().addRowBefore();
-    case "addRowAfter":
+    case 'addRowAfter':
       return editor.can().addRowAfter();
-    case "addColumnBefore":
+    case 'addColumnBefore':
       return editor.can().addColumnBefore();
-    case "addColumnAfter":
+    case 'addColumnAfter':
       return editor.can().addColumnAfter();
-    case "deleteRow":
+    case 'deleteRow':
       return editor.can().deleteRow();
-    case "deleteColumn":
+    case 'deleteColumn':
       return editor.can().deleteColumn();
-    case "toggleHeaderRow":
+    case 'toggleHeaderRow':
       return editor.can().toggleHeaderRow();
-    case "toggleHeaderColumn":
+    case 'toggleHeaderColumn':
       return editor.can().toggleHeaderColumn();
-    case "mergeCells":
+    case 'mergeCells':
       return editor.can().mergeCells();
-    case "splitCell":
+    case 'splitCell':
       return editor.can().splitCell();
-    case "deleteTable":
+    case 'deleteTable':
       return editor.can().deleteTable();
     default:
       return false;
@@ -106,27 +105,27 @@ export function executeTableAction(
   const chain = editor.chain().focus();
 
   switch (action) {
-    case "addRowBefore":
+    case 'addRowBefore':
       return chain.addRowBefore().run();
-    case "addRowAfter":
+    case 'addRowAfter':
       return chain.addRowAfter().run();
-    case "addColumnBefore":
+    case 'addColumnBefore':
       return chain.addColumnBefore().run();
-    case "addColumnAfter":
+    case 'addColumnAfter':
       return chain.addColumnAfter().run();
-    case "deleteRow":
+    case 'deleteRow':
       return chain.deleteRow().run();
-    case "deleteColumn":
+    case 'deleteColumn':
       return chain.deleteColumn().run();
-    case "toggleHeaderRow":
+    case 'toggleHeaderRow':
       return chain.toggleHeaderRow().run();
-    case "toggleHeaderColumn":
+    case 'toggleHeaderColumn':
       return chain.toggleHeaderColumn().run();
-    case "mergeCells":
+    case 'mergeCells':
       return chain.mergeCells().run();
-    case "splitCell":
+    case 'splitCell':
       return chain.splitCell().run();
-    case "deleteTable":
+    case 'deleteTable':
       return chain.deleteTable().run();
     default:
       return false;
@@ -154,57 +153,57 @@ export function useTable() {
   );
 
   const addRowBefore = useCallback(
-    () => executeTableAction(editor, "addRowBefore"),
+    () => executeTableAction(editor, 'addRowBefore'),
     [editor],
   );
 
   const addRowAfter = useCallback(
-    () => executeTableAction(editor, "addRowAfter"),
+    () => executeTableAction(editor, 'addRowAfter'),
     [editor],
   );
 
   const addColumnBefore = useCallback(
-    () => executeTableAction(editor, "addColumnBefore"),
+    () => executeTableAction(editor, 'addColumnBefore'),
     [editor],
   );
 
   const addColumnAfter = useCallback(
-    () => executeTableAction(editor, "addColumnAfter"),
+    () => executeTableAction(editor, 'addColumnAfter'),
     [editor],
   );
 
   const deleteRow = useCallback(
-    () => executeTableAction(editor, "deleteRow"),
+    () => executeTableAction(editor, 'deleteRow'),
     [editor],
   );
 
   const deleteColumn = useCallback(
-    () => executeTableAction(editor, "deleteColumn"),
+    () => executeTableAction(editor, 'deleteColumn'),
     [editor],
   );
 
   const toggleHeaderRow = useCallback(
-    () => executeTableAction(editor, "toggleHeaderRow"),
+    () => executeTableAction(editor, 'toggleHeaderRow'),
     [editor],
   );
 
   const toggleHeaderColumn = useCallback(
-    () => executeTableAction(editor, "toggleHeaderColumn"),
+    () => executeTableAction(editor, 'toggleHeaderColumn'),
     [editor],
   );
 
   const mergeCells = useCallback(
-    () => executeTableAction(editor, "mergeCells"),
+    () => executeTableAction(editor, 'mergeCells'),
     [editor],
   );
 
   const splitCell = useCallback(
-    () => executeTableAction(editor, "splitCell"),
+    () => executeTableAction(editor, 'splitCell'),
     [editor],
   );
 
   const deleteTable = useCallback(
-    () => executeTableAction(editor, "deleteTable"),
+    () => executeTableAction(editor, 'deleteTable'),
     [editor],
   );
 

@@ -1,25 +1,5 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field, FieldError, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Switch } from '@/components/ui/switch';
-import { useSession } from '@/lib/auth-client';
-import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
-import { useSingleArticle, useSlugCheck } from '@/services/article';
-import { useCategories } from '@/services/categories';
-import TiptapEditor, { type TiptapEditorRef } from '@/tiptap-editor';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import {
@@ -44,6 +24,26 @@ import slugify from 'slugify';
 import { toast } from 'sonner';
 import { useDebounce } from 'use-debounce';
 import type * as z from 'zod';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
+import { useSession } from '@/lib/auth-client';
+import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
+import { useSingleArticle, useSlugCheck } from '@/services/article';
+import { useCategories } from '@/services/categories';
+import TiptapEditor, { type TiptapEditorRef } from '@/tiptap-editor';
 
 const slugifyText = (text: string) => {
   return slugify(text, { lower: true, strict: true });

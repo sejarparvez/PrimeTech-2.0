@@ -1,20 +1,18 @@
-import { ShadingType } from "docx";
-
+import { ShadingType } from 'docx';
+import type { MarkMapping } from '../types';
 import {
-  pixelsToHalfPoint,
   normalizeDocxColor,
   normalizeDocxFont,
-} from "../utils";
-
-import type { MarkMapping } from "../types";
+  pixelsToHalfPoint,
+} from '../utils';
 
 export const defaultMarkMapping: MarkMapping = {
   bold: () => ({ bold: true }),
   italic: () => ({ italics: true }),
-  underline: () => ({ underline: { type: "single" } }),
+  underline: () => ({ underline: { type: 'single' } }),
   strike: () => ({ strike: true }),
-  code: () => ({ style: "Code" }),
-  link: () => ({ style: "Hyperlink" }),
+  code: () => ({ style: 'Code' }),
+  link: () => ({ style: 'Hyperlink' }),
   superscript: () => ({ superScript: true }),
   subscript: () => ({ subScript: true }),
   textStyle: (mark) => {

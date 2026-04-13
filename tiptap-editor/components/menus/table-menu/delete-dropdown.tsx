@@ -1,8 +1,6 @@
-import React from "react";
-
-import { MenuButton } from "../../menu-button";
-import { PopoverClose } from "../../ui/popover";
-import { Toolbar } from "../../ui/toolbar";
+import { MenuButton } from '../../menu-button';
+import { PopoverClose } from '../../ui/popover';
+import { Toolbar } from '../../ui/toolbar';
 
 interface DeleteDropdownProps {
   deleteRow: () => void;
@@ -17,35 +15,35 @@ export const DeleteDropdown = ({
 }: DeleteDropdownProps) => {
   return (
     <MenuButton
-      type="popover"
-      icon="TableMinus"
-      dropdownClass="rte-table-delete-dropdown"
-      dropdownStyle={{ minWidth: "10rem" }}
+      type='popover'
+      icon='TableMinus'
+      dropdownClass='rte-table-delete-dropdown'
+      dropdownStyle={{ minWidth: '10rem' }}
     >
       <PopoverClose asChild>
         <Toolbar vertical={true}>
           <MenuButton
-            icon="RowRemove"
+            icon='RowRemove'
             hideText={false}
             tooltip={false}
             block={true}
-            text="Delete row"
+            text='Delete row'
             onClick={deleteRow}
           />
           <MenuButton
-            icon="ColRemove"
+            icon='ColRemove'
             hideText={false}
             block={true}
             tooltip={false}
-            text="Delete column"
+            text='Delete column'
             onClick={deleteColumn}
           />
           <MenuButton
-            icon="TableMinus"
+            icon='TableMinus'
             hideText={false}
             block={true}
             tooltip={false}
-            text="Delete table"
+            text='Delete table'
             onClick={deleteTable}
           />
         </Toolbar>

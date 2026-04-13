@@ -1,28 +1,26 @@
-import React from "react";
-
-import { useEditorState, useTiptap } from "@tiptap/react";
+import { useEditorState, useTiptap } from '@tiptap/react';
 
 import {
   canSetTextAlign,
   isTextAlignActive,
   type TextAlignType,
-} from "../../hooks/use-text-align";
-import { MenuButton } from "../menu-button";
-import AlignCenterButton from "./align-center-button";
-import AlignJustifyButton from "./align-justify-button";
-import AlignLeftButton from "./align-left-button";
-import AlignRightButton from "./align-right-button";
-import { type IconProps } from "../ui/icon";
-import { PopoverClose } from "../ui/popover";
-import { Toolbar } from "../ui/toolbar";
+} from '../../hooks/use-text-align';
+import { MenuButton } from '../menu-button';
+import type { IconProps } from '../ui/icon';
+import { PopoverClose } from '../ui/popover';
+import { Toolbar } from '../ui/toolbar';
+import AlignCenterButton from './align-center-button';
+import AlignJustifyButton from './align-justify-button';
+import AlignLeftButton from './align-left-button';
+import AlignRightButton from './align-right-button';
 
-const ALIGNMENTS: TextAlignType[] = ["left", "center", "right", "justify"];
+const ALIGNMENTS: TextAlignType[] = ['left', 'center', 'right', 'justify'];
 
-const ALIGN_ICONS: Record<TextAlignType, IconProps["name"]> = {
-  left: "AlignLeft",
-  right: "AlignRight",
-  center: "AlignCenter",
-  justify: "AlignJustify",
+const ALIGN_ICONS: Record<TextAlignType, IconProps['name']> = {
+  left: 'AlignLeft',
+  right: 'AlignRight',
+  center: 'AlignCenter',
+  justify: 'AlignJustify',
 };
 
 const TextAlignPopover = () => {
@@ -32,7 +30,7 @@ const TextAlignPopover = () => {
     editor,
     selector({ editor }) {
       const current =
-        ALIGNMENTS.find((align) => isTextAlignActive(editor, align)) ?? "left";
+        ALIGNMENTS.find((align) => isTextAlignActive(editor, align)) ?? 'left';
       const canSetAny = ALIGNMENTS.some((align) =>
         canSetTextAlign(editor, align),
       );
@@ -41,15 +39,15 @@ const TextAlignPopover = () => {
   });
 
   const { current, canSetAny } = editorState ?? {
-    current: "left",
+    current: 'left',
     canSetAny: false,
   };
 
   return (
     <MenuButton
-      type="popover"
+      type='popover'
       icon={ALIGN_ICONS[current]}
-      tooltip="Alignment"
+      tooltip='Alignment'
       disabled={!canSetAny}
     >
       <PopoverClose asChild>

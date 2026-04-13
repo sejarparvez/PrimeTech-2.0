@@ -1,17 +1,15 @@
-import React from "react";
-
-import { useTable } from "../../hooks/use-table";
-import { MenuButton } from "../menu-button";
-import TableBuilder from "../table-builder";
+import { useTable } from '../../hooks/use-table';
+import { MenuButton } from '../menu-button';
+import TableBuilder from '../table-builder';
 
 const TableButton = () => {
   const { canInsert, insert } = useTable();
 
   return (
     <MenuButton
-      icon="Table"
-      tooltip="Insert Table"
-      type="popover"
+      icon='Table'
+      tooltip='Insert Table'
+      type='popover'
       hideArrow
       disabled={!canInsert}
     >

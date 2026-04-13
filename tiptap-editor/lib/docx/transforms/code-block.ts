@@ -1,23 +1,21 @@
-import { Paragraph, TextRun, ShadingType } from "docx";
+import { Paragraph, ShadingType, TextRun } from 'docx';
 
-import { codeToTokens, defaultLanguage } from "@/lib/shiki";
-
-import { normalizeDocxColor } from "../utils";
-
-import type { DocxExporter } from "../exporter";
-import type { TiptapNode } from "../types";
+import { codeToTokens, defaultLanguage } from '@/lib/shiki';
+import type { DocxExporter } from '../exporter';
+import type { TiptapNode } from '../types';
+import { normalizeDocxColor } from '../utils';
 
 export async function processCodeBlock(
   node: TiptapNode,
-  exporter: DocxExporter
+  exporter: DocxExporter,
 ): Promise<Paragraph[]> {
   const language = node.attrs?.language || defaultLanguage;
-  const code = node.content?.[0].text || "";
+  const code = node.content?.[0].text || '';
 
   // Generate tokens
   const { tokens, bg, fg } = await codeToTokens(code, {
     lang: language,
-    theme: "github-dark",
+    theme: 'github-dark',
   });
 
   // Convert each line to a Paragraph
@@ -35,7 +33,7 @@ export async function processCodeBlock(
     // }
 
     return new Paragraph({
-      style: "CodeBlock",
+      style: 'CodeBlock',
       shading: {
         type: ShadingType.SOLID,
         fill: normalizeDocxColor(bg),

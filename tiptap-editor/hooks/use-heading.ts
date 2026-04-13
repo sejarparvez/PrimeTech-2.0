@@ -1,11 +1,10 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
 export const HEADING_LEVELS = [1, 2, 3, 4, 5, 6] as const;
 export type HeadingLevel = (typeof HEADING_LEVELS)[number];
-export type HeadingType = "paragraph" | `heading${HeadingLevel}`;
+export type HeadingType = 'paragraph' | `heading${HeadingLevel}`;
 
 // Utility functions
 export function canToggleHeading(
@@ -13,7 +12,7 @@ export function canToggleHeading(
   level?: HeadingLevel,
 ): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.can().setNode("heading", { level });
+  return editor.can().setNode('heading', { level });
 }
 
 export function isHeadingActive(
@@ -22,15 +21,15 @@ export function isHeadingActive(
 ): boolean {
   if (!editor) return false;
   return level
-    ? editor.isActive("heading", { level })
-    : editor.isActive("paragraph");
+    ? editor.isActive('heading', { level })
+    : editor.isActive('paragraph');
 }
 
 export function getCurrentHeading(editor: Editor | null): HeadingType | null {
   if (!editor) return null;
-  if (editor.isActive("paragraph")) return "paragraph";
+  if (editor.isActive('paragraph')) return 'paragraph';
   const active = HEADING_LEVELS.find((level) =>
-    editor.isActive("heading", { level }),
+    editor.isActive('heading', { level }),
   );
   return active ? `heading${active}` : null;
 }
@@ -65,11 +64,11 @@ export function useHeading() {
 
   const handleToggle = useCallback(
     (type: HeadingType) => {
-      if (type === "paragraph") {
+      if (type === 'paragraph') {
         return toggleHeading(editor);
       }
 
-      const level = Number(type.split("heading")[1]) as HeadingLevel;
+      const level = Number(type.split('heading')[1]) as HeadingLevel;
       return toggleHeading(editor, level);
     },
     [editor],

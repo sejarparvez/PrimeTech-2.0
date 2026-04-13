@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
-import { clamp } from "../helpers/utils";
+import { clamp } from '../helpers/utils';
 
 export interface ResizeParams {
-  side: "left" | "right";
+  side: 'left' | 'right';
   initialWidth: number;
   initialClientX: number;
 }
@@ -24,7 +24,7 @@ export function useResizable(
     onResize?: (width: number, height: number) => void;
     onResizeStart?: () => void;
     onResizeEnd?: (width: number) => void;
-  } = {}
+  } = {},
 ) {
   const {
     minWidth = 96,
@@ -59,7 +59,7 @@ export function useResizable(
   }, [element, keepRatio]);
 
   const startResize = useCallback(
-    (side: ResizeParams["side"], clientX: number) => {
+    (side: ResizeParams['side'], clientX: number) => {
       if (!rect) return;
 
       setResizeParams({
@@ -70,7 +70,7 @@ export function useResizable(
 
       onResizeStart?.();
     },
-    [element, rect, onResizeStart]
+    [element, rect, onResizeStart],
   );
 
   const stopResize = useCallback(() => {
@@ -88,7 +88,7 @@ export function useResizable(
       if (!resizeParams || !element || !rect) return;
 
       const deltaX =
-        resizeParams.side === "left"
+        resizeParams.side === 'left'
           ? resizeParams.initialClientX - clientX
           : clientX - resizeParams.initialClientX;
 
@@ -117,7 +117,7 @@ export function useResizable(
 
       onResize?.(newWidth, newHeight);
     },
-    [element, rect, resizeParams, minWidth, maxWidth, aspectRatio]
+    [element, rect, resizeParams, minWidth, maxWidth, aspectRatio],
   );
 
   // Mouse event handling
@@ -134,12 +134,12 @@ export function useResizable(
       stopResize();
     };
 
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup", onUp);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
 
     return () => {
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", onUp);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
     };
   }, [resizeParams, resize, stopResize]);
 

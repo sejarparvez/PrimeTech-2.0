@@ -15,7 +15,7 @@
 //   //   const buffer = await exporter.export(editor.state.doc, "buffer");
 //   //   // console.log(editor.state.doc, editor.getJSON());
 //   //   saveAs(
-//   //     // @ts-ignore
+//   //     // @ts-expect-error
 //   //     new Blob([buffer], {
 //   //       type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 //   //     }),

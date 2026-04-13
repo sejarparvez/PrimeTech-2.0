@@ -1,9 +1,8 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Type
-export type TextAlignType = "left" | "right" | "justify" | "center";
+export type TextAlignType = 'left' | 'right' | 'justify' | 'center';
 
 // Utility functions
 export function canSetTextAlign(
@@ -11,7 +10,7 @@ export function canSetTextAlign(
   alignment: TextAlignType,
 ) {
   if (!editor || !editor.isEditable) return false;
-  if (editor.isActive("table")) return false;
+  if (editor.isActive('table')) return false;
   return editor.can().setTextAlign(alignment);
 }
 

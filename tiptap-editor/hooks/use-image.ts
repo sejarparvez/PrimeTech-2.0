@@ -1,7 +1,6 @@
-import { useCallback } from "react";
-
-import { NodeSelection, TextSelection } from "@tiptap/pm/state";
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { NodeSelection, TextSelection } from '@tiptap/pm/state';
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
 export type ImageAttributes = {
@@ -21,12 +20,12 @@ export type ImageInsertOptions = ImageAttributes & {};
 // Utility functions
 export function canInsertImage(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.can().setImage({ src: "" });
+  return editor.can().setImage({ src: '' });
 }
 
 export function isImageActive(editor: Editor | null): boolean {
   if (!editor) return false;
-  return editor.isActive("image") || editor.isActive("imageFigure");
+  return editor.isActive('image') || editor.isActive('imageFigure');
 }
 
 export function getCurrentImageData(editor: Editor | null): ImageData | null {
@@ -43,16 +42,16 @@ export function getCurrentImageData(editor: Editor | null): ImageData | null {
   } else if (selection instanceof NodeSelection) {
     // Direct image or figure selection
     node = selection.node;
-    if (node.type.name === "imageFigure") {
+    if (node.type.name === 'imageFigure') {
       node = node.firstChild; // Get image from figure
     }
   }
 
-  if (!node || node.type.name !== "image") return null;
+  if (!node || node.type.name !== 'image') return null;
 
   return {
-    src: node.attrs.src || "",
-    alt: node.attrs.alt || "",
+    src: node.attrs.src || '',
+    alt: node.attrs.alt || '',
     width: node.attrs.width,
     height: node.attrs.height,
     // hasCaption: editor.isActive("imageFigure"),
@@ -78,7 +77,7 @@ export function updateImageAttributes(
   if (!editor || !editor.isEditable) return false;
   if (!isImageActive(editor)) return false;
 
-  return editor.chain().focus().updateAttributes("image", attributes).run();
+  return editor.chain().focus().updateAttributes('image', attributes).run();
 }
 
 export function removeImage(editor: Editor | null): boolean {
@@ -91,7 +90,7 @@ export function toggleImageCaption(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
   if (!isImageActive(editor)) return false;
 
-  const hasCaption = editor.isActive("imageFigure");
+  const hasCaption = editor.isActive('imageFigure');
 
   if (hasCaption) {
     return editor.chain().focus().figureToImage().run();
@@ -102,19 +101,19 @@ export function toggleImageCaption(editor: Editor | null): boolean {
 
 export function downloadImage(src: string, filename?: string): void {
   if (!src) {
-    console.error("No image source available for download.");
+    console.error('No image source available for download.');
     return;
   }
 
   fetch(src)
     .then((response) => {
-      if (!response.ok) throw new Error("Failed to fetch the image.");
+      if (!response.ok) throw new Error('Failed to fetch the image.');
       return response.blob();
     })
     .then((blob) => {
-      const extension = blob.type.split(/\/|\+/)[1] || "jpg";
+      const extension = blob.type.split(/\/|\+/)[1] || 'jpg';
       const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = url;
       link.download = filename || `image.${extension}`;
       document.body.appendChild(link);
@@ -123,7 +122,7 @@ export function downloadImage(src: string, filename?: string): void {
       URL.revokeObjectURL(url);
     })
     .catch((error) => {
-      console.error("Error downloading image:", error);
+      console.error('Error downloading image:', error);
     });
 }
 

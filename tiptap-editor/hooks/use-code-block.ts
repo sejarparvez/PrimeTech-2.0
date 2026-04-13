@@ -1,8 +1,7 @@
-import { useCallback } from "react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
-
-import { getClosestDOM } from "../helpers/tiptap";
+import { getClosestDOM } from '../helpers/tiptap';
 
 // Utility functions
 export function canToggleCodeBlock(editor: Editor | null): boolean {
@@ -12,12 +11,12 @@ export function canToggleCodeBlock(editor: Editor | null): boolean {
 
 export function isCodeBlockActive(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.isActive("codeBlock");
+  return editor.isActive('codeBlock');
 }
 
 export function getCodeBlockLanguage(editor: Editor | null): string | null {
   if (!editor) return null;
-  return editor.getAttributes("codeBlock").language || null;
+  return editor.getAttributes('codeBlock').language || null;
 }
 
 export function toggleCodeBlock(editor: Editor | null): boolean {
@@ -27,7 +26,7 @@ export function toggleCodeBlock(editor: Editor | null): boolean {
   const chain = editor.chain().focus();
 
   // If code block is active, just turn it off
-  if (editor.isActive("codeBlock")) {
+  if (editor.isActive('codeBlock')) {
     return chain.toggleCodeBlock().run();
   }
 
@@ -36,9 +35,9 @@ export function toggleCodeBlock(editor: Editor | null): boolean {
 }
 
 export function getCodeBlockContent(editor: Editor | null): string {
-  if (!editor) return "";
-  const node = getClosestDOM(editor, (node) => node.nodeName === "PRE");
-  return node?.textContent || "";
+  if (!editor) return '';
+  const node = getClosestDOM(editor, (node) => node.nodeName === 'PRE');
+  return node?.textContent || '';
 }
 
 // Hook
@@ -66,14 +65,14 @@ export function useCodeBlock() {
       return editor
         .chain()
         .focus()
-        .updateAttributes("codeBlock", { language })
+        .updateAttributes('codeBlock', { language })
         .run();
     },
     [editor],
   );
 
   const deleteBlock = useCallback(() => {
-    return editor.chain().focus().deleteNode("codeBlock").run();
+    return editor.chain().focus().deleteNode('codeBlock').run();
   }, [editor]);
 
   const getContent = useCallback(() => {

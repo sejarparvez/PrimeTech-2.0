@@ -1,9 +1,10 @@
-import React, { useMemo, useCallback, useState } from "react";
+import type React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { List, type RowComponentProps } from "react-window";
+import { List, type RowComponentProps } from 'react-window';
 
-import { EmojiItem } from "../../helpers/emoji";
-import SearchInput from "../ui/search-input";
+import type { EmojiItem } from '../../helpers/emoji';
+import SearchInput from '../ui/search-input';
 
 // import type { EmojiItem } from "@tiptap/extension-emoji";
 
@@ -39,12 +40,12 @@ const VirtualizedRow = ({
   const emojis = items[index];
 
   return (
-    <div style={style} className="rte-ep__row">
+    <div style={style} className='rte-ep__row'>
       {emojis.map((emoji, i) => (
         <button
           key={`${emoji.name}-${i}`}
-          type="button"
-          className="rte-ep__item"
+          type='button'
+          className='rte-ep__item'
           onClick={() => onSelect?.(emoji)}
           onMouseEnter={() => onHover?.(emoji)}
           onMouseLeave={() => onHover?.(null)}
@@ -57,7 +58,7 @@ const VirtualizedRow = ({
 };
 
 const EmojiPicker = ({ emojis, onSelect }: EmojiPickerProps) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [hoveredEmoji, setHoveredEmoji] = useState<EmojiItem | null>(null);
 
   const filteredEmojis = useMemo(() => {
@@ -68,7 +69,7 @@ const EmojiPicker = ({ emojis, onSelect }: EmojiPickerProps) => {
     return emojis.filter(
       (item) =>
         item.name.toLowerCase().includes(cleanQuery) ||
-        item.tags.some((tag) => tag.toLowerCase().includes(cleanQuery))
+        item.tags.some((tag) => tag.toLowerCase().includes(cleanQuery)),
     );
   }, [emojis, query]);
 
@@ -112,7 +113,7 @@ const EmojiPicker = ({ emojis, onSelect }: EmojiPickerProps) => {
 
   const itemData = useMemo(
     () => ({ items: rows, onSelect, onHover: setHoveredEmoji }),
-    [rows, onSelect]
+    [rows, onSelect],
   );
 
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,18 +123,18 @@ const EmojiPicker = ({ emojis, onSelect }: EmojiPickerProps) => {
   const isEmpty = filteredEmojis.length === 0;
 
   return (
-    <div className="rte-ep">
+    <div className='rte-ep'>
       <SearchInput
         autoFocus={false}
-        placeholder="Search"
-        className="rte-ep__search"
+        placeholder='Search'
+        className='rte-ep__search'
         value={query}
         onChange={handleSearch}
       />
 
-      <div className="rte-ep__content">
+      <div className='rte-ep__content'>
         {isEmpty ? (
-          <div className="rte-ep__empty">
+          <div className='rte-ep__empty'>
             <p>No emojis found</p>
           </div>
         ) : (
@@ -148,28 +149,28 @@ const EmojiPicker = ({ emojis, onSelect }: EmojiPickerProps) => {
               <div
                 key={header.title}
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   inset: 0,
                   top: header.offset,
                   height: header.height,
-                  pointerEvents: "none",
+                  pointerEvents: 'none',
                 }}
               >
-                <div className="rte-ep__title">{header.title}</div>
+                <div className='rte-ep__title'>{header.title}</div>
               </div>
             ))}
           </List>
         )}
       </div>
 
-      <div className="rte-ep__preview">
+      <div className='rte-ep__preview'>
         {hoveredEmoji ? (
           <>
-            <span className="rte-ep__preview-emoji">{hoveredEmoji.emoji}</span>
-            <span className="rte-ep__preview-text">{hoveredEmoji.name}</span>
+            <span className='rte-ep__preview-emoji'>{hoveredEmoji.emoji}</span>
+            <span className='rte-ep__preview-text'>{hoveredEmoji.name}</span>
           </>
         ) : (
-          <span className="rte-ep__preview-text">Select an emoji...</span>
+          <span className='rte-ep__preview-text'>Select an emoji...</span>
         )}
       </div>
     </div>

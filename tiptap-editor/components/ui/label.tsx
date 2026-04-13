@@ -1,6 +1,6 @@
-import React, { type ReactNode, type JSX } from "react";
+import React, { type JSX, type ReactNode } from 'react';
 
-import { cn } from "../../helpers/utils";
+import { cn } from '../../helpers/utils';
 
 interface LabelProps {
   as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
@@ -9,11 +9,11 @@ interface LabelProps {
 }
 
 const Label = ({
-  as: Comp = "label",
+  as: Comp = 'label',
   children,
-  className = "",
+  className = '',
 }: LabelProps) => {
-  return <Comp className={cn("rte-label", className)}>{children}</Comp>;
+  return <Comp className={cn('rte-label', className)}>{children}</Comp>;
 };
 
 export default Label;

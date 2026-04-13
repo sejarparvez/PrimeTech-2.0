@@ -1,11 +1,11 @@
-import { createHighlightPlugin } from "prosemirror-highlight";
-import { createParser, type Parser } from "prosemirror-highlight/lowlight";
+import { createHighlightPlugin } from 'prosemirror-highlight';
+import { createParser, type Parser } from 'prosemirror-highlight/lowlight';
 
 import {
+  type BundledLanguage,
   createHighlighter,
   type Highlighter,
-  type BundledLanguage,
-} from "@/lib/lowlight";
+} from '@/lib/lowlight';
 
 let highlighter: Highlighter | undefined;
 let highlighterPromise: Promise<void> | undefined;
@@ -14,7 +14,7 @@ let parser: Parser | undefined;
 const loadHighlighter = () => {
   if (!highlighterPromise) {
     highlighterPromise = createHighlighter({
-      langs: ["plaintext", "xml"],
+      langs: ['plaintext', 'xml'],
     }).then((h) => {
       highlighter = h;
     });

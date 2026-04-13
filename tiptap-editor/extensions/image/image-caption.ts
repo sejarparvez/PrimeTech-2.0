@@ -1,19 +1,19 @@
 /** @jsxImportSource @tiptap/core */
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
 
-import { Figcaption } from "../figcaption";
-import ImageFigure from "./image-figure";
+import { Figcaption } from '../figcaption';
+import ImageFigure from './image-figure';
 
 export const ImageCaption = Figcaption.extend({
-  name: "imageCaption",
+  name: 'imageCaption',
   draggable: false,
-  marks: "",
+  marks: '',
 
   addProseMirrorPlugins() {
     return [
       new Plugin({
-        key: new PluginKey("imageCaptionFocus"),
+        key: new PluginKey('imageCaptionFocus'),
         props: {
           decorations: ({ doc, selection }) => {
             const { isEditable, isFocused } = this.editor;
@@ -42,7 +42,7 @@ export const ImageCaption = Figcaption.extend({
             // Apply decoration to the figure node
             return DecorationSet.create(doc, [
               Decoration.node(figurePos, figureEndPos, {
-                class: "ProseMirror-selectednode",
+                class: 'ProseMirror-selectednode',
               }),
             ]);
 
@@ -64,7 +64,7 @@ export const ImageCaption = Figcaption.extend({
 
       // Plugin to sync caption text to image attrs
       new Plugin({
-        key: new PluginKey("imageCaptionSync"),
+        key: new PluginKey('imageCaptionSync'),
         appendTransaction: (transactions, oldState, newState) => {
           const docChanged = transactions.some((tr) => tr.docChanged);
           if (!docChanged) return null;

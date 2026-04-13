@@ -1,11 +1,10 @@
-import { useCallback } from "react";
-
 import {
+  type Editor,
   getMarkRange,
   useEditorState,
   useTiptap,
-  type Editor,
-} from "@tiptap/react";
+} from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Type
 export interface LinkData {
@@ -23,19 +22,19 @@ export interface LinkState {
 // Utility functions
 export function canSetLink(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.can().setMark("link");
+  return editor.can().setMark('link');
 }
 
 export function isLinkActive(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.storage.link.menuState !== "hidden";
+  return editor.storage.link.menuState !== 'hidden';
   // return editor.isActive("link");
 }
 
 export function getCurrentLink(editor: Editor | null): LinkData | null {
   if (!editor || !isLinkActive(editor)) return null;
 
-  const { href = "" } = editor.getAttributes("link");
+  const { href = '' } = editor.getAttributes('link');
   const { selection, schema, doc } = editor.state;
 
   const range = getMarkRange(selection.$anchor, schema.marks.link);
@@ -59,7 +58,7 @@ export function useLink() {
         link: getCurrentLink(editor),
         isActive: isLinkActive(editor),
         canSet: canSetLink(editor),
-        shouldShow: editor.storage.link.menuState !== "hidden",
+        shouldShow: editor.storage.link.menuState !== 'hidden',
       };
     },
   });
@@ -73,20 +72,20 @@ export function useLink() {
         const linkText = text || href;
         return chain
           .insertContent({
-            type: "text",
+            type: 'text',
             text: linkText,
-            marks: [{ type: "link", attrs: { href } }],
+            marks: [{ type: 'link', attrs: { href } }],
           })
           .run();
       }
 
-      return chain.extendMarkRange("link").setLink({ href }).run();
+      return chain.extendMarkRange('link').setLink({ href }).run();
     },
     [editor],
   );
 
   const unsetLink = useCallback(() => {
-    return editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    return editor.chain().focus().extendMarkRange('link').unsetLink().run();
   }, [editor]);
 
   const openMenu = useCallback(() => {

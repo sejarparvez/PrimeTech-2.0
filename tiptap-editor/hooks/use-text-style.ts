@@ -1,9 +1,8 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
-export type TextStyleProperty = "color" | "backgroundColor";
+export type TextStyleProperty = 'color' | 'backgroundColor';
 
 export interface TextStyleAttributes {
   color?: string;
@@ -18,13 +17,13 @@ export function canSetTextStyle(
   if (!editor || !editor.isEditable) return false;
 
   const testValues: Record<TextStyleProperty, string> = {
-    color: "currentColor",
-    backgroundColor: "currentColor",
+    color: 'currentColor',
+    backgroundColor: 'currentColor',
   };
 
   return editor
     .can()
-    .setMark("textStyle", { [property]: testValues[property] });
+    .setMark('textStyle', { [property]: testValues[property] });
 }
 
 export function getActiveTextStyle(
@@ -33,7 +32,7 @@ export function getActiveTextStyle(
 ): string | undefined {
   if (!editor) return undefined;
 
-  const attributes = editor.getAttributes("textStyle");
+  const attributes = editor.getAttributes('textStyle');
   return attributes[property];
 }
 
@@ -58,7 +57,7 @@ export function setTextStyle(
   attributes: TextStyleAttributes,
 ): boolean {
   if (!editor || !editor.isEditable) return false;
-  return editor.chain().focus().setMark("textStyle", attributes).run();
+  return editor.chain().focus().setMark('textStyle', attributes).run();
 }
 
 export function unsetTextStyle(
@@ -70,7 +69,7 @@ export function unsetTextStyle(
   return editor
     .chain()
     .focus()
-    .setMark("textStyle", { [property]: null })
+    .setMark('textStyle', { [property]: null })
     .removeEmptyTextStyle()
     .run();
 }

@@ -31,14 +31,14 @@ export interface GetEmbedUrlOptions {
 
 export const getYoutubeEmbedUrl = (
   nocookie?: boolean,
-  isPlaylist?: boolean
+  isPlaylist?: boolean,
 ) => {
   if (isPlaylist) {
-    return "https://www.youtube-nocookie.com/embed/videoseries?list=";
+    return 'https://www.youtube-nocookie.com/embed/videoseries?list=';
   }
   return nocookie
-    ? "https://www.youtube-nocookie.com/embed/"
-    : "https://www.youtube.com/embed/";
+    ? 'https://www.youtube-nocookie.com/embed/'
+    : 'https://www.youtube.com/embed/';
 };
 
 export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
@@ -69,13 +69,13 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   }
 
   // if is already an embed url, return it
-  if (url.includes("/embed/")) {
+  if (url.includes('/embed/')) {
     return url;
   }
 
   // if is a youtu.be url, get the id after the /
-  if (url.includes("youtu.be")) {
-    const id = url.split("/").pop();
+  if (url.includes('youtu.be')) {
+    const id = url.split('/').pop();
 
     if (!id) {
       return null;
@@ -90,16 +90,16 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
     return null;
   }
 
-  let outputUrl = `${getYoutubeEmbedUrl(nocookie, matches[1] === "list")}${matches[2]}`;
+  let outputUrl = `${getYoutubeEmbedUrl(nocookie, matches[1] === 'list')}${matches[2]}`;
 
   const params = [];
 
   if (allowFullscreen === false) {
-    params.push("fs=0");
+    params.push('fs=0');
   }
 
   if (autoplay) {
-    params.push("autoplay=1");
+    params.push('autoplay=1');
   }
 
   if (ccLanguage) {
@@ -107,19 +107,19 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   }
 
   if (ccLoadPolicy) {
-    params.push("cc_load_policy=1");
+    params.push('cc_load_policy=1');
   }
 
   if (!controls) {
-    params.push("controls=0");
+    params.push('controls=0');
   }
 
   if (disableKBcontrols) {
-    params.push("disablekb=1");
+    params.push('disablekb=1');
   }
 
   if (enableIFrameApi) {
-    params.push("enablejsapi=1");
+    params.push('enablejsapi=1');
   }
 
   if (endTime) {
@@ -135,11 +135,11 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   }
 
   if (loop) {
-    params.push("loop=1");
+    params.push('loop=1');
   }
 
   if (modestBranding) {
-    params.push("modestbranding=1");
+    params.push('modestbranding=1');
   }
 
   if (origin) {
@@ -163,7 +163,7 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   }
 
   if (params.length) {
-    outputUrl += `${matches[1] === "v" ? "?" : "&"}${params.join("&")}`;
+    outputUrl += `${matches[1] === 'v' ? '?' : '&'}${params.join('&')}`;
   }
 
   return outputUrl;

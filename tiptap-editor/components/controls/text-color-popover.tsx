@@ -1,26 +1,26 @@
-import React, { CSSProperties, useRef } from "react";
+import { type CSSProperties, useRef } from 'react';
 
-import { createPortal } from "react-dom";
+import { createPortal } from 'react-dom';
 
-import useMount from "../../hooks/use-mount";
-import { useTextStyle } from "../../hooks/use-text-style";
-import ColorPicker from "../color-picker";
-import { MenuButton } from "../menu-button";
+import useMount from '../../hooks/use-mount';
+import { useTextStyle } from '../../hooks/use-text-style';
+import ColorPicker from '../color-picker';
+import { MenuButton } from '../menu-button';
 
 const TextColorPopover = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const mounted = useMount();
   const { currentValue, canSetValue, setValue, unsetValue } =
-    useTextStyle("color");
+    useTextStyle('color');
 
   const colorBarStyle: CSSProperties = {
-    position: "absolute",
+    position: 'absolute',
     bottom: 1.5,
     insetInline: 5,
     height: 4,
     borderRadius: 4,
-    pointerEvents: "none",
-    background: currentValue || "var(--rte-fg, black)",
+    pointerEvents: 'none',
+    background: currentValue || 'var(--rte-fg, black)',
   };
 
   const renderBar =
@@ -32,14 +32,14 @@ const TextColorPopover = () => {
     <>
       <MenuButton
         ref={buttonRef}
-        type="popover"
-        icon={"TextColor"}
+        type='popover'
+        icon={'TextColor'}
         hideArrow
-        tooltip={"Text color"}
+        tooltip={'Text color'}
         disabled={!canSetValue}
       >
         <ColorPicker
-          color={currentValue || "DEFAULT"}
+          color={currentValue || 'DEFAULT'}
           onChange={(color) => setValue(color)}
           onReset={() => unsetValue()}
         />

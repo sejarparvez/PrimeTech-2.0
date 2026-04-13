@@ -1,18 +1,17 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
-export type ListType = "bulletList" | "orderedList";
+export type ListType = 'bulletList' | 'orderedList';
 
 // Utility functions
 export function canToggleList(editor: Editor | null, type: ListType): boolean {
   if (!editor || !editor.isEditable) return false;
 
   switch (type) {
-    case "bulletList":
+    case 'bulletList':
       return editor.can().toggleBulletList();
-    case "orderedList":
+    case 'orderedList':
       return editor.can().toggleOrderedList();
     default:
       return false;
@@ -33,17 +32,17 @@ export function toggleList(editor: Editor | null, type: ListType): boolean {
   // If list is active, just turn it off
   if (editor.isActive(type)) {
     return chain
-      .liftListItem("listItem")
-      .lift("bulletList")
-      .lift("orderedList")
+      .liftListItem('listItem')
+      .lift('bulletList')
+      .lift('orderedList')
       .run();
   }
 
   // If list is NOT active, clear wrapping nodes first, then toggle
   switch (type) {
-    case "bulletList":
+    case 'bulletList':
       return chain.clearNodes().toggleBulletList().run();
-    case "orderedList":
+    case 'orderedList':
       return chain.clearNodes().toggleOrderedList().run();
     default:
       return false;

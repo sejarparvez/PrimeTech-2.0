@@ -1,3 +1,3 @@
-export * from "./shiki.config";
-export * from "./shiki.bundle";
-export * from "./shiki.utils";
+export * from './shiki.bundle';
+export * from './shiki.config';
+export * from './shiki.utils';

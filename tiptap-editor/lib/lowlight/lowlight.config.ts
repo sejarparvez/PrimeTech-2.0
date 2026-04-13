@@ -1,88 +1,88 @@
-export const defaultLanguage = "plaintext";
+export const defaultLanguage = 'plaintext';
 
 export const supportedLanguages = {
   plaintext: {
-    name: "Plain Text",
-    aliases: ["plaintext", "text", "txt"],
+    name: 'Plain Text',
+    aliases: ['plaintext', 'text', 'txt'],
   },
   javascript: {
-    name: "JavaScript",
-    aliases: ["javascript", "js", "jsx", "mjs", "cjs"],
+    name: 'JavaScript',
+    aliases: ['javascript', 'js', 'jsx', 'mjs', 'cjs'],
   },
   typescript: {
-    name: "TypeScript",
-    aliases: ["typescript", "ts", "tsx"],
+    name: 'TypeScript',
+    aliases: ['typescript', 'ts', 'tsx'],
   },
   python: {
-    name: "Python",
-    aliases: ["python", "py"],
+    name: 'Python',
+    aliases: ['python', 'py'],
   },
   java: {
-    name: "Java",
-    aliases: ["java"],
+    name: 'Java',
+    aliases: ['java'],
   },
   go: {
-    name: "Go",
-    aliases: ["go"],
+    name: 'Go',
+    aliases: ['go'],
   },
   rust: {
-    name: "Rust",
-    aliases: ["rust", "rs"],
+    name: 'Rust',
+    aliases: ['rust', 'rs'],
   },
   php: {
-    name: "PHP",
-    aliases: ["php"],
+    name: 'PHP',
+    aliases: ['php'],
   },
   ruby: {
-    name: "Ruby",
-    aliases: ["ruby", "rb"],
+    name: 'Ruby',
+    aliases: ['ruby', 'rb'],
   },
   kotlin: {
-    name: "Kotlin",
-    aliases: ["kotlin", "kt"],
+    name: 'Kotlin',
+    aliases: ['kotlin', 'kt'],
   },
   c: {
-    name: "C",
-    aliases: ["c"],
+    name: 'C',
+    aliases: ['c'],
   },
   csharp: {
-    name: "C#",
-    aliases: ["csharp", "cs"],
+    name: 'C#',
+    aliases: ['csharp', 'cs'],
   },
   xml: {
-    name: "HTML, XML",
-    aliases: ["html", "xml"],
+    name: 'HTML, XML',
+    aliases: ['html', 'xml'],
   },
   css: {
-    name: "CSS",
-    aliases: ["css"],
+    name: 'CSS',
+    aliases: ['css'],
   },
   scss: {
-    name: "SCSS",
-    aliases: ["scss"],
+    name: 'SCSS',
+    aliases: ['scss'],
   },
   json: {
-    name: "JSON",
-    aliases: ["json"],
+    name: 'JSON',
+    aliases: ['json'],
   },
   markdown: {
-    name: "Markdown",
-    aliases: ["markdown", "md"],
+    name: 'Markdown',
+    aliases: ['markdown', 'md'],
   },
   bash: {
-    name: "Bash",
-    aliases: ["bash", "sh", "shell"],
+    name: 'Bash',
+    aliases: ['bash', 'sh', 'shell'],
   },
   makefile: {
-    name: "Makefile",
-    aliases: ["makefile", "make"],
+    name: 'Makefile',
+    aliases: ['makefile', 'make'],
   },
   sql: {
-    name: "SQL",
-    aliases: ["sql"],
+    name: 'SQL',
+    aliases: ['sql'],
   },
   graphql: {
-    name: "GraphQL",
-    aliases: ["graphql"],
+    name: 'GraphQL',
+    aliases: ['graphql'],
   },
 };

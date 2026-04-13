@@ -1,1 +1,1 @@
-export * from "./cell-align";
+export * from './cell-align';

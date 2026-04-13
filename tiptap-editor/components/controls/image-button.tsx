@@ -1,7 +1,7 @@
-import React, { ChangeEvent, Fragment, useCallback, useRef } from "react";
+import { type ChangeEvent, Fragment, useCallback, useRef } from 'react';
 
-import { useImage } from "../../hooks/use-image";
-import { MenuButton } from "../menu-button";
+import { useImage } from '../../hooks/use-image';
+import { MenuButton } from '../menu-button';
 
 const ImageButton = () => {
   const { canInsert, insert } = useImage();
@@ -16,28 +16,28 @@ const ImageButton = () => {
       const target = e.target;
       const file = target.files?.[0];
 
-      if (file?.type.startsWith("image/")) {
+      if (file?.type.startsWith('image/')) {
         const url = URL.createObjectURL(file);
         insert({ src: url, alt: file.name });
         // Reset input value to allow uploading same file again
-        target.value = "";
+        target.value = '';
       }
     },
-    [insert]
+    [insert],
   );
 
   return (
     <Fragment>
       <MenuButton
-        icon="Image"
-        tooltip="Insert Image"
+        icon='Image'
+        tooltip='Insert Image'
         disabled={!canInsert}
         onClick={handleClick}
       />
       <input
-        style={{ display: "none" }}
-        type="file"
-        accept="image/*"
+        style={{ display: 'none' }}
+        type='file'
+        accept='image/*'
         ref={fileInput}
         onChange={onUpload}
       />
@@ -110,7 +110,7 @@ export default ImageButton;
 
 //     <UploadWidget
 //       onSuccess={(result, widget) => {
-//         // @ts-ignore
+//         // @ts-expect-error
 //         const image = result.info!;
 //         editor
 //           .chain()

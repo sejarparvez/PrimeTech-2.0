@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
-
-import { Transaction } from "@tiptap/pm/state";
-import { useEditorState, useTiptap } from "@tiptap/react";
-
-import { CodeBlockMenu } from "./code-block-menu";
-import { ImageMenu } from "./image-menu";
-import { LinkMenu } from "./link-menu";
-import { TableMenu } from "./table-menu";
+import type { Transaction } from '@tiptap/pm/state';
+import { useEditorState, useTiptap } from '@tiptap/react';
+import React, { useEffect, useState } from 'react';
 import {
   getAncestorBoundingRect,
   getSelectionBoundingRect,
-} from "../../helpers/tiptap";
-import { isCodeBlockActive } from "../../hooks/use-code-block";
-import { isImageActive } from "../../hooks/use-image";
-import { isLinkActive } from "../../hooks/use-link";
-import { isTableActive } from "../../hooks/use-table";
-import { BubbleMenu } from "../bubble-menu";
+} from '../../helpers/tiptap';
+import { isCodeBlockActive } from '../../hooks/use-code-block';
+import { isImageActive } from '../../hooks/use-image';
+import { isLinkActive } from '../../hooks/use-link';
+import { isTableActive } from '../../hooks/use-table';
+import { BubbleMenu } from '../bubble-menu';
+import { CodeBlockMenu } from './code-block-menu';
+import { ImageMenu } from './image-menu';
+import { LinkMenu } from './link-menu';
+import { TableMenu } from './table-menu';
 
 export const Menus = () => {
   const { editor } = useTiptap();
@@ -24,11 +22,11 @@ export const Menus = () => {
   const activeMenu = useEditorState({
     editor,
     selector({ editor }) {
-      if (isLinkActive(editor)) return "link";
-      if (isImageActive(editor)) return "image";
-      if (isCodeBlockActive(editor)) return "codeBlock";
+      if (isLinkActive(editor)) return 'link';
+      if (isImageActive(editor)) return 'image';
+      if (isCodeBlockActive(editor)) return 'codeBlock';
       if (isTableActive(editor) && !editor.state.selection.empty)
-        return "table";
+        return 'table';
 
       return null;
     },
@@ -36,16 +34,16 @@ export const Menus = () => {
 
   const menuConfig = React.useMemo(() => {
     switch (activeMenu) {
-      case "image":
-      case "table":
-      case "codeBlock":
+      case 'image':
+      case 'table':
+      case 'codeBlock':
         return {
-          placement: "top" as const,
+          placement: 'top' as const,
           getReferenceClientRect: getAncestorBoundingRect,
         };
-      case "link":
+      case 'link':
         return {
-          placement: "bottom-start" as const,
+          placement: 'bottom-start' as const,
           getReferenceClientRect: getSelectionBoundingRect,
         };
       default:
@@ -57,12 +55,12 @@ export const Menus = () => {
     if (!editor) return;
 
     const onTransaction = ({ transaction }: { transaction: Transaction }) => {
-      setHideBubbleMenu(transaction.getMeta("hideBubbleMenu"));
+      setHideBubbleMenu(transaction.getMeta('hideBubbleMenu'));
     };
 
-    editor.on("transaction", onTransaction);
+    editor.on('transaction', onTransaction);
     return () => {
-      editor.off("transaction", onTransaction);
+      editor.off('transaction', onTransaction);
     };
   }, [editor]);
 
@@ -72,10 +70,10 @@ export const Menus = () => {
       shouldShow={!hideBubbleMenu && activeMenu !== null}
       getReferenceClientRect={menuConfig?.getReferenceClientRect}
     >
-      {activeMenu === "link" && <LinkMenu />}
-      {activeMenu === "image" && <ImageMenu />}
-      {activeMenu === "codeBlock" && <CodeBlockMenu />}
-      {activeMenu === "table" && <TableMenu />}
+      {activeMenu === 'link' && <LinkMenu />}
+      {activeMenu === 'image' && <ImageMenu />}
+      {activeMenu === 'codeBlock' && <CodeBlockMenu />}
+      {activeMenu === 'table' && <TableMenu />}
     </BubbleMenu>
   );
 };

@@ -1,14 +1,12 @@
-import { Paragraph, ExternalHyperlink, TextRun, BuilderElement } from "docx";
-
+import { BuilderElement, ExternalHyperlink, Paragraph, TextRun } from 'docx';
+import type { DocxExporter } from '../exporter';
+import type { TiptapNode } from '../types';
 import {
-  twipToPixel,
-  createShapeElement,
-  ShapeOptions,
   createPictureElement,
-} from "../utils";
-
-import type { DocxExporter } from "../exporter";
-import type { TiptapNode } from "../types";
+  createShapeElement,
+  type ShapeOptions,
+  twipToPixel,
+} from '../utils';
 
 const YOUTUBE_REGEX =
   /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu\.be|youtube-nocookie\.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
@@ -30,26 +28,26 @@ function extractYouTubeId(url: string): string | null {
 
 export function processYouTube(
   node: TiptapNode,
-  exporter: DocxExporter
+  exporter: DocxExporter,
 ): Paragraph {
-  const videoId = extractYouTubeId(node.attrs?.src || "");
-  const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : "";
+  const videoId = extractYouTubeId(node.attrs?.src || '');
+  const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '';
 
   return createTextbox({
     width: twipToPixel(exporter.availableWidth),
     height: 120,
     children: [
       new Paragraph({
-        alignment: "center",
+        alignment: 'center',
         children: [
           new TextRun({
-            text: "Watch on YouTube",
+            text: 'Watch on YouTube',
             size: 28,
           }),
         ],
       }),
       new Paragraph({
-        alignment: "center",
+        alignment: 'center',
         children: [
           new ExternalHyperlink({
             link: videoUrl,
@@ -57,7 +55,7 @@ export function processYouTube(
               new TextRun({
                 text: videoUrl,
                 size: 20,
-                style: "Hyperlink",
+                style: 'Hyperlink',
               }),
             ],
           }),
@@ -67,24 +65,24 @@ export function processYouTube(
   });
 }
 
-type TextboxOptions = Pick<ShapeOptions, "width" | "height" | "children"> & {
-  verticalAlign?: "top" | "middle" | "bottom";
+type TextboxOptions = Pick<ShapeOptions, 'width' | 'height' | 'children'> & {
+  verticalAlign?: 'top' | 'middle' | 'bottom';
 };
 
 export function createTextbox(options: TextboxOptions) {
-  const { width, height, verticalAlign = "middle", children } = options;
+  const { width, height, verticalAlign = 'middle', children } = options;
 
   const textboxContent = new BuilderElement({
-    name: "v:textbox",
+    name: 'v:textbox',
     attributes: {
       style: {
-        key: "style",
-        value: `v-text-anchor:${verticalAlign};mso-fit-shape-to-text:${height == "auto" ? "t" : "f"}`,
+        key: 'style',
+        value: `v-text-anchor:${verticalAlign};mso-fit-shape-to-text:${height == 'auto' ? 't' : 'f'}`,
       },
     },
     children: [
       new BuilderElement({
-        name: "w:txbxContent",
+        name: 'w:txbxContent',
         children,
       }),
     ],
@@ -94,13 +92,13 @@ export function createTextbox(options: TextboxOptions) {
     width,
     height,
     fill: {
-      color: "#F0F0F0",
-      opacity: "50%",
+      color: '#F0F0F0',
+      opacity: '50%',
     },
     stroke: {
-      dashstyle: "dash",
-      color: "#0066CC",
-      weight: "1pt",
+      dashstyle: 'dash',
+      color: '#0066CC',
+      weight: '1pt',
     },
     children: [textboxContent],
   });

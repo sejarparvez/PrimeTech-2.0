@@ -1,16 +1,15 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
 export type MarkType =
-  | "bold"
-  | "italic"
-  | "underline"
-  | "strike"
-  | "code"
-  | "superscript"
-  | "subscript";
+  | 'bold'
+  | 'italic'
+  | 'underline'
+  | 'strike'
+  | 'code'
+  | 'superscript'
+  | 'subscript';
 
 // Utility functions
 export function canToggleMark(editor: Editor | null, type: MarkType): boolean {

@@ -1,8 +1,8 @@
 /** @jsxImportSource @tiptap/core */
-import { Link as TiptapLink } from "@tiptap/extension-link";
-import { Plugin } from "@tiptap/pm/state";
+import { Link as TiptapLink } from '@tiptap/extension-link';
+import { Plugin } from '@tiptap/pm/state';
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     customLink: {
       openLinkMenu: () => ReturnType;
@@ -15,7 +15,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export type LinkMenuState = "view" | "edit" | "hidden";
+export type LinkMenuState = 'view' | 'edit' | 'hidden';
 
 export interface LinkStorage {
   menuState: LinkMenuState;
@@ -33,7 +33,7 @@ export const Link = TiptapLink.extend({
 
   addStorage() {
     return {
-      menuState: "hidden",
+      menuState: 'hidden',
     };
   },
 
@@ -42,12 +42,12 @@ export const Link = TiptapLink.extend({
       ...this.parent?.(),
       openLinkMenu: () => () => {
         const isLinkActive = this.editor.isActive(this.name);
-        this.storage.menuState = isLinkActive ? "view" : "edit";
+        this.storage.menuState = isLinkActive ? 'view' : 'edit';
         return true;
       },
 
       closeLinkMenu: () => () => {
-        this.storage.menuState = "hidden";
+        this.storage.menuState = 'hidden';
         return true;
       },
     };
@@ -55,7 +55,7 @@ export const Link = TiptapLink.extend({
 
   onSelectionUpdate() {
     // Auto-close menu when selection moves away from link
-    if (this.storage.menuState !== "hidden" && !this.editor.isActive("link")) {
+    if (this.storage.menuState !== 'hidden' && !this.editor.isActive('link')) {
       this.editor.commands.closeLinkMenu();
     }
   },
@@ -76,14 +76,14 @@ export const Link = TiptapLink.extend({
             if (event.target instanceof HTMLAnchorElement) {
               linkElement = event.target;
             } else {
-              linkElement = (event.target as Element)?.closest?.("a");
+              linkElement = (event.target as Element)?.closest?.('a');
             }
 
             if (!linkElement) {
               return false;
             }
 
-            if (this.storage.menuState === "hidden") {
+            if (this.storage.menuState === 'hidden') {
               this.editor
                 .chain()
                 .extendMarkRange(this.type.name)
@@ -103,12 +103,12 @@ export const Link = TiptapLink.extend({
   addKeyboardShortcuts() {
     return {
       ...this.parent?.(),
-      "Mod-k": () => {
+      'Mod-k': () => {
         this.editor.commands.openLinkMenu();
         return true;
       },
       Escape: () => {
-        if (this.storage.menuState !== "hidden") {
+        if (this.storage.menuState !== 'hidden') {
           this.editor.commands.closeLinkMenu();
           return true;
         }

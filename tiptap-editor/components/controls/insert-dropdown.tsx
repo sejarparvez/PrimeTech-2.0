@@ -1,9 +1,7 @@
-import React from "react";
+import { useEditorState, useTiptap } from '@tiptap/react';
 
-import { useEditorState, useTiptap } from "@tiptap/react";
-
-import { MenuButton } from "../menu-button";
-import { DropdownMenuItem } from "../ui/dropdown";
+import { MenuButton } from '../menu-button';
+import { DropdownMenuItem } from '../ui/dropdown';
 
 const InsertDropdown = () => {
   const { editor } = useTiptap();
@@ -21,8 +19,8 @@ const InsertDropdown = () => {
 
   const insertYoutube = () => {
     const src = prompt(
-      "Embed Youtube Video",
-      "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      'Embed Youtube Video',
+      'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     );
     if (src) {
       editor.chain().focus().setYoutubeVideo({ src }).run();
@@ -31,36 +29,36 @@ const InsertDropdown = () => {
 
   return (
     <MenuButton
-      type="dropdown"
-      tooltip="Insert"
+      type='dropdown'
+      tooltip='Insert'
       disabled={!canInsert}
-      icon="Plus"
-      dropdownStyle={{ minWidth: "8rem" }}
+      icon='Plus'
+      dropdownStyle={{ minWidth: '8rem' }}
     >
       <DropdownMenuItem asChild>
         <MenuButton
-          text="Blockquote"
+          text='Blockquote'
           hideText={false}
           tooltip={false}
-          icon="Quote"
+          icon='Quote'
           onClick={toggleBlockquote}
         />
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
         <MenuButton
-          text="Code block"
+          text='Code block'
           hideText={false}
           tooltip={false}
-          icon="CodeBlock"
+          icon='CodeBlock'
           onClick={toggleCodeBlock}
         />
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
         <MenuButton
-          text="Youtube"
+          text='Youtube'
           hideText={false}
           tooltip={false}
-          icon="Youtube"
+          icon='Youtube'
           onClick={insertYoutube}
         />
       </DropdownMenuItem>

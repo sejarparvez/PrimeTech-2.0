@@ -1,9 +1,7 @@
-import { Paragraph, AlignmentType, type IParagraphOptions } from "docx";
-
-import { lineHeightToDocx } from "../utils";
-
-import type { DocxExporter } from "../exporter";
-import type { TiptapNode } from "../types";
+import { AlignmentType, type IParagraphOptions, Paragraph } from 'docx';
+import type { DocxExporter } from '../exporter';
+import type { TiptapNode } from '../types';
+import { lineHeightToDocx } from '../utils';
 
 const ALIGNMENT_MAP = {
   left: AlignmentType.LEFT,
@@ -15,7 +13,7 @@ const ALIGNMENT_MAP = {
 export function processParagraph(
   node: TiptapNode,
   exporter: DocxExporter,
-  options: IParagraphOptions = {}
+  options: IParagraphOptions = {},
 ): Paragraph {
   const { run, spacing, ...paragraphOptions } = options;
 

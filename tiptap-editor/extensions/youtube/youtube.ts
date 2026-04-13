@@ -1,8 +1,8 @@
 /** @jsxImportSource @tiptap/core */
-import { Youtube as TiptapYoutube } from "@tiptap/extension-youtube";
-import { mergeAttributes } from "@tiptap/react";
+import { Youtube as TiptapYoutube } from '@tiptap/extension-youtube';
+import { mergeAttributes } from '@tiptap/react';
 
-import { getEmbedUrlFromYoutubeUrl } from "./utils";
+import { getEmbedUrlFromYoutubeUrl } from './utils';
 
 type SetYoutubeVideoOptions = {
   src: string;
@@ -27,7 +27,7 @@ export const Youtube = TiptapYoutube.extend({
   parseHTML() {
     return [
       {
-        tag: "div iframe[src]",
+        tag: 'div iframe[src]',
       },
     ];
   },
@@ -54,9 +54,9 @@ export const Youtube = TiptapYoutube.extend({
     };
 
     return [
-      "div",
+      'div',
       [
-        "iframe",
+        'iframe',
         mergeAttributes(this.options.HTMLAttributes, attrs, HTMLAttributes),
       ],
     ];

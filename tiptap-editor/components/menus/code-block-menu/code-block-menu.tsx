@@ -1,10 +1,9 @@
-import React, { useCallback } from "react";
-
-import { LanguageDropdown } from "./language-dropdown";
-import { useCodeBlock } from "../../../hooks/use-code-block";
-import { useCopyToClipboard } from "../../../hooks/use-copy-to-clipboard";
-import { MenuButton } from "../../menu-button";
-import { Toolbar, ToolbarDivider } from "../../ui/toolbar";
+import { useCallback } from 'react';
+import { useCodeBlock } from '../../../hooks/use-code-block';
+import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
+import { MenuButton } from '../../menu-button';
+import { Toolbar, ToolbarDivider } from '../../ui/toolbar';
+import { LanguageDropdown } from './language-dropdown';
 
 export const CodeBlockMenu = () => {
   const { isCopied, copy } = useCopyToClipboard();
@@ -22,13 +21,13 @@ export const CodeBlockMenu = () => {
       <LanguageDropdown value={language} onSelect={setLanguage} />
       <ToolbarDivider />
       <MenuButton
-        icon={isCopied ? "Check" : "Clipboard"}
+        icon={isCopied ? 'Check' : 'Clipboard'}
         onClick={handleCopy}
-        tooltip="Copy code"
+        tooltip='Copy code'
       />
       <MenuButton
-        icon="Trash"
-        tooltip="Delete code block"
+        icon='Trash'
+        tooltip='Delete code block'
         onClick={deleteBlock}
       />
     </Toolbar>

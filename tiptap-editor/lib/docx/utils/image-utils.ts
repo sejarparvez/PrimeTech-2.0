@@ -16,36 +16,36 @@ export function imageTypeFromData(imageData: Uint8Array<ArrayBuffer>) {
     imageData[2] === 0x4e &&
     imageData[3] === 0x47
   ) {
-    return "png";
+    return 'png';
   }
 
   // JPEG: FF D8 FF
   if (imageData[0] === 0xff && imageData[1] === 0xd8 && imageData[2] === 0xff) {
-    return "jpg";
+    return 'jpg';
   }
 
   // GIF: 47 49 46
   if (imageData[0] === 0x47 && imageData[1] === 0x49 && imageData[2] === 0x46) {
-    return "gif";
+    return 'gif';
   }
 
   // BMP: 42 4D
   if (imageData[0] === 0x42 && imageData[1] === 0x4d) {
-    return "bmp";
+    return 'bmp';
   }
 
   // SVG check (text-based)
   const decoder = new TextDecoder();
   const header = decoder.decode(imageData.subarray(0, 200));
-  if (header.includes("<svg")) {
-    return "svg";
+  if (header.includes('<svg')) {
+    return 'svg';
   }
 
-  throw new Error("Unsupported image type");
+  throw new Error('Unsupported image type');
 }
 
 export async function imageDimensionsFromData(
-  imageData: Uint8Array<ArrayBuffer>
+  imageData: Uint8Array<ArrayBuffer>,
 ) {
   return new Promise<{ width: number; height: number }>((resolve, reject) => {
     const blob = new Blob([imageData]);
@@ -62,7 +62,7 @@ export async function imageDimensionsFromData(
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error("Failed to load image dimensions"));
+      reject(new Error('Failed to load image dimensions'));
     };
 
     img.src = url;

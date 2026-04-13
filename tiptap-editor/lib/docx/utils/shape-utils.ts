@@ -1,7 +1,7 @@
-import { BuilderElement, UniversalMeasure } from "docx";
+import { BuilderElement, type UniversalMeasure } from 'docx';
 
 export type StrokeOptions = {
-  dashstyle?: "dash" | "dot" | "dashdot" | "longdash" | "solid";
+  dashstyle?: 'dash' | 'dot' | 'dashdot' | 'longdash' | 'solid';
   color?: string;
   weight?: string;
 };
@@ -20,26 +20,26 @@ export type ShapeOptions = {
 };
 
 function createStroke(options: StrokeOptions): BuilderElement {
-  const { dashstyle = "dash", color = "#0066CC", weight = "1pt" } = options;
+  const { dashstyle = 'dash', color = '#0066CC', weight = '1pt' } = options;
 
   return new BuilderElement({
-    name: "v:stroke",
+    name: 'v:stroke',
     attributes: {
-      dashstyle: { key: "dashstyle", value: dashstyle },
-      color: { key: "color", value: color },
-      weight: { key: "weight", value: weight },
+      dashstyle: { key: 'dashstyle', value: dashstyle },
+      color: { key: 'color', value: color },
+      weight: { key: 'weight', value: weight },
     },
   });
 }
 
 function createFill(options: FillOptions): BuilderElement {
-  const { color = "#FFFFFF", opacity = "100%" } = options;
+  const { color = '#FFFFFF', opacity = '100%' } = options;
 
   return new BuilderElement({
-    name: "v:fill",
+    name: 'v:fill',
     attributes: {
-      color: { key: "color", value: color },
-      opacity: { key: "opacity", value: opacity },
+      color: { key: 'color', value: color },
+      opacity: { key: 'opacity', value: opacity },
     },
   });
 }
@@ -60,12 +60,12 @@ export function createShapeElement(options: ShapeOptions): BuilderElement {
   shapeChildren.push(...children);
 
   return new BuilderElement({
-    name: "v:shape",
+    name: 'v:shape',
     attributes: {
-      type: { key: "type", value: "#_x0000_t202" },
-      style: { key: "style", value: `width:${width};height:${height}` },
-      filled: { key: "filled", value: fill ? "t" : "f" },
-      stroked: { key: "stroked", value: stroke ? "t" : "f" },
+      type: { key: 'type', value: '#_x0000_t202' },
+      style: { key: 'style', value: `width:${width};height:${height}` },
+      filled: { key: 'filled', value: fill ? 't' : 'f' },
+      stroked: { key: 'stroked', value: stroke ? 't' : 'f' },
     },
     children: shapeChildren,
   });
@@ -73,7 +73,7 @@ export function createShapeElement(options: ShapeOptions): BuilderElement {
 
 export function createPictureElement(shape: BuilderElement): BuilderElement {
   return new BuilderElement({
-    name: "w:pict",
+    name: 'w:pict',
     children: [shape],
   });
 }

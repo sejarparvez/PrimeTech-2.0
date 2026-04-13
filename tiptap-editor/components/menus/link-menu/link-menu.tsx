@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import LinkEdit from "./link-edit";
-import LinkView from "./link-view";
-import { useLink } from "../../../hooks/use-link";
+import { useCallback, useEffect, useState } from 'react';
+import { useLink } from '../../../hooks/use-link';
+import LinkEdit from './link-edit';
+import LinkView from './link-view';
 
 export const LinkMenu = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -21,7 +20,7 @@ export const LinkMenu = () => {
       setLink(url.trim(), text?.trim());
       setIsEditing(false);
     },
-    [setLink]
+    [setLink],
   );
 
   const handleRemoveLink = useCallback(() => {
@@ -39,8 +38,8 @@ export const LinkMenu = () => {
 
   return isEditing ? (
     <LinkEdit
-      initialUrl={link?.href ?? ""}
-      initialText={link?.text ?? ""}
+      initialUrl={link?.href ?? ''}
+      initialText={link?.text ?? ''}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
     />

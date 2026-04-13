@@ -1,11 +1,11 @@
-import { processCodeBlock } from "../transforms/code-block";
-import { processImage } from "../transforms/image";
-import { processList } from "../transforms/list";
-import { processParagraph } from "../transforms/paragraph";
-import { processTable } from "../transforms/table";
-import { processYouTube } from "../transforms/youtube";
+import { processCodeBlock } from '../transforms/code-block';
+import { processImage } from '../transforms/image';
+import { processList } from '../transforms/list';
+import { processParagraph } from '../transforms/paragraph';
+import { processTable } from '../transforms/table';
+import { processYouTube } from '../transforms/youtube';
 
-import type { NodeMapping } from "../types";
+import type { NodeMapping } from '../types';
 
 export const defaultNodeMapping: NodeMapping = {
   paragraph: (node, exporter) => processParagraph(node, exporter),
@@ -16,7 +16,7 @@ export const defaultNodeMapping: NodeMapping = {
   },
   blockquote: (node, exporter) => {
     return (node.content || []).map((child) =>
-      processParagraph(child, exporter, { style: "Blockquote" })
+      processParagraph(child, exporter, { style: 'Blockquote' }),
     );
   },
   bulletList: (node, exporter) => {
@@ -30,7 +30,7 @@ export const defaultNodeMapping: NodeMapping = {
     const [imageNode, captionNode] = node.content || [];
     return Promise.all([
       processImage(imageNode, exporter),
-      processParagraph(captionNode, exporter, { style: "Caption" }),
+      processParagraph(captionNode, exporter, { style: 'Caption' }),
     ]);
   },
   table: (node, exporter) => processTable(node, exporter),

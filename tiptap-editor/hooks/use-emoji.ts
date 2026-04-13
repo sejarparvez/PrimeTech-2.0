@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { useEditorState, useTiptap } from "@tiptap/react";
-
-import { getEmojiData, type EmojiItem } from "../helpers/emoji";
+import { type EmojiItem, getEmojiData } from '../helpers/emoji';
 
 export function useEmoji() {
   const { editor } = useTiptap();

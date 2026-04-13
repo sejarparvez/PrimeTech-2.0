@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from "react";
-
-import AltTextEdit from "./alt-text-edit";
-import SizeDropdown from "./size-dropdown";
-import { useImage } from "../../../hooks/use-image";
-import { MenuButton } from "../../menu-button";
-import { Toolbar, ToolbarDivider } from "../../ui/toolbar";
+import { useCallback, useState } from 'react';
+import { useImage } from '../../../hooks/use-image';
+import { MenuButton } from '../../menu-button';
+import { Toolbar, ToolbarDivider } from '../../ui/toolbar';
+import AltTextEdit from './alt-text-edit';
+import SizeDropdown from './size-dropdown';
 
 export const ImageMenu = () => {
   const {
@@ -25,7 +24,7 @@ export const ImageMenu = () => {
       setAlt(value);
       setIsEditAltText(false);
     },
-    [setAlt]
+    [setAlt],
   );
 
   const handleAltTextCancel = useCallback(() => {
@@ -38,22 +37,22 @@ export const ImageMenu = () => {
 
   return isEditAltText ? (
     <AltTextEdit
-      initialText={imageData?.alt || ""}
+      initialText={imageData?.alt || ''}
       onApply={handleAltTextApply}
       onCancel={handleAltTextCancel}
     />
   ) : (
     <Toolbar>
       <MenuButton
-        text="Alt text"
+        text='Alt text'
         hideText={false}
-        tooltip="Alternative text"
+        tooltip='Alternative text'
         disabled={!canUpdateAttributes}
         onClick={handleToggleAltText}
       />
       <MenuButton
-        icon="ImageCaption"
-        tooltip={`Caption: ${imageData?.hasCaption ? "ON" : "OFF"}`}
+        icon='ImageCaption'
+        tooltip={`Caption: ${imageData?.hasCaption ? 'ON' : 'OFF'}`}
         active={imageData?.hasCaption}
         disabled={!canToggleCaption}
         onClick={toggleCaption}
@@ -62,14 +61,14 @@ export const ImageMenu = () => {
       <SizeDropdown value={imageData?.width || 0} onChange={setSize} />
       <ToolbarDivider />
       <MenuButton
-        icon="Download"
-        tooltip="Download"
+        icon='Download'
+        tooltip='Download'
         disabled={!imageData?.src}
         onClick={download}
       />
       <MenuButton
-        icon="Trash"
-        tooltip="Delete"
+        icon='Trash'
+        tooltip='Delete'
         disabled={!canRemove}
         onClick={remove}
       />

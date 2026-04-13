@@ -1,6 +1,7 @@
-import React, { HTMLProps, forwardRef } from "react";
+import type React from 'react';
+import { forwardRef, type HTMLProps } from 'react';
 
-import { cn } from "../../helpers/utils";
+import { cn } from '../../helpers/utils';
 
 export type ToolbarProps = {
   dense?: boolean;
@@ -10,10 +11,10 @@ export type ToolbarProps = {
 const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   ({ children, dense, vertical = false, className, ...rest }, ref) => {
     const toolbarClassName = cn(
-      "rte-toolbar",
-      dense && "rte-toolbar--dense",
-      vertical && "rte-toolbar--vertical",
-      className
+      'rte-toolbar',
+      dense && 'rte-toolbar--dense',
+      vertical && 'rte-toolbar--vertical',
+      className,
     );
 
     return (
@@ -21,10 +22,10 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
-Toolbar.displayName = "Toolbar";
+Toolbar.displayName = 'Toolbar';
 
 export type ToolbarGroupProps = {
   className?: string;
@@ -33,13 +34,13 @@ export type ToolbarGroupProps = {
 
 const ToolbarGroup = forwardRef<HTMLDivElement, ToolbarGroupProps>(
   ({ className, ...rest }, ref) => {
-    const groupClassName = cn("rte-toolbar__group", className);
+    const groupClassName = cn('rte-toolbar__group', className);
 
-    return <div className={groupClassName} role="group" ref={ref} {...rest} />;
-  }
+    return <div className={groupClassName} role='group' ref={ref} {...rest} />;
+  },
 );
 
-ToolbarGroup.displayName = "ToolbarGroup";
+ToolbarGroup.displayName = 'ToolbarGroup';
 
 export type ToolbarDividerProps = {
   horizontal?: boolean;
@@ -48,15 +49,15 @@ export type ToolbarDividerProps = {
 const ToolbarDivider = forwardRef<HTMLDivElement, ToolbarDividerProps>(
   ({ horizontal, className, ...rest }, ref) => {
     const dividerClassName = cn(
-      "bg-neutral-200 dark:bg-neutral-800 rte-toolbar__divider",
-      horizontal && "rte-toolbar__divider--horizontal",
-      className
+      'bg-neutral-200 dark:bg-neutral-800 rte-toolbar__divider',
+      horizontal && 'rte-toolbar__divider--horizontal',
+      className,
     );
 
     return <div className={dividerClassName} ref={ref} {...rest} />;
-  }
+  },
 );
 
-ToolbarDivider.displayName = "Toolbar.Divider";
+ToolbarDivider.displayName = 'Toolbar.Divider';
 
-export { Toolbar, ToolbarGroup, ToolbarDivider };
+export { Toolbar, ToolbarDivider, ToolbarGroup };

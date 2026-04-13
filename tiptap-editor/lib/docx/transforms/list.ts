@@ -1,9 +1,7 @@
-import { Paragraph } from "docx";
-
-import { processParagraph } from "./paragraph";
-
-import type { DocxExporter } from "../exporter";
-import type { TiptapNode } from "../types";
+import type { Paragraph } from 'docx';
+import type { DocxExporter } from '../exporter';
+import type { TiptapNode } from '../types';
+import { processParagraph } from './paragraph';
 
 type ListConfig = {
   level: number;
@@ -14,7 +12,7 @@ type ListConfig = {
 export function processList(
   node: TiptapNode,
   exporter: DocxExporter,
-  config: ListConfig
+  config: ListConfig,
 ): Paragraph[] {
   const {
     level,
@@ -23,14 +21,14 @@ export function processList(
   } = config;
 
   return (node.content || []).flatMap((child: TiptapNode) =>
-    processListItem(child, exporter, { level, isNumbering, instance })
+    processListItem(child, exporter, { level, isNumbering, instance }),
   );
 }
 
 function processListItem(
   node: TiptapNode,
   exporter: DocxExporter,
-  config: ListConfig
+  config: ListConfig,
 ): Paragraph[] {
   const result: Paragraph[] = [];
 
@@ -38,33 +36,33 @@ function processListItem(
     const childType = child.type;
 
     switch (childType) {
-      case "paragraph":
+      case 'paragraph':
         result.push(
           processParagraph(child, exporter, {
             numbering: {
               level: config.level,
               instance: config.isNumbering ? config.instance : undefined,
-              reference: config.isNumbering ? "orderedList" : "bulletList",
+              reference: config.isNumbering ? 'orderedList' : 'bulletList',
             },
-          })
+          }),
         );
         break;
 
-      case "bulletList":
+      case 'bulletList':
         result.push(
           ...processList(child, exporter, {
             level: config.level + 1,
             isNumbering: false,
-          })
+          }),
         );
         break;
 
-      case "orderedList":
+      case 'orderedList':
         result.push(
           ...processList(child, exporter, {
             level: config.level + 1,
             isNumbering: true,
-          })
+          }),
         );
         break;
     }

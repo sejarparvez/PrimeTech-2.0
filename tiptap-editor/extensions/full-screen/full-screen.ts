@@ -1,4 +1,4 @@
-import { Extension } from "@tiptap/core";
+import { Extension } from '@tiptap/core';
 
 export type FullScreenOptions = {
   className: string;
@@ -9,7 +9,7 @@ export interface FullScreenStorage {
   enabled: boolean;
 }
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     fullScreen: {
       toggleFullScreen: () => ReturnType;
@@ -29,12 +29,12 @@ export const FullScreen = Extension.create<
   let scrollPosition = 0;
 
   return {
-    name: "fullScreen",
+    name: 'fullScreen',
 
     addOptions() {
       return {
-        className: "rte-editor--full-screen",
-        containerSelector: ".rte-editor",
+        className: 'rte-editor--full-screen',
+        containerSelector: '.rte-editor',
       };
     },
 
@@ -78,7 +78,7 @@ export const FullScreen = Extension.create<
 
     addKeyboardShortcuts() {
       return {
-        "Mod-Shift-F": () => this.editor.commands.toggleFullScreen(),
+        'Mod-Shift-F': () => this.editor.commands.toggleFullScreen(),
       };
     },
   };

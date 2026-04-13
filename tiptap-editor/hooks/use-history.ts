@@ -1,9 +1,8 @@
-import { useCallback } from "react";
-
-import { useEditorState, useTiptap, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState, useTiptap } from '@tiptap/react';
+import { useCallback } from 'react';
 
 // Types
-export type UndoRedoAction = "undo" | "redo";
+export type UndoRedoAction = 'undo' | 'redo';
 
 // Utility functions
 export function canUndoRedo(
@@ -33,15 +32,15 @@ export function useHistory() {
     editor,
     selector({ editor }) {
       return {
-        canUndo: canUndoRedo(editor, "undo"),
-        canRedo: canUndoRedo(editor, "redo"),
+        canUndo: canUndoRedo(editor, 'undo'),
+        canRedo: canUndoRedo(editor, 'redo'),
       };
     },
   });
 
-  const undo = useCallback(() => executeUndoRedo(editor, "undo"), [editor]);
+  const undo = useCallback(() => executeUndoRedo(editor, 'undo'), [editor]);
 
-  const redo = useCallback(() => executeUndoRedo(editor, "redo"), [editor]);
+  const redo = useCallback(() => executeUndoRedo(editor, 'redo'), [editor]);
 
   return {
     ...editorState,

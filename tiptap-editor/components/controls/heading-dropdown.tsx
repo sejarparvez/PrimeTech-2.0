@@ -1,21 +1,19 @@
-import React from "react";
-
 import {
-  useHeading,
   HEADING_LEVELS,
   type HeadingType,
-} from "../../hooks/use-heading";
-import { MenuButton } from "../menu-button";
-import { DropdownMenuItem } from "../ui/dropdown";
+  useHeading,
+} from '../../hooks/use-heading';
+import { MenuButton } from '../menu-button';
+import { DropdownMenuItem } from '../ui/dropdown';
 
 const HeadingDropdown = () => {
   const { currentType, canToggle, toggleHeading } = useHeading();
 
   const options = [
     {
-      value: "paragraph",
-      label: "Paragraph",
-      display: "p",
+      value: 'paragraph',
+      label: 'Paragraph',
+      display: 'p',
     },
     ...HEADING_LEVELS.map((level) => ({
       value: `heading${level}`,
@@ -25,17 +23,17 @@ const HeadingDropdown = () => {
   ] as { value: HeadingType; label: string; display: string }[];
 
   const currentLabel =
-    options.find((item) => item.value === currentType)?.label || "Headings";
+    options.find((item) => item.value === currentType)?.label || 'Headings';
 
   return (
     <MenuButton
-      type="dropdown"
+      type='dropdown'
       text={currentLabel}
-      tooltip="Headings"
+      tooltip='Headings'
       hideText={false}
       disabled={!canToggle}
-      buttonStyle={{ minWidth: "6.5rem" }}
-      dropdownClass="rte-heading-dropdown"
+      buttonStyle={{ minWidth: '6.5rem' }}
+      dropdownClass='rte-heading-dropdown'
     >
       {options.map((item) => (
         <DropdownMenuItem

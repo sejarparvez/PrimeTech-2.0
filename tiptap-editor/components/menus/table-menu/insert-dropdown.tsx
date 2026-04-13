@@ -1,8 +1,6 @@
-import React from "react";
-
-import { MenuButton } from "../../menu-button";
-import { PopoverClose } from "../../ui/popover";
-import { Toolbar } from "../../ui/toolbar";
+import { MenuButton } from '../../menu-button';
+import { PopoverClose } from '../../ui/popover';
+import { Toolbar } from '../../ui/toolbar';
 
 interface InsertDropdownProps {
   addRowBefore: () => void;
@@ -19,43 +17,43 @@ export const InsertDropdown = ({
 }: InsertDropdownProps) => {
   return (
     <MenuButton
-      type="popover"
-      icon="TablePlus"
-      dropdownClass="rte-table-insert-dropdown"
-      dropdownStyle={{ minWidth: "10rem" }}
+      type='popover'
+      icon='TablePlus'
+      dropdownClass='rte-table-insert-dropdown'
+      dropdownStyle={{ minWidth: '10rem' }}
     >
       <PopoverClose asChild>
         <Toolbar vertical={true}>
           <MenuButton
-            icon="RowInsertTop"
+            icon='RowInsertTop'
             hideText={false}
             tooltip={false}
             block={true}
-            text="Insert row above"
+            text='Insert row above'
             onClick={addRowBefore}
           />
           <MenuButton
-            icon="RowInsertBottom"
+            icon='RowInsertBottom'
             hideText={false}
             block={true}
             tooltip={false}
-            text="Insert row below"
+            text='Insert row below'
             onClick={addRowAfter}
           />
           <MenuButton
-            icon="ColInsertLeft"
+            icon='ColInsertLeft'
             hideText={false}
             block={true}
             tooltip={false}
-            text="Insert column before"
+            text='Insert column before'
             onClick={addColumnBefore}
           />
           <MenuButton
-            icon="ColInsertRight"
+            icon='ColInsertRight'
             hideText={false}
             block={true}
             tooltip={false}
-            text="Insert column after"
+            text='Insert column after'
             onClick={addColumnAfter}
           />
         </Toolbar>
