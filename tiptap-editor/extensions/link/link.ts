@@ -28,6 +28,10 @@ export const Link = TiptapLink.extend({
       ...this.parent?.(),
       autolink: false,
       openOnClick: false,
+      HTMLAttributes: {
+        target: null,
+        rel: null,
+      },
     };
   },
 

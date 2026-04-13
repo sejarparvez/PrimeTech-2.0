@@ -4,11 +4,12 @@ import { Toolbar } from '../../ui/toolbar';
 
 interface LinkViewProps {
   url: string;
+  target?: string;
   onEdit?: () => void;
   onRemove?: () => void;
 }
 
-const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
+const LinkView = ({ url, target, onEdit, onRemove }: LinkViewProps) => {
   const { copy, isCopied } = useCopyToClipboard();
 
   return (
@@ -17,7 +18,7 @@ const LinkView = ({ url, onEdit, onRemove }: LinkViewProps) => {
       <MenuButton
         icon='ExternalLink'
         text='Open in new tab'
-        onClick={() => window.open(url, '_blank')}
+        onClick={() => window.open(url, target ?? '_blank')}
       />
       <MenuButton
         icon={isCopied ? 'Check' : 'Clipboard'}

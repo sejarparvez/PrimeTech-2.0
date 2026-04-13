@@ -6,10 +6,10 @@ import {
 } from '@tiptap/react';
 import { useCallback } from 'react';
 
-// Type
 export interface LinkData {
   href: string;
   text: string;
+  target?: string;
 }
 
 export interface LinkState {
@@ -19,7 +19,6 @@ export interface LinkState {
   shouldShow: boolean;
 }
 
-// Utility functions
 export function canSetLink(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
   return editor.can().setMark('link');
@@ -28,45 +27,37 @@ export function canSetLink(editor: Editor | null): boolean {
 export function isLinkActive(editor: Editor | null): boolean {
   if (!editor || !editor.isEditable) return false;
   return editor.storage.link.menuState !== 'hidden';
-  // return editor.isActive("link");
 }
 
 export function getCurrentLink(editor: Editor | null): LinkData | null {
   if (!editor || !isLinkActive(editor)) return null;
-
-  const { href = '' } = editor.getAttributes('link');
+  const { href = '', target } = editor.getAttributes('link');
   const { selection, schema, doc } = editor.state;
-
   const range = getMarkRange(selection.$anchor, schema.marks.link);
-
   const from = range ? range.from : selection.from;
   const to = range ? range.to : selection.to;
-
   const text = doc.textBetween(from, to);
-
-  return { href, text };
+  return { href, text, target };
 }
 
-// Hook
 export function useLink() {
   const { editor } = useTiptap();
 
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }): LinkState => {
-      return {
-        link: getCurrentLink(editor),
-        isActive: isLinkActive(editor),
-        canSet: canSetLink(editor),
-        shouldShow: editor.storage.link.menuState !== 'hidden',
-      };
-    },
+    selector: ({ editor }): LinkState => ({
+      link: getCurrentLink(editor),
+      isActive: isLinkActive(editor),
+      canSet: canSetLink(editor),
+      shouldShow: editor.storage.link.menuState !== 'hidden',
+    }),
   });
 
   const setLink = useCallback(
-    (href: string, text?: string) => {
+    (href: string, text?: string, target?: string) => {
       const chain = editor.chain().focus();
       const isSelectionEmpty = editor.state.selection.empty;
+      const attrs = { href, target: target ?? '_self' };
 
       if (isSelectionEmpty || text) {
         const linkText = text || href;
@@ -74,12 +65,12 @@ export function useLink() {
           .insertContent({
             type: 'text',
             text: linkText,
-            marks: [{ type: 'link', attrs: { href } }],
+            marks: [{ type: 'link', attrs }],
           })
           .run();
       }
 
-      return chain.extendMarkRange('link').setLink({ href }).run();
+      return chain.extendMarkRange('link').setLink(attrs).run();
     },
     [editor],
   );

@@ -14,10 +14,9 @@ export const LinkMenu = () => {
   }, [link]);
 
   const handleSubmit = useCallback(
-    (url: string, text?: string) => {
+    (url: string, text?: string, target?: string) => {
       if (!url.trim()) return;
-
-      setLink(url.trim(), text?.trim());
+      setLink(url.trim(), text?.trim(), target);
       setIsEditing(false);
     },
     [setLink],
@@ -40,11 +39,17 @@ export const LinkMenu = () => {
     <LinkEdit
       initialUrl={link?.href ?? ''}
       initialText={link?.text ?? ''}
+      initialTarget={link?.target ?? ''}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
     />
   ) : link ? (
-    <LinkView url={link.href} onEdit={handleEdit} onRemove={handleRemoveLink} />
+    <LinkView
+      url={link.href}
+      target={link.target}
+      onEdit={handleEdit}
+      onRemove={handleRemoveLink}
+    />
   ) : null;
 };
 
