@@ -13,7 +13,7 @@ const CompactColorPopover = () => {
   const textStyle = useTextStyle('color');
   const bgStyle = useTextStyle('backgroundColor');
 
-  const isActive = textStyle.currentValue || bgStyle.currentValue;
+  const isActive = !!(textStyle.currentValue || bgStyle.currentValue);
 
   const colorBarStyle: CSSProperties = {
     position: 'absolute',
