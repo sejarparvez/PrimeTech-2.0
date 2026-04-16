@@ -65,7 +65,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/images', {
+      const response = await fetch('/api/article/images', {
         method: 'POST',
         body: formData,
       });
@@ -102,7 +102,7 @@ const MediaLibrary: React.FC<MediaLibraryProps> = ({ onInsert, onClose }) => {
     const fetchImages = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/images');
+        const response = await fetch('/api/article/images');
         const data = await response.json();
         setImages(data);
       } catch (error) {
