@@ -12,12 +12,12 @@ const HeadingDropdown = () => {
   const options = [
     {
       value: 'paragraph',
-      label: 'Paragraph',
+      label: 'P',
       display: 'p',
     },
     ...HEADING_LEVELS.map((level) => ({
       value: `heading${level}`,
-      label: `Heading ${level}`,
+      label: `H ${level}`,
       display: `h${level}`,
     })),
   ] as { value: HeadingType; label: string; display: string }[];
@@ -32,7 +32,6 @@ const HeadingDropdown = () => {
       tooltip='Headings'
       hideText={false}
       disabled={!canToggle}
-      buttonStyle={{ minWidth: '6.5rem' }}
       dropdownClass='rte-heading-dropdown'
     >
       {options.map((item) => (

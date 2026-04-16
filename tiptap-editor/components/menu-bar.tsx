@@ -19,7 +19,7 @@ import { Toolbar, ToolbarDivider, ToolbarGroup } from './ui/toolbar';
 
 export const MenuBar = () => {
   return (
-    <Toolbar dense className='rte-menu-bar'>
+    <Toolbar dense className='flex items-center shrink-0 border-b'>
       <ToolbarGroup>
         <UndoButton />
         <RedoButton />

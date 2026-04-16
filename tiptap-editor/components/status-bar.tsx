@@ -19,7 +19,7 @@ export const StatusBar = () => {
   });
 
   return (
-    <div className='rte-status-bar'>
+    <div className='border-t shrink-0 flex'>
       <Toolbar dense>
         <MenuButton
           icon='SourceCode'
@@ -37,9 +37,9 @@ export const StatusBar = () => {
         />
       </Toolbar>
 
-      <div className='rte-counter'>
-        <span className='rte-word-count'>Words: {counter.words}</span>
-        <span className='rte-charater'>Characters: {counter.characters}</span>
+      <div className='flex items-center ml-auto px-4 gap-4'>
+        <span>Words: {counter.words}</span>
+        <span>Characters: {counter.characters}</span>
       </div>
     </div>
   );
