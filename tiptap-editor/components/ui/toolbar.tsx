@@ -34,7 +34,7 @@ export type ToolbarGroupProps = {
 
 const ToolbarGroup = forwardRef<HTMLDivElement, ToolbarGroupProps>(
   ({ className, ...rest }, ref) => {
-    const groupClassName = cn('rte-toolbar__group', className);
+    const groupClassName = cn(className);
 
     // biome-ignore lint/a11y/useSemanticElements: this is fine
     return <div className={groupClassName} role='group' ref={ref} {...rest} />;

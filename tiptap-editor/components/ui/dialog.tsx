@@ -13,19 +13,31 @@ const Dialog = ({ children, open, onOpenChange }: DialogProps) => {
     onOpenChange?.(false);
   };
 
-  if (!open) return;
+  if (!open) return null;
 
   return createPortal(
     // biome-ignore lint/a11y/useKeyWithClickEvents: this is fine
-    <div role='dialog' className='rte-dialog' onClick={onDismiss}>
-      {/** biome-ignore lint/a11y/noStaticElementInteractions: this is fine */}
-      {/** biome-ignore lint/a11y/useKeyWithClickEvents: this is fine */}
-      <div className='rte-dialog__content' onClick={(e) => e.stopPropagation()}>
+    <div
+      role='dialog'
+      className='rte-dialog'
+      onClick={onDismiss}
+      onMouseDown={(e) => e.preventDefault()}
+      onTouchStart={(e) => e.stopPropagation()}
+      onPointerDown={(e) => e.stopPropagation()}
+    >
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: this is fine */}
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: this is fine */}
+      <div
+        className='rte-dialog__content'
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
     </div>,
-    // biome-ignore lint/style/noNonNullAssertion: this is fine
-    document.querySelector('body')!,
+    document.body,
   );
 };
 

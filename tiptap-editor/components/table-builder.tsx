@@ -11,9 +11,10 @@ type GridSize = { cols: number; rows: number };
 
 interface TableBuilderProps {
   onCreate?: (value: GridSize) => void;
+  disablePopoverClose?: boolean;
 }
 
-const TableBuilder = ({ onCreate }: TableBuilderProps) => {
+const TableBuilder = ({ onCreate, disablePopoverClose }: TableBuilderProps) => {
   const [gridSize, setGridSize] = useState<GridSize>({ cols: 1, rows: 1 });
 
   const isActiveCell = (rowIndex: number, colIndex: number) =>
@@ -44,14 +45,22 @@ const TableBuilder = ({ onCreate }: TableBuilderProps) => {
     [gridSize, onCreate],
   );
 
-  return (
-    <div className='rte-tb__builder'>
-      <PopoverClose asChild>
-        <div className='rte-tb__grid'>{grid}</div>
-      </PopoverClose>
+  const gridContent = (
+    <>
+      <div className='rte-tb__grid'>{grid}</div>
       <div style={{ textAlign: 'center', marginBlock: 3 }}>
         {gridSize.rows} x {gridSize.cols}
       </div>
+    </>
+  );
+
+  if (disablePopoverClose) {
+    return <div className='rte-tb__builder'>{gridContent}</div>;
+  }
+
+  return (
+    <div className='rte-tb__builder'>
+      <PopoverClose asChild>{gridContent}</PopoverClose>
     </div>
   );
 };
