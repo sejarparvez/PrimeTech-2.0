@@ -25,26 +25,19 @@
   }
 
   &__container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    // min-height: $editor-min-height;
-    // max-height: $editor-max-height;
+  
+   
+    min-height: $editor-min-height;
+    max-height: $editor-max-height;
   }
 
   &__content {
-    cursor: text;
-    position: relative;
-    flex-direction: column;
     min-height: $editor-min-height;
     max-height: $editor-max-height;
-    display: flex;
-    flex: 1;
     background-color: $bg-color;
     color: $fg-color;
     font-size: $editor-font-size;
     line-height: $editor-line-height;
-    overflow: auto;
     @include custom-scrollbar;
 
     & > .ProseMirror {

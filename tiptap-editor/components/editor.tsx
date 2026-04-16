@@ -110,10 +110,10 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps2>(
     return (
       <TiptapProvider editor={editor}>
         <div className='rte-editor'>
-          <div className='rte-editor__container'>
+          <div className='rte-editor__container flex flex-col h-full'>
             <MenuBar />
 
-            <TiptapContent className='rte-editor__content'>
+            <TiptapContent className='rte-editor__content cursor-text relative flex flex-col flex-1 overflow-auto'>
               <Menus />
               <DragHandle />
               <Resizer />
