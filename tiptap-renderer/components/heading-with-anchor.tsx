@@ -32,7 +32,7 @@ const HeadingWithAnchor: React.FC<HeadingWithAnchorProps> = ({
       <Link
         href={`#${headingId}`}
         aria-label={`Link to ${headingId}`}
-        className="not-prose font-inherit group relative hover:before:absolute hover:before:-left-6 hover:before:top-1/2 hover:before:-translate-y-1/2 hover:before:text-[1em] hover:before:opacity-70 hover:before:content-['#']"
+        className="not-prose font-inherit text-inherit group relative hover:before:absolute hover:before:-left-6 hover:before:top-1/2 hover:before:-translate-y-1/2 hover:before:text-[1em] hover:before:opacity-70 hover:before:content-['#']"
       >
         {children}
       </Link>
