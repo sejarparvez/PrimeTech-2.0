@@ -15,7 +15,7 @@ import {
 } from 'react';
 import { createExtensions } from '../extensions';
 import { getEditorContent } from '../helpers/tiptap';
-import { cssVar, throttle } from '../helpers/utils';
+import { throttle } from '../helpers/utils';
 import DragHandle from './drag-handle';
 import MenuBar from './menu-bar';
 import Menus from './menus';
@@ -97,12 +97,6 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps2>(
       editor.view.dispatch(editor.view.state.tr);
     }, [editor, isEditable]);
 
-    useEffect(() => {
-      cssVar('--rte-editor-min-height', minHeight, 'px');
-      cssVar('--rte-editor-max-height', maxHeight, 'px');
-      cssVar('--rte-editor-max-width', maxWidth, 'px');
-    }, [minHeight, maxHeight, maxWidth]);
-
     if (!editor) {
       return null;
     }
@@ -110,10 +104,10 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps2>(
     return (
       <TiptapProvider editor={editor}>
         <div className='rte-editor'>
-          <div className='rte-editor__container flex flex-col h-full'>
+          <div className='flex flex-col h-full'>
             <MenuBar />
 
-            <TiptapContent className='rte-editor__content cursor-text relative flex flex-col flex-1 overflow-auto'>
+            <TiptapContent className='rte-editor__content overflow-scroll min-h-96 cursor-text relative flex flex-col flex-1'>
               <Menus />
               <DragHandle />
               <Resizer />

@@ -80,26 +80,20 @@ export const LanguageDropdown = ({
       text={currentLanguage}
       hideText={false}
       buttonStyle={{ minWidth: '8.5rem' }}
-      dropdownClass='rte-code-dropdown'
+      dropdownClass='left-3 relative flex '
       dropdownStyle={{
         minWidth: '12rem',
         maxHeight: `${maxHeight}px`,
       }}
     >
       <SearchInput
-        className='code-search'
         placeholder='Search languages...'
         value={search}
         onChange={handleSearchChange}
         showSearchIcon={false}
       />
-      {/* <Input
-        className="code-search"
-        placeholder="Search languages..."
-        value={search}
-        onChange={handleSearchChange}
-      /> */}
-      <div className='code-list' style={{ overflowY: 'auto' }}>
+
+      <div style={{ overflowY: 'auto' }}>
         {filteredOptions.length === 0 ? (
           <div>No languages found</div>
         ) : (
@@ -110,7 +104,7 @@ export const LanguageDropdown = ({
               <div
                 role='button'
                 tabIndex={0}
-                className='code-item'
+                className='code-item relative flex items-center gap-2 py-2 pl-7 pr-2 cursor-pointer rounded-lg hover:bg-secondary'
                 onClick={() => handleSelect(item.value)}
               >
                 <span>{item.label}</span>
@@ -118,7 +112,7 @@ export const LanguageDropdown = ({
                 {item.value === value && (
                   <Icon
                     name='Check'
-                    className='code-item__indicator'
+                    className='absolute left-2'
                     size={14}
                     strokeWidth={2.5}
                   />

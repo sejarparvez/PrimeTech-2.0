@@ -32,7 +32,7 @@ const HeadingDropdown = () => {
       tooltip='Headings'
       hideText={false}
       disabled={!canToggle}
-      dropdownClass='rte-heading-dropdown'
+      dropdownClass="w-40 [&_[data-heading='p']]:text-sm [&_[data-heading='h1']]:text-2xl [&_[data-heading='h1']]:font-bold [&_[data-heading='h2']]:text-xl [&_[data-heading='h2']]:font-bold [&_[data-heading='h3']]:text-lg [&_[data-heading='h3']]:font-bold [&_[data-heading='h4']]:text-base [&_[data-heading='h4']]:font-bold"
     >
       {options.map((item) => (
         <DropdownMenuItem

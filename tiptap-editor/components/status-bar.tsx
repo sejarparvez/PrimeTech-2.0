@@ -19,7 +19,7 @@ export const StatusBar = () => {
   });
 
   return (
-    <div className='border-t shrink-0 flex'>
+    <div className='border-t shrink-0 flex bg-card rounded-b-lg'>
       <Toolbar dense>
         <MenuButton
           icon='SourceCode'

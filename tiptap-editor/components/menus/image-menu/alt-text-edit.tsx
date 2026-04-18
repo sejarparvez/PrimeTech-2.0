@@ -18,15 +18,29 @@ const AltTextEdit = ({ initialText, onApply, onCancel }: AltTextEditProps) => {
   };
 
   return (
-    <form className='rte-text-alternative__form' onSubmit={onSubmit}>
+    <form
+      className='flex gap-4 bg-secondary p-2 rounded-lg'
+      onSubmit={onSubmit}
+    >
       <Input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder='Text alternative'
+        placeholder='Text alternative '
         autoFocus
+        className='flex-1'
       />
-      <MenuButton buttonType='submit' icon={'Check'} tooltip={false} />
-      <MenuButton icon={'Close'} tooltip={false} onClick={onCancel} />
+      <MenuButton
+        buttonType='submit'
+        icon={'Check'}
+        tooltip={false}
+        variant='outline'
+      />
+      <MenuButton
+        icon={'Close'}
+        tooltip={false}
+        onClick={onCancel}
+        variant='outline'
+      />
     </form>
   );
 };

@@ -148,7 +148,7 @@ export const BubbleMenu = ({
   return createPortal(
     <div
       ref={refs.setFloating}
-      className={cn('rte-bubble-menu', className)}
+      className={cn(className)}
       style={{
         ...floatingStyles,
         zIndex,
