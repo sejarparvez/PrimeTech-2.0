@@ -12,6 +12,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useArticles } from '@/services/article';
 import type { ArticleListType } from '@/types/article';
 
+const LIMIT = 10;
+
 export default function LatestPost() {
   const {
     data: response,
@@ -19,10 +21,10 @@ export default function LatestPost() {
     isError,
     refetch,
   } = useArticles({
-    limit: 1,
+    limit: LIMIT,
   });
 
-  const latest = response?.data?.[0];
+  const articles = response?.data ?? [];
 
   if (isError) {
     return (
@@ -32,7 +34,7 @@ export default function LatestPost() {
             <AlertCircle className='text-destructive h-10 w-10' />
           </div>
           <h2 className='mb-2 text-2xl font-bold tracking-tight'>
-            Couldn't load the latest article
+            Couldn't load the latest articles
           </h2>
           <Button onClick={() => refetch()} variant='outline' className='mt-4'>
             Try Again
@@ -47,10 +49,10 @@ export default function LatestPost() {
       <div className='mb-8 flex flex-col items-center justify-between gap-4 md:mb-12 md:flex-row md:items-end'>
         <div className='space-y-1 text-center md:text-left'>
           <h2 className='text-3xl font-extrabold italic md:text-5xl tracking-tight'>
-            Latest Article
+            Latest Articles
           </h2>
           <p className='text-muted-foreground'>
-            Our most recent story, hot off the press.
+            Discover our most recent stories and guides.
           </p>
         </div>
 
@@ -63,106 +65,35 @@ export default function LatestPost() {
       </div>
 
       {isLoading ? (
-        <LatestHeroSkeleton />
-      ) : latest ? (
-        <LatestHero data={latest} />
+        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+          {/* biome-ignore lint/suspicious/noArrayIndexKey: static skeletons */}
+          {Array.from({ length: LIMIT }).map((_, i) => (
+            <PostSkeleton key={i} />
+          ))}
+        </div>
+      ) : articles.length > 0 ? (
+        <>
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+            {articles.map((post) => (
+              <PostCard key={post.id} data={post} />
+            ))}
+          </div>
+
+          <div className='mt-12 flex justify-center'>
+            <Link href='/articles'>
+              <Button variant='outline' size='lg' className='group'>
+                Show All
+                <MoveUpRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1' />
+              </Button>
+            </Link>
+          </div>
+        </>
       ) : (
         <div className='flex min-h-[30vh] items-center justify-center rounded-2xl border-2 border-dashed border-border'>
           <p className='text-muted-foreground'>No articles available yet.</p>
         </div>
       )}
     </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// LatestHero (single latest article)
-// ---------------------------------------------------------------------------
-
-function LatestHero({ data }: { data: ArticleListType }) {
-  return (
-    <Link href={`/article/${data.slug}`} className='group block'>
-      <Card className='grid grid-cols-1 overflow-hidden border-none bg-background p-0 shadow-sm transition-all duration-300 hover:shadow-xl lg:grid-cols-2'>
-        <div className='relative min-h-64 overflow-hidden sm:min-h-96'>
-          <Image
-            src={data.coverImage || '/placeholder.jpg'}
-            alt={data.title}
-            fill
-            priority
-            sizes='(max-width: 1024px) 100vw, 50vw'
-            className='object-cover transition-transform duration-500 group-hover:scale-105'
-          />
-        </div>
-
-        <div className='flex flex-col justify-center p-6 sm:p-10'>
-          {data.category && (
-            <Badge className='mb-4 w-fit bg-muted text-foreground hover:bg-muted'>
-              {data.category.name}
-            </Badge>
-          )}
-
-          <h3 className='mb-4 text-2xl font-extrabold leading-tight transition-colors group-hover:text-primary sm:text-4xl'>
-            {data.title}
-          </h3>
-
-          {data.excerpt && (
-            <p className='mb-6 line-clamp-3 text-muted-foreground'>
-              {data.excerpt}
-            </p>
-          )}
-
-          <div className='mt-2 flex items-center justify-between border-t pt-6'>
-            <div className='flex items-center space-x-3'>
-              <Avatar className='h-10 w-10'>
-                <AvatarImage src={data.author?.image} />
-                <AvatarFallback>{data.author?.name?.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className='text-sm font-bold'>{data.author?.name}</p>
-                <time className='text-xs text-muted-foreground uppercase tracking-widest'>
-                  {formatDistanceToNow(new Date(data.updatedAt), {
-                    addSuffix: true,
-                  })}
-                </time>
-              </div>
-            </div>
-
-            <div className='flex items-center text-muted-foreground'>
-              <MessageCircle className='mr-1.5 h-4 w-4' />
-              <span className='text-xs font-medium'>
-                {data._count?.comments ?? 0}
-              </span>
-            </div>
-          </div>
-        </div>
-      </Card>
-    </Link>
-  );
-}
-
-function LatestHeroSkeleton() {
-  return (
-    <Card className='grid grid-cols-1 overflow-hidden border-none bg-background p-0 lg:grid-cols-2'>
-      <div className='min-h-64 sm:min-h-96'>
-        <Skeleton className='h-full w-full rounded-none' />
-      </div>
-      <div className='p-6 sm:p-10'>
-        <Skeleton className='mb-4 h-6 w-24' />
-        <Skeleton className='mb-4 h-10 w-3/4' />
-        <Skeleton className='mb-2 h-4 w-full' />
-        <Skeleton className='mb-2 h-4 w-2/3' />
-        <div className='mt-8 flex items-center justify-between border-t pt-6'>
-          <div className='flex items-center space-x-3'>
-            <Skeleton className='h-10 w-10 rounded-full' />
-            <div>
-              <Skeleton className='mb-1 h-4 w-20' />
-              <Skeleton className='h-3 w-24' />
-            </div>
-          </div>
-          <Skeleton className='h-4 w-8' />
-        </div>
-      </div>
-    </Card>
   );
 }
 
