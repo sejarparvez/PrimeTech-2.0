@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import { isAdmin } from '@/lib/auth-utils';
 import { prisma } from '@/lib/prisma';
 import {
   cloudinaryUploadImage,
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
         content,
         isFeatured,
         tags,
+        status: isAdmin(session) ? 'PUBLISHED' : 'DRAFT',
         coverImage: imageUrl.secure_url,
         imageId: imageUrl.public_id,
         // Connect the relations correctly

@@ -4,6 +4,7 @@ export interface ArticleListType {
   slug: string;
   coverImage: string;
   isFeatured: boolean;
+  excerpt?: string;
   updatedAt: string;
   author: {
     name: string;
