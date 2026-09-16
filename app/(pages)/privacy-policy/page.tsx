@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
       <Navbar />
       <main className='container mx-auto min-h-screen px-4 py-10 md:py-16 md:px-0'>
         <div className='mx-auto max-w-3xl space-y-1 text-center'>
-          <h1 className='text-3xl font-extrabold italic tracking-tight md:text-6xl'>
+          <h1 className='text-3xl font-extrabold tracking-tight md:text-5xl'>
             Privacy Policy
           </h1>
           <p className='text-muted-foreground'>Last updated: 2026</p>

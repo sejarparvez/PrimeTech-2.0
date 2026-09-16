@@ -74,7 +74,7 @@ export default function TagPage() {
             <p className='text-sm text-muted-foreground uppercase tracking-widest'>
               Tag
             </p>
-            <h1 className='flex items-center justify-center gap-3 text-3xl font-extrabold italic tracking-tight md:justify-start md:text-6xl break-words'>
+            <h1 className='flex items-center justify-center gap-3 text-3xl font-extrabold tracking-tight md:justify-start md:text-5xl break-words'>
               <Tag className='h-8 w-8 md:h-12 md:w-12 shrink-0' />
               {tag}
             </h1>

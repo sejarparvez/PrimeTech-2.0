@@ -87,7 +87,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href='/'>
-          <span className='text-xl font-extrabold text-primary md:mr-16'>
+          <span className='text-2xl font-black tracking-tight text-primary md:mr-16'>
             PrimeTech
           </span>
         </Link>

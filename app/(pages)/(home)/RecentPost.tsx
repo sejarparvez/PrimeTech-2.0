@@ -47,10 +47,10 @@ export default function LatestPost() {
   }
 
   return (
-    <section className='container mx-auto mt-16 px-4 md:px-0'>
+    <section className='container mx-auto mt-12 md:mt-20 px-4 md:px-0'>
       <div className='mb-8 flex flex-col items-center justify-between gap-4 md:mb-12 md:flex-row md:items-end'>
         <div className='space-y-1 text-center md:text-left'>
-          <h2 className='text-3xl font-extrabold italic md:text-5xl tracking-tight'>
+          <h2 className='text-2xl font-extrabold tracking-tight md:text-4xl'>
             Latest Articles
           </h2>
           <p className='text-muted-foreground'>
@@ -125,7 +125,7 @@ export function PostCard({ data }: { data: ArticleListType }) {
 
   return (
     <Link href={href} className='group block h-full'>
-      <Card className='h-full overflow-hidden p-0 border-none bg-background shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1'>
+      <Card className='h-full overflow-hidden p-0 bg-background shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1'>
         <div className='relative h-52 sm:h-64'>
           <Image
             src={data.coverImage || '/placeholder.jpg'}

@@ -84,7 +84,7 @@ export default function AuthorPage() {
                 </AvatarFallback>
               </Avatar>
               <div className='space-y-1'>
-                <h1 className='text-3xl font-extrabold italic tracking-tight md:text-5xl'>
+                <h1 className='text-3xl font-extrabold tracking-tight md:text-5xl'>
                   {author.name}
                 </h1>
                 {author.bio && (

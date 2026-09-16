@@ -78,7 +78,7 @@ function SearchResults() {
         <p className='text-sm text-muted-foreground uppercase tracking-widest'>
           Search results
         </p>
-        <h1 className='text-3xl font-extrabold italic tracking-tight md:text-6xl break-words'>
+        <h1 className='text-3xl font-extrabold tracking-tight md:text-5xl break-words'>
           &ldquo;{q}&rdquo;
         </h1>
         {meta && !isLoading && (

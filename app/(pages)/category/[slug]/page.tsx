@@ -76,7 +76,7 @@ export default function CategoryPage() {
       <main className='container mx-auto min-h-screen px-4 py-10 md:py-16 md:px-0'>
         <div className='mb-10 flex flex-col items-center justify-between gap-4 md:mb-16 md:flex-row md:items-end'>
           <div className='space-y-1 text-center md:text-left'>
-            <h1 className='text-3xl font-extrabold italic tracking-tight md:text-6xl capitalize'>
+            <h1 className='text-3xl font-extrabold tracking-tight md:text-5xl'>
               {title}
             </h1>
             <p className='text-muted-foreground'>{description}</p>

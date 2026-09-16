@@ -100,7 +100,7 @@ export default function SingleArticle({ slug }: { slug: string }) {
         </div>
       </div>
       {data.tags?.length > 0 && (
-        <div className='mx-auto mt-10 flex w-full max-w-5xl flex-wrap gap-2'>
+        <div className='mx-auto mt-12 flex w-full max-w-5xl flex-wrap gap-2'>
           {data.tags.map((tag: string) => (
             <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
               <Badge

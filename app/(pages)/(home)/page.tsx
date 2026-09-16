@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className='pb-10 md:pb-16'>
+      <main className='pt-6 md:pt-10 pb-10 md:pb-16'>
         <Featured />
         <RecentPost />
       </main>
