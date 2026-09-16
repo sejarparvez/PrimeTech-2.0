@@ -13,7 +13,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
     const article = await prisma.article.findUnique({
       where: { slug },
       include: {
-        author: { select: { name: true, image: true } },
+        author: { select: { id: true, name: true, image: true } },
         category: true,
         comments: { orderBy: { createdAt: 'desc' } },
         _count: { select: { comments: true, likes: true } },
@@ -28,6 +28,25 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
   } catch (_error) {
     return NextResponse.json(
       { error: 'Internal Server Error' },
+      { status: 500 },
+    );
+  }
+}
+
+export async function POST(_req: NextRequest, { params }: RouteContext) {
+  try {
+    const { slug } = await params;
+
+    const article = await prisma.article.update({
+      where: { slug },
+      data: { views: { increment: 1 } },
+      select: { views: true },
+    });
+
+    return NextResponse.json({ views: article.views }, { status: 200 });
+  } catch (_error) {
+    return NextResponse.json(
+      { error: 'Failed to record view' },
       { status: 500 },
     );
   }

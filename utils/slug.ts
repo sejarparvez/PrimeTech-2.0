@@ -36,6 +36,15 @@ export const SlugToText = (slug: string): string => {
 };
 
 /**
+ * Estimates reading time in minutes for HTML content (200 wpm, min 1).
+ */
+export function getReadingTime(html: string): number {
+  const text = RemoveHtmlTags(html);
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+/**
  * Removes HTML tags from a string using htmlparser2.
  */
 export function RemoveHtmlTags(str: string): string {

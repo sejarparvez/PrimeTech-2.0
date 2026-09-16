@@ -197,6 +197,12 @@
   html {
     @apply font-sans;
     }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+    }
 }
 
 

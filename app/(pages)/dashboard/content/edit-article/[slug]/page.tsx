@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 import { useSession } from '@/lib/auth-client';
 import { EditArticleSchema, type EditArticleSchemaType } from '@/lib/Schemas';
 import { useSingleArticle, useSlugCheck } from '@/services/article';
@@ -106,6 +107,7 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
       content: '',
       category: '',
       tags: [],
+      excerpt: '',
     },
   });
 
@@ -143,6 +145,7 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
         setValue('content', article.content || '');
         setValue('category', categoryId);
         setValue('tags', tags);
+        setValue('excerpt', article.excerpt || '');
         setEditorReady(true);
       }, 50);
     }
@@ -172,6 +175,7 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
         content: article.content || '',
         category: article.category?.id || '',
         tags: article.tags || [],
+        excerpt: article.excerpt || '',
       });
       setExistingImage(article.coverImage || null);
       setDeletedImageId(null);
@@ -344,6 +348,24 @@ function EditArticleForm({ articleSlug }: EditArticleFormProps) {
                   )}
                   {errors.slug && (
                     <FieldError>{errors.slug.message}</FieldError>
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              control={control}
+              name='excerpt'
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel>Excerpt</FieldLabel>
+                  <Textarea
+                    placeholder='A short summary shown on article cards (optional, max 300 characters)...'
+                    rows={3}
+                    {...field}
+                  />
+                  {errors.excerpt && (
+                    <FieldError>{errors.excerpt.message}</FieldError>
                   )}
                 </Field>
               )}

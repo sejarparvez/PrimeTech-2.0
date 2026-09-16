@@ -4,12 +4,12 @@ import { AlertCircle, MoveUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { PostCard, PostSkeleton } from '@/app/(pages)/(home)/RecentPost';
-import { Button } from '@/components/ui/button';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
+import { Button } from '@/components/ui/button';
 import { useArticles } from '@/services/article';
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 24;
 
 export default function ArticlesPage() {
   const [page, setPage] = useState(1);
@@ -27,6 +27,11 @@ export default function ArticlesPage() {
 
   const articles = response?.data ?? [];
   const meta = response?.meta;
+
+  const goToPage = (next: number) => {
+    setPage(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (isError) {
     return (
@@ -92,7 +97,7 @@ export default function ArticlesPage() {
             <Button
               variant='ghost'
               disabled={page === 1 || isPlaceholderData}
-              onClick={() => setPage((old) => Math.max(old - 1, 1))}
+              onClick={() => goToPage(Math.max(page - 1, 1))}
             >
               Previous
             </Button>
@@ -102,7 +107,7 @@ export default function ArticlesPage() {
             <Button
               variant='ghost'
               disabled={!meta.hasMore || isPlaceholderData}
-              onClick={() => setPage((old) => old + 1)}
+              onClick={() => goToPage(page + 1)}
             >
               Next
             </Button>

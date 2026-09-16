@@ -11,6 +11,8 @@ export interface FetchArticlesParams {
   isFeatured?: boolean;
   page?: number;
   limit?: number;
+  search?: string;
+  tag?: string;
 }
 
 export interface ArticleResponse {
@@ -87,9 +89,14 @@ export function useArticles({
   isFeatured,
   page = 1,
   limit = 10,
+  search,
+  tag,
 }: FetchArticlesParams = {}) {
   return useQuery<ArticleResponse>({
-    queryKey: [QUERY_KEYS.ARTICLES, { category, isFeatured, page, limit }],
+    queryKey: [
+      QUERY_KEYS.ARTICLES,
+      { category, isFeatured, page, limit, search, tag },
+    ],
     queryFn: async () => {
       const { data } = await axios.get('/api/article/recent', {
         params: {
@@ -97,12 +104,25 @@ export function useArticles({
           featured: isFeatured, // maps to the 'featured' param in API
           page,
           limit,
+          search,
+          tag,
         },
       });
       return data;
     },
     placeholderData: (previousData) => previousData,
   });
+}
+
+/**
+ * Fire-and-forget view counter for a single article.
+ * Returns the updated view count.
+ */
+export async function incrementArticleView(slug: string): Promise<number> {
+  const { data } = await axios.post(`/api/article/single-article/${slug}`, {
+    action: 'view',
+  });
+  return data.views ?? 0;
 }
 
 /**
@@ -116,6 +136,120 @@ export function useSingleArticle(Slug: string) {
       return data;
     },
     enabled: !!Slug,
+  });
+}
+
+export interface ArticleCommentType {
+  id: string;
+  content: string;
+  createdAt: string;
+  author: {
+    id: string;
+    name: string;
+    image: string | null;
+  };
+}
+
+/**
+ * Hook to fetch comments for a single article by slug
+ */
+export function useArticleComments(slug: string) {
+  return useQuery<{ data: ArticleCommentType[] }>({
+    queryKey: [QUERY_KEYS.ARTICLES, slug, 'comments'],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `/api/article/single-article/${slug}/comments`,
+      );
+      return data;
+    },
+    enabled: !!slug,
+  });
+}
+
+/**
+ * Hook to post a comment on an article (signed-in users)
+ */
+export function useCreateComment() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      slug,
+      content,
+    }: {
+      slug: string;
+      content: string;
+    }) => {
+      const { data } = await axios.post(
+        `/api/article/single-article/${slug}/comments`,
+        { content },
+      );
+      return data;
+    },
+    onSuccess: (_data, variables) => {
+      toast.success('Comment posted!');
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ARTICLES, variables.slug, 'comments'],
+      });
+      // Refresh the article itself so the comment count updates
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ARTICLES, variables.slug],
+      });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+}
+
+export interface AuthorType {
+  id: string;
+  name: string;
+  image: string | null;
+  bio: string | null;
+  _count: {
+    Articles: number;
+  };
+}
+
+export interface AuthorDetailType extends AuthorType {
+  articles: ArticleListType[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasMore: boolean;
+  };
+}
+
+/**
+ * Hook to fetch all authors with published articles
+ */
+export function useAuthors() {
+  return useQuery<{ data: AuthorType[] }>({
+    queryKey: [QUERY_KEYS.ARTICLES, 'authors'],
+    queryFn: async () => {
+      const { data } = await axios.get('/api/authors');
+      return data;
+    },
+  });
+}
+
+/**
+ * Hook to fetch a single author with their published articles
+ */
+export function useAuthor(id: string, page = 1, limit = 24) {
+  return useQuery<{ data: AuthorDetailType }>({
+    queryKey: [QUERY_KEYS.ARTICLES, 'authors', id, { page, limit }],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/authors/${id}`, {
+        params: { page, limit },
+      });
+      return data;
+    },
+    enabled: !!id,
+    placeholderData: (previousData) => previousData,
   });
 }
 
@@ -149,7 +283,7 @@ export function useDeleteArticle() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const { data } = await axios.delete(`/api/admin/articles??id=${id}`);
+      const { data } = await axios.delete(`/api/admin/articles?id=${id}`);
       return data;
     },
     onSuccess: () => {

@@ -4,9 +4,11 @@ export interface ArticleListType {
   slug: string;
   coverImage: string;
   isFeatured: boolean;
+  views: number;
   excerpt?: string;
   updatedAt: string;
   author: {
+    id: string;
     name: string;
     image: string;
   };

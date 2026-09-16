@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { useCategories } from '@/services/categories';
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -27,10 +28,12 @@ export default function Footer() {
     defaultValues: { email: '' },
   });
 
+  const { data: categories } = useCategories();
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     toast.loading('Please wait...');
     try {
-      const response = await axios.post('/api/dashboard/subscribe', {
+      const response = await axios.post('/api/subscribe', {
         email: data.email,
       });
       toast.dismiss();
@@ -153,19 +156,13 @@ export default function Footer() {
             <nav className='space-y-4'>
               <h3 className='text-lg font-semibold'>Topics</h3>
               <ul className='space-y-2'>
-                {[
-                  'Web Development',
-                  'AI & ML',
-                  'DevOps',
-                  'Open Source',
-                  'UI/UX',
-                ].map((topic) => (
-                  <li key={topic}>
+                {categories?.slice(0, 5).map((category) => (
+                  <li key={category.id}>
                     <Link
-                      href={`/topics/${topic.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
+                      href={`/category/${category.slug}`}
                       className='text-muted-foreground transition-colors hover:text-primary'
                     >
-                      {topic}
+                      {category.name}
                     </Link>
                   </li>
                 ))}
@@ -174,36 +171,42 @@ export default function Footer() {
             <nav className='space-y-4'>
               <h3 className='text-lg font-semibold'>Company</h3>
               <ul className='space-y-2'>
-                {['About', 'Blog', 'Newsletter', 'Careers', 'Contact'].map(
-                  (item) => (
-                    <li key={item}>
-                      <Link
-                        href={`/${item.toLowerCase()}`}
-                        className='text-muted-foreground transition-colors hover:text-primary'
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                {[
+                  { label: 'About', href: '/about' },
+                  { label: 'Articles', href: '/articles' },
+                  { label: 'Authors', href: '/authors' },
+                  { label: 'Contact', href: '/contact' },
+                  {
+                    label: 'Write an Article',
+                    href: '/dashboard/content/write-article',
+                  },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      className='text-muted-foreground transition-colors hover:text-primary'
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
             <nav className='space-y-4'>
               <h3 className='text-lg font-semibold'>Resources</h3>
               <ul className='space-y-2'>
                 {[
-                  'Tutorials',
-                  'Cheat Sheets',
-                  'Tools',
-                  'Roadmaps',
-                  'Community',
-                ].map((resource) => (
-                  <li key={resource}>
+                  { label: 'All Articles', href: '/articles' },
+                  { label: 'Search', href: '/search' },
+                  { label: 'Support', href: '/support' },
+                  { label: 'Sign In', href: '/auth/signin' },
+                ].map((item) => (
+                  <li key={item.label}>
                     <Link
-                      href={`/resources/${resource.toLowerCase().replace(/\s+/g, '-')}`}
+                      href={item.href}
                       className='text-muted-foreground transition-colors hover:text-primary'
                     >
-                      {resource}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
@@ -253,17 +256,16 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} PrimeTech. All rights reserved.</p>
           <nav className='mt-4 flex flex-wrap justify-center space-x-4 sm:mt-0 sm:space-x-6'>
             {[
-              'Privacy Policy',
-              'Terms of Service',
-              'Cookie Policy',
-              'Sitemap',
+              { label: 'Privacy Policy', href: '/privacy-policy' },
+              { label: 'Terms of Service', href: '/terms-of-service' },
+              { label: 'Contact', href: '/contact' },
             ].map((item) => (
               <Link
-                key={item}
-                href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                key={item.label}
+                href={item.href}
                 className='transition-colors hover:text-primary'
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </nav>

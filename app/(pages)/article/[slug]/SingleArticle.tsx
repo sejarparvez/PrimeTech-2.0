@@ -1,20 +1,26 @@
 'use client';
 
-import { AlertCircle } from 'lucide-react';
-import { useState } from 'react';
+import { AlertCircle, Tag } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSingleArticle } from '@/services/article';
+import { incrementArticleView, useSingleArticle } from '@/services/article';
 import TiptapRenderer from '@/tiptap-renderer/tiptap-renderer';
+import { getReadingTime } from '@/utils/slug';
+import PostComments from './PostComments';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostReadingProgress from './PostReadingProgress';
 import PostSharing from './PostSharing';
 import PostToc from './PostToc';
+import RelatedArticles from './RelatedArticles';
 
 export default function SingleArticle({ slug }: { slug: string }) {
   const [retryCount, setRetryCount] = useState(0);
+  const [views, setViews] = useState<number | null>(null);
 
   const { isLoading, data, isError, refetch } = useSingleArticle(slug);
   const siteurl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -22,6 +28,19 @@ export default function SingleArticle({ slug }: { slug: string }) {
     setRetryCount((prev) => prev + 1);
     refetch();
   };
+
+  // Count this visit (separate from the GET used by generateMetadata)
+  useEffect(() => {
+    if (!slug) return;
+    incrementArticleView(slug)
+      .then(setViews)
+      .catch(() => {});
+  }, [slug]);
+
+  const readingTime = useMemo(
+    () => (data?.content ? getReadingTime(data.content) : null),
+    [data?.content],
+  );
 
   if (isError) {
     return (
@@ -56,8 +75,11 @@ export default function SingleArticle({ slug }: { slug: string }) {
       <PostHeader
         title={data.title}
         authorName={data.author.name}
+        authorId={data.author.id}
         updatedAt={data.updatedAt}
         cover={data.coverImage}
+        readingTime={readingTime}
+        views={views ?? data.views ?? 0}
       />
       <div className='mx-auto mt-8 w-full'>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12'>
@@ -77,6 +99,28 @@ export default function SingleArticle({ slug }: { slug: string }) {
           </aside>
         </div>
       </div>
+      {data.tags?.length > 0 && (
+        <div className='mx-auto mt-10 flex w-full max-w-5xl flex-wrap gap-2'>
+          {data.tags.map((tag: string) => (
+            <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`}>
+              <Badge
+                variant='secondary'
+                className='cursor-pointer gap-1.5 hover:bg-secondary/70'
+              >
+                <Tag className='h-3 w-3' />
+                {tag}
+              </Badge>
+            </Link>
+          ))}
+        </div>
+      )}
+      {data.category?.slug && (
+        <RelatedArticles
+          categorySlug={data.category.slug}
+          currentSlug={data.slug}
+        />
+      )}
+      <PostComments slug={slug} />
     </article>
   );
 }

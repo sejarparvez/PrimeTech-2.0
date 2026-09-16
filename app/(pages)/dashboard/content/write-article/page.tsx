@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 import { useSession } from '@/lib/auth-client';
 import { NewArticleSchema, type NewArticleSchemaType } from '@/lib/Schemas';
 import { useSlugCheck } from '@/services/article';
@@ -87,6 +88,7 @@ function NewArticleForm() {
       category: '',
       tags: [],
       isFeatured: false,
+      excerpt: '',
     },
   });
 
@@ -255,6 +257,25 @@ function NewArticleForm() {
                   )}
                   {errors.slug && (
                     <FieldError>{errors.slug.message}</FieldError>
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Excerpt */}
+            <Controller
+              control={control}
+              name='excerpt'
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel>Excerpt</FieldLabel>
+                  <Textarea
+                    placeholder='A short summary shown on article cards (optional, max 300 characters)...'
+                    rows={3}
+                    {...field}
+                  />
+                  {errors.excerpt && (
+                    <FieldError>{errors.excerpt.message}</FieldError>
                   )}
                 </Field>
               )}

@@ -12,11 +12,17 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
     // New param: featured
     const featured = searchParams.get('featured') === 'true';
+    const searchQuery = searchParams.get('search') || '';
+    const tag = searchParams.get('tag') || '';
 
     const whereClause = {
       status: 'PUBLISHED' as const,
       ...(category && { category: { slug: category.toLowerCase() } }),
       ...(featured && { isFeatured: true }), // Only filter if featured=true is passed
+      ...(searchQuery && {
+        title: { contains: searchQuery, mode: 'insensitive' as const },
+      }),
+      ...(tag && { tags: { has: tag } }),
     };
 
     const [totalArticles, articles] = await Promise.all([
@@ -30,6 +36,7 @@ export async function GET(request: NextRequest) {
           excerpt: true,
           coverImage: true,
           isFeatured: true,
+          views: true,
           category: {
             select: {
               name: true,
@@ -37,7 +44,7 @@ export async function GET(request: NextRequest) {
             },
           },
           updatedAt: true,
-          author: { select: { name: true, image: true } },
+          author: { select: { id: true, name: true, image: true } },
           _count: { select: { comments: true } },
         },
         orderBy: { updatedAt: 'desc' },

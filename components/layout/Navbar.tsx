@@ -2,7 +2,7 @@
 
 import { Menu, Search } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,17 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    setIsSearchOpen(false);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+  };
 
   // --- Hydration Fix ---
   const [mounted, setMounted] = React.useState(false);
@@ -37,7 +47,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60'>
+    <header className='w-full border-b bg-background'>
       <div className='container mx-auto flex h-16 items-center px-4'>
         {/* Mobile Menu - Only rendered after mount to prevent hydration error */}
         <div className='lg:hidden'>
@@ -108,12 +118,14 @@ export default function Navbar() {
               isSearchOpen ? 'w-72 lg:w-96' : 'w-48 lg:w-60',
             )}
           >
-            <form onSubmit={(e) => e.preventDefault()} className='relative'>
+            <form onSubmit={handleSearch} className='relative'>
               <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
               <Input
                 type='search'
                 placeholder='Search articles...'
                 className='w-full bg-muted/50 py-2 pl-9 pr-12 focus-visible:ring-primary'
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsSearchOpen(true)}
                 onBlur={() => setIsSearchOpen(false)}
               />

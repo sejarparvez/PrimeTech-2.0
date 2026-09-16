@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     const content = data.get('content') as string;
     const categoryId = data.get('category') as string; // This is the ID from the frontend select
     const isFeatured = data.get('isFeatured') === 'true';
+    const excerpt = (data.get('excerpt') as string) || '';
 
     // Parse tags (they were sent as JSON.stringify in the frontend)
     const rawTags = data.get('tags') as string;
@@ -53,6 +54,7 @@ export async function POST(req: NextRequest) {
         content,
         isFeatured,
         tags,
+        excerpt,
         status: isAdmin(session) ? 'PUBLISHED' : 'DRAFT',
         coverImage: imageUrl.secure_url,
         imageId: imageUrl.public_id,
@@ -89,6 +91,7 @@ export async function PUT(req: NextRequest) {
     const content = formData.get('content') as string;
     const categoryId = formData.get('category') as string;
     const isFeatured = formData.get('isFeatured') === 'true';
+    const excerpt = (formData.get('excerpt') as string) || '';
     const oldImageId = formData.get('deletedImage') as string;
     const imageFile = formData.get('image') as File | null;
 
@@ -108,6 +111,7 @@ export async function PUT(req: NextRequest) {
       content,
       isFeatured,
       tags,
+      excerpt,
       category: { connect: { id: categoryId } },
     };
 

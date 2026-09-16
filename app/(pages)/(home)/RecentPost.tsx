@@ -1,9 +1,11 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-import { AlertCircle, MessageCircle, MoveUpRight } from 'lucide-react';
+import { AlertCircle, Eye, MessageCircle, MoveUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import type { MouseEvent } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,7 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useArticles } from '@/services/article';
 import type { ArticleListType } from '@/types/article';
 
-const LIMIT = 10;
+const LIMIT = 12;
 
 export default function LatestPost() {
   const {
@@ -66,8 +68,8 @@ export default function LatestPost() {
 
       {isLoading ? (
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-          {/* biome-ignore lint/suspicious/noArrayIndexKey: static skeletons */}
           {Array.from({ length: LIMIT }).map((_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static skeletons
             <PostSkeleton key={i} />
           ))}
         </div>
@@ -102,7 +104,24 @@ export default function LatestPost() {
 // ---------------------------------------------------------------------------
 
 export function PostCard({ data }: { data: ArticleListType }) {
+  const router = useRouter();
   const href = `/article/${data.slug}`;
+
+  const goToCategory = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/category/${data.category.slug}`);
+  };
+
+  const navigateToAuthor = () => {
+    router.push(`/author/${data.author.id}`);
+  };
+
+  const goToAuthor = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigateToAuthor();
+  };
 
   return (
     <Link href={href} className='group block h-full'>
@@ -116,7 +135,10 @@ export function PostCard({ data }: { data: ArticleListType }) {
             className='object-cover transition-transform duration-500 group-hover:scale-105'
           />
           {data.category && (
-            <Badge className='absolute left-4 top-4 z-10 bg-white/90 text-black backdrop-blur-md hover:bg-white'>
+            <Badge
+              onClick={goToCategory}
+              className='absolute left-4 top-4 z-10 bg-white/90 text-black backdrop-blur-md hover:bg-white cursor-pointer'
+            >
               {data.category.name}
             </Badge>
           )}
@@ -130,13 +152,28 @@ export function PostCard({ data }: { data: ArticleListType }) {
           </div>
 
           <div className='mt-4 flex items-center justify-between border-t pt-4'>
-            <div className='flex items-center space-x-3'>
+            {/* biome-ignore lint/a11y/useSemanticElements: nested inside the card link, so a semantic anchor can't be used; keyboard support provided */}
+            <div
+              role='link'
+              tabIndex={0}
+              aria-label={`View articles by ${data.author?.name}`}
+              onClick={goToAuthor}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  navigateToAuthor();
+                }
+              }}
+              className='flex cursor-pointer items-center space-x-3 rounded-md focus-visible:outline-2 focus-visible:outline-primary'
+            >
               <Avatar className='h-8 w-8'>
                 <AvatarImage src={data.author?.image} />
                 <AvatarFallback>{data.author?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className='text-xs font-bold'>{data.author?.name}</p>
+                <p className='text-xs font-bold hover:text-primary'>
+                  {data.author?.name}
+                </p>
                 <time className='text-[10px] text-muted-foreground uppercase tracking-widest'>
                   {formatDistanceToNow(new Date(data.updatedAt), {
                     addSuffix: true,
@@ -145,10 +182,18 @@ export function PostCard({ data }: { data: ArticleListType }) {
               </div>
             </div>
 
-            <div className='flex items-center text-muted-foreground'>
-              <MessageCircle className='mr-1.5 h-4 w-4' />
-              <span className='text-xs font-medium'>
-                {data._count?.comments ?? 0}
+            <div className='flex items-center gap-3 text-muted-foreground'>
+              <span className='flex items-center'>
+                <Eye className='mr-1.5 h-4 w-4' />
+                <span className='text-xs font-medium'>
+                  {(data.views ?? 0).toLocaleString()}
+                </span>
+              </span>
+              <span className='flex items-center'>
+                <MessageCircle className='mr-1.5 h-4 w-4' />
+                <span className='text-xs font-medium'>
+                  {data._count?.comments ?? 0}
+                </span>
               </span>
             </div>
           </div>

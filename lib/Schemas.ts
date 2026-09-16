@@ -21,6 +21,7 @@ export const NewArticleSchema = z.object({
   content: z.string().min(1, 'Content is required'),
   category: z.string().min(1, 'Category is required'),
   isFeatured: z.boolean(),
+  excerpt: z.string().max(300).optional(),
 });
 
 export type NewArticleSchemaType = z.infer<typeof NewArticleSchema>;
@@ -43,6 +44,7 @@ export const EditArticleSchema = z.object({
   tags: z.array(z.string()),
   content: z.string().min(1, 'Content is required'),
   category: z.string().min(1, 'Category is required'),
+  excerpt: z.string().max(300).optional(),
 });
 
 export type EditArticleSchemaType = z.infer<typeof EditArticleSchema>;

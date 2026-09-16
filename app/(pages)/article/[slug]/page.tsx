@@ -40,8 +40,8 @@ export async function generateMetadata(
   }
 
   const title = data.title;
-  // Use the helper to clean the Tiptap HTML content for the description tag
-  const rawDescription = RemoveHtmlTags(data.content || '');
+  // Prefer the excerpt, fall back to cleaning the Tiptap HTML content
+  const rawDescription = data.excerpt || RemoveHtmlTags(data.content || '');
   const description = truncateString(rawDescription, 160);
   const imageUrl = data.coverImage || `${siteUrl}/default-image.jpg`;
   const pageUrl = `${siteUrl}/article/${slug}`;
